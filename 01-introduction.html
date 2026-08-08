@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 1 - Introduction to C Programming | ALLIED</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">
+            ALLIED
+        </a>
+
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="books.html">Books</a>
+            <a href="c.html">C Programming</a>
+            <a href="login.html">Login</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <!-- TITLE -->
+
+    <div class="hero">
+
+        <h1>Chapter 1: Introduction to C Programming</h1>
+
+        <p>
+            Learn the history, features, uses, advantages and basic
+            structure of the C programming language.
+        </p>
+
+    </div>
+
+
+    <!-- OBJECTIVES -->
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>
+            After completing this chapter, you should be able to:
+        </p>
+
+        <ul>
+
+            <li>Understand what C programming is.</li>
+
+            <li>Explain the history of the C language.</li>
+
+            <li>Understand the major features of C.</li>
+
+            <li>Identify the advantages and disadvantages of C.</li>
+
+            <li>Explain where C programming is used.</li>
+
+            <li>Understand the basic structure of a C program.</li>
+
+            <li>Write and understand a simple C program.</li>
+
+            <li>Understand the basic compilation process.</li>
+
+        </ul>
+
+    </section>
+
+
+    <!-- INTRODUCTION -->
+
+    <section>
+
+        <h2>1.1 Introduction to C Programming</h2>
+
+        <p>
+            C is a general-purpose programming language that has been
+            widely used for system programming, application development,
+            embedded systems and many other areas of computing.
+        </p>
+
+        <p>
+            C provides programmers with facilities for working with
+            variables, functions, arrays, pointers, structures and
+            memory. Because of this combination of high-level programming
+            features and low-level control, C has remained an important
+            language in computer science.
+        </p>
+
+        <p>
+            C programs are normally written as human-readable source code.
+            A compiler translates this source code into a form that the
+            computer can execute.
+        </p>
+
+        <div class="note">
+
+            <strong>Important:</strong>
+
+            C is often described as a middle-level language because it
+            provides both high-level programming features and low-level
+            access to memory and hardware-related operations.
+
+        </div>
+
+    </section>
+
+
+    <!-- HISTORY -->
+
+    <section>
+
+        <h2>1.2 History of C</h2>
+
+        <p>
+            The history of C is closely connected with the development
+            of the Unix operating system.
+        </p>
+
+        <p>
+            C was developed at Bell Labs during the early 1970s.
+            Dennis Ritchie played the central role in developing the
+            language. The language evolved from earlier programming
+            languages such as BCPL and B.
+        </p>
+
+        <p>
+            C became especially important because the Unix operating
+            system was rewritten largely in C. This demonstrated that a
+            relatively portable language could be used for operating
+            system development.
+        </p>
+
+        <h3>Important Historical Points</h3>
+
+        <table>
+
+            <tr>
+                <th>Period</th>
+                <th>Development</th>
+            </tr>
+
+            <tr>
+                <td>1960s</td>
+                <td>
+                    Earlier languages such as BCPL and B influenced
+                    the development of C.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Early 1970s</td>
+                <td>
+                    C was developed at Bell Labs.
+                </td>
+            </tr>
+
+            <tr>
+                <td>1970s</td>
+                <td>
+                    C was used extensively in Unix development.
+                </td>
+            </tr>
+
+            <tr>
+                <td>1980s</td>
+                <td>
+                    C became widely used for commercial and academic
+                    programming.
+                </td>
+            </tr>
+
+            <tr>
+                <td>1989</td>
+                <td>
+                    The first major standardized version became known
+                    as ANSI C, associated with the C89 standard.
+                </td>
+            </tr>
+
+            <tr>
+                <td>1990</td>
+                <td>
+                    The ISO C standard was published as C90.
+                </td>
+            </tr>
+
+            <tr>
+                <td>1999</td>
+                <td>
+                    C99 introduced several important language features.
+                </td>
+            </tr>
+
+            <tr>
+                <td>2011</td>
+                <td>
+                    C11 introduced additional language and library
+                    improvements.
+                </td>
+            </tr>
+
+            <tr>
+                <td>2018</td>
+                <td>
+                    C17/C18 provided clarifications and corrections.
+                </td>
+            </tr>
+
+            <tr>
+                <td>2024</td>
+                <td>
+                    C23 introduced another major revision to the
+                    language standard.
+                </td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <!-- HISTORY DIAGRAM -->
+
+    <section>
+
+        <h2>1.3 C Language Development Diagram</h2>
+
+        <div class="diagram">
+
+BCPL
+  |
+  v
+ B Language
+  |
+  v
+ C Language
+  |
+  +-----------------------+
+  |                       |
+  v                       v
+ Unix Development     General Programming
+  |
+  v
+ C Standards
+  |
+  +---- C89/C90
+  |
+  +---- C99
+  |
+  +---- C11
+  |
+  +---- C17/C18
+  |
+  +---- C23
+
+        </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+
+    <section>
+
+        <h2>1.4 Features of C</h2>
+
+        <p>
+            C contains many features that make it useful for both
+            beginners and professional programmers.
+        </p>
+
+        <h3>1. Simple</h3>
+
+        <p>
+            C has a relatively small set of core language concepts.
+            This makes it possible to learn the fundamentals and then
+            apply them to many types of programs.
+        </p>
+
+        <h3>2. Structured Programming</h3>
+
+        <p>
+            C supports structured programming through functions,
+            selection statements and loops.
+        </p>
+
+        <h3>3. Portable</h3>
+
+        <p>
+            C source code can often be moved between different systems
+            with appropriate changes and recompilation.
+        </p>
+
+        <h3>4. Fast</h3>
+
+        <p>
+            C programs can be compiled into efficient machine code,
+            making C suitable for performance-sensitive applications.
+        </p>
+
+        <h3>5. Pointers</h3>
+
+        <p>
+            C provides pointers that allow programmers to work directly
+            with memory addresses.
+        </p>
+
+        <h3>6. Functions</h3>
+
+        <p>
+            Programs can be divided into smaller reusable functions.
+        </p>
+
+        <h3>7. Rich Operators</h3>
+
+        <p>
+            C provides arithmetic, relational, logical, bitwise,
+            assignment and other operators.
+        </p>
+
+        <h3>8. Dynamic Memory Management</h3>
+
+        <p>
+            C provides library functions such as
+            <code>malloc()</code>, <code>calloc()</code>,
+            <code>realloc()</code> and <code>free()</code>
+            for dynamic memory management.
+        </p>
+
+        <h3>9. Low-Level Access</h3>
+
+        <p>
+            C can be used for programming tasks that require close
+            interaction with memory and hardware.
+        </p>
+
+        <h3>10. Large Ecosystem</h3>
+
+        <p>
+            C has a large collection of libraries, tools, compilers
+            and educational resources.
+        </p>
+
+    </section>
+
+
+    <!-- ADVANTAGES -->
+
+    <section>
+
+        <h2>1.5 Advantages of C</h2>
+
+        <ol>
+
+            <li>
+                <strong>High Performance:</strong>
+                Compiled C programs can execute efficiently.
+            </li>
+
+            <li>
+                <strong>Portability:</strong>
+                C programs can often be adapted to different platforms.
+            </li>
+
+            <li>
+                <strong>Memory Control:</strong>
+                Pointers and memory-management functions provide
+                detailed control over memory.
+            </li>
+
+            <li>
+                <strong>Small Core Language:</strong>
+                The fundamental language concepts are manageable
+                for learners.
+            </li>
+
+            <li>
+                <strong>Suitable for Systems:</strong>
+                C is widely used in operating-system and embedded
+                software development.
+            </li>
+
+            <li>
+                <strong>Reusable Functions:</strong>
+                Functions allow programs to be organized into
+                reusable components.
+            </li>
+
+            <li>
+                <strong>Foundation Language:</strong>
+                Learning C helps students understand concepts such
+                as memory, pointers and compilation.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <!-- DISADVANTAGES -->
+
+    <section>
+
+        <h2>1.6 Disadvantages of C</h2>
+
+        <ol>
+
+            <li>
+                <strong>No Automatic Memory Safety:</strong>
+                Incorrect pointer or memory usage can cause serious
+                bugs.
+            </li>
+
+            <li>
+                <strong>Manual Memory Management:</strong>
+                Programmers are responsible for dynamically allocated
+                memory.
+            </li>
+
+            <li>
+                <strong>No Built-in Object-Oriented System:</strong>
+                C does not directly provide classes and inheritance
+                like C++ or Java.
+            </li>
+
+            <li>
+                <strong>Pointer Complexity:</strong>
+                Pointers are powerful but can be difficult for beginners.
+            </li>
+
+            <li>
+                <strong>Limited Runtime Protection:</strong>
+                Many programming errors are not automatically prevented.
+            </li>
+
+            <li>
+                <strong>String Handling:</strong>
+                C strings require careful handling of arrays and
+                null terminators.
+            </li>
+
+        </ol>
+
+        <div class="warning">
+
+            <strong>Remember:</strong>
+
+            C gives programmers significant control. With that control
+            comes responsibility. Incorrect memory operations can lead
+            to crashes, corrupted data or security vulnerabilities.
+
+        </div>
+
+    </section>
+
+
+    <!-- APPLICATIONS -->
+
+    <section>
+
+        <h2>1.7 Applications of C</h2>
+
+        <p>
+            C is used in many areas of software development.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Application</th>
+                <th>Use of C</th>
+            </tr>
+
+            <tr>
+                <td>Operating Systems</td>
+                <td>
+                    Low-level system components and operating-system
+                    development.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Embedded Systems</td>
+                <td>
+                    Programming microcontrollers and hardware devices.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Compilers</td>
+                <td>
+                    Building language tools and compiler components.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Networking</td>
+                <td>
+                    High-performance networking software and libraries.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Databases</td>
+                <td>
+                    Database engines and performance-critical components.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Game Technology</td>
+                <td>
+                    Performance-sensitive engines and supporting systems.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Scientific Software</td>
+                <td>
+                    Efficient numerical and computational programs.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Device Drivers</td>
+                <td>
+                    Software that communicates closely with hardware.
+                </td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <!-- BASIC STRUCTURE -->
+
+    <section>
+
+        <h2>1.8 Basic Structure of a C Program</h2>
+
+        <p>
+            A simple C program normally contains several important
+            components.
+        </p>
+
+        <pre><code>#include &lt;
