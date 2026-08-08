@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+<h1>E-Book Management System</h1>
+</header>
+
+<section class="hero">
+<h2>Login</h2>
+
+<input type="email" id="username" placeholder="Enter Email"><br><br>
+
+<input type="password" id="password" placeholder="Enter Password"><br><br>
+
+<button onclick="login()">Login</button>
+
+<p><br>Don't have an account?
+<a href="register.html">Register</a></p>
+
+</section>
+
+<script type="module" src="firebase.js"></script>
+<script type="module" src="firebase.js?v=2"></script>
+<footer><br>
+If any problem in login 
+contact me:
+<br>
+ <form action="https://formsubmit.co/YOUR_EMAIL@gmail.com" method="POST">
+
+<input type="text" name="Name" placeholder="Name" required>
+
+<input type="email" name="Email" placeholder="Email" required>
+
+<textarea name="Message" placeholder="Message"></textarea>
+<button type="button" onclick="sendData()">Submit</button>
+<script>
+function sendData() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+
+    submitForm(name, email, message);
+}
+</script>
+
+</form>
+</br>
+Thankyou for visiting my website🙏
+</footer>
+</body>
+</html>

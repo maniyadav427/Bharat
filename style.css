@@ -1,0 +1,163 @@
+ /* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#6dd5ed,#2193b0);
+    min-height:100vh;
+}
+
+header{
+    background:linear-gradient(90deg,#0f2027,#203a43,#2c5364);
+    color:white;
+    text-align:center;
+    padding:20px;
+    font-size:20px;
+    box-shadow:0 4px 10px rgba(0,0,0,.3);
+}
+
+nav{
+    text-align:center;
+    background:#ffffff;
+    padding:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+
+nav a{
+    color:#1565c0;
+    text-decoration:none;
+    margin:0 15px;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#ff5722;
+}
+
+.hero{
+    width:90%;
+    max-width:900px;
+    margin:30px auto;
+    background:#ffffff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.hero h2{
+    text-align:center;
+    color:#1565c0;
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:2px solid #2193b0;
+    border-radius:10px;
+    margin:10px 0;
+    font-size:16px;
+}
+
+input:focus{
+    outline:none;
+    border-color:#ff9800;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    background:linear-gradient(90deg,#ff512f,#dd2476);
+    color:white;
+    border:none;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
+
+.card{
+    background:white;
+    margin:20px 0;
+    padding:20px;
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+    text-align:center;
+}
+
+.card h3{
+    color:#0d47a1;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#555;
+    margin-bottom:15px;
+}
+
+ul{
+    list-style:none;
+}
+
+li{
+    margin:15px 0;
+}
+
+footer{
+    background:#0f2027;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:30px;
+}
+
+footer a{
+    color:#ffeb3b;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+img{
+    max-width:100%;
+    border-radius:10px;
+.book-logo{
+    text-align:center;
+    padding:20px;
+    background:linear-gradient(135deg,#000428,#004e92);
+}
+
+.book-logo img{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    box-shadow:0 0 20px #00bfff;
+    animation:zoom 2s infinite;
+}
+
+@keyframes zoom{
+    0%{transform:scale(0.9);}
+    50%{transform:scale(1.05);}
+    100%{transform:scale(0.9);}
+}
+.logo-box{
+    text-align:center;
+    padding:30px;
+    background:linear-gradient(135deg,#1e3c72,#2a5298,#00c6ff);
+    border-radius:20px;
+    margin:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+  
+    
