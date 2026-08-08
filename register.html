@@ -1,39 +1,214 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register</title>
-<link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register</title>
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
 <header>
-<h1>E-Book Management System</h1>
+    <h1>E-Book Management System</h1>
 </header>
+
 
 <section class="hero">
 
-<h2>Create Account</h2>
+    <h2>Create Account</h2>
 
-<input type="text" id="newUsername" placeholder="Enter Username"><br><br>
+    <input
+        type="text"
+        id="newUsername"
+        placeholder="Enter Username"
+    >
 
-<input type="email" id="newEmail" placeholder="Enter Email"><br><br>
+    <br><br>
 
-<input type="password" id="newPassword" 
-placeholder="Enter Password"><br><br>
-<button onclick="register()">Register</button>
-<p><br>Already have an account?
-<a href="login.html">Login</a></p>
+    <input
+        type="email"
+        id="newEmail"
+        placeholder="Enter Email"
+    >
+
+    <br><br>
+
+    <input
+        type="password"
+        id="newPassword"
+        placeholder="Enter Password"
+    >
+
+    <br><br>
+
+    <button id="registerButton">
+        Register
+    </button>
+
+    <p id="message"></p>
+
+    <p>
+        <br>
+        Already have an account?
+        <a href="login.html">Login</a>
+    </p>
 
 </section>
 
-<script type="module" src="firebase.js"></script>
+
+<script type="module">
+
+    import {
+        auth,
+        createUserWithEmailAndPassword,
+        sendEmailVerification,
+        signOut
+    } from "./firebase.js";
+
+
+    const registerButton =
+        document.getElementById("registerButton");
+
+    const message =
+        document.getElementById("message");
+
+
+    registerButton.addEventListener("click", async () => {
+
+        const username =
+            document.getElementById("newUsername").value.trim();
+
+        const email =
+            document.getElementById("newEmail").value.trim();
+
+        const password =
+            document.getElementById("newPassword").value;
+
+
+        // Check username
+        if (username === "") {
+
+            message.textContent =
+                "Please enter your username.";
+
+            return;
+        }
+
+
+        // Check email
+        if (email === "") {
+
+            message.textContent =
+                "Please enter your email.";
+
+            return;
+        }
+
+
+        // Check password
+        if (password.length < 6) {
+
+            message.textContent =
+                "Password must be at least 6 characters.";
+
+            return;
+        }
+
+
+        try {
+
+            message.textContent =
+                "Creating your account...";
+
+
+            // Create Firebase account
+            const userCredential =
+                await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            const user =
+                userCredential.user;
+
+
+            // Send verification email
+            await sendEmailVerification(user);
+
+
+            // Sign out until email is verified
+            await signOut(auth);
+
+
+            message.textContent =
+                "Registration successful! " +
+                "Verification email sent to " +
+                email +
+                ". Please verify your email before logging in.";
+
+
+            // Clear form
+            document.getElementById("newUsername").value = "";
+            document.getElementById("newEmail").value = "";
+            document.getElementById("newPassword").value = "";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            if (error.code === "auth/email-already-in-use") {
+
+                message.textContent =
+                    "This email is already registered.";
+
+            } else if (error.code === "auth/invalid-email") {
+
+                message.textContent =
+                    "Please enter a valid email address.";
+
+            } else if (error.code === "auth/weak-password") {
+
+                message.textContent =
+                    "Password is too weak.";
+
+            } else if (error.code === "auth/operation-not-allowed") {
+
+                message.textContent =
+                    "Email/Password authentication is not enabled.";
+
+            } else {
+
+                message.textContent =
+                    "Registration failed: " +
+                    error.message;
+            }
+
+        }
+
+    });
+
+</script>
+
+
 <footer>
-<a href="https://instagram.com/_obito_112__">
-Instagram Page
-</a>
+
+    <a href="https://instagram.com/_obito_112__">
+        Instagram Page
+    </a>
+
 </footer>
+
+
 </body>
+
 </html>
