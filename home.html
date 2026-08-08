@@ -1,65 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2870967645080381"
-     crossorigin="anonymous"></script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>E-Book Management System</title>
 
-<link rel="stylesheet" href="style.css">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>E-Book Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 
 <body>
+
+
 <header>
+
     <div class="logo-box">
-        <div class="logo-circle">📚</div>
+
+        <div class="logo-circle">
+            📚
+        </div>
+
         <h1>E-Book Management System</h1>
-        <p class="tagline">Read • Learn • Manage</p>
+
+        <p class="tagline">
+            Read • Learn • Manage
+        </p>
+
     </div>
- 
-<nav>
 
-<a href="login.html">Login</a>
-<a href="register.html">Register</a>
 
-</nav>
+    <nav>
+
+        <a href="home.html">
+            Home
+        </a>
+
+        <a href="login.html">
+            Login
+        </a>
+
+        <a href="register.html">
+            Register
+        </a>
+
+    </nav>
+
 </header>
 
-<section class="hero">
-<h2>Welcome to the E-Book Library</h2>
 
-<p>Read and download your favorite books anytime.</p>
-<button onclick="window.location.href='books.html'">
-    📚 Open Books
-</button>
+
+<section class="hero">
+
+    <h2>
+        Welcome to the E-Book Library 📚
+    </h2>
+
+    <p>
+        Learn programming from our collection of books.
+    </p>
+
+
+    <p id="loginStatus">
+        Please login to access the books.
+    </p>
+
+
+    <hr>
+
+
+    <h2>
+        📚 All Books
+    </h2>
+
+
+    <!-- C Programming -->
+
+    <button
+        onclick="openBook('c.html')">
+
+        💻 C Programming
+
+    </button>
+
+    <br><br>
+
+
+    <!-- Java Programming -->
+
+    <button
+        onclick="openBook('java.html')">
+
+        ☕ Java Programming
+
+    </button>
+
+    <br><br>
+
+
+    <!-- Python Programming -->
+
+    <button
+        onclick="openBook('python.html')">
+
+        🐍 Python Programming
+
+    </button>
+
+    <br><br>
+
+
+    <!-- Data Structures -->
+
+    <button
+        onclick="openBook('dsa.html')">
+
+        📚 Data Structures & Algorithms
+
+    </button>
 
 
 </section>
 
-<script src="script.js"></script>
-<footer><br>
-contact me:
-<br>
-<label page="username">username:</label>
-<input type ="username" id="username" >
-</input>
-<label page="email">email:</label>
-<input type ="email" id="email" >
-</input>
-<label page="phone number">ph no::</label>
-<input type ="phone number" id="phone number" >
-</input>
-<button
-onclick="window.open.href='submitted is successful"'>submit</button><br>
-</br>
 
-<a href="https://instagram.com/call_me_mr_mani_yadav_">
-Instagram Page
-</a>
-<a href="privacy.html">Privacy Policy</a>
-Thankyou for visiting my website🙏
+
+<footer>
+
+    <br>
+
+    <p>
+        Contact me:
+    </p>
+
+
+    <input
+        type="text"
+        id="contactUsername"
+        placeholder="Username"
+    >
+
+    <br><br>
+
+
+    <input
+        type="email"
+        id="contactEmail"
+        placeholder="Email"
+    >
+
+    <br><br>
+
+
+    <input
+        type="tel"
+        id="contactPhone"
+        placeholder="Phone Number"
+    >
+
+    <br><br>
+
+
+    <button
+        type="button"
+        onclick="alert('Submitted successfully!')">
+
+        Submit
+
+    </button>
+
+
+    <br><br>
+
+
+    <a href="https://instagram.com/call_me_mr_mani_yadav_">
+        Instagram Page
+    </a>
+
+
+    <br><br>
+
+
+    <a href="privacy.html">
+        Privacy Policy
+    </a>
+
+
+    <br><br>
+
+
+    Thank you for visiting my website 🙏
+
 </footer>
+
+
+
+<!-- Firebase -->
+
+<script type="module">
+
+    import {
+        auth,
+        onAuthStateChanged
+    } from "./firebase.js";
+
+
+    let currentUser = null;
+
+
+    const loginStatus =
+        document.getElementById("loginStatus");
+
+
+    /*
+     * Check Firebase login status
+     */
+
+    onAuthStateChanged(auth, (user) => {
+
+        currentUser = user;
+
+
+        if (user && user.emailVerified) {
+
+            loginStatus.textContent =
+                "You are logged in. You can open the books. ✅";
+
+        }
+
+        else {
+
+            loginStatus.textContent =
+                "Please login to access the books. 🔐";
+
+        }
+
+    });
+
+
+    /*
+     * Open selected book
+     */
+
+    window.openBook = function(bookPage) {
+
+
+        /*
+         * User is not logged in
+         */
+
+        if (!currentUser) {
+
+            alert(
+                "Please login first to access the books."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /*
+         * User has not verified email
+         */
+
+        if (!currentUser.emailVerified) {
+
+            alert(
+                "Please verify your email before accessing the books."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /*
+         * User is authenticated and verified
+         */
+
+        window.location.href =
+            bookPage;
+
+    };
+
+</script>
+
+
 </body>
+
 </html>
