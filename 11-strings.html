@@ -1,0 +1,2891 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 11 - Strings in C | ALLIED</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">
+            ALLIED
+        </a>
+
+        <nav>
+
+            <a href="home.html">
+                Home
+            </a>
+
+            <a href="books.html">
+                Books
+            </a>
+
+            <a href="c.html">
+                C Programming
+            </a>
+
+            <a href="login.html">
+                Login
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <div class="hero">
+
+        <h1>
+            Chapter 11: Strings in C
+        </h1>
+
+        <p>
+            Learn how strings are represented using character arrays
+            and how C provides functions for reading, displaying,
+            copying, joining, comparing and processing strings.
+        </p>
+
+    </div>
+
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>
+            After completing this chapter, you will be able to:
+        </p>
+
+        <ul>
+
+            <li>
+                Understand the concept of strings in C.
+            </li>
+
+            <li>
+                Understand character arrays.
+            </li>
+
+            <li>
+                Declare and initialize strings.
+            </li>
+
+            <li>
+                Understand the null character.
+            </li>
+
+            <li>
+                Read and display strings.
+            </li>
+
+            <li>
+                Use common string library functions.
+            </li>
+
+            <li>
+                Find string length.
+            </li>
+
+            <li>
+                Copy and concatenate strings.
+            </li>
+
+            <li>
+                Compare strings.
+            </li>
+
+            <li>
+                Write practical string programs.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Introduction to Strings</h2>
+
+        <p>
+            A string is a sequence of characters stored in a character
+            array and terminated by a special null character
+            <code>'\0'</code>.
+        </p>
+
+        <p>
+            Strings are used to store text such as names, addresses,
+            messages, passwords and other character data.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>char name[] = "ALLIED";</code></pre>
+
+        <p>
+            Internally, the string contains the characters followed by
+            the null character.
+        </p>
+
+        <div class="diagram">
+
+        A    L    L    I    E    D    \0
+        |    |    |    |    |    |     |
+        +----+----+----+----+----+-----+
+                 String
+
+        </div>
+
+        <div class="note">
+
+            <strong>Simple Definition:</strong>
+
+            A string in C is a sequence of characters terminated by
+            the null character <code>'\0'</code>.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Character Array</h2>
+
+        <p>
+            A character array is an array whose elements have the
+            <code>char</code> data type.
+        </p>
+
+        <pre><code>char name[10];</code></pre>
+
+        <p>
+            A character array can store individual characters or a
+            string.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>char name[] = {'A', 'L', 'L', 'I', 'E', 'D', '\0'};</code></pre>
+
+        <p>
+            The same string can be written more conveniently as:
+        </p>
+
+        <pre><code>char name[] = "ALLIED";</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Null Character</h2>
+
+        <p>
+            The null character is written as <code>'\0'</code>.
+            It marks the end of a C string.
+        </p>
+
+        <pre><code>char word[] = "HELLO";</code></pre>
+
+        <div class="diagram">
+
+        H    E    L    L    O    \0
+        |    |    |    |    |     |
+        0    1    2    3    4     5
+
+        </div>
+
+        <p>
+            Although the word <strong>HELLO</strong> contains five visible
+            characters, the character array requires six positions when
+            storing it as a C string because of the terminating
+            <code>'\0'</code>.
+        </p>
+
+        <div class="warning">
+
+            Forgetting enough space for the null character can lead to
+            incorrect string handling and undefined behavior.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>String Declaration</h2>
+
+        <p>
+            A string can be declared using a character array.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>char string_name[size];</code></pre>
+
+        <h3>Examples</h3>
+
+        <pre><code>char name[20];
+
+char city[30];
+
+char message[100];</code></pre>
+
+        <p>
+            The size should be large enough to store all required
+            characters plus the null character.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>String Initialization</h2>
+
+        <p>
+            Strings can be initialized when they are declared.
+        </p>
+
+        <h3>Method 1: String Literal</h3>
+
+        <pre><code>char name[] = "ALLIED";</code></pre>
+
+        <h3>Method 2: Character List</h3>
+
+        <pre><code>char name[] =
+{
+    'A',
+    'L',
+    'L',
+    'I',
+    'E',
+    'D',
+    '\0'
+};</code></pre>
+
+        <h3>Method 3: Fixed Size Array</h3>
+
+        <pre><code>char name[10] = "ALLIED";</code></pre>
+
+        <div class="tip">
+
+            Using a string literal such as
+            <code>char name[] = "ALLIED";</code>
+            is usually the simplest way to initialize a string.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Displaying a String</h2>
+
+        <p>
+            The <code>printf()</code> function uses the
+            <code>%s</code> format specifier to display a string.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char name[] = "ALLIED";
+
+    printf("%s", name);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>ALLIED</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Reading a String Using scanf()</h2>
+
+        <p>
+            The <code>%s</code> format specifier can be used with
+            <code>scanf()</code> to read a word.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char name[30];
+
+    printf("Enter your name: ");
+    scanf("%29s", name);
+
+    printf("Hello %s", name);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter your name: Maniking
+Hello Maniking</code></pre>
+
+        <div class="warning">
+
+            <code>scanf("%s", ...)</code> stops reading at whitespace.
+            Therefore, it is not suitable by itself for reading a full
+            sentence containing spaces.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Reading a Full Line Using fgets()</h2>
+
+        <p>
+            The <code>fgets()</code> function can read a line of text,
+            including spaces, from standard input.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char name[50];
+
+    printf("Enter your full name: ");
+
+    fgets(name, sizeof(name), stdin);
+
+    printf("Name: %s", name);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter your full name: Ravi Kumar
+Name: Ravi Kumar</code></pre>
+
+        <div class="note">
+
+            <strong>Remember:</strong>
+
+            <code>scanf("%s", name)</code> is commonly used for a single
+            word, while <code>fgets()</code> can read spaces as part of
+            the input line.
+
+        </div>
+
+    </section>
+        <section>
+
+        <h2>String Length Using strlen()</h2>
+
+        <p>
+            The <code>strlen()</code> function is used to find the number
+            of characters in a string, excluding the terminating
+            null character.
+        </p>
+
+        <p>
+            It is declared in the <code>&lt;string.h&gt;</code> header file.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>strlen(string);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char name[] = "ALLIED";
+
+    printf("Length = %zu", strlen(name));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Length = 6</code></pre>
+
+        <div class="note">
+
+            <strong>Important:</strong>
+
+            <code>strlen()</code> counts the visible characters but does
+            not count the terminating <code>'\0'</code> character.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>String Copy Using strcpy()</h2>
+
+        <p>
+            The <code>strcpy()</code> function copies the contents of one
+            string into another character array.
+        </p>
+
+        <p>
+            It is declared in the <code>&lt;string.h&gt;</code> header file.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>strcpy(destination, source);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char source[] = "ALLIED";
+    char destination[20];
+
+    strcpy(destination, source);
+
+    printf("Copied string: %s", destination);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Copied string: ALLIED</code></pre>
+
+        <div class="warning">
+
+            The destination array must have enough space for the source
+            string and its terminating null character.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>String Concatenation Using strcat()</h2>
+
+        <p>
+            The <code>strcat()</code> function appends one string to the
+            end of another string.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>strcat(destination, source);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char first[30] = "Hello ";
+    char second[] = "World";
+
+    strcat(first, second);
+
+    printf("%s", first);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Hello World</code></pre>
+
+        <div class="tip">
+
+            Make sure the destination array has enough unused space to
+            contain the combined string.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>String Comparison Using strcmp()</h2>
+
+        <p>
+            The <code>strcmp()</code> function compares two strings
+            lexicographically.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>strcmp(string1, string2);</code></pre>
+
+        <table>
+
+            <tr>
+                <th>Return Value</th>
+                <th>Meaning</th>
+            </tr>
+
+            <tr>
+                <td>0</td>
+                <td>Both strings are equal.</td>
+            </tr>
+
+            <tr>
+                <td>Less than 0</td>
+                <td>First string comes before the second.</td>
+            </tr>
+
+            <tr>
+                <td>Greater than 0</td>
+                <td>First string comes after the second.</td>
+            </tr>
+
+        </table>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char first[] = "Apple";
+    char second[] = "Apple";
+
+    if (strcmp(first, second) == 0)
+    {
+        printf("Strings are equal");
+    }
+    else
+    {
+        printf("Strings are different");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Strings are equal</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>String Functions in C</h2>
+
+        <p>
+            The <code>&lt;string.h&gt;</code> header provides several
+            commonly used functions for string processing.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Function</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>strlen()</td>
+                <td>Finds the length of a string.</td>
+            </tr>
+
+            <tr>
+                <td>strcpy()</td>
+                <td>Copies one string to another.</td>
+            </tr>
+
+            <tr>
+                <td>strcat()</td>
+                <td>Appends one string to another.</td>
+            </tr>
+
+            <tr>
+                <td>strcmp()</td>
+                <td>Compares two strings.</td>
+            </tr>
+
+            <tr>
+                <td>strchr()</td>
+                <td>Finds the first occurrence of a character.</td>
+            </tr>
+
+            <tr>
+                <td>strstr()</td>
+                <td>Finds the first occurrence of a substring.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Finding a Character Using strchr()</h2>
+
+        <p>
+            The <code>strchr()</code> function searches for the first
+            occurrence of a specified character in a string.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>strchr(string, character);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char word[] = "PROGRAMMING";
+
+    char *result = strchr(word, 'G');
+
+    if (result != NULL)
+    {
+        printf("Character found");
+    }
+    else
+    {
+        printf("Character not found");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Character found</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Finding a Substring Using strstr()</h2>
+
+        <p>
+            The <code>strstr()</code> function searches for the first
+            occurrence of one string inside another string.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>strstr(main_string, substring);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char text[] = "I am learning C programming";
+
+    char *result = strstr(text, "C");
+
+    if (result != NULL)
+    {
+        printf("Substring found");
+    }
+    else
+    {
+        printf("Substring not found");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Substring found</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>String Traversal</h2>
+
+        <p>
+            A string can be traversed character by character using a
+            loop until the null character is reached.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char word[] = "HELLO";
+
+    for (int i = 0; word[i] != '\0'; i++)
+    {
+        printf("%c\n", word[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>H
+E
+L
+L
+O</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Count Characters in a String</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char word[100];
+    int count = 0;
+
+    printf("Enter a word: ");
+    scanf("%99s", word);
+
+    while (word[count] != '\0')
+    {
+        count++;
+    }
+
+    printf("Number of characters = %d", count);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a word: PROGRAM
+Number of characters = 7</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Count Vowels in a String</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char word[100];
+    int vowels = 0;
+
+    printf("Enter a word: ");
+    scanf("%99s", word);
+
+    for (int i = 0; word[i] != '\0'; i++)
+    {
+        if (word[i] == 'a' ||
+            word[i] == 'e' ||
+            word[i] == 'i' ||
+            word[i] == 'o' ||
+            word[i] == 'u' ||
+            word[i] == 'A' ||
+            word[i] == 'E' ||
+            word[i] == 'I' ||
+            word[i] == 'O' ||
+            word[i] == 'U')
+        {
+            vowels++;
+        }
+    }
+
+    printf("Vowels = %d", vowels);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a word: EDUCATION
+Vowels = 5</code></pre>
+
+    </section>
+        <section>
+
+        <h2>Program: Count Vowels and Consonants</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char word[100];
+    int vowels = 0;
+    int consonants = 0;
+
+    printf("Enter a word: ");
+    scanf("%99s", word);
+
+    for (int i = 0; word[i] != '\0'; i++)
+    {
+        if (word[i] == 'a' ||
+            word[i] == 'e' ||
+            word[i] == 'i' ||
+            word[i] == 'o' ||
+            word[i] == 'u' ||
+            word[i] == 'A' ||
+            word[i] == 'E' ||
+            word[i] == 'I' ||
+            word[i] == 'O' ||
+            word[i] == 'U')
+        {
+            vowels++;
+        }
+        else if ((word[i] >= 'a' && word[i] <= 'z') ||
+                 (word[i] >= 'A' && word[i] <= 'Z'))
+        {
+            consonants++;
+        }
+    }
+
+    printf("Vowels = %d\n", vowels);
+    printf("Consonants = %d", consonants);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a word: PROGRAM
+Vowels = 2
+Consonants = 5</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Convert String to Uppercase</h2>
+
+        <p>
+            The <code>toupper()</code> function can be used to convert
+            a character to uppercase. It is available through the
+            <code>&lt;ctype.h&gt;</code> header file.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char word[100];
+
+    printf("Enter a word: ");
+    scanf("%99s", word);
+
+    for (int i = 0; word[i] != '\0'; i++)
+    {
+        word[i] = toupper((unsigned char)word[i]);
+    }
+
+    printf("Uppercase = %s", word);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a word: allied
+Uppercase = ALLIED</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Convert String to Lowercase</h2>
+
+        <p>
+            The <code>tolower()</code> function can be used to convert
+            a character to lowercase.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char word[100];
+
+    printf("Enter a word: ");
+    scanf("%99s", word);
+
+    for (int i = 0; word[i] != '\0'; i++)
+    {
+        word[i] = tolower((unsigned char)word[i]);
+    }
+
+    printf("Lowercase = %s", word);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a word: ALLIED
+Lowercase = allied</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Reverse a String</h2>
+
+        <p>
+            A string can be displayed in reverse order by starting from
+            its last character and moving toward the first character.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char word[100];
+
+    printf("Enter a word: ");
+    scanf("%99s", word);
+
+    printf("Reverse = ");
+
+    for (int i = (int)strlen(word) - 1; i &gt;= 0; i--)
+    {
+        printf("%c", word[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a word: PROGRAM
+Reverse = MARGORP</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Check Palindrome String</h2>
+
+        <p>
+            A palindrome is a string that reads the same from left to
+            right and right to left.
+        </p>
+
+        <h3>Examples</h3>
+
+        <ul>
+            <li>MADAM</li>
+            <li>LEVEL</li>
+            <li>RADAR</li>
+        </ul>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char word[100];
+    int palindrome = 1;
+
+    printf("Enter a word: ");
+    scanf("%99s", word);
+
+    int length = (int)strlen(word);
+
+    for (int i = 0; i &lt; length / 2; i++)
+    {
+        if (word[i] != word[length - 1 - i])
+        {
+            palindrome = 0;
+            break;
+        }
+    }
+
+    if (palindrome)
+    {
+        printf("Palindrome");
+    }
+    else
+    {
+        printf("Not a palindrome");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a word: MADAM
+Palindrome</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Compare Two Strings</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char first[50];
+    char second[50];
+
+    printf("Enter first string: ");
+    scanf("%49s", first);
+
+    printf("Enter second string: ");
+    scanf("%49s", second);
+
+    if (strcmp(first, second) == 0)
+    {
+        printf("Strings are equal");
+    }
+    else
+    {
+        printf("Strings are different");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter first string: C
+Enter second string: C
+Strings are equal</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Copy a String</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char source[50];
+    char destination[50];
+
+    printf("Enter a string: ");
+    scanf("%49s", source);
+
+    strcpy(destination, source);
+
+    printf("Copied string = %s", destination);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a string: Programming
+Copied string = Programming</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Concatenate Two Strings</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char first[100];
+    char second[50];
+
+    printf("Enter first string: ");
+    scanf("%49s", first);
+
+    printf("Enter second string: ");
+    scanf("%49s", second);
+
+    strcat(first, second);
+
+    printf("Combined string = %s", first);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter first string: Hello
+Enter second string: World
+Combined string = HelloWorld</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Count Digits, Letters and Special Characters</h2>
+
+        <p>
+            The <code>ctype.h</code> functions can be used to classify
+            characters.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char text[100];
+
+    int letters = 0;
+    int digits = 0;
+    int special = 0;
+
+    printf("Enter a string: ");
+    scanf("%99s", text);
+
+    for (int i = 0; text[i] != '\0'; i++)
+    {
+        if (isalpha((unsigned char)text[i]))
+        {
+            letters++;
+        }
+        else if (isdigit((unsigned char)text[i]))
+        {
+            digits++;
+        }
+        else
+        {
+            special++;
+        }
+    }
+
+    printf("Letters = %d\n", letters);
+    printf("Digits = %d\n", digits);
+    printf("Special characters = %d", special);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a string: Hello123@
+Letters = 5
+Digits = 3
+Special characters = 1</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Count Words in a Sentence</h2>
+
+        <p>
+            A sentence can contain multiple words separated by spaces.
+            The following program counts words while handling repeated
+            spaces.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char sentence[200];
+    int words = 0;
+    int insideWord = 0;
+
+    printf("Enter a sentence: ");
+
+    fgets(sentence, sizeof(sentence), stdin);
+
+    for (int i = 0; sentence[i] != '\0'; i++)
+    {
+        if (!isspace((unsigned char)sentence[i]))
+        {
+            if (!insideWord)
+            {
+                words++;
+                insideWord = 1;
+            }
+        }
+        else
+        {
+            insideWord = 0;
+        }
+    }
+
+    printf("Number of words = %d", words);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a sentence: C programming is easy
+Number of words = 4</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Remove Spaces from a String</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char text[200];
+    int j = 0;
+
+    printf("Enter a sentence: ");
+
+    fgets(text, sizeof(text), stdin);
+
+    for (int i = 0; text[i] != '\0'; i++)
+    {
+        if (text[i] != ' ' &&
+            text[i] != '\n' &&
+            text[i] != '\t')
+        {
+            text[j] = text[i];
+            j++;
+        }
+    }
+
+    text[j] = '\0';
+
+    printf("Without spaces = %s", text);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a sentence: C Programming Language
+Without spaces = CProgrammingLanguage</code></pre>
+
+    </section>
+        <section>
+
+        <h2>String and Character Array</h2>
+
+        <p>
+            A string in C is stored inside a character array. The main
+            difference is that a valid C string ends with the null
+            character <code>'\0'</code>.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Character Array</th>
+                <th>C String</th>
+            </tr>
+
+            <tr>
+                <td>Can store characters</td>
+                <td>Stores a sequence of characters</td>
+            </tr>
+
+            <tr>
+                <td>May not contain a null terminator</td>
+                <td>Must end with <code>'\0'</code></td>
+            </tr>
+
+            <tr>
+                <td>Example: {'A','B','C'}</td>
+                <td>Example: "ABC"</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>String Functions and Header Files</h2>
+
+        <p>
+            C provides standard library functions for working with
+            strings and characters.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Header File</th>
+                <th>Function</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>&lt;string.h&gt;</td>
+                <td>strlen()</td>
+                <td>Find string length</td>
+            </tr>
+
+            <tr>
+                <td>&lt;string.h&gt;</td>
+                <td>strcpy()</td>
+                <td>Copy a string</td>
+            </tr>
+
+            <tr>
+                <td>&lt;string.h&gt;</td>
+                <td>strcat()</td>
+                <td>Concatenate strings</td>
+            </tr>
+
+            <tr>
+                <td>&lt;string.h&gt;</td>
+                <td>strcmp()</td>
+                <td>Compare strings</td>
+            </tr>
+
+            <tr>
+                <td>&lt;string.h&gt;</td>
+                <td>strchr()</td>
+                <td>Search for a character</td>
+            </tr>
+
+            <tr>
+                <td>&lt;string.h&gt;</td>
+                <td>strstr()</td>
+                <td>Search for a substring</td>
+            </tr>
+
+            <tr>
+                <td>&lt;ctype.h&gt;</td>
+                <td>toupper()</td>
+                <td>Convert character to uppercase</td>
+            </tr>
+
+            <tr>
+                <td>&lt;ctype.h&gt;</td>
+                <td>tolower()</td>
+                <td>Convert character to lowercase</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>String Input Methods</h2>
+
+        <p>
+            There are different ways to read string input in C. The
+            appropriate method depends on whether spaces are required.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Method</th>
+                <th>Can Read Spaces?</th>
+                <th>Common Use</th>
+            </tr>
+
+            <tr>
+                <td>scanf("%s", name)</td>
+                <td>No</td>
+                <td>Single word</td>
+            </tr>
+
+            <tr>
+                <td>fgets()</td>
+                <td>Yes</td>
+                <td>Full line</td>
+            </tr>
+
+        </table>
+
+        <div class="tip">
+
+            For modern C programs, <code>fgets()</code> is generally
+            preferable when you need to read a complete line of text.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Removing the Newline from fgets()</h2>
+
+        <p>
+            When <code>fgets()</code> reads a line, the newline character
+            may also be stored if there is enough space in the array.
+            It can be removed when required.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char name[50];
+
+    printf("Enter your name: ");
+
+    fgets(name, sizeof(name), stdin);
+
+    name[strcspn(name, "\n")] = '\0';
+
+    printf("Name: %s", name);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter your name: Ravi Kumar
+Name: Ravi Kumar</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>String Searching</h2>
+
+        <p>
+            Searching is an important operation when processing text.
+            C provides functions such as <code>strchr()</code> and
+            <code>strstr()</code> for searching.
+        </p>
+
+        <h3>Search for a Character</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char text[] = "PROGRAMMING";
+
+    if (strchr(text, 'M') != NULL)
+    {
+        printf("Character M found");
+    }
+    else
+    {
+        printf("Character M not found");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Character M found</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>String Comparison Example</h2>
+
+        <p>
+            String comparison should be performed using
+            <code>strcmp()</code> rather than the equality operator
+            <code>==</code>.
+        </p>
+
+        <h3>Correct Method</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char password[30];
+
+    printf("Enter password: ");
+    scanf("%29s", password);
+
+    if (strcmp(password, "admin123") == 0)
+    {
+        printf("Correct password");
+    }
+    else
+    {
+        printf("Incorrect password");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter password: admin123
+Correct password</code></pre>
+
+        <div class="warning">
+
+            Do not use <code>==</code> to compare the contents of two
+            C strings. Use <code>strcmp()</code>.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>String Reversal Using an Array</h2>
+
+        <p>
+            A string can also be reversed by storing its characters in
+            reverse order in another character array.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char word[100];
+    char reverse[100];
+
+    printf("Enter a word: ");
+    scanf("%99s", word);
+
+    int length = (int)strlen(word);
+
+    for (int i = 0; i &lt; length; i++)
+    {
+        reverse[i] = word[length - 1 - i];
+    }
+
+    reverse[length] = '\0';
+
+    printf("Original = %s\n", word);
+    printf("Reverse = %s", reverse);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a word: HELLO
+Original = HELLO
+Reverse = OLLEH</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Find Frequency of a Character</h2>
+
+        <p>
+            The frequency of a character is the number of times that
+            character occurs in a string.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char text[100];
+    char character;
+    int count = 0;
+
+    printf("Enter a word: ");
+    scanf("%99s", text);
+
+    printf("Enter character to search: ");
+    scanf(" %c", &amp;character);
+
+    for (int i = 0; text[i] != '\0'; i++)
+    {
+        if (text[i] == character)
+        {
+            count++;
+        }
+    }
+
+    printf("Frequency of %c = %d",
+           character, count);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a word: PROGRAMMING
+Enter character to search: M
+Frequency of M = 2</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Find First and Last Character</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char word[100];
+
+    printf("Enter a word: ");
+    scanf("%99s", word);
+
+    int length = (int)strlen(word);
+
+    if (length &gt; 0)
+    {
+        printf("First character = %c\n", word[0]);
+        printf("Last character = %c", word[length - 1]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a word: PROGRAM
+First character = P
+Last character = M</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Count Uppercase and Lowercase Characters</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main()
+{
+    char text[100];
+
+    int uppercase = 0;
+    int lowercase = 0;
+
+    printf("Enter a string: ");
+
+    scanf("%99s", text);
+
+    for (int i = 0; text[i] != '\0'; i++)
+    {
+        if (isupper((unsigned char)text[i]))
+        {
+            uppercase++;
+        }
+        else if (islower((unsigned char)text[i]))
+        {
+            lowercase++;
+        }
+    }
+
+    printf("Uppercase = %d\n", uppercase);
+    printf("Lowercase = %d", lowercase);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter a string: Hello
+Uppercase = 1
+Lowercase = 4</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Common Errors in String Handling</h2>
+
+        <ul>
+
+            <li>
+                Forgetting the null character when manually creating
+                a C string.
+            </li>
+
+            <li>
+                Declaring an array that is too small for the string.
+            </li>
+
+            <li>
+                Accessing characters beyond the valid array bounds.
+            </li>
+
+            <li>
+                Using <code>==</code> instead of <code>strcmp()</code>
+                to compare string contents.
+            </li>
+
+            <li>
+                Using <code>scanf("%s", ...)</code> when the input
+                contains spaces.
+            </li>
+
+            <li>
+                Forgetting to include <code>&lt;string.h&gt;</code>
+                when using string functions.
+            </li>
+
+            <li>
+                Forgetting to include <code>&lt;ctype.h&gt;</code>
+                when using character classification or conversion
+                functions.
+            </li>
+
+            <li>
+                Copying or concatenating into a destination array that
+                is too small.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Best Practices for Strings</h2>
+
+        <ul>
+
+            <li>
+                Allocate enough space for the string and its null
+                character.
+            </li>
+
+            <li>
+                Prefer bounded input operations such as
+                <code>fgets()</code> for complete lines.
+            </li>
+
+            <li>
+                Use <code>strcmp()</code> for comparing string contents.
+            </li>
+
+            <li>
+                Use <code>strlen()</code> when the string length is
+                required.
+            </li>
+
+            <li>
+                Check destination size before copying or concatenating.
+            </li>
+
+            <li>
+                Use meaningful variable names.
+            </li>
+
+            <li>
+                Avoid accessing characters outside the valid range.
+            </li>
+
+            <li>
+                Include the correct standard library header files.
+            </li>
+
+        </ul>
+
+        <div class="tip">
+
+            <strong>Best Practice:</strong>
+
+            Always think about the size of the destination character
+            array before copying or joining strings.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Real-World Applications of Strings</h2>
+
+        <p>
+            Strings are used in almost every type of software application
+            that handles text.
+        </p>
+
+        <ul>
+
+            <li>
+                User names and profiles.
+            </li>
+
+            <li>
+                Password and authentication systems.
+            </li>
+
+            <li>
+                Search boxes.
+            </li>
+
+            <li>
+                Text messages.
+            </li>
+
+            <li>
+                Email addresses.
+            </li>
+
+            <li>
+                File names and paths.
+            </li>
+
+            <li>
+                Product names.
+            </li>
+
+            <li>
+                Student information.
+            </li>
+
+            <li>
+                Database text fields.
+            </li>
+
+            <li>
+                Command-line input.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>String Processing Flow Diagram</h2>
+
+        <div class="diagram">
+
+                 START
+                   |
+                   v
+             Declare String
+                   |
+                   v
+              Read Input
+                   |
+                   v
+           Check Characters
+                   |
+                   v
+           Process String
+                   |
+                   v
+            Display Result
+                   |
+                   v
+                  END
+
+        </div>
+
+    </section>
+        <section>
+
+        <h2>Multiple Choice Questions (MCQs)</h2>
+
+
+        <div class="mcq">
+
+            <p><strong>1. What is a string in C?</strong></p>
+
+            <ol type="A">
+                <li>A collection of integers</li>
+                <li>A sequence of characters terminated by '\0'</li>
+                <li>A single character</li>
+                <li>A floating-point value</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. A sequence of characters terminated by '\0'
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>2. Which data type is used to store characters?</strong></p>
+
+            <ol type="A">
+                <li>int</li>
+                <li>float</li>
+                <li>char</li>
+                <li>double</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. char
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>3. Which character marks the end of a C string?</strong></p>
+
+            <ol type="A">
+                <li>'\n'</li>
+                <li>'\0'</li>
+                <li>' '</li>
+                <li>'\t'</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. '\0'
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>4. Which header file contains strlen()?</strong></p>
+
+            <ol type="A">
+                <li>&lt;stdio.h&gt;</li>
+                <li>&lt;stdlib.h&gt;</li>
+                <li>&lt;string.h&gt;</li>
+                <li>&lt;math.h&gt;</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. &lt;string.h&gt;
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>5. What does strlen() do?</strong></p>
+
+            <ol type="A">
+                <li>Copies a string</li>
+                <li>Compares strings</li>
+                <li>Finds string length</li>
+                <li>Joins strings</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. Finds string length
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>6. Which function copies a string?</strong></p>
+
+            <ol type="A">
+                <li>strcpy()</li>
+                <li>strlen()</li>
+                <li>strcmp()</li>
+                <li>strcat()</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. strcpy()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>7. Which function joins two strings?</strong></p>
+
+            <ol type="A">
+                <li>strlen()</li>
+                <li>strcat()</li>
+                <li>strcmp()</li>
+                <li>strchr()</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. strcat()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>8. Which function compares two strings?</strong></p>
+
+            <ol type="A">
+                <li>strcpy()</li>
+                <li>strlen()</li>
+                <li>strcmp()</li>
+                <li>strcat()</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. strcmp()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>9. Which format specifier is used to print a string?</strong></p>
+
+            <ol type="A">
+                <li>%c</li>
+                <li>%d</li>
+                <li>%f</li>
+                <li>%s</li>
+            </ol>
+
+            <p class="answer">
+                Answer: D. %s
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>10. Which function can read a complete line containing spaces?</strong></p>
+
+            <ol type="A">
+                <li>fgets()</li>
+                <li>strlen()</li>
+                <li>strcmp()</li>
+                <li>strcpy()</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. fgets()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>11. Which function searches for a character in a string?</strong></p>
+
+            <ol type="A">
+                <li>strchr()</li>
+                <li>strcpy()</li>
+                <li>strlen()</li>
+                <li>strcat()</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. strchr()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>12. Which function searches for a substring?</strong></p>
+
+            <ol type="A">
+                <li>strcmp()</li>
+                <li>strstr()</li>
+                <li>strcpy()</li>
+                <li>strlen()</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. strstr()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>13. What does strcmp() return when two strings are equal?</strong></p>
+
+            <ol type="A">
+                <li>1</li>
+                <li>-1</li>
+                <li>0</li>
+                <li>2</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. 0
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>14. Which header file contains toupper()?</strong></p>
+
+            <ol type="A">
+                <li>&lt;string.h&gt;</li>
+                <li>&lt;stdio.h&gt;</li>
+                <li>&lt;ctype.h&gt;</li>
+                <li>&lt;math.h&gt;</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. &lt;ctype.h&gt;
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>15. Which function converts a character to lowercase?</strong></p>
+
+            <ol type="A">
+                <li>toupper()</li>
+                <li>tolower()</li>
+                <li>strcmp()</li>
+                <li>strlen()</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. tolower()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>16. Which function converts a character to uppercase?</strong></p>
+
+            <ol type="A">
+                <li>toupper()</li>
+                <li>tolower()</li>
+                <li>strcpy()</li>
+                <li>strcat()</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. toupper()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>17. Which string is a palindrome?</strong></p>
+
+            <ol type="A">
+                <li>HELLO</li>
+                <li>WORLD</li>
+                <li>MADAM</li>
+                <li>PROGRAM</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. MADAM
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>18. Which operator should NOT be used to compare the contents of two C strings?</strong></p>
+
+            <ol type="A">
+                <li>strcmp()</li>
+                <li>==</li>
+                <li>strcmp() == 0</li>
+                <li>strcmp()</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. ==
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>19. What does %s represent in printf()?</strong></p>
+
+            <ol type="A">
+                <li>Integer</li>
+                <li>Character</li>
+                <li>String</li>
+                <li>Float</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. String
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>20. Which statement is correct?</strong></p>
+
+            <ol type="A">
+                <li>A C string does not need a terminator</li>
+                <li>A C string normally ends with '\0'</li>
+                <li>Strings can contain only numbers</li>
+                <li>Strings cannot contain spaces</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. A C string normally ends with '\0'
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Interview Questions</h2>
+
+        <ol>
+
+            <li>
+                What is a string in C?
+            </li>
+
+            <li>
+                What is the difference between a character and a string?
+            </li>
+
+            <li>
+                What is the null character?
+            </li>
+
+            <li>
+                Why is '\0' important in C strings?
+            </li>
+
+            <li>
+                How do you declare a string?
+            </li>
+
+            <li>
+                How do you initialize a string?
+            </li>
+
+            <li>
+                What is the use of strlen()?
+            </li>
+
+            <li>
+                What is the use of strcpy()?
+            </li>
+
+            <li>
+                What is the use of strcat()?
+            </li>
+
+            <li>
+                What is the use of strcmp()?
+            </li>
+
+            <li>
+                What is the difference between scanf() and fgets()
+                for string input?
+            </li>
+
+            <li>
+                How can you reverse a string?
+            </li>
+
+            <li>
+                What is a palindrome string?
+            </li>
+
+            <li>
+                How can you count vowels in a string?
+            </li>
+
+            <li>
+                How can you compare two strings?
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>Practice Programs</h2>
+
+        <ol>
+
+            <li>
+                Write a program to read and display a string.
+            </li>
+
+            <li>
+                Write a program to find the length of a string.
+            </li>
+
+            <li>
+                Write a program to copy one string into another.
+            </li>
+
+            <li>
+                Write a program to concatenate two strings.
+            </li>
+
+            <li>
+                Write a program to compare two strings.
+            </li>
+
+            <li>
+                Write a program to reverse a string.
+            </li>
+
+            <li>
+                Write a program to check whether a string is a palindrome.
+            </li>
+
+            <li>
+                Write a program to count vowels and consonants.
+            </li>
+
+            <li>
+                Write a program to count uppercase and lowercase characters.
+            </li>
+
+            <li>
+                Write a program to count digits and special characters.
+            </li>
+
+            <li>
+                Write a program to find the frequency of a character.
+            </li>
+
+            <li>
+                Write a program to remove spaces from a string.
+            </li>
+
+            <li>
+                Write a program to count words in a sentence.
+            </li>
+
+            <li>
+                Write a program to convert a string to uppercase.
+            </li>
+
+            <li>
+                Write a program to convert a string to lowercase.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>Summary</h2>
+
+        <p>
+            Strings are an important part of C programming because they
+            allow programs to store and process text.
+        </p>
+
+        <ul>
+
+            <li>
+                A C string is stored in a character array.
+            </li>
+
+            <li>
+                A string normally ends with the null character
+                <code>'\0'</code>.
+            </li>
+
+            <li>
+                The <code>%s</code> format specifier is used for strings.
+            </li>
+
+            <li>
+                <code>strlen()</code> finds the length of a string.
+            </li>
+
+            <li>
+                <code>strcpy()</code> copies a string.
+            </li>
+
+            <li>
+                <code>strcat()</code> joins strings.
+            </li>
+
+            <li>
+                <code>strcmp()</code> compares strings.
+            </li>
+
+            <li>
+                <code>strchr()</code> searches for a character.
+            </li>
+
+            <li>
+                <code>strstr()</code> searches for a substring.
+            </li>
+
+            <li>
+                <code>fgets()</code> can read a complete line of text.
+            </li>
+
+            <li>
+                Strings are widely used in real-world applications.
+            </li>
+
+        </ul>
+
+        <div class="tip">
+
+            <strong>Key Point:</strong>
+
+            Always remember that a C string is a character sequence
+            terminated by the null character <code>'\0'</code>.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Quick Revision</h2>
+
+        <table>
+
+            <tr>
+                <th>Concept</th>
+                <th>Important Point</th>
+            </tr>
+
+            <tr>
+                <td>String</td>
+                <td>Sequence of characters ending with '\0'</td>
+            </tr>
+
+            <tr>
+                <td>Data Type</td>
+                <td>char</td>
+            </tr>
+
+            <tr>
+                <td>String Output</td>
+                <td>%s</td>
+            </tr>
+
+            <tr>
+                <td>String Length</td>
+                <td>strlen()</td>
+            </tr>
+
+            <tr>
+                <td>String Copy</td>
+                <td>strcpy()</td>
+            </tr>
+
+            <tr>
+                <td>String Concatenation</td>
+                <td>strcat()</td>
+            </tr>
+
+            <tr>
+                <td>String Comparison</td>
+                <td>strcmp()</td>
+            </tr>
+
+            <tr>
+                <td>Character Search</td>
+                <td>strchr()</td>
+            </tr>
+
+            <tr>
+                <td>Substring Search</td>
+                <td>strstr()</td>
+            </tr>
+
+            <tr>
+                <td>Full Line Input</td>
+                <td>fgets()</td>
+            </tr>
+
+            <tr>
+                <td>Uppercase</td>
+                <td>toupper()</td>
+            </tr>
+
+            <tr>
+                <td>Lowercase</td>
+                <td>tolower()</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <div class="navigation">
+
+        <a href="10-arrays.html" class="button">
+            ← Previous: Arrays
+        </a>
+
+        <a href="12-pointers.html" class="button">
+            Next: Pointers →
+        </a>
+
+    </div>
+
+
+</main>
+
+
+<footer>
+
+    <h3>ALLIED</h3>
+
+    <p>
+        C Programming Learning Course
+    </p>
+
+    <p>
+        Chapter 11 - Strings in C
+    </p>
+
+    <p>
+        © 2026 ALLIED. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

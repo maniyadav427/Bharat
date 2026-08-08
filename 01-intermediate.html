@@ -1,0 +1,3720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Intermediate C - Chapter 1 | ALLIED</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">ALLIED</a>
+
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="books.html">Books</a>
+            <a href="c.html">C Programming</a>
+            <a href="login.html">Login</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <div class="hero">
+
+        <h1>
+            Intermediate C Programming - Chapter 1
+        </h1>
+
+        <p>
+            Advanced Functions and Recursion in C
+        </p>
+
+        <p>
+            This chapter develops the basic function concepts from
+            beginner-level C programming into more advanced techniques
+            such as parameter passing, arrays with functions, pointers,
+            recursion and recursive problem solving.
+        </p>
+
+    </div>
+
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>
+            After completing this chapter, you will be able to:
+        </p>
+
+        <ul>
+
+            <li>Understand advanced function concepts in C.</li>
+
+            <li>Understand function declarations and prototypes.</li>
+
+            <li>Pass values to functions.</li>
+
+            <li>Use pointers to modify data through functions.</li>
+
+            <li>Pass arrays to functions.</li>
+
+            <li>Return values from functions.</li>
+
+            <li>Understand recursion.</li>
+
+            <li>Write recursive functions.</li>
+
+            <li>Trace recursive function calls.</li>
+
+            <li>Implement factorial using recursion.</li>
+
+            <li>Implement Fibonacci using recursion.</li>
+
+            <li>Implement GCD using recursion.</li>
+
+            <li>Identify advantages and limitations of recursion.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.1 Introduction to Advanced Functions</h2>
+
+        <p>
+            A function is a named block of C code that performs a
+            particular task. Functions are one of the most important
+            mechanisms for organizing large programs.
+        </p>
+
+        <p>
+            In beginner-level C programming, functions are often used
+            simply to divide a program into smaller parts. At the
+            intermediate level, functions can also work with pointers,
+            arrays, structures and recursive calls.
+        </p>
+
+        <div class="note">
+
+            <strong>Simple Definition:</strong>
+
+            <br><br>
+
+            A function is a reusable block of code that performs a
+            specific task and can receive input through parameters and
+            optionally return a result.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.2 Why Functions Are Important</h2>
+
+        <ul>
+
+            <li>Functions reduce code repetition.</li>
+
+            <li>Functions divide a large problem into smaller problems.</li>
+
+            <li>Functions improve code readability.</li>
+
+            <li>Functions make debugging easier.</li>
+
+            <li>Functions improve code reuse.</li>
+
+            <li>Functions allow independent testing of program parts.</li>
+
+            <li>Functions are essential for structured programming.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.3 Basic Structure of a Function</h2>
+
+        <pre><code>return_type function_name(parameters)
+{
+    statements;
+
+    return value;
+}</code></pre>
+
+        <table>
+
+            <tr>
+                <th>Part</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>return_type</td>
+                <td>Specifies the type of result returned by the function.</td>
+            </tr>
+
+            <tr>
+                <td>function_name</td>
+                <td>Name used to call the function.</td>
+            </tr>
+
+            <tr>
+                <td>parameters</td>
+                <td>Values received by the function.</td>
+            </tr>
+
+            <tr>
+                <td>function body</td>
+                <td>Contains statements executed by the function.</td>
+            </tr>
+
+            <tr>
+                <td>return</td>
+                <td>Sends a result back to the caller when required.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.4 Function Prototype</h2>
+
+        <p>
+            A function prototype tells the compiler the function's name,
+            return type and parameter types before the function is called.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>return_type function_name(parameter_types);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>int add(int, int);</code></pre>
+
+        <p>
+            The prototype allows the compiler to check calls to the
+            function more accurately.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.5 Function Prototype Example</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int add(int, int);
+
+int main()
+{
+    int result;
+
+    result = add(10, 20);
+
+    printf("Result = %d", result);
+
+    return 0;
+}
+
+int add(int a, int b)
+{
+    return a + b;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Result = 30</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.6 Function Call</h2>
+
+        <p>
+            A function call transfers control to the function and
+            supplies any required arguments.
+        </p>
+
+        <pre><code>result = add(10, 20);</code></pre>
+
+        <p>
+            Here, the values 10 and 20 are passed to the parameters of
+            the add() function.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.7 Function Parameters and Arguments</h2>
+
+        <table>
+
+            <tr>
+                <th>Term</th>
+                <th>Meaning</th>
+            </tr>
+
+            <tr>
+                <td>Parameter</td>
+                <td>Variable declared in a function definition.</td>
+            </tr>
+
+            <tr>
+                <td>Argument</td>
+                <td>Actual value or expression supplied during a call.</td>
+            </tr>
+
+        </table>
+
+        <h3>Example</h3>
+
+        <pre><code>int add(int a, int b)
+{
+    return a + b;
+}
+
+add(10, 20);</code></pre>
+
+        <p>
+            Here, <code>a</code> and <code>b</code> are parameters, while
+            10 and 20 are arguments.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.8 Call by Value</h2>
+
+        <p>
+            In C, ordinary function parameters receive copies of the
+            values supplied by the caller. This is commonly described
+            as call by value.
+        </p>
+
+        <p>
+            Changes made to the parameter inside the function do not
+            directly change the original variable in the caller.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void change(int x)
+{
+    x = 100;
+}
+
+int main()
+{
+    int a = 10;
+
+    change(a);
+
+    printf("a = %d", a);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>a = 10</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.9 Call by Value Flow</h2>
+
+        <div class="diagram">
+
+             main()
+               |
+               | a = 10
+               v
+          change(a)
+               |
+               v
+          x receives 10
+               |
+               v
+            x = 100
+               |
+               v
+          Function ends
+               |
+               v
+          a is still 10
+
+        </div>
+
+        <div class="note">
+
+            C does not have a separate built-in "call by reference"
+            parameter mechanism. Reference-like modification is commonly
+            achieved by passing pointers.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.10 Call by Reference Using Pointers</h2>
+
+        <p>
+            A pointer can be passed to a function so that the function
+            can access and modify the original object through its address.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void change(int *x)
+{
+    *x = 100;
+}
+
+int main()
+{
+    int a = 10;
+
+    change(&amp;a);
+
+    printf("a = %d", a);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>a = 100</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.11 How Pointer Parameters Work</h2>
+
+        <div class="diagram">
+
+             main()
+               |
+               v
+          a = 10
+               |
+             &amp;a
+               |
+               v
+          change(&amp;a)
+               |
+               v
+          x stores address
+               |
+               v
+             *x = 100
+               |
+               v
+          Original a = 100
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.12 Swap Two Numbers Using Pointers</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void swap(int *a, int *b)
+{
+    int temp;
+
+    temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main()
+{
+    int x = 10;
+    int y = 20;
+
+    printf("Before swap: x = %d, y = %d\n", x, y);
+
+    swap(&amp;x, &amp;y);
+
+    printf("After swap: x = %d, y = %d", x, y);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Before swap: x = 10, y = 20
+After swap: x = 20, y = 10</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.13 Returning a Value from a Function</h2>
+
+        <p>
+            A function can return a value to its caller using the
+            return statement.
+        </p>
+
+        <pre><code>int square(int n)
+{
+    return n * n;
+}</code></pre>
+
+        <h3>Calling the Function</h3>
+
+        <pre><code>int result = square(5);</code></pre>
+
+        <p>
+            The value returned by square() is stored in result.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.14 Function Returning a Result</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int square(int n)
+{
+    return n * n;
+}
+
+int main()
+{
+    int result;
+
+    result = square(7);
+
+    printf("Square = %d", result);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Square = 49</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.15 void Functions</h2>
+
+        <p>
+            A function with a return type of void does not return a value
+            to its caller.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void display()
+{
+    printf("Welcome to ALLIED");
+}
+
+int main()
+{
+    display();
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Welcome to ALLIED</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.16 Passing Multiple Arguments</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int calculate(int a, int b, int c)
+{
+    return a + b + c;
+}
+
+int main()
+{
+    int result;
+
+    result = calculate(10, 20, 30);
+
+    printf("Result = %d", result);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Result = 60</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.17 Passing Arrays to Functions</h2>
+
+        <p>
+            An array can be passed to a function. In a function parameter,
+            an array parameter is adjusted to a pointer to its first
+            element.
+        </p>
+
+        <pre><code>void display(int arr[], int n)
+{
+    for (int i = 0; i &lt; n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.18 Program: Passing Array to Function</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void display(int arr[], int n)
+{
+    for (int i = 0; i &lt; n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+}
+
+int main()
+{
+    int numbers[] = {10, 20, 30, 40, 50};
+
+    display(numbers, 5);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10 20 30 40 50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.19 Function to Find Array Sum</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int arraySum(int arr[], int n)
+{
+    int sum = 0;
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        sum += arr[i];
+    }
+
+    return sum;
+}
+
+int main()
+{
+    int numbers[] = {10, 20, 30, 40, 50};
+
+    printf("Sum = %d", arraySum(numbers, 5));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum = 150</code></pre>
+
+    </section>
+        <section>
+
+        <h2>1.20 Passing a Pointer to an Array</h2>
+
+        <p>
+            Because an array argument is commonly converted to a pointer
+            to its first element when passed to a function, pointer
+            notation can also be used in the parameter.
+        </p>
+
+        <pre><code>void display(int *arr, int n)
+{
+    for (int i = 0; i &lt; n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.21 Finding Maximum Element Using Function</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int maximum(int arr[], int n)
+{
+    int max = arr[0];
+
+    for (int i = 1; i &lt; n; i++)
+    {
+        if (arr[i] &gt; max)
+        {
+            max = arr[i];
+        }
+    }
+
+    return max;
+}
+
+int main()
+{
+    int numbers[] = {12, 45, 7, 89, 23};
+
+    printf("Maximum = %d", maximum(numbers, 5));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Maximum = 89</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.22 Finding Minimum Element Using Function</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int minimum(int arr[], int n)
+{
+    int min = arr[0];
+
+    for (int i = 1; i &lt; n; i++)
+    {
+        if (arr[i] &lt; min)
+        {
+            min = arr[i];
+        }
+    }
+
+    return min;
+}
+
+int main()
+{
+    int numbers[] = {12, 45, 7, 89, 23};
+
+    printf("Minimum = %d", minimum(numbers, 5));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Minimum = 7</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.23 Passing a String to a Function</h2>
+
+        <p>
+            A string in C is an array of characters terminated by a null
+            character. It can be passed to a function using a character
+            array parameter or a character pointer.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void display(char str[])
+{
+    printf("%s", str);
+}
+
+int main()
+{
+    char name[] = "ALLIED";
+
+    display(name);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>ALLIED</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.24 Function with Pointer and Array</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void increment(int *arr, int n)
+{
+    for (int i = 0; i &lt; n; i++)
+    {
+        arr[i]++;
+    }
+}
+
+int main()
+{
+    int numbers[] = {1, 2, 3, 4, 5};
+
+    increment(numbers, 5);
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", numbers[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>2 3 4 5 6</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.25 Recursion</h2>
+
+        <p>
+            Recursion is a programming technique in which a function
+            calls itself to solve a problem.
+        </p>
+
+        <div class="note">
+
+            <strong>Simple Definition:</strong>
+
+            <br><br>
+
+            Recursion is the process in which a function calls itself
+            with a smaller or simpler version of the problem until a
+            stopping condition is reached.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.26 Basic Structure of Recursion</h2>
+
+        <pre><code>return_type function()
+{
+    if (base_condition)
+    {
+        return result;
+    }
+
+    return function();
+}</code></pre>
+
+        <p>
+            A correct recursive function normally needs:
+        </p>
+
+        <ol>
+
+            <li>A base case.</li>
+
+            <li>A recursive case.</li>
+
+            <li>Progress toward the base case.</li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.27 Base Case</h2>
+
+        <p>
+            The base case is the condition that stops further recursive
+            calls.
+        </p>
+
+        <pre><code>if (n == 0)
+{
+    return 1;
+}</code></pre>
+
+        <div class="warning">
+
+            Without an appropriate base case, recursion may continue until
+            the program exhausts available call-stack space.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.28 Recursive Case</h2>
+
+        <p>
+            The recursive case is the part of the function that calls the
+            same function again with a smaller or simpler problem.
+        </p>
+
+        <pre><code>return n * factorial(n - 1);</code></pre>
+
+        <p>
+            Here, factorial() calls itself with n - 1.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.29 Recursion Flow</h2>
+
+        <div class="diagram">
+
+                  START
+                    |
+                    v
+             Call Function
+                    |
+                    v
+              Base Case?
+                /     \
+              Yes      No
+               |        |
+               v        v
+             Return   Recursive
+             Result      Call
+                          |
+                          v
+                   Smaller Problem
+                          |
+                          +-----> Repeat
+                                   |
+                                   v
+                                  END
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.30 Simple Recursive Program</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void countDown(int n)
+{
+    if (n == 0)
+    {
+        return;
+    }
+
+    printf("%d ", n);
+
+    countDown(n - 1);
+}
+
+int main()
+{
+    countDown(5);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>5 4 3 2 1</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.31 Recursive Call Trace</h2>
+
+        <pre><code>countDown(5)
+    |
+    +-- countDown(4)
+          |
+          +-- countDown(3)
+                |
+                +-- countDown(2)
+                      |
+                      +-- countDown(1)
+                            |
+                            +-- countDown(0)
+                                  |
+                                  +-- return</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.32 Factorial Using Recursion</h2>
+
+        <p>
+            The factorial of a non-negative integer n is:
+        </p>
+
+        <pre><code>n! = n × (n - 1) × (n - 2) × ... × 1</code></pre>
+
+        <p>
+            Mathematically:
+        </p>
+
+        <pre><code>n! = n × (n - 1)!</code></pre>
+
+        <p>
+            The base case is:
+        </p>
+
+        <pre><code>0! = 1</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.33 Factorial Program Using Recursion</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+unsigned long long factorial(int n)
+{
+    if (n == 0)
+    {
+        return 1;
+    }
+
+    return (unsigned long long)n * factorial(n - 1);
+}
+
+int main()
+{
+    int n;
+
+    printf("Enter a number: ");
+    scanf("%d", &amp;n);
+
+    if (n &lt; 0)
+    {
+        printf("Factorial is not defined for negative integers.");
+    }
+    else
+    {
+        printf("Factorial = %llu", factorial(n));
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter a number: 5
+Factorial = 120</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.34 Factorial Recursion Trace</h2>
+
+        <div class="diagram">
+
+        factorial(5)
+             |
+             v
+        5 * factorial(4)
+             |
+             v
+        4 * factorial(3)
+             |
+             v
+        3 * factorial(2)
+             |
+             v
+        2 * factorial(1)
+             |
+             v
+        1 * factorial(0)
+             |
+             v
+             1
+             |
+             v
+             2
+             |
+             v
+             6
+             |
+             v
+            24
+             |
+             v
+           120
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.35 Fibonacci Series Using Recursion</h2>
+
+        <p>
+            The Fibonacci sequence begins:
+        </p>
+
+        <pre><code>0 1 1 2 3 5 8 13 21 ...</code></pre>
+
+        <p>
+            A common mathematical definition is:
+        </p>
+
+        <pre><code>F(0) = 0
+F(1) = 1
+
+F(n) = F(n - 1) + F(n - 2)</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.36 Fibonacci Recursive Program</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int fibonacci(int n)
+{
+    if (n == 0)
+    {
+        return 0;
+    }
+
+    if (n == 1)
+    {
+        return 1;
+    }
+
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+int main()
+{
+    int n;
+
+    printf("Enter number of terms: ");
+    scanf("%d", &amp;n);
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        printf("%d ", fibonacci(i));
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter number of terms: 7
+0 1 1 2 3 5 8</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.37 Fibonacci Recursion Tree</h2>
+
+        <div class="diagram">
+
+                    fibonacci(4)
+                    /        \
+                   /          \
+          fibonacci(3)      fibonacci(2)
+            /      \          /      \
+           /        \        /        \
+       fib(2)      fib(1)  fib(1)    fib(0)
+       /   \
+    fib(1) fib(0)
+
+        </div>
+
+        <p>
+            This shows why the simple recursive Fibonacci algorithm
+            performs many repeated calculations.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.38 GCD Using Recursion</h2>
+
+        <p>
+            The greatest common divisor of two integers can be computed
+            using the Euclidean algorithm.
+        </p>
+
+        <pre><code>gcd(a, b) = gcd(b, a % b)</code></pre>
+
+        <p>
+            The base case is reached when b becomes zero:
+        </p>
+
+        <pre><code>gcd(a, 0) = a</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.39 GCD Recursive Program</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int gcd(int a, int b)
+{
+    if (b == 0)
+    {
+        return a;
+    }
+
+    return gcd(b, a % b);
+}
+
+int main()
+{
+    int a, b;
+
+    printf("Enter two numbers: ");
+    scanf("%d %d", &amp;a, &amp;b);
+
+    printf("GCD = %d", gcd(a, b));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter two numbers: 48 18
+GCD = 6</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.40 Recursive GCD Trace</h2>
+
+        <div class="diagram">
+
+        gcd(48,18)
+             |
+             v
+        gcd(18,12)
+             |
+             v
+        gcd(12,6)
+             |
+             v
+        gcd(6,0)
+             |
+             v
+             6
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.41 Power Using Recursion</h2>
+
+        <p>
+            A simple recursive definition for positive integer exponent
+            is:
+        </p>
+
+        <pre><code>power(x, n) = x × power(x, n - 1)</code></pre>
+
+        <p>
+            With the base case:
+        </p>
+
+        <pre><code>power(x, 0) = 1</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.42 Recursive Power Program</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+long long power(int base, int exponent)
+{
+    if (exponent == 0)
+    {
+        return 1;
+    }
+
+    return base * power(base, exponent - 1);
+}
+
+int main()
+{
+    int base;
+    int exponent;
+
+    printf("Enter base and exponent: ");
+    scanf("%d %d", &amp;base, &amp;exponent);
+
+    if (exponent &lt; 0)
+    {
+        printf("This example expects a non-negative exponent.");
+    }
+    else
+    {
+        printf("Result = %lld",
+               power(base, exponent));
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter base and exponent: 2 5
+Result = 32</code></pre>
+
+    </section>
+        <section>
+
+        <h2>1.43 Sum of Natural Numbers Using Recursion</h2>
+
+        <p>
+            The sum of the first n natural numbers can be defined
+            recursively as:
+        </p>
+
+        <pre><code>sum(n) = n + sum(n - 1)</code></pre>
+
+        <p>
+            Base case:
+        </p>
+
+        <pre><code>sum(0) = 0</code></pre>
+
+        <h3>Program</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int sum(int n)
+{
+    if (n == 0)
+    {
+        return 0;
+    }
+
+    return n + sum(n - 1);
+}
+
+int main()
+{
+    int n;
+
+    printf("Enter n: ");
+    scanf("%d", &amp;n);
+
+    if (n &lt; 0)
+    {
+        printf("Enter a non-negative number.");
+    }
+    else
+    {
+        printf("Sum = %d", sum(n));
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter n: 5
+Sum = 15</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.44 Reverse a Number Using Recursion</h2>
+
+        <p>
+            A recursive approach can process the digits of a number
+            one by one.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void reverseNumber(int n)
+{
+    if (n == 0)
+    {
+        return;
+    }
+
+    printf("%d", n % 10);
+
+    reverseNumber(n / 10);
+}
+
+int main()
+{
+    int n;
+
+    printf("Enter a number: ");
+    scanf("%d", &amp;n);
+
+    if (n == 0)
+    {
+        printf("0");
+    }
+    else
+    {
+        reverseNumber(n);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter a number: 12345
+54321</code></pre>
+
+        <div class="warning">
+
+            This simple example assumes a non-negative integer.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.45 Count Digits Using Recursion</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int countDigits(int n)
+{
+    if (n &gt; -10 &amp;&amp; n &lt; 10)
+    {
+        return 1;
+    }
+
+    return 1 + countDigits(n / 10);
+}
+
+int main()
+{
+    int n;
+
+    printf("Enter a number: ");
+    scanf("%d", &amp;n);
+
+    printf("Number of digits = %d",
+           countDigits(n));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter a number: 12345
+Number of digits = 5</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.46 Sum of Digits Using Recursion</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int sumDigits(int n)
+{
+    if (n &lt; 0)
+    {
+        n = -n;
+    }
+
+    if (n == 0)
+    {
+        return 0;
+    }
+
+    return (n % 10) + sumDigits(n / 10);
+}
+
+int main()
+{
+    int n;
+
+    printf("Enter a number: ");
+    scanf("%d", &amp;n);
+
+    printf("Sum of digits = %d",
+           sumDigits(n));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter a number: 12345
+Sum of digits = 15</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.47 Recursive Palindrome Check</h2>
+
+        <p>
+            A palindrome reads the same from left to right and right to
+            left. Recursive palindrome algorithms usually compare
+            corresponding characters or digits and then process the
+            smaller portion.
+        </p>
+
+        <h3>Example Idea</h3>
+
+        <pre><code>LEVEL
+L = L
+E = E
+V is middle
+Therefore palindrome</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.48 Recursive String Length</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int length(char str[])
+{
+    if (str[0] == '\0')
+    {
+        return 0;
+    }
+
+    return 1 + length(str + 1);
+}
+
+int main()
+{
+    char text[] = "ALLIED";
+
+    printf("Length = %d", length(text));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Length = 6</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.49 Direct and Indirect Recursion</h2>
+
+        <h3>Direct Recursion</h3>
+
+        <p>
+            A function directly calls itself.
+        </p>
+
+        <pre><code>void fun()
+{
+    fun();
+}</code></pre>
+
+        <h3>Indirect Recursion</h3>
+
+        <p>
+            One function calls another function, which eventually calls
+            the first function.
+        </p>
+
+        <pre><code>void A()
+{
+    B();
+}
+
+void B()
+{
+    A();
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.50 Direct vs Indirect Recursion</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>Direct Recursion</th>
+                <th>Indirect Recursion</th>
+            </tr>
+
+            <tr>
+                <td>Function calls itself</td>
+                <td>Yes</td>
+                <td>Not directly</td>
+            </tr>
+
+            <tr>
+                <td>Number of functions involved</td>
+                <td>Usually one</td>
+                <td>Two or more</td>
+            </tr>
+
+            <tr>
+                <td>Example</td>
+                <td>factorial()</td>
+                <td>A() → B() → A()</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.51 Recursion and Stack Memory</h2>
+
+        <p>
+            Every active function call needs information such as
+            parameters, local variables and return information. This
+            information is commonly maintained using the call stack.
+        </p>
+
+        <p>
+            Recursive calls therefore consume stack space while they are
+            active.
+        </p>
+
+        <div class="diagram">
+
+            factorial(4)
+                 |
+                 v
+            factorial(3)
+                 |
+                 v
+            factorial(2)
+                 |
+                 v
+            factorial(1)
+                 |
+                 v
+            factorial(0)
+
+            Stack grows downward
+            until the base case is reached.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.52 Recursion Unwinding</h2>
+
+        <p>
+            After reaching the base case, recursive calls return in the
+            reverse order in which they were created.
+        </p>
+
+        <div class="diagram">
+
+            CALLING PHASE
+
+            fun(4)
+              |
+            fun(3)
+              |
+            fun(2)
+              |
+            fun(1)
+              |
+            fun(0)
+
+
+            RETURNING PHASE
+
+            fun(0)
+              |
+            fun(1)
+              |
+            fun(2)
+              |
+            fun(3)
+              |
+            fun(4)
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.53 Recursion vs Iteration</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>Recursion</th>
+                <th>Iteration</th>
+            </tr>
+
+            <tr>
+                <td>Technique</td>
+                <td>Function calls itself.</td>
+                <td>Uses loops such as for or while.</td>
+            </tr>
+
+            <tr>
+                <td>Memory</td>
+                <td>Uses call-stack space for active calls.</td>
+                <td>Usually requires less call-stack overhead.</td>
+            </tr>
+
+            <tr>
+                <td>Code</td>
+                <td>Can be concise for recursive problems.</td>
+                <td>Often straightforward for repetitive tasks.</td>
+            </tr>
+
+            <tr>
+                <td>Risk</td>
+                <td>Deep recursion can exhaust stack space.</td>
+                <td>Infinite loops can occur if termination is incorrect.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.54 Factorial: Recursion vs Loop</h2>
+
+        <h3>Recursive Version</h3>
+
+        <pre><code>int factorial(int n)
+{
+    if (n == 0)
+        return 1;
+
+    return n * factorial(n - 1);
+}</code></pre>
+
+        <h3>Iterative Version</h3>
+
+        <pre><code>int factorial(int n)
+{
+    int result = 1;
+
+    for (int i = 1; i &lt;= n; i++)
+    {
+        result *= i;
+    }
+
+    return result;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.55 Advantages of Recursion</h2>
+
+        <ul>
+
+            <li>
+                Can provide a natural solution for recursively defined
+                problems.
+            </li>
+
+            <li>
+                Can make some algorithms shorter and easier to express.
+            </li>
+
+            <li>
+                Useful for tree and graph algorithms.
+            </li>
+
+            <li>
+                Useful for divide-and-conquer algorithms.
+            </li>
+
+            <li>
+                Useful for backtracking problems.
+            </li>
+
+            <li>
+                Can simplify traversal of hierarchical structures.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.56 Disadvantages of Recursion</h2>
+
+        <ul>
+
+            <li>
+                Recursive calls consume call-stack memory.
+            </li>
+
+            <li>
+                Deep recursion can cause stack overflow.
+            </li>
+
+            <li>
+                Recursive code can be harder to trace for beginners.
+            </li>
+
+            <li>
+                Some recursive solutions repeat calculations.
+            </li>
+
+            <li>
+                An iterative solution may be more efficient for simple
+                repetitive tasks.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.57 Common Recursion Errors</h2>
+
+        <div class="mcq">
+
+            <h3>❌ Missing Base Case</h3>
+
+            <pre><code>void fun()
+{
+    fun();
+}</code></pre>
+
+            <p>
+                There is no condition to stop the recursion.
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <h3>❌ No Progress Toward Base Case</h3>
+
+            <pre><code>int fun(int n)
+{
+    if (n == 0)
+        return 0;
+
+    return fun(n);
+}</code></pre>
+
+            <p>
+                The argument does not move toward the base case.
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <h3>❌ Incorrect Base Case</h3>
+
+            <p>
+                A wrong stopping condition can produce incorrect results
+                or prevent termination.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.58 Best Practices for Recursive Functions</h2>
+
+        <ol>
+
+            <li>
+                Always identify the base case first.
+            </li>
+
+            <li>
+                Make sure every recursive call moves toward the base case.
+            </li>
+
+            <li>
+                Keep recursive functions simple.
+            </li>
+
+            <li>
+                Avoid unnecessary repeated calculations.
+            </li>
+
+            <li>
+                Consider an iterative solution when recursion provides no
+                clear benefit.
+            </li>
+
+            <li>
+                Test boundary cases carefully.
+            </li>
+
+        </ol>
+
+    </section>
+        <section>
+
+        <h2>1.59 Practical Applications of Functions</h2>
+
+        <ul>
+
+            <li>Mathematical calculations.</li>
+
+            <li>Searching algorithms.</li>
+
+            <li>Sorting algorithms.</li>
+
+            <li>Data processing.</li>
+
+            <li>File processing.</li>
+
+            <li>Modular application design.</li>
+
+            <li>Embedded systems.</li>
+
+            <li>Operating-system components.</li>
+
+            <li>Scientific computing.</li>
+
+            <li>Large software projects.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.60 Practical Applications of Recursion</h2>
+
+        <ul>
+
+            <li>Tree traversal.</li>
+
+            <li>Graph traversal algorithms.</li>
+
+            <li>Binary search.</li>
+
+            <li>Merge sort.</li>
+
+            <li>Quick sort.</li>
+
+            <li>Backtracking.</li>
+
+            <li>Maze solving.</li>
+
+            <li>Directory traversal.</li>
+
+            <li>Expression evaluation.</li>
+
+            <li>Divide-and-conquer algorithms.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.61 Recursive Binary Search</h2>
+
+        <p>
+            Binary search repeatedly divides a sorted array into smaller
+            sections. This makes it a natural example of recursion.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int binarySearch(int arr[],
+                 int low,
+                 int high,
+                 int key)
+{
+    if (low &gt; high)
+    {
+        return -1;
+    }
+
+    int mid = low + (high - low) / 2;
+
+    if (arr[mid] == key)
+    {
+        return mid;
+    }
+
+    if (key &lt; arr[mid])
+    {
+        return binarySearch(arr,
+                            low,
+                            mid - 1,
+                            key);
+    }
+
+    return binarySearch(arr,
+                        mid + 1,
+                        high,
+                        key);
+}
+
+int main()
+{
+    int arr[] = {10, 20, 30, 40, 50};
+
+    int key = 40;
+
+    int result =
+        binarySearch(arr, 0, 4, key);
+
+    if (result == -1)
+    {
+        printf("Element not found");
+    }
+    else
+    {
+        printf("Element found at index %d",
+               result);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Element found at index 3</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.62 Recursive Binary Search Flow</h2>
+
+        <div class="diagram">
+
+                 Sorted Array
+                      |
+                      v
+                  Find Middle
+                      |
+              +-------+-------+
+              |               |
+           Key == Mid      Key != Mid
+              |               |
+              v               v
+            Return       Compare Key
+                              |
+                     +--------+--------+
+                     |                 |
+                   Smaller           Larger
+                     |                 |
+                     v                 v
+                Left Half         Right Half
+                     |                 |
+                     +--------+--------+
+                              |
+                              v
+                       Recursive Call
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.63 Recursive Sum of Array</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int arraySum(int arr[], int n)
+{
+    if (n == 0)
+    {
+        return 0;
+    }
+
+    return arr[n - 1] +
+           arraySum(arr, n - 1);
+}
+
+int main()
+{
+    int arr[] = {10, 20, 30, 40};
+
+    printf("Sum = %d",
+           arraySum(arr, 4));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum = 100</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.64 Recursive Maximum in Array</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int maximum(int arr[], int n)
+{
+    if (n == 1)
+    {
+        return arr[0];
+    }
+
+    int maxRest =
+        maximum(arr, n - 1);
+
+    return arr[n - 1] &gt; maxRest
+           ? arr[n - 1]
+           : maxRest;
+}
+
+int main()
+{
+    int arr[] = {12, 55, 8, 90, 31};
+
+    printf("Maximum = %d",
+           maximum(arr, 5));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Maximum = 90</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.65 Passing a Function to Another Function</h2>
+
+        <p>
+            C supports function pointers. A function pointer can store
+            the address of a function and can be passed to another
+            function.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int square(int x)
+{
+    return x * x;
+}
+
+void process(int value,
+             int (*operation)(int))
+{
+    printf("Result = %d",
+           operation(value));
+}
+
+int main()
+{
+    process(5, square);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Result = 25</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.66 Function Pointer Concept</h2>
+
+        <pre><code>int (*operation)(int);</code></pre>
+
+        <table>
+
+            <tr>
+                <th>Part</th>
+                <th>Meaning</th>
+            </tr>
+
+            <tr>
+                <td>int</td>
+                <td>Return type of the function.</td>
+            </tr>
+
+            <tr>
+                <td>(*operation)</td>
+                <td>Name of the function pointer.</td>
+            </tr>
+
+            <tr>
+                <td>(int)</td>
+                <td>Function accepts one int parameter.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.67 Function Pointers and Callbacks</h2>
+
+        <p>
+            Passing a function pointer to another function is commonly
+            used to implement callback-style behavior.
+        </p>
+
+        <pre><code>void process(int value,
+             int (*operation)(int))
+{
+    printf("%d",
+           operation(value));
+}</code></pre>
+
+        <p>
+            The caller can choose which operation should be performed.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.68 Function Scope and Local Variables</h2>
+
+        <p>
+            Variables declared inside a function normally have automatic
+            storage duration and are accessible only within their scope.
+        </p>
+
+        <pre><code>void test()
+{
+    int x = 10;
+
+    printf("%d", x);
+}</code></pre>
+
+        <p>
+            The variable x cannot be directly accessed from another
+            function because its scope is local to the function block.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.69 Static Local Variable</h2>
+
+        <p>
+            A local variable declared with static storage duration keeps
+            its stored value between function calls.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void counter()
+{
+    static int count = 0;
+
+    count++;
+
+    printf("%d ", count);
+}
+
+int main()
+{
+    counter();
+    counter();
+    counter();
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>1 2 3</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.70 Static Local Variable Flow</h2>
+
+        <div class="diagram">
+
+        First call
+            |
+            v
+        count = 0
+            |
+            v
+        count = 1
+            |
+            v
+        Value retained
+
+        Second call
+            |
+            v
+        count = 1
+            |
+            v
+        count = 2
+            |
+            v
+        Value retained
+
+        Third call
+            |
+            v
+        count = 3
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.71 Function Design Principles</h2>
+
+        <ul>
+
+            <li>Give each function a clear purpose.</li>
+
+            <li>Use meaningful function names.</li>
+
+            <li>Keep functions reasonably small.</li>
+
+            <li>Use parameters to provide required input.</li>
+
+            <li>Return meaningful results.</li>
+
+            <li>Avoid unnecessary global variables.</li>
+
+            <li>Document complex algorithms.</li>
+
+            <li>Test functions independently.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.72 Common Function Errors</h2>
+
+        <table>
+
+            <tr>
+                <th>Error</th>
+                <th>Problem</th>
+            </tr>
+
+            <tr>
+                <td>Missing prototype</td>
+                <td>Can lead to incorrect declarations or diagnostics,
+                    especially in modern C.</td>
+            </tr>
+
+            <tr>
+                <td>Wrong argument type</td>
+                <td>Can produce warnings or incorrect behavior.</td>
+            </tr>
+
+            <tr>
+                <td>Missing return</td>
+                <td>A non-void function may fail to return a value on
+                    some control paths.</td>
+            </tr>
+
+            <tr>
+                <td>Wrong pointer</td>
+                <td>Can cause invalid memory access.</td>
+            </tr>
+
+            <tr>
+                <td>Incorrect array size</td>
+                <td>Can cause out-of-bounds access.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.73 Common Recursion Errors</h2>
+
+        <ul>
+
+            <li>Missing base case.</li>
+
+            <li>Incorrect base case.</li>
+
+            <li>No progress toward the base case.</li>
+
+            <li>Excessive recursion depth.</li>
+
+            <li>Repeated calculations causing poor performance.</li>
+
+            <li>Incorrect return values.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.74 Best Practices ⭐</h2>
+
+        <ol>
+
+            <li>
+                Declare functions clearly using prototypes.
+            </li>
+
+            <li>
+                Use meaningful names for functions and parameters.
+            </li>
+
+            <li>
+                Pass only the data a function actually needs.
+            </li>
+
+            <li>
+                Use pointers carefully when modifying caller data.
+            </li>
+
+            <li>
+                Always validate array bounds.
+            </li>
+
+            <li>
+                Identify the base case before writing a recursive
+                function.
+            </li>
+
+            <li>
+                Make sure every recursive call approaches termination.
+            </li>
+
+            <li>
+                Prefer iteration when recursion provides no practical
+                advantage.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.75 Advantages of Modular Functions</h2>
+
+        <ul>
+
+            <li>Better organization.</li>
+
+            <li>Improved readability.</li>
+
+            <li>Code reuse.</li>
+
+            <li>Easier testing.</li>
+
+            <li>Easier debugging.</li>
+
+            <li>Improved maintainability.</li>
+
+            <li>Better teamwork on large projects.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.76 Complete Example: Menu Using Functions</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int subtract(int a, int b)
+{
+    return a - b;
+}
+
+int multiply(int a, int b)
+{
+    return a * b;
+}
+
+int main()
+{
+    int choice;
+    int a, b;
+
+    printf("1. Add\n");
+    printf("2. Subtract\n");
+    printf("3. Multiply\n");
+
+    printf("Enter choice: ");
+    scanf("%d", &amp;choice);
+
+    printf("Enter two numbers: ");
+    scanf("%d %d", &amp;a, &amp;b);
+
+    switch (choice)
+    {
+        case 1:
+            printf("Result = %d",
+                   add(a, b));
+            break;
+
+        case 2:
+            printf("Result = %d",
+                   subtract(a, b));
+            break;
+
+        case 3:
+            printf("Result = %d",
+                   multiply(a, b));
+            break;
+
+        default:
+            printf("Invalid choice");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Sample Output</h3>
+
+        <pre><code>1. Add
+2. Subtract
+3. Multiply
+Enter choice: 1
+Enter two numbers: 10 20
+Result = 30</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.77 Overall Function Flow</h2>
+
+        <div class="diagram">
+
+                    MAIN FUNCTION
+                         |
+                         v
+                   Function Call
+                         |
+                         v
+                 Pass Arguments
+                         |
+                         v
+                 Execute Function
+                         |
+               +---------+---------+
+               |                   |
+               v                   v
+          Return Value       Modify Through
+                                  Pointer
+               |                   |
+               +---------+---------+
+                         |
+                         v
+                    Continue Main
+
+        </div>
+
+    </section>
+        <section>
+
+        <h2>1.78 Summary</h2>
+
+        <p>
+            Functions are fundamental building blocks for modular C
+            programs. At the intermediate level, functions can receive
+            pointers and arrays, return values, and work together through
+            function pointers.
+        </p>
+
+        <p>
+            C uses pass-by-value for ordinary function parameters.
+            Pointer parameters can be used when a function needs to
+            access or modify an object in the caller.
+        </p>
+
+        <p>
+            Recursion occurs when a function calls itself. A recursive
+            solution requires a base case and a recursive case that
+            moves toward the base case.
+        </p>
+
+        <p>
+            Factorial, Fibonacci, GCD, binary search, tree traversal and
+            divide-and-conquer algorithms are common examples where
+            recursion can be useful.
+        </p>
+
+        <div class="tip">
+
+            <strong>Remember:</strong>
+
+            <br><br>
+
+            Function → Reusable block of code
+            <br>
+            Parameter → Variable receiving input
+            <br>
+            Argument → Actual value passed
+            <br>
+            Pointer → Can provide access to caller's object
+            <br>
+            Recursion → Function calls itself
+            <br>
+            Base Case → Stops recursion
+            <br>
+            Recursive Case → Continues with a smaller problem
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.79 Important Exam Points ⭐</h2>
+
+        <ul>
+
+            <li>Define a function and explain its components.</li>
+
+            <li>Explain function prototypes.</li>
+
+            <li>Differentiate parameters and arguments.</li>
+
+            <li>Explain call by value.</li>
+
+            <li>Explain pointer-based modification of caller data.</li>
+
+            <li>Explain passing arrays to functions.</li>
+
+            <li>Define recursion.</li>
+
+            <li>Explain base case and recursive case.</li>
+
+            <li>Write factorial using recursion.</li>
+
+            <li>Write Fibonacci using recursion.</li>
+
+            <li>Write GCD using recursion.</li>
+
+            <li>Compare recursion and iteration.</li>
+
+            <li>Explain advantages and disadvantages of recursion.</li>
+
+            <li>Explain function pointers.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.80 MCQs – Multiple Choice Questions</h2>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    1. What is a function?
+                </strong>
+            </p>
+
+            <p>A) A data type</p>
+            <p>B) A reusable block of code</p>
+            <p>C) A header file</p>
+            <p>D) A loop only</p>
+
+            <p class="answer">
+                Answer: B) A reusable block of code
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    2. What is a function prototype used for?
+                </strong>
+            </p>
+
+            <p>A) Running a program</p>
+            <p>B) Informing the compiler about a function's interface</p>
+            <p>C) Creating a loop</p>
+            <p>D) Allocating an array</p>
+
+            <p class="answer">
+                Answer: B) Informing the compiler about a function's interface
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    3. What does a parameter represent?
+                </strong>
+            </p>
+
+            <p>A) A variable declared in the function definition</p>
+            <p>B) A header file</p>
+            <p>C) A loop condition</p>
+            <p>D) A compiler option</p>
+
+            <p class="answer">
+                Answer: A) A variable declared in the function definition
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    4. What does ordinary C parameter passing use?
+                </strong>
+            </p>
+
+            <p>A) Call by value</p>
+            <p>B) Automatic reference passing</p>
+            <p>C) Call by name</p>
+            <p>D) Call by file</p>
+
+            <p class="answer">
+                Answer: A) Call by value
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    5. How can a function modify an object in its caller?
+                </strong>
+            </p>
+
+            <p>A) By using a pointer to the object</p>
+            <p>B) By using only printf()</p>
+            <p>C) By using a loop</p>
+            <p>D) By using a header file</p>
+
+            <p class="answer">
+                Answer: A) By using a pointer to the object
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    6. What is recursion?
+                </strong>
+            </p>
+
+            <p>A) A loop only</p>
+            <p>B) A function calling itself</p>
+            <p>C) A pointer declaration</p>
+            <p>D) A data type</p>
+
+            <p class="answer">
+                Answer: B) A function calling itself
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    7. What stops a recursive function?
+                </strong>
+            </p>
+
+            <p>A) Header file</p>
+            <p>B) Base case</p>
+            <p>C) Pointer</p>
+            <p>D) Macro</p>
+
+            <p class="answer">
+                Answer: B) Base case
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    8. Which function is commonly implemented recursively?
+                </strong>
+            </p>
+
+            <p>A) Factorial</p>
+            <p>B) printf()</p>
+            <p>C) scanf()</p>
+            <p>D) main() only</p>
+
+            <p class="answer">
+                Answer: A) Factorial
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    9. What happens if recursion has no proper stopping condition?
+                </strong>
+            </p>
+
+            <p>A) It always returns immediately</p>
+            <p>B) Calls may continue until stack space is exhausted</p>
+            <p>C) The compiler creates a loop</p>
+            <p>D) Nothing happens</p>
+
+            <p class="answer">
+                Answer: B) Calls may continue until stack space is exhausted
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    10. What is the base case?
+                </strong>
+            </p>
+
+            <p>A) The recursive call</p>
+            <p>B) The condition that terminates recursion</p>
+            <p>C) The function prototype</p>
+            <p>D) The array</p>
+
+            <p class="answer">
+                Answer: B) The condition that terminates recursion
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    11. Which operator is used to obtain the address of a variable?
+                </strong>
+            </p>
+
+            <p>A) *</p>
+            <p>B) &amp;</p>
+            <p>C) %</p>
+            <p>D) #</p>
+
+            <p class="answer">
+                Answer: B) &amp;
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    12. Which operator dereferences a pointer?
+                </strong>
+            </p>
+
+            <p>A) *</p>
+            <p>B) &amp;</p>
+            <p>C) %</p>
+            <p>D) @</p>
+
+            <p class="answer">
+                Answer: A) *
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    13. What is commonly passed when an array is supplied
+                    to a function?
+                </strong>
+            </p>
+
+            <p>A) The complete array object by value</p>
+            <p>B) A pointer to its first element</p>
+            <p>C) Only its last element</p>
+            <p>D) Nothing</p>
+
+            <p class="answer">
+                Answer: B) A pointer to its first element
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    14. What does a void function indicate?
+                </strong>
+            </p>
+
+            <p>A) It returns an int</p>
+            <p>B) It does not return a value</p>
+            <p>C) It cannot have parameters</p>
+            <p>D) It is recursive</p>
+
+            <p class="answer">
+                Answer: B) It does not return a value
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    15. Which algorithm is naturally suitable for recursion?
+                </strong>
+            </p>
+
+            <p>A) Tree traversal</p>
+            <p>B) Variable declaration</p>
+            <p>C) Header inclusion</p>
+            <p>D) printf()</p>
+
+            <p class="answer">
+                Answer: A) Tree traversal
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    16. What memory structure keeps active function call information?
+                </strong>
+            </p>
+
+            <p>A) Heap only</p>
+            <p>B) Call stack</p>
+            <p>C) ROM</p>
+            <p>D) Cache only</p>
+
+            <p class="answer">
+                Answer: B) Call stack
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    17. What is indirect recursion?
+                </strong>
+            </p>
+
+            <p>A) A function calls itself directly</p>
+            <p>B) Functions call each other in a cycle</p>
+            <p>C) A loop calls a function</p>
+            <p>D) A pointer calls a variable</p>
+
+            <p class="answer">
+                Answer: B) Functions call each other in a cycle
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    18. What does a function pointer store?
+                </strong>
+            </p>
+
+            <p>A) Address of a function</p>
+            <p>B) Only an integer</p>
+            <p>C) Header file name</p>
+            <p>D) Array length only</p>
+
+            <p class="answer">
+                Answer: A) Address of a function
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    19. Which is usually a disadvantage of recursion?
+                </strong>
+            </p>
+
+            <p>A) It cannot use parameters</p>
+            <p>B) It may consume significant stack space</p>
+            <p>C) It cannot return values</p>
+            <p>D) It cannot use integers</p>
+
+            <p class="answer">
+                Answer: B) It may consume significant stack space
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    20. Which is a good recursive-programming practice?
+                </strong>
+            </p>
+
+            <p>A) Remove the base case</p>
+            <p>B) Ensure every recursive call moves toward the base case</p>
+            <p>C) Always recurse forever</p>
+            <p>D) Avoid return statements</p>
+
+            <p class="answer">
+                Answer: B) Ensure every recursive call moves toward the base case
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.81 Interview Questions</h2>
+
+        <ol>
+
+            <li>
+                <strong>What is a function?</strong>
+                <br>
+                A reusable block of code that performs a specific task.
+            </li>
+
+            <li>
+                <strong>What is a function prototype?</strong>
+                <br>
+                A declaration that specifies a function's name, return
+                type and parameter types.
+            </li>
+
+            <li>
+                <strong>What is call by value?</strong>
+                <br>
+                A function receives a copy of the argument's value.
+            </li>
+
+            <li>
+                <strong>How can a function modify the caller's variable?</strong>
+                <br>
+                By passing a pointer to that variable and dereferencing
+                the pointer inside the function.
+            </li>
+
+            <li>
+                <strong>What is recursion?</strong>
+                <br>
+                A technique in which a function calls itself.
+            </li>
+
+            <li>
+                <strong>What is a base case?</strong>
+                <br>
+                The condition that stops further recursive calls.
+            </li>
+
+            <li>
+                <strong>What happens without a proper base case?</strong>
+                <br>
+                Recursive calls may continue until available stack space
+                is exhausted.
+            </li>
+
+            <li>
+                <strong>Can arrays be passed to functions?</strong>
+                <br>
+                Yes. When passed as arguments, arrays are commonly
+                represented by a pointer to their first element.
+            </li>
+
+            <li>
+                <strong>What is a function pointer?</strong>
+                <br>
+                A pointer that stores the address of a function.
+            </li>
+
+            <li>
+                <strong>What is indirect recursion?</strong>
+                <br>
+                A recursive cycle where one function calls another
+                function and eventually the first function is called
+                again.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.82 Viva Questions</h2>
+
+        <table>
+
+            <tr>
+                <th>Question</th>
+                <th>Short Answer</th>
+            </tr>
+
+            <tr>
+                <td>Reusable code block?</td>
+                <td>Function</td>
+            </tr>
+
+            <tr>
+                <td>Function declaration?</td>
+                <td>Function prototype</td>
+            </tr>
+
+            <tr>
+                <td>Normal C parameter passing?</td>
+                <td>Pass by value</td>
+            </tr>
+
+            <tr>
+                <td>Modify caller object?</td>
+                <td>Pass its address using a pointer</td>
+            </tr>
+
+            <tr>
+                <td>Function calling itself?</td>
+                <td>Recursion</td>
+            </tr>
+
+            <tr>
+                <td>Stopping condition?</td>
+                <td>Base case</td>
+            </tr>
+
+            <tr>
+                <td>Function address storage?</td>
+                <td>Function pointer</td>
+            </tr>
+
+            <tr>
+                <td>Memory for active calls?</td>
+                <td>Call stack</td>
+            </tr>
+
+            <tr>
+                <td>Common recursive mathematical example?</td>
+                <td>Factorial</td>
+            </tr>
+
+            <tr>
+                <td>Common recursive search?</td>
+                <td>Binary search</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.83 Final Revision 🚀</h2>
+
+        <div class="diagram">
+
+                    FUNCTIONS
+                       |
+          +------------+------------+
+          |            |            |
+          v            v            v
+       Parameters    Pointers      Arrays
+          |            |            |
+          v            v            v
+       Arguments    Modify       Process
+                    Objects       Data
+                       |
+                       v
+                  RECURSION
+                       |
+             +---------+---------+
+             |                   |
+             v                   v
+          Base Case       Recursive Case
+             |                   |
+             +---------+---------+
+                       |
+                       v
+                    RESULT
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>1.84 Final Summary 📚</h2>
+
+        <p>
+            This chapter introduced advanced function concepts required
+            for intermediate C programming. Functions help divide complex
+            programs into manageable and reusable components.
+        </p>
+
+        <p>
+            You learned about prototypes, parameters, arguments, return
+            values, pointer parameters, arrays as function arguments and
+            function pointers.
+        </p>
+
+        <p>
+            You also learned recursion, including base cases, recursive
+            cases, recursive tracing, stack behavior, factorial,
+            Fibonacci, GCD, binary search and other recursive examples.
+        </p>
+
+        <div class="tip">
+
+            <strong>⭐ Key Concept:</strong>
+
+            <br><br>
+
+            <strong>
+                Function = Reuse
+                <br>
+                Pointer Parameter = Modify Caller Object
+                <br>
+                Array Parameter = Process Array Data
+                <br>
+                Recursion = Function Calls Itself
+                <br>
+                Base Case = Stops Recursion
+                <br>
+                Recursive Case = Solves Smaller Problem
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <div class="navigation">
+
+        <a href="c.html"
+           class="button">
+            ← C Programming
+        </a>
+
+        <a href="home.html"
+           class="button">
+            Home
+        </a>
+
+        <a href="02-intermediate.html"
+           class="button">
+            Next Chapter →
+        </a>
+
+    </div>
+
+
+</main>
+
+
+<footer>
+
+    <h3>ALLIED</h3>
+
+    <p>
+        Intermediate C Programming
+    </p>
+
+    <p>
+        Learn advanced concepts with simple explanations,
+        programs and practical examples.
+    </p>
+
+    <p>
+        © 2026 ALLIED. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

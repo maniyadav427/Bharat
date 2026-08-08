@@ -1,0 +1,2769 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 10 - Arrays in C | ALLIED</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">
+            ALLIED
+        </a>
+
+        <nav>
+
+            <a href="home.html">
+                Home
+            </a>
+
+            <a href="books.html">
+                Books
+            </a>
+
+            <a href="c.html">
+                C Programming
+            </a>
+
+            <a href="login.html">
+                Login
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <div class="hero">
+
+        <h1>
+            Chapter 10: Arrays in C
+        </h1>
+
+        <p>
+            Learn how arrays store multiple values of the same data type
+            under a single name and how arrays are used for efficient
+            data processing in C programming.
+        </p>
+
+    </div>
+
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>
+            After completing this chapter, you will be able to:
+        </p>
+
+        <ul>
+
+            <li>
+                Understand the concept of arrays.
+            </li>
+
+            <li>
+                Understand why arrays are required.
+            </li>
+
+            <li>
+                Declare and initialize arrays.
+            </li>
+
+            <li>
+                Access array elements using indexes.
+            </li>
+
+            <li>
+                Read and display array elements.
+            </li>
+
+            <li>
+                Understand one-dimensional arrays.
+            </li>
+
+            <li>
+                Understand two-dimensional arrays.
+            </li>
+
+            <li>
+                Process arrays using loops.
+            </li>
+
+            <li>
+                Search and sort array elements.
+            </li>
+
+            <li>
+                Write practical programs using arrays.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Introduction to Arrays</h2>
+
+        <p>
+            An array is a collection of elements of the same data type
+            stored under a single name.
+        </p>
+
+        <p>
+            Arrays are useful when a program needs to store and process
+            multiple values of the same type.
+        </p>
+
+        <p>
+            For example, instead of declaring five separate variables
+            for five student marks, an array can store all five marks
+            using one variable name.
+        </p>
+
+        <h3>Without an Array</h3>
+
+        <pre><code>int mark1 = 80;
+int mark2 = 75;
+int mark3 = 90;
+int mark4 = 65;
+int mark5 = 88;</code></pre>
+
+        <h3>With an Array</h3>
+
+        <pre><code>int marks[5] = {80, 75, 90, 65, 88};</code></pre>
+
+        <div class="note">
+
+            <strong>Simple Definition:</strong>
+
+            An array is a collection of elements of the same data type
+            stored in contiguous memory locations and accessed using
+            an index.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Why Are Arrays Needed?</h2>
+
+        <p>
+            Arrays are needed when a program must store and process
+            many values of the same data type.
+        </p>
+
+        <ul>
+
+            <li>
+                To store multiple values using one variable name.
+            </li>
+
+            <li>
+                To reduce the number of variable declarations.
+            </li>
+
+            <li>
+                To process large amounts of similar data.
+            </li>
+
+            <li>
+                To make searching easier.
+            </li>
+
+            <li>
+                To perform sorting operations.
+            </li>
+
+            <li>
+                To process student marks.
+            </li>
+
+            <li>
+                To store numbers, temperatures, prices and other data.
+            </li>
+
+            <li>
+                To work efficiently with loops.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Characteristics of Arrays</h2>
+
+        <ul>
+
+            <li>
+                All elements normally have the same data type.
+            </li>
+
+            <li>
+                Elements are stored in contiguous memory locations.
+            </li>
+
+            <li>
+                Each element is identified using an index.
+            </li>
+
+            <li>
+                Array indexing in C starts from 0.
+            </li>
+
+            <li>
+                The size of a fixed array is determined when it is
+                defined.
+            </li>
+
+            <li>
+                Arrays can have one or more dimensions.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Array Indexing</h2>
+
+        <p>
+            In C, the first element of an array has index 0.
+            If an array contains five elements, its indexes are
+            0, 1, 2, 3 and 4.
+        </p>
+
+        <pre><code>int marks[5] = {80, 75, 90, 65, 88};</code></pre>
+
+        <div class="diagram">
+
+        Index:     0     1     2     3     4
+                   |     |     |     |     |
+        Value:    80    75    90    65    88
+
+        </div>
+
+        <table>
+
+            <tr>
+                <th>Index</th>
+                <th>Value</th>
+            </tr>
+
+            <tr>
+                <td>0</td>
+                <td>80</td>
+            </tr>
+
+            <tr>
+                <td>1</td>
+                <td>75</td>
+            </tr>
+
+            <tr>
+                <td>2</td>
+                <td>90</td>
+            </tr>
+
+            <tr>
+                <td>3</td>
+                <td>65</td>
+            </tr>
+
+            <tr>
+                <td>4</td>
+                <td>88</td>
+            </tr>
+
+        </table>
+
+        <div class="warning">
+
+            Remember: C array indexing starts from <strong>0</strong>,
+            not 1.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Declaration of an Array</h2>
+
+        <p>
+            An array is declared by specifying its data type, name and
+            size.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>data_type array_name[size];</code></pre>
+
+        <h3>Examples</h3>
+
+        <pre><code>int numbers[10];
+
+float prices[5];
+
+char letters[26];
+
+double values[20];</code></pre>
+
+        <table>
+
+            <tr>
+                <th>Declaration</th>
+                <th>Meaning</th>
+            </tr>
+
+            <tr>
+                <td>int numbers[10];</td>
+                <td>Integer array with 10 elements.</td>
+            </tr>
+
+            <tr>
+                <td>float prices[5];</td>
+                <td>Float array with 5 elements.</td>
+            </tr>
+
+            <tr>
+                <td>char letters[26];</td>
+                <td>Character array with 26 elements.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Array Initialization</h2>
+
+        <p>
+            Array elements can be initialized when the array is declared.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>int numbers[5] = {10, 20, 30, 40, 50};</code></pre>
+
+        <p>
+            Individual elements can also be initialized using indexes.
+        </p>
+
+        <pre><code>int numbers[5];
+
+numbers[0] = 10;
+numbers[1] = 20;
+numbers[2] = 30;
+numbers[3] = 40;
+numbers[4] = 50;</code></pre>
+
+        <div class="tip">
+
+            When an array is initialized with fewer values than its
+            declared size, the remaining elements are initialized to
+            zero for an ordinary static initialization.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Accessing Array Elements</h2>
+
+        <p>
+            Array elements are accessed using the array name followed
+            by an index inside square brackets.
+        </p>
+
+        <pre><code>int numbers[5] = {10, 20, 30, 40, 50};
+
+printf("%d", numbers[0]);
+printf("%d", numbers[3]);</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10
+40</code></pre>
+
+        <p>
+            The expression <code>numbers[0]</code> accesses the first
+            element, while <code>numbers[3]</code> accesses the fourth
+            element.
+        </p>
+
+    </section>
+        <section>
+
+        <h2>One-Dimensional Array</h2>
+
+        <p>
+            A one-dimensional array stores elements in a single row or
+            sequence. It is also called a single-dimensional array.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>data_type array_name[size];</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>int numbers[5] = {10, 20, 30, 40, 50};</code></pre>
+
+        <div class="diagram">
+
+        numbers
+           |
+           +----+----+----+----+----+
+           | 10 | 20 | 30 | 40 | 50 |
+           +----+----+----+----+----+
+             0    1    2    3    4
+                    Index
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Reading One-Dimensional Array</h2>
+
+        <p>
+            A loop can be used to read multiple values into an array.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[5];
+
+    printf("Enter 5 numbers:\n");
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        scanf("%d", &amp;numbers[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Displaying One-Dimensional Array</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[5] = {10, 20, 30, 40, 50};
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", numbers[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10 20 30 40 50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Read and Display Array Elements</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[5];
+
+    printf("Enter 5 numbers:\n");
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        scanf("%d", &amp;numbers[i]);
+    }
+
+    printf("Array elements:\n");
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", numbers[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter 5 numbers:
+10
+20
+30
+40
+50
+
+Array elements:
+10 20 30 40 50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Traversing an Array</h2>
+
+        <p>
+            Traversing an array means visiting each element of the array
+            one by one.
+        </p>
+
+        <p>
+            Loops are commonly used for array traversal.
+        </p>
+
+        <pre><code>int numbers[5] = {10, 20, 30, 40, 50};
+
+for (int i = 0; i &lt; 5; i++)
+{
+    printf("%d ", numbers[i]);
+}</code></pre>
+
+        <div class="tip">
+
+            <strong>Important:</strong>
+
+            For an array containing <code>n</code> elements, valid indexes
+            are from <code>0</code> to <code>n - 1</code>.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Finding Sum of Array Elements</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[5] = {10, 20, 30, 40, 50};
+    int sum = 0;
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        sum = sum + numbers[i];
+    }
+
+    printf("Sum = %d", sum);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum = 150</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Finding Average of Array Elements</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[5] = {10, 20, 30, 40, 50};
+    int sum = 0;
+    float average;
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        sum += numbers[i];
+    }
+
+    average = (float)sum / 5;
+
+    printf("Average = %.2f", average);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Average = 30.00</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Finding Largest Element in an Array</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[5] = {25, 10, 45, 30, 15};
+    int largest = numbers[0];
+
+    for (int i = 1; i &lt; 5; i++)
+    {
+        if (numbers[i] &gt; largest)
+        {
+            largest = numbers[i];
+        }
+    }
+
+    printf("Largest = %d", largest);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Largest = 45</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Finding Smallest Element in an Array</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[5] = {25, 10, 45, 30, 15};
+    int smallest = numbers[0];
+
+    for (int i = 1; i &lt; 5; i++)
+    {
+        if (numbers[i] &lt; smallest)
+        {
+            smallest = numbers[i];
+        }
+    }
+
+    printf("Smallest = %d", smallest);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Smallest = 10</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Searching an Element in an Array</h2>
+
+        <p>
+            Searching means checking whether a particular value exists
+            in an array.
+        </p>
+
+        <p>
+            Linear search checks the elements one by one from the
+            beginning of the array.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[5] = {10, 20, 30, 40, 50};
+    int key;
+    int found = 0;
+
+    printf("Enter element to search: ");
+    scanf("%d", &amp;key);
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        if (numbers[i] == key)
+        {
+            printf("Element found at index %d", i);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        printf("Element not found");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter element to search: 30
+Element found at index 2</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Linear Search</h2>
+
+        <div class="diagram">
+
+        Array:
+        +----+----+----+----+----+
+        | 10 | 20 | 30 | 40 | 50 |
+        +----+----+----+----+----+
+          |
+          v
+        Compare with key
+          |
+          v
+        Continue until found
+        or end of array
+
+        </div>
+
+        <p>
+            Linear search is simple and works even when the array is
+            not sorted.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>Counting Even and Odd Elements</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[6] = {10, 15, 22, 31, 40, 55};
+    int even = 0;
+    int odd = 0;
+
+    for (int i = 0; i &lt; 6; i++)
+    {
+        if (numbers[i] % 2 == 0)
+        {
+            even++;
+        }
+        else
+        {
+            odd++;
+        }
+    }
+
+    printf("Even elements = %d\n", even);
+    printf("Odd elements = %d", odd);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Even elements = 3
+Odd elements = 3</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Copying an Array</h2>
+
+        <p>
+            Array elements can be copied from one array to another
+            using a loop.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int source[5] = {10, 20, 30, 40, 50};
+    int destination[5];
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        destination[i] = source[i];
+    }
+
+    printf("Copied array:\n");
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", destination[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Copied array:
+10 20 30 40 50</code></pre>
+
+    </section>
+        <section>
+
+        <h2>Reversing an Array</h2>
+
+        <p>
+            Reversing an array means displaying its elements from the
+            last element to the first element.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[5] = {10, 20, 30, 40, 50};
+
+    printf("Reverse order:\n");
+
+    for (int i = 4; i &gt;= 0; i--)
+    {
+        printf("%d ", numbers[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Reverse order:
+50 40 30 20 10</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Reverse an Array</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[5];
+    int reverse[5];
+
+    printf("Enter 5 elements:\n");
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        scanf("%d", &amp;numbers[i]);
+    }
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        reverse[i] = numbers[4 - i];
+    }
+
+    printf("Reversed array:\n");
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", reverse[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter 5 elements:
+10
+20
+30
+40
+50
+
+Reversed array:
+50 40 30 20 10</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Sorting an Array</h2>
+
+        <p>
+            Sorting means arranging array elements in a particular order.
+            The order may be ascending or descending.
+        </p>
+
+        <p>
+            Bubble sort is a simple sorting technique that repeatedly
+            compares adjacent elements and swaps them when they are
+            in the wrong order.
+        </p>
+
+        <h3>Bubble Sort in Ascending Order</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[5] = {50, 20, 40, 10, 30};
+    int temp;
+
+    for (int i = 0; i &lt; 5 - 1; i++)
+    {
+        for (int j = 0; j &lt; 5 - 1 - i; j++)
+        {
+            if (numbers[j] &gt; numbers[j + 1])
+            {
+                temp = numbers[j];
+                numbers[j] = numbers[j + 1];
+                numbers[j + 1] = temp;
+            }
+        }
+    }
+
+    printf("Sorted array:\n");
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", numbers[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sorted array:
+10 20 30 40 50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Sorting in Descending Order</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[5] = {10, 50, 20, 40, 30};
+    int temp;
+
+    for (int i = 0; i &lt; 5 - 1; i++)
+    {
+        for (int j = 0; j &lt; 5 - 1 - i; j++)
+        {
+            if (numbers[j] &lt; numbers[j + 1])
+            {
+                temp = numbers[j];
+                numbers[j] = numbers[j + 1];
+                numbers[j + 1] = temp;
+            }
+        }
+    }
+
+    printf("Descending order:\n");
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", numbers[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Descending order:
+50 40 30 20 10</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Two-Dimensional Array</h2>
+
+        <p>
+            A two-dimensional array stores data in rows and columns.
+            It can be visualized like a table or matrix.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>data_type array_name[rows][columns];</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>int matrix[2][3] =
+{
+    {10, 20, 30},
+    {40, 50, 60}
+};</code></pre>
+
+        <div class="diagram">
+
+                 Column
+             0     1     2
+          +-----+-----+-----+
+        0 | 10  | 20  | 30  |
+          +-----+-----+-----+
+        1 | 40  | 50  | 60  |
+          +-----+-----+-----+
+             Row
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Accessing Two-Dimensional Array Elements</h2>
+
+        <p>
+            A two-dimensional array uses two indexes. The first index
+            represents the row and the second index represents the column.
+        </p>
+
+        <pre><code>int matrix[2][3] =
+{
+    {10, 20, 30},
+    {40, 50, 60}
+};
+
+printf("%d", matrix[0][1]);</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>20</code></pre>
+
+        <p>
+            Here, <code>matrix[0][1]</code> refers to the element in
+            row 0 and column 1.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>Reading a Two-Dimensional Array</h2>
+
+        <p>
+            Nested loops are commonly used to read elements of a
+            two-dimensional array.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int matrix[2][3];
+
+    printf("Enter 6 elements:\n");
+
+    for (int i = 0; i &lt; 2; i++)
+    {
+        for (int j = 0; j &lt; 3; j++)
+        {
+            scanf("%d", &amp;matrix[i][j]);
+        }
+    }
+
+    return 0;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Displaying a Two-Dimensional Array</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int matrix[2][3] =
+    {
+        {10, 20, 30},
+        {40, 50, 60}
+    };
+
+    for (int i = 0; i &lt; 2; i++)
+    {
+        for (int j = 0; j &lt; 3; j++)
+        {
+            printf("%d ", matrix[i][j]);
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10 20 30
+40 50 60</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Matrix Addition</h2>
+
+        <p>
+            Two matrices of the same dimensions can be added by adding
+            their corresponding elements.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a[2][2] =
+    {
+        {1, 2},
+        {3, 4}
+    };
+
+    int b[2][2] =
+    {
+        {5, 6},
+        {7, 8}
+    };
+
+    int sum[2][2];
+
+    for (int i = 0; i &lt; 2; i++)
+    {
+        for (int j = 0; j &lt; 2; j++)
+        {
+            sum[i][j] = a[i][j] + b[i][j];
+        }
+    }
+
+    printf("Sum of matrices:\n");
+
+    for (int i = 0; i &lt; 2; i++)
+    {
+        for (int j = 0; j &lt; 2; j++)
+        {
+            printf("%d ", sum[i][j]);
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum of matrices:
+6 8
+10 12</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Matrix Transpose</h2>
+
+        <p>
+            The transpose of a matrix is obtained by converting its
+            rows into columns and its columns into rows.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int matrix[2][3] =
+    {
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+
+    printf("Transpose:\n");
+
+    for (int j = 0; j &lt; 3; j++)
+    {
+        for (int i = 0; i &lt; 2; i++)
+        {
+            printf("%d ", matrix[i][j]);
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Transpose:
+1 4
+2 5
+3 6</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Multi-Dimensional Arrays</h2>
+
+        <p>
+            C supports arrays with more than two dimensions. Such arrays
+            are called multi-dimensional arrays.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>int values[2][3][4];</code></pre>
+
+        <p>
+            This declaration represents a three-dimensional array.
+            Multi-dimensional arrays are useful for representing
+            complex structured data.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>Character Arrays</h2>
+
+        <p>
+            A character array is an array whose elements have the
+            <code>char</code> data type. Character arrays are commonly
+            used to store strings.
+        </p>
+
+        <pre><code>char name[6] = {'A', 'L', 'L', 'I', 'E', 'D'};</code></pre>
+
+        <p>
+            C strings are normally stored in character arrays and
+            terminated by the null character <code>'\0'</code>.
+        </p>
+
+        <pre><code>char name[] = "ALLIED";</code></pre>
+
+        <div class="note">
+
+            A string such as <code>"ALLIED"</code> requires space for
+            the characters plus the terminating null character.
+
+        </div>
+
+    </section>
+        <section>
+
+        <h2>Array and Pointer Relationship</h2>
+
+        <p>
+            In many expressions, the name of an array is converted to a
+            pointer to its first element. This is an important concept
+            when working with arrays and functions.
+        </p>
+
+        <pre><code>int numbers[3] = {10, 20, 30};
+
+printf("%d", *numbers);</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10</code></pre>
+
+        <p>
+            Here, <code>numbers</code> refers to the first element in
+            this expression, so dereferencing it gives the value 10.
+        </p>
+
+        <div class="note">
+
+            Array names and pointers are closely related in many C
+            expressions, but an array itself is not a modifiable pointer.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Passing an Array to a Function</h2>
+
+        <p>
+            Arrays can be passed to functions. A function can receive an
+            array and process its elements.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void display(int numbers[], int size)
+{
+    for (int i = 0; i &lt; size; i++)
+    {
+        printf("%d ", numbers[i]);
+    }
+}
+
+int main()
+{
+    int numbers[5] = {10, 20, 30, 40, 50};
+
+    display(numbers, 5);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10 20 30 40 50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Sum of Array Using Function</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int arraySum(int numbers[], int size)
+{
+    int sum = 0;
+
+    for (int i = 0; i &lt; size; i++)
+    {
+        sum += numbers[i];
+    }
+
+    return sum;
+}
+
+int main()
+{
+    int numbers[5] = {10, 20, 30, 40, 50};
+
+    printf("Sum = %d", arraySum(numbers, 5));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum = 150</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Find Largest Element Using Function</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int findLargest(int numbers[], int size)
+{
+    int largest = numbers[0];
+
+    for (int i = 1; i &lt; size; i++)
+    {
+        if (numbers[i] &gt; largest)
+        {
+            largest = numbers[i];
+        }
+    }
+
+    return largest;
+}
+
+int main()
+{
+    int numbers[5] = {25, 80, 45, 10, 60};
+
+    printf("Largest = %d",
+           findLargest(numbers, 5));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Largest = 80</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Array Size and Number of Elements</h2>
+
+        <p>
+            The <code>sizeof</code> operator can be used to determine
+            the total size in bytes of an array.
+        </p>
+
+        <p>
+            For an array whose elements have a known type, the number
+            of elements can commonly be calculated using:
+        </p>
+
+        <pre><code>sizeof(array) / sizeof(array[0])</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[] = {10, 20, 30, 40, 50};
+
+    int size = sizeof(numbers) / sizeof(numbers[0]);
+
+    printf("Number of elements = %d", size);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number of elements = 5</code></pre>
+
+        <div class="warning">
+
+            This calculation gives the number of elements only when
+            <code>numbers</code> is actually an array in that scope.
+            It does not generally work the same way after an array is
+            passed to a function parameter.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Difference Between 1D and 2D Arrays</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>1D Array</th>
+                <th>2D Array</th>
+            </tr>
+
+            <tr>
+                <td>Dimensions</td>
+                <td>One</td>
+                <td>Two</td>
+            </tr>
+
+            <tr>
+                <td>Representation</td>
+                <td>List or sequence</td>
+                <td>Rows and columns</td>
+            </tr>
+
+            <tr>
+                <td>Indexing</td>
+                <td>One index</td>
+                <td>Two indexes</td>
+            </tr>
+
+            <tr>
+                <td>Example</td>
+                <td>int a[5]</td>
+                <td>int a[3][3]</td>
+            </tr>
+
+            <tr>
+                <td>Common use</td>
+                <td>List of marks</td>
+                <td>Matrix or table</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Common Errors in Arrays</h2>
+
+        <ul>
+
+            <li>
+                Using an index outside the valid range.
+            </li>
+
+            <li>
+                Forgetting that array indexes start at 0.
+            </li>
+
+            <li>
+                Using the wrong array size.
+            </li>
+
+            <li>
+                Reading more elements than the array can hold.
+            </li>
+
+            <li>
+                Using incorrect row or column indexes in 2D arrays.
+            </li>
+
+            <li>
+                Forgetting to initialize variables used for calculations.
+            </li>
+
+            <li>
+                Confusing the number of elements with the last index.
+            </li>
+
+            <li>
+                Using an incorrect loop condition.
+            </li>
+
+        </ul>
+
+        <h3>Incorrect Example</h3>
+
+        <pre><code>int numbers[5];
+
+for (int i = 0; i &lt;= 5; i++)
+{
+    numbers[i] = i;
+}</code></pre>
+
+        <p>
+            The valid indexes are <code>0</code> through <code>4</code>.
+            When <code>i</code> becomes 5, the program accesses an
+            element outside the array.
+        </p>
+
+        <h3>Correct Example</h3>
+
+        <pre><code>int numbers[5];
+
+for (int i = 0; i &lt; 5; i++)
+{
+    numbers[i] = i;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Best Practices for Arrays</h2>
+
+        <ul>
+
+            <li>
+                Always use valid array indexes.
+            </li>
+
+            <li>
+                Remember that indexing starts from 0.
+            </li>
+
+            <li>
+                Use loops to process array elements efficiently.
+            </li>
+
+            <li>
+                Keep track of the number of valid elements.
+            </li>
+
+            <li>
+                Avoid accessing elements beyond the array bounds.
+            </li>
+
+            <li>
+                Use meaningful array names.
+            </li>
+
+            <li>
+                Check input sizes before storing user data.
+            </li>
+
+            <li>
+                Use functions to organize complex array operations.
+            </li>
+
+            <li>
+                Test arrays with empty, small and boundary cases where
+                appropriate.
+            </li>
+
+        </ul>
+
+        <div class="tip">
+
+            <strong>Important:</strong>
+
+            Always make sure that your loop condition matches the
+            actual number of elements in the array.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Real-World Applications of Arrays</h2>
+
+        <p>
+            Arrays are widely used in software because many applications
+            need to store collections of related values.
+        </p>
+
+        <ul>
+
+            <li>
+                Student marks and grades.
+            </li>
+
+            <li>
+                Employee records.
+            </li>
+
+            <li>
+                Product prices.
+            </li>
+
+            <li>
+                Bank transaction data.
+            </li>
+
+            <li>
+                Temperature measurements.
+            </li>
+
+            <li>
+                Game scores.
+            </li>
+
+            <li>
+                Image and pixel processing.
+            </li>
+
+            <li>
+                Matrix calculations.
+            </li>
+
+            <li>
+                Searching and sorting algorithms.
+            </li>
+
+            <li>
+                Scientific and engineering calculations.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Array Processing Flow Diagram</h2>
+
+        <div class="diagram">
+
+                 START
+                   |
+                   v
+            Declare Array
+                   |
+                   v
+           Initialize / Input
+                   |
+                   v
+          Traverse Elements
+                   |
+                   v
+          Process Each Element
+                   |
+                   v
+             Display Result
+                   |
+                   v
+                  END
+
+        </div>
+
+    </section>
+        <section>
+
+        <h2>Multiple Choice Questions (MCQs)</h2>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>1. What is an array?</strong>
+            </p>
+
+            <ol type="A">
+                <li>A collection of different functions</li>
+                <li>A collection of elements of the same data type</li>
+                <li>A single variable only</li>
+                <li>An operator</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. A collection of elements of the same data type
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    2. What is the first index of an array in C?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>0</li>
+                <li>1</li>
+                <li>-1</li>
+                <li>2</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. 0
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    3. Which is a valid array declaration?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>int numbers;</li>
+                <li>int numbers[5];</li>
+                <li>array int numbers;</li>
+                <li>numbers int[5];</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. int numbers[5];
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    4. What is the last valid index of an array
+                    declared as int a[10]?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>10</li>
+                <li>9</li>
+                <li>8</li>
+                <li>11</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. 9
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    5. Which loop is commonly used to traverse an array?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>for</li>
+                <li>switch</li>
+                <li>if</li>
+                <li>goto</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. for
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    6. Which declaration creates a two-dimensional array?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>int a[5];</li>
+                <li>int a[5][5];</li>
+                <li>int a;</li>
+                <li>int a(5,5);</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. int a[5][5];
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    7. A two-dimensional array is commonly represented
+                    as:
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>A table</li>
+                <li>A single value</li>
+                <li>A function</li>
+                <li>An operator</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. A table
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    8. Which symbol is used to access an array element?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>()</li>
+                <li>{}</li>
+                <li>[]</li>
+                <li>&lt;&gt;</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. []
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    9. What does int a[5] represent?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>Five integer elements</li>
+                <li>Five floating-point elements</li>
+                <li>One integer element</li>
+                <li>Five arrays</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. Five integer elements
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    10. Which index accesses the third element of an
+                    array?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. 2
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    11. Which technique checks array elements one by one?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>Linear search</li>
+                <li>Binary operator</li>
+                <li>Recursion only</li>
+                <li>Selection statement</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. Linear search
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    12. Which sorting algorithm repeatedly compares
+                    adjacent elements?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>Bubble sort</li>
+                <li>Binary search</li>
+                <li>Linear search</li>
+                <li>Recursion</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. Bubble sort
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    13. Which operator can be used to determine the
+                    total size of an array in bytes?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>length</li>
+                <li>size</li>
+                <li>sizeof</li>
+                <li>count</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. sizeof
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    14. What is the correct expression to find the
+                    number of elements of a local array?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>sizeof(a)</li>
+                <li>sizeof(a) / sizeof(a[0])</li>
+                <li>length(a)</li>
+                <li>a.length</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. sizeof(a) / sizeof(a[0])
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    15. What type of array is commonly used to represent
+                    a matrix?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>One-dimensional array</li>
+                <li>Two-dimensional array</li>
+                <li>Character only</li>
+                <li>Pointer only</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. Two-dimensional array
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    16. Which data type is commonly used for a character
+                    array?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>int</li>
+                <li>float</li>
+                <li>char</li>
+                <li>double</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. char
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    17. What terminates a C string?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>'\n'</li>
+                <li>'\0'</li>
+                <li>' '</li>
+                <li>'\t'</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. '\0'
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    18. What happens if an array is accessed outside
+                    its valid bounds?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>It is always safe</li>
+                <li>It causes undefined behavior</li>
+                <li>The array automatically grows</li>
+                <li>The compiler always fixes it</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. It causes undefined behavior
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    19. Which structure is commonly used to process a
+                    2D array?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>Nested loops</li>
+                <li>Only if statement</li>
+                <li>Only switch</li>
+                <li>Only one variable</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. Nested loops
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    20. Which is an important advantage of arrays?
+                </strong>
+            </p>
+
+            <ol type="A">
+                <li>Store many related values using one name</li>
+                <li>Store only one value</li>
+                <li>Eliminate all loops</li>
+                <li>Remove the need for data types</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. Store many related values using one name
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Interview Questions</h2>
+
+        <ol>
+
+            <li>
+                What is an array in C?
+            </li>
+
+            <li>
+                Why are arrays used?
+            </li>
+
+            <li>
+                What is array indexing?
+            </li>
+
+            <li>
+                Why does array indexing start from 0 in C?
+            </li>
+
+            <li>
+                What is a one-dimensional array?
+            </li>
+
+            <li>
+                What is a two-dimensional array?
+            </li>
+
+            <li>
+                How do you initialize an array?
+            </li>
+
+            <li>
+                How do you access an array element?
+            </li>
+
+            <li>
+                What is array traversal?
+            </li>
+
+            <li>
+                What is linear search?
+            </li>
+
+            <li>
+                What is bubble sort?
+            </li>
+
+            <li>
+                How can you find the largest element in an array?
+            </li>
+
+            <li>
+                How can you find the smallest element in an array?
+            </li>
+
+            <li>
+                How do you pass an array to a function?
+            </li>
+
+            <li>
+                What is the relationship between arrays and pointers?
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>Practice Programs</h2>
+
+        <ol>
+
+            <li>
+                Write a program to read and display an array.
+            </li>
+
+            <li>
+                Write a program to find the sum of array elements.
+            </li>
+
+            <li>
+                Write a program to find the average of array elements.
+            </li>
+
+            <li>
+                Write a program to find the largest element.
+            </li>
+
+            <li>
+                Write a program to find the smallest element.
+            </li>
+
+            <li>
+                Write a program to search for an element using linear search.
+            </li>
+
+            <li>
+                Write a program to reverse an array.
+            </li>
+
+            <li>
+                Write a program to sort an array in ascending order.
+            </li>
+
+            <li>
+                Write a program to sort an array in descending order.
+            </li>
+
+            <li>
+                Write a program to count even and odd elements.
+            </li>
+
+            <li>
+                Write a program to copy one array into another array.
+            </li>
+
+            <li>
+                Write a program to add two matrices.
+            </li>
+
+            <li>
+                Write a program to find the transpose of a matrix.
+            </li>
+
+            <li>
+                Write a program to find the sum of each row of a matrix.
+            </li>
+
+            <li>
+                Write a program to find the sum of each column of a matrix.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>Summary</h2>
+
+        <p>
+            Arrays are an important data structure in C programming.
+            They allow multiple values of the same data type to be
+            stored using a single variable name.
+        </p>
+
+        <ul>
+
+            <li>
+                An array contains multiple elements of the same type.
+            </li>
+
+            <li>
+                Array indexing starts from 0.
+            </li>
+
+            <li>
+                A one-dimensional array stores elements in a single
+                sequence.
+            </li>
+
+            <li>
+                A two-dimensional array stores elements using rows
+                and columns.
+            </li>
+
+            <li>
+                Loops are commonly used to traverse arrays.
+            </li>
+
+            <li>
+                Arrays can be searched and sorted.
+            </li>
+
+            <li>
+                Arrays can be passed to functions.
+            </li>
+
+            <li>
+                Character arrays are commonly used to store strings.
+            </li>
+
+            <li>
+                Accessing an array outside its valid bounds results in
+                undefined behavior.
+            </li>
+
+            <li>
+                Arrays are widely used in real-world applications.
+            </li>
+
+        </ul>
+
+        <div class="tip">
+
+            <strong>Key Point:</strong>
+
+            Always remember that for an array of size
+            <code>n</code>, the valid indexes are
+            <code>0</code> through <code>n - 1</code>.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Quick Revision</h2>
+
+        <table>
+
+            <tr>
+                <th>Concept</th>
+                <th>Important Point</th>
+            </tr>
+
+            <tr>
+                <td>Array</td>
+                <td>Collection of same-type elements</td>
+            </tr>
+
+            <tr>
+                <td>First Index</td>
+                <td>0</td>
+            </tr>
+
+            <tr>
+                <td>1D Array</td>
+                <td>Single sequence of elements</td>
+            </tr>
+
+            <tr>
+                <td>2D Array</td>
+                <td>Rows and columns</td>
+            </tr>
+
+            <tr>
+                <td>Traversal</td>
+                <td>Visiting elements one by one</td>
+            </tr>
+
+            <tr>
+                <td>Searching</td>
+                <td>Finding a required element</td>
+            </tr>
+
+            <tr>
+                <td>Sorting</td>
+                <td>Arranging elements in order</td>
+            </tr>
+
+            <tr>
+                <td>sizeof</td>
+                <td>Determines size in bytes</td>
+            </tr>
+
+            <tr>
+                <td>String</td>
+                <td>Character sequence terminated by '\0'</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <div class="navigation">
+
+        <a href="09-functions.html" class="button">
+            ← Previous: Functions
+        </a>
+
+        <a href="11-strings.html" class="button">
+            Next: Strings →
+        </a>
+
+    </div>
+
+
+</main>
+
+
+<footer>
+
+    <h3>ALLIED</h3>
+
+    <p>
+        C Programming Learning Course
+    </p>
+
+    <p>
+        Chapter 10 - Arrays in C
+    </p>
+
+    <p>
+        © 2026 ALLIED. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

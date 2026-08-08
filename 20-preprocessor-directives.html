@@ -1,0 +1,3037 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 20 - Preprocessor Directives in C | ALLIED</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">ALLIED</a>
+
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="books.html">Books</a>
+            <a href="c.html">C Programming</a>
+            <a href="login.html">Login</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <div class="hero">
+
+        <h1>Chapter 20: Preprocessor Directives in C</h1>
+
+        <p>
+            Learn how the C preprocessor processes source code before
+            compilation and how directives such as #include, #define,
+            #if, #ifdef, #ifndef, #else, #elif and #endif are used.
+        </p>
+
+    </div>
+
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>
+            After completing this chapter, you will be able to:
+        </p>
+
+        <ul>
+
+            <li>Understand the C preprocessor.</li>
+
+            <li>Understand preprocessing directives.</li>
+
+            <li>Understand the preprocessing stage.</li>
+
+            <li>Use #include directives.</li>
+
+            <li>Use #define directives.</li>
+
+            <li>Create object-like macros.</li>
+
+            <li>Create function-like macros.</li>
+
+            <li>Use #undef.</li>
+
+            <li>Understand conditional compilation.</li>
+
+            <li>Use #if, #ifdef and #ifndef.</li>
+
+            <li>Use #else, #elif and #endif.</li>
+
+            <li>Understand predefined macros.</li>
+
+            <li>Use header guards.</li>
+
+            <li>Identify common preprocessor errors.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.1 Introduction to the C Preprocessor</h2>
+
+        <p>
+            Before a C program is compiled, its source code goes through
+            a preprocessing stage. The C preprocessor handles special
+            instructions called preprocessing directives.
+        </p>
+
+        <p>
+            These directives can include header files, define macros,
+            remove macro definitions and conditionally include portions
+            of source code.
+        </p>
+
+        <div class="note">
+
+            <strong>Simple Definition:</strong>
+
+            <br><br>
+
+            The C preprocessor is a program or processing stage that
+            performs source-code transformations before the compiler
+            compiles the resulting source.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.2 What is a Preprocessor?</h2>
+
+        <p>
+            The preprocessor is the part of the C translation process
+            that processes preprocessing directives before the compiler
+            analyzes the resulting source code.
+        </p>
+
+        <p>
+            It does not normally execute the C program. Instead, it
+            prepares the source code for compilation.
+        </p>
+
+        <h3>Examples of Preprocessor Directives</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+#define PI 3.14159
+
+#ifdef DEBUG
+
+#endif</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.3 Preprocessing Stage</h2>
+
+        <p>
+            A simplified view of the C program translation process is:
+        </p>
+
+        <div class="diagram">
+
+        C Source Program
+                |
+                v
+        Preprocessing
+                |
+                v
+        Translated Source
+                |
+                v
+        Compilation
+                |
+                v
+        Object Code
+                |
+                v
+        Linking
+                |
+                v
+        Executable Program
+
+        </div>
+
+        <p>
+            The exact implementation details can vary between compilers,
+            but preprocessing conceptually occurs before compilation of
+            the resulting source.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.4 Preprocessor Directives</h2>
+
+        <p>
+            Preprocessor directives begin with the <code>#</code>
+            character.
+        </p>
+
+        <h3>Examples</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+#define MAX 100
+
+#undef MAX
+
+#ifdef DEBUG
+
+#endif</code></pre>
+
+        <div class="warning">
+
+            A preprocessor directive is not an ordinary C statement.
+            It is handled during preprocessing.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.5 Types of Preprocessor Directives</h2>
+
+        <table>
+
+            <tr>
+                <th>Directive</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>#include</td>
+                <td>Includes a header file or source file.</td>
+            </tr>
+
+            <tr>
+                <td>#define</td>
+                <td>Defines a macro.</td>
+            </tr>
+
+            <tr>
+                <td>#undef</td>
+                <td>Removes a macro definition.</td>
+            </tr>
+
+            <tr>
+                <td>#if</td>
+                <td>Conditionally includes code based on an expression.</td>
+            </tr>
+
+            <tr>
+                <td>#ifdef</td>
+                <td>Checks whether a macro is defined.</td>
+            </tr>
+
+            <tr>
+                <td>#ifndef</td>
+                <td>Checks whether a macro is not defined.</td>
+            </tr>
+
+            <tr>
+                <td>#else</td>
+                <td>Selects the alternative conditional branch.</td>
+            </tr>
+
+            <tr>
+                <td>#elif</td>
+                <td>Provides another conditional branch.</td>
+            </tr>
+
+            <tr>
+                <td>#endif</td>
+                <td>Ends a conditional preprocessing block.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.6 #include Directive</h2>
+
+        <p>
+            The <code>#include</code> directive is used to make the
+            contents of a header file available to the source file.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>#include &lt;header-file&gt;</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;</code></pre>
+
+        <p>
+            This is commonly used when a program needs declarations for
+            standard input/output functions such as printf() and scanf().
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.7 System Header Files</h2>
+
+        <p>
+            Header files provided by the implementation are commonly
+            included using angle brackets.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;math.h&gt;</code></pre>
+
+        <table>
+
+            <tr>
+                <th>Header</th>
+                <th>Common Purpose</th>
+            </tr>
+
+            <tr>
+                <td>stdio.h</td>
+                <td>Input and output facilities.</td>
+            </tr>
+
+            <tr>
+                <td>stdlib.h</td>
+                <td>General utility functions.</td>
+            </tr>
+
+            <tr>
+                <td>string.h</td>
+                <td>String and memory functions.</td>
+            </tr>
+
+            <tr>
+                <td>math.h</td>
+                <td>Mathematical functions.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.8 User-Defined Header Files</h2>
+
+        <p>
+            A programmer can create a header file and include it using
+            double quotation marks.
+        </p>
+
+        <pre><code>#include "myheader.h"</code></pre>
+
+        <p>
+            This style is commonly used for project-specific header
+            files.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.9 #define Directive</h2>
+
+        <p>
+            The <code>#define</code> directive defines a macro.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>#define NAME replacement</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#define PI 3.14159</code></pre>
+
+        <p>
+            After preprocessing, occurrences of the macro name can be
+            replaced according to the macro definition.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.10 Object-Like Macro</h2>
+
+        <p>
+            A macro without parameters is called an object-like macro.
+        </p>
+
+        <pre><code>#define MAX_SIZE 100</code></pre>
+
+        <h3>Example Program</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+#define MAX_SIZE 100
+
+int main()
+{
+    printf("Maximum size = %d", MAX_SIZE);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Maximum size = 100</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.11 Symbolic Constants</h2>
+
+        <p>
+            Macros are sometimes used to give meaningful names to
+            constant values.
+        </p>
+
+        <pre><code>#define DAYS_IN_WEEK 7
+#define MONTHS_IN_YEAR 12
+#define PI 3.14159</code></pre>
+
+        <div class="tip">
+
+            Meaningful names can make source code easier to understand.
+            However, for typed constants in modern C, const objects or
+            enum values may often be preferable depending on the use case.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.12 #define with Strings</h2>
+
+        <p>
+            A macro can also represent a string literal.
+        </p>
+
+        <pre><code>#define COLLEGE "ALLIED"
+
+#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("College: %s", COLLEGE);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>College: ALLIED</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.13 #define and Expressions</h2>
+
+        <pre><code>#define WIDTH 10
+#define HEIGHT 20
+
+#include &lt;stdio.h&gt;
+
+int main()
+{
+    int area = WIDTH * HEIGHT;
+
+    printf("Area = %d", area);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Area = 200</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.14 Important Point About Macros</h2>
+
+        <p>
+            A macro is not a variable. It represents a preprocessing
+            replacement mechanism.
+        </p>
+
+        <pre><code>#define VALUE 10</code></pre>
+
+        <p>
+            The preprocessor can replace occurrences of
+            <code>VALUE</code> according to the macro definition before
+            compilation.
+        </p>
+
+    </section>
+        <section>
+
+        <h2>20.15 Function-Like Macros</h2>
+
+        <p>
+            A function-like macro contains parameters inside parentheses.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>#define NAME(parameter) replacement</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#define SQUARE(x) ((x) * (x))</code></pre>
+
+        <p>
+            The macro can be used as:
+        </p>
+
+        <pre><code>int result = SQUARE(5);</code></pre>
+
+        <h3>Result</h3>
+
+        <pre><code>25</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.16 Program Using Function-Like Macro</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+#define SQUARE(x) ((x) * (x))
+
+int main()
+{
+    int n = 6;
+
+    printf("Square = %d", SQUARE(n));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Square = 36</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.17 Why Parentheses Are Important in Macros</h2>
+
+        <p>
+            Macro parameters and the complete replacement expression
+            should usually be parenthesized when arithmetic expressions
+            are involved.
+        </p>
+
+        <h3>Unsafe Style</h3>
+
+        <pre><code>#define SQUARE(x) x * x</code></pre>
+
+        <h3>Safer Style</h3>
+
+        <pre><code>#define SQUARE(x) ((x) * (x))</code></pre>
+
+        <p>
+            Parentheses help prevent unexpected results caused by
+            operator precedence.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.18 Macro Side Effects</h2>
+
+        <p>
+            Function-like macros can evaluate their arguments more than
+            once.
+        </p>
+
+        <pre><code>#define SQUARE(x) ((x) * (x))</code></pre>
+
+        <p>
+            Using:
+        </p>
+
+        <pre><code>SQUARE(i++)</code></pre>
+
+        <p>
+            can produce unexpected behavior because the argument may be
+            expanded more than once.
+        </p>
+
+        <div class="warning">
+
+            Be careful when passing expressions with side effects to
+            function-like macros.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.19 Macro for Maximum</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+#define MAX(a, b) ((a) &gt; (b) ? (a) : (b))
+
+int main()
+{
+    int x = 10;
+    int y = 20;
+
+    printf("Maximum = %d", MAX(x, y));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Maximum = 20</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.20 #undef Directive</h2>
+
+        <p>
+            The <code>#undef</code> directive removes a macro definition.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#define VALUE 100
+
+#undef VALUE</code></pre>
+
+        <p>
+            After <code>#undef VALUE</code>, the macro VALUE is no longer
+            defined.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.21 Program Using #undef</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+#define VALUE 10
+
+int main()
+{
+    printf("%d\n", VALUE);
+
+#undef VALUE
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10</code></pre>
+
+        <p>
+            The #undef directive is processed before compilation and
+            removes the macro for subsequent preprocessing.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.22 Conditional Compilation</h2>
+
+        <p>
+            Conditional compilation allows selected portions of source
+            code to be included or excluded during preprocessing.
+        </p>
+
+        <p>
+            Common directives include:
+        </p>
+
+        <pre><code>#if
+#ifdef
+#ifndef
+#else
+#elif
+#endif</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.23 #if Directive</h2>
+
+        <p>
+            The <code>#if</code> directive includes a section of code
+            when its preprocessing condition evaluates to a nonzero
+            value.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#define VERSION 2
+
+#if VERSION == 2
+
+printf("Version 2");
+
+#endif</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.24 #ifdef Directive</h2>
+
+        <p>
+            <code>#ifdef</code> checks whether a specified macro has been
+            defined.
+        </p>
+
+        <pre><code>#define DEBUG
+
+#ifdef DEBUG
+
+printf("Debug mode");
+
+#endif</code></pre>
+
+        <p>
+            If DEBUG is defined, the selected code is included.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.25 #ifndef Directive</h2>
+
+        <p>
+            <code>#ifndef</code> means "if not defined".
+        </p>
+
+        <pre><code>#ifndef VALUE
+
+#define VALUE 100
+
+#endif</code></pre>
+
+        <p>
+            The macro is defined only if VALUE has not already been
+            defined.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.26 Header Guards</h2>
+
+        <p>
+            Header guards are commonly used to prevent a header file from
+            being processed multiple times in the same translation unit.
+        </p>
+
+        <pre><code>#ifndef MYHEADER_H
+#define MYHEADER_H
+
+/* Header declarations */
+
+#endif</code></pre>
+
+        <div class="note">
+
+            Header guards are one of the most important practical uses
+            of #ifndef, #define and #endif.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.27 Header Guard Flow</h2>
+
+        <div class="diagram">
+
+              Include Header
+                    |
+                    v
+             Is MYHEADER_H
+                defined?
+                /      \
+              Yes      No
+               |        |
+               v        v
+            Skip      Define
+            header   MYHEADER_H
+                        |
+                        v
+                  Process header
+                        |
+                        v
+                       END
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.28 #else Directive</h2>
+
+        <p>
+            The <code>#else</code> directive provides an alternative
+            section when the preceding conditional condition is false.
+        </p>
+
+        <pre><code>#ifdef DEBUG
+
+printf("Debug mode");
+
+#else
+
+printf("Normal mode");
+
+#endif</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.29 #elif Directive</h2>
+
+        <p>
+            The <code>#elif</code> directive allows additional
+            conditional branches.
+        </p>
+
+        <pre><code>#if VERSION == 1
+
+printf("Version 1");
+
+#elif VERSION == 2
+
+printf("Version 2");
+
+#else
+
+printf("Other version");
+
+#endif</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.30 #endif Directive</h2>
+
+        <p>
+            The <code>#endif</code> directive marks the end of a
+            conditional preprocessing section.
+        </p>
+
+        <pre><code>#ifdef DEBUG
+
+printf("Debug");
+
+#endif</code></pre>
+
+        <div class="warning">
+
+            Every conditional preprocessing block must be properly
+            terminated.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.31 Conditional Compilation Example</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+#define DEBUG
+
+int main()
+{
+
+#ifdef DEBUG
+
+    printf("Debug information enabled.\n");
+
+#else
+
+    printf("Debug information disabled.\n");
+
+#endif
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Debug information enabled.</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.32 #if, #ifdef and #ifndef Comparison</h2>
+
+        <table>
+
+            <tr>
+                <th>Directive</th>
+                <th>Meaning</th>
+            </tr>
+
+            <tr>
+                <td>#if</td>
+                <td>Tests a preprocessing expression.</td>
+            </tr>
+
+            <tr>
+                <td>#ifdef</td>
+                <td>Tests whether a macro is defined.</td>
+            </tr>
+
+            <tr>
+                <td>#ifndef</td>
+                <td>Tests whether a macro is not defined.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.33 Predefined Macros</h2>
+
+        <p>
+            C implementations provide several predefined macros.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Macro</th>
+                <th>Meaning</th>
+            </tr>
+
+            <tr>
+                <td>__FILE__</td>
+                <td>Name of the current source file.</td>
+            </tr>
+
+            <tr>
+                <td>__LINE__</td>
+                <td>Current source line number.</td>
+            </tr>
+
+            <tr>
+                <td>__DATE__</td>
+                <td>Date the source was compiled.</td>
+            </tr>
+
+            <tr>
+                <td>__TIME__</td>
+                <td>Time the source was compiled.</td>
+            </tr>
+
+            <tr>
+                <td>__STDC__</td>
+                <td>Indicates whether the implementation conforms to a
+                    specified ISO C standard environment.</td>
+            </tr>
+
+        </table>
+
+    </section>
+        <section>
+
+        <h2>20.34 Program Using Predefined Macros</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("File: %s\n", __FILE__);
+    printf("Line: %d\n", __LINE__);
+    printf("Date: %s\n", __DATE__);
+    printf("Time: %s\n", __TIME__);
+
+    return 0;
+}</code></pre>
+
+        <p>
+            The exact date, time, file name and line number depend on the
+            compilation environment and source file.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.35 #if with Mathematical Conditions</h2>
+
+        <pre><code>#define SIZE 100
+
+#if SIZE &gt; 50
+
+#include &lt;stdio.h&gt;
+
+#endif</code></pre>
+
+        <p>
+            Preprocessor conditions are evaluated during preprocessing,
+            before ordinary C runtime execution.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.36 Multiple Conditional Branches</h2>
+
+        <pre><code>#define VERSION 3
+
+#if VERSION == 1
+
+printf("Version One");
+
+#elif VERSION == 2
+
+printf("Version Two");
+
+#elif VERSION == 3
+
+printf("Version Three");
+
+#else
+
+printf("Unknown Version");
+
+#endif</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.37 Program: Debug Mode</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+#define DEBUG
+
+int main()
+{
+    printf("Program started.\n");
+
+#ifdef DEBUG
+
+    printf("Debug information is enabled.\n");
+
+#endif
+
+    printf("Program ended.\n");
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Program started.
+Debug information is enabled.
+Program ended.</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.38 Program: Conditional Message</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+#define STUDENT
+
+int main()
+{
+
+#ifdef STUDENT
+
+    printf("Student mode");
+
+#else
+
+    printf("Guest mode");
+
+#endif
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Student mode</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.39 Program: Macro for Cube</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+#define CUBE(x) ((x) * (x) * (x))
+
+int main()
+{
+    int n = 4;
+
+    printf("Cube = %d", CUBE(n));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Cube = 64</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.40 Program: Macro for Area of Circle</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+#define PI 3.14159
+#define AREA(r) (PI * (r) * (r))
+
+int main()
+{
+    double radius = 5;
+
+    printf("Area = %.2f", AREA(radius));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Area = 78.54</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.41 Program: Macro for Minimum</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+#define MIN(a, b) ((a) &lt; (b) ? (a) : (b))
+
+int main()
+{
+    int a = 25;
+    int b = 15;
+
+    printf("Minimum = %d", MIN(a, b));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Minimum = 15</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.42 Macro vs Function</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>Macro</th>
+                <th>Function</th>
+            </tr>
+
+            <tr>
+                <td>Processed by</td>
+                <td>Preprocessor</td>
+                <td>Compiler/runtime mechanisms</td>
+            </tr>
+
+            <tr>
+                <td>Type checking</td>
+                <td>No normal function parameter type checking</td>
+                <td>Yes, according to declarations</td>
+            </tr>
+
+            <tr>
+                <td>Argument evaluation</td>
+                <td>May occur more than once</td>
+                <td>Normally once per argument</td>
+            </tr>
+
+            <tr>
+                <td>Debugging</td>
+                <td>Can be less straightforward</td>
+                <td>Usually easier</td>
+            </tr>
+
+            <tr>
+                <td>Use</td>
+                <td>Textual/source transformation</td>
+                <td>Executable program logic</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.43 Macro vs const</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>#define</th>
+                <th>const</th>
+            </tr>
+
+            <tr>
+                <td>Handled by</td>
+                <td>Preprocessor</td>
+                <td>Compiler</td>
+            </tr>
+
+            <tr>
+                <td>Type</td>
+                <td>No type associated with the macro itself</td>
+                <td>Has a declared type</td>
+            </tr>
+
+            <tr>
+                <td>Scope behavior</td>
+                <td>Controlled by preprocessing regions</td>
+                <td>Follows C scope rules</td>
+            </tr>
+
+            <tr>
+                <td>Debugging</td>
+                <td>Can be less convenient</td>
+                <td>Generally easier</td>
+            </tr>
+
+        </table>
+
+        <div class="tip">
+
+            Use the mechanism that best matches the requirement.
+            Macros are especially useful for conditional compilation
+            and source-level substitutions; const objects are often
+            preferable for typed constants.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.44 Nested Conditional Compilation</h2>
+
+        <p>
+            Conditional directives can be nested when a program requires
+            multiple levels of preprocessing decisions.
+        </p>
+
+        <pre><code>#ifdef SYSTEM
+
+    #ifdef DEBUG
+
+        printf("System debug mode");
+
+    #endif
+
+#endif</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.45 Logical Operators in #if</h2>
+
+        <p>
+            Preprocessor expressions can use operators such as logical
+            AND, logical OR and logical NOT.
+        </p>
+
+        <pre><code>#define VERSION 2
+#define DEBUG 1
+
+#if VERSION == 2 &amp;&amp; DEBUG
+
+printf("Debug version 2");
+
+#endif</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.46 Using defined Operator</h2>
+
+        <p>
+            The <code>defined</code> operator can be used in conditional
+            preprocessing expressions.
+        </p>
+
+        <pre><code>#ifdef DEBUG
+
+printf("Debug");
+
+#endif</code></pre>
+
+        <p>
+            An equivalent style can use:
+        </p>
+
+        <pre><code>#if defined(DEBUG)
+
+printf("Debug");
+
+#endif</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.47 Conditional Compilation for Platforms</h2>
+
+        <p>
+            Conditional compilation can be used when different source
+            code is required for different target environments.
+        </p>
+
+        <pre><code>#ifdef WINDOWS
+
+printf("Windows code");
+
+#elif defined(LINUX)
+
+printf("Linux code");
+
+#else
+
+printf("Other platform");
+
+#endif</code></pre>
+
+        <p>
+            The actual platform macros depend on the compiler and build
+            environment. Portable code should not assume that every
+            implementation defines the same platform macro.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.48 Header File Example</h2>
+
+        <h3>myheader.h</h3>
+
+        <pre><code>#ifndef MYHEADER_H
+#define MYHEADER_H
+
+#define MESSAGE "Welcome to ALLIED"
+
+void display();
+
+#endif</code></pre>
+
+        <h3>main.c</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include "myheader.h"
+
+void display()
+{
+    printf("%s", MESSAGE);
+}
+
+int main()
+{
+    display();
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Welcome to ALLIED</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.49 Preprocessor Flow Diagram</h2>
+
+        <div class="diagram">
+
+             Source Code
+                  |
+                  v
+         Find # directives
+                  |
+        +---------+---------+
+        |                   |
+        v                   v
+      #include            #define
+        |                   |
+        v                   v
+     Include file       Define macro
+        |                   |
+        +---------+---------+
+                  |
+                  v
+        Conditional checks
+                  |
+                  v
+        Expanded source
+                  |
+                  v
+              Compiler
+                  |
+                  v
+            Object Code
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.50 Important Preprocessor Directives</h2>
+
+        <table>
+
+            <tr>
+                <th>Directive</th>
+                <th>Example</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>#include</td>
+                <td>#include &lt;stdio.h&gt;</td>
+                <td>Include header content.</td>
+            </tr>
+
+            <tr>
+                <td>#define</td>
+                <td>#define PI 3.14</td>
+                <td>Define a macro.</td>
+            </tr>
+
+            <tr>
+                <td>#undef</td>
+                <td>#undef PI</td>
+                <td>Remove a macro.</td>
+            </tr>
+
+            <tr>
+                <td>#if</td>
+                <td>#if VERSION == 2</td>
+                <td>Conditional compilation.</td>
+            </tr>
+
+            <tr>
+                <td>#ifdef</td>
+                <td>#ifdef DEBUG</td>
+                <td>Check whether macro exists.</td>
+            </tr>
+
+            <tr>
+                <td>#ifndef</td>
+                <td>#ifndef HEADER_H</td>
+                <td>Check whether macro does not exist.</td>
+            </tr>
+
+            <tr>
+                <td>#else</td>
+                <td>#else</td>
+                <td>Alternative branch.</td>
+            </tr>
+
+            <tr>
+                <td>#elif</td>
+                <td>#elif VERSION == 2</td>
+                <td>Additional branch.</td>
+            </tr>
+
+            <tr>
+                <td>#endif</td>
+                <td>#endif</td>
+                <td>End conditional block.</td>
+            </tr>
+
+        </table>
+
+    </section>
+        <section>
+
+        <h2>20.51 Advantages of Preprocessor Directives</h2>
+
+        <ul>
+
+            <li>
+                Header files can be included conveniently.
+            </li>
+
+            <li>
+                Repeated source substitutions can be simplified using
+                macros.
+            </li>
+
+            <li>
+                Conditional compilation supports different build
+                configurations.
+            </li>
+
+            <li>
+                Header guards help prevent repeated inclusion of a
+                header's declarations.
+            </li>
+
+            <li>
+                Debugging features can be enabled or disabled at build
+                time.
+            </li>
+
+            <li>
+                Platform-specific source sections can be selected.
+            </li>
+
+            <li>
+                Common constants and configuration values can be named.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.52 Disadvantages of Preprocessor Directives</h2>
+
+        <ul>
+
+            <li>
+                Excessive macro use can make code difficult to understand.
+            </li>
+
+            <li>
+                Macros do not provide normal type checking.
+            </li>
+
+            <li>
+                Function-like macros can evaluate arguments more than
+                once.
+            </li>
+
+            <li>
+                Complex conditional compilation can make code harder to
+                maintain.
+            </li>
+
+            <li>
+                Preprocessor errors can sometimes be difficult to trace.
+            </li>
+
+            <li>
+                Macro names can conflict with identifiers.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.53 Common Errors</h2>
+
+
+        <div class="mcq">
+
+            <h3>❌ Error 1: Missing #</h3>
+
+            <pre><code>include &lt;stdio.h&gt;</code></pre>
+
+            <p>
+                Correct:
+            </p>
+
+            <pre><code>#include &lt;stdio.h&gt;</code></pre>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <h3>❌ Error 2: Incorrect Macro Parentheses</h3>
+
+            <pre><code>#define SQUARE(x) x * x</code></pre>
+
+            <p>
+                Safer:
+            </p>
+
+            <pre><code>#define SQUARE(x) ((x) * (x))</code></pre>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <h3>❌ Error 3: Missing #endif</h3>
+
+            <pre><code>#ifdef DEBUG
+
+printf("Debug");</code></pre>
+
+            <p>
+                Correct:
+            </p>
+
+            <pre><code>#ifdef DEBUG
+
+printf("Debug");
+
+#endif</code></pre>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <h3>❌ Error 4: Macro Side Effects</h3>
+
+            <pre><code>#define SQUARE(x) ((x) * (x))
+
+SQUARE(i++)</code></pre>
+
+            <p>
+                Avoid passing expressions with side effects to macros that
+                may evaluate their parameters more than once.
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <h3>❌ Error 5: Macro Name Collision</h3>
+
+            <pre><code>#define SIZE 100
+
+int SIZE = 20;</code></pre>
+
+            <p>
+                A macro can interfere with identifiers if names are not
+                chosen carefully.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.54 Best Practices</h2>
+
+        <ol>
+
+            <li>
+                Use meaningful macro names.
+            </li>
+
+            <li>
+                Use uppercase names for many project-wide macros when
+                appropriate.
+            </li>
+
+            <li>
+                Parenthesize macro parameters and complete expressions.
+            </li>
+
+            <li>
+                Avoid macros with arguments that have side effects.
+            </li>
+
+            <li>
+                Keep conditional compilation simple.
+            </li>
+
+            <li>
+                Use header guards in reusable headers.
+            </li>
+
+            <li>
+                Avoid defining macros with names likely to conflict with
+                library or project identifiers.
+            </li>
+
+            <li>
+                Prefer typed C language features when they provide a
+                clearer and safer solution.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.55 Macro Naming</h2>
+
+        <h3>Good Example</h3>
+
+        <pre><code>#define MAX_STUDENTS 100
+#define PI_VALUE 3.14159</code></pre>
+
+        <h3>Less Descriptive Example</h3>
+
+        <pre><code>#define X 100
+#define P 3.14</code></pre>
+
+        <p>
+            Descriptive names make source code easier to understand.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.56 Header Guards Best Practice</h2>
+
+        <pre><code>#ifndef STUDENT_H
+#define STUDENT_H
+
+struct Student
+{
+    int id;
+    char name[50];
+};
+
+#endif</code></pre>
+
+        <p>
+            A header guard prevents the header's contents from being
+            processed repeatedly within the same translation unit.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.57 Real-World Applications</h2>
+
+        <ul>
+
+            <li>
+                Large C and C++ software projects.
+            </li>
+
+            <li>
+                Operating-system development.
+            </li>
+
+            <li>
+                Embedded systems.
+            </li>
+
+            <li>
+                Device-driver development.
+            </li>
+
+            <li>
+                Cross-platform software.
+            </li>
+
+            <li>
+                Debug and release configurations.
+            </li>
+
+            <li>
+                Library development.
+            </li>
+
+            <li>
+                Compiler and build systems.
+            </li>
+
+            <li>
+                Configuration management.
+            </li>
+
+            <li>
+                Header file management.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.58 Preprocessor vs Compiler</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>Preprocessor</th>
+                <th>Compiler</th>
+            </tr>
+
+            <tr>
+                <td>Main role</td>
+                <td>Processes preprocessing directives.</td>
+                <td>Analyzes and translates C source.</td>
+            </tr>
+
+            <tr>
+                <td>Macros</td>
+                <td>Handles macro expansion.</td>
+                <td>Compiles the resulting source.</td>
+            </tr>
+
+            <tr>
+                <td>#include</td>
+                <td>Processes inclusion.</td>
+                <td>Compiles resulting declarations and code.</td>
+            </tr>
+
+            <tr>
+                <td>#if</td>
+                <td>Selects source sections.</td>
+                <td>Compiles the selected source.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.59 Preprocessor vs Runtime</h2>
+
+        <table>
+
+            <tr>
+                <th>Preprocessing</th>
+                <th>Runtime</th>
+            </tr>
+
+            <tr>
+                <td>Occurs before compilation of the resulting source.</td>
+                <td>Occurs when the executable program runs.</td>
+            </tr>
+
+            <tr>
+                <td>Handles macros and conditional source selection.</td>
+                <td>Executes program instructions.</td>
+            </tr>
+
+            <tr>
+                <td>#define is processed here.</td>
+                <td>printf(), loops and calculations execute here.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.60 Important Exam Points ⭐</h2>
+
+        <ul>
+
+            <li>
+                Preprocessor directives begin with #.
+            </li>
+
+            <li>
+                #include is used for header inclusion.
+            </li>
+
+            <li>
+                #define defines a macro.
+            </li>
+
+            <li>
+                #undef removes a macro definition.
+            </li>
+
+            <li>
+                #ifdef checks whether a macro is defined.
+            </li>
+
+            <li>
+                #ifndef checks whether a macro is not defined.
+            </li>
+
+            <li>
+                #if tests a preprocessing expression.
+            </li>
+
+            <li>
+                #else provides an alternative branch.
+            </li>
+
+            <li>
+                #elif provides another conditional branch.
+            </li>
+
+            <li>
+                #endif ends a conditional block.
+            </li>
+
+            <li>
+                Header guards commonly use #ifndef, #define and #endif.
+            </li>
+
+            <li>
+                Function-like macros should generally use careful
+                parenthesization.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.61 Quick Revision Table</h2>
+
+        <table>
+
+            <tr>
+                <th>Concept</th>
+                <th>Remember</th>
+            </tr>
+
+            <tr>
+                <td>Preprocessor</td>
+                <td>Processes preprocessing directives before compilation.</td>
+            </tr>
+
+            <tr>
+                <td>#include</td>
+                <td>Includes a file.</td>
+            </tr>
+
+            <tr>
+                <td>#define</td>
+                <td>Defines a macro.</td>
+            </tr>
+
+            <tr>
+                <td>#undef</td>
+                <td>Removes a macro.</td>
+            </tr>
+
+            <tr>
+                <td>#if</td>
+                <td>Conditional compilation expression.</td>
+            </tr>
+
+            <tr>
+                <td>#ifdef</td>
+                <td>If macro is defined.</td>
+            </tr>
+
+            <tr>
+                <td>#ifndef</td>
+                <td>If macro is not defined.</td>
+            </tr>
+
+            <tr>
+                <td>#else</td>
+                <td>Alternative branch.</td>
+            </tr>
+
+            <tr>
+                <td>#elif</td>
+                <td>Additional condition.</td>
+            </tr>
+
+            <tr>
+                <td>#endif</td>
+                <td>Ends conditional block.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.62 Final Flow Diagram</h2>
+
+        <div class="diagram">
+
+                    C SOURCE CODE
+                          |
+                          v
+                   PREPROCESSOR
+                          |
+             +------------+------------+
+             |            |            |
+             v            v            v
+          #include      #define     #if/#ifdef
+             |            |            |
+             v            v            v
+          Include       Expand      Select
+           files        macros       code
+             |            |            |
+             +------------+------------+
+                          |
+                          v
+                   Processed Source
+                          |
+                          v
+                       COMPILER
+                          |
+                          v
+                     OBJECT CODE
+                          |
+                          v
+                       LINKER
+                          |
+                          v
+                     EXECUTABLE
+
+        </div>
+
+    </section>
+        <section>
+
+        <h2>20.63 Summary</h2>
+
+        <p>
+            The C preprocessor is an important part of the C translation
+            process. It processes preprocessing directives before the
+            resulting source code is compiled.
+        </p>
+
+        <p>
+            The most commonly used directives include #include,
+            #define, #undef, #if, #ifdef, #ifndef, #else, #elif and
+            #endif.
+        </p>
+
+        <p>
+            Macros can be object-like or function-like. Conditional
+            compilation allows programmers to select source code based
+            on preprocessing conditions.
+        </p>
+
+        <p>
+            Header guards are commonly used to prevent repeated
+            processing of a header's contents within the same translation
+            unit.
+        </p>
+
+        <div class="tip">
+
+            <strong>Easy Formula to Remember:</strong>
+
+            <br><br>
+
+            <strong>
+                #include → Include<br>
+                #define → Define<br>
+                #undef → Remove<br>
+                #if → Check condition<br>
+                #ifdef → If defined<br>
+                #ifndef → If not defined<br>
+                #else → Otherwise<br>
+                #elif → Another condition<br>
+                #endif → End condition
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.64 MCQs – Multiple Choice Questions</h2>
+
+
+        <div class="mcq">
+
+            <p><strong>1. What is the main purpose of the C preprocessor?</strong></p>
+
+            <p>A) Execute the program</p>
+            <p>B) Process preprocessing directives</p>
+            <p>C) Allocate memory</p>
+            <p>D) Run the linker</p>
+
+            <p class="answer">
+                Answer: B) Process preprocessing directives
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>2. Which symbol begins a preprocessing directive?</strong></p>
+
+            <p>A) $</p>
+            <p>B) @</p>
+            <p>C) #</p>
+            <p>D) &amp;</p>
+
+            <p class="answer">
+                Answer: C) #
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>3. Which directive is used to include a header?</strong></p>
+
+            <p>A) #define</p>
+            <p>B) #include</p>
+            <p>C) #header</p>
+            <p>D) #import</p>
+
+            <p class="answer">
+                Answer: B) #include
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>4. Which directive defines a macro?</strong></p>
+
+            <p>A) #define</p>
+            <p>B) #macro</p>
+            <p>C) #create</p>
+            <p>D) #const</p>
+
+            <p class="answer">
+                Answer: A) #define
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>5. Which directive removes a macro definition?</strong></p>
+
+            <p>A) #remove</p>
+            <p>B) #delete</p>
+            <p>C) #undef</p>
+            <p>D) #clear</p>
+
+            <p class="answer">
+                Answer: C) #undef
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>6. Which directive checks whether a macro is defined?</strong></p>
+
+            <p>A) #ifdef</p>
+            <p>B) #ifnot</p>
+            <p>C) #check</p>
+            <p>D) #defined</p>
+
+            <p class="answer">
+                Answer: A) #ifdef
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>7. What does #ifndef mean?</strong></p>
+
+            <p>A) If function exists</p>
+            <p>B) If macro is not defined</p>
+            <p>C) If file exists</p>
+            <p>D) If number is false</p>
+
+            <p class="answer">
+                Answer: B) If macro is not defined
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>8. Which directive ends a conditional block?</strong></p>
+
+            <p>A) #end</p>
+            <p>B) #endif</p>
+            <p>C) #stop</p>
+            <p>D) #finish</p>
+
+            <p class="answer">
+                Answer: B) #endif
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>9. Which directive provides an alternative branch?</strong></p>
+
+            <p>A) #else</p>
+            <p>B) #other</p>
+            <p>C) #alternative</p>
+            <p>D) #default</p>
+
+            <p class="answer">
+                Answer: A) #else
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>10. Which directive provides another conditional branch?</strong></p>
+
+            <p>A) #another</p>
+            <p>B) #elif</p>
+            <p>C) #elseifonly</p>
+            <p>D) #next</p>
+
+            <p class="answer">
+                Answer: B) #elif
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>11. Which macro normally gives the current source file name?</strong></p>
+
+            <p>A) __FILE__</p>
+            <p>B) __NAME__</p>
+            <p>C) __SOURCE__</p>
+            <p>D) __PROGRAM__</p>
+
+            <p class="answer">
+                Answer: A) __FILE__
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>12. Which predefined macro normally gives the current source line?</strong></p>
+
+            <p>A) __ROW__</p>
+            <p>B) __LINE__</p>
+            <p>C) __NUMBER__</p>
+            <p>D) __SOURCE_LINE__</p>
+
+            <p class="answer">
+                Answer: B) __LINE__
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>13. Which is commonly used for header guards?</strong></p>
+
+            <p>A) #ifndef</p>
+            <p>B) #loop</p>
+            <p>C) #guard</p>
+            <p>D) #protect</p>
+
+            <p class="answer">
+                Answer: A) #ifndef
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>14. Which is an object-like macro?</strong></p>
+
+            <p>A) #define MAX 100</p>
+            <p>B) #function MAX()</p>
+            <p>C) #macro(MAX)</p>
+            <p>D) #value MAX()</p>
+
+            <p class="answer">
+                Answer: A) #define MAX 100
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>15. Which is a function-like macro?</strong></p>
+
+            <p>A) #define PI 3.14</p>
+            <p>B) #define SQUARE(x) ((x)*(x))</p>
+            <p>C) #macro SQUARE</p>
+            <p>D) #function SQUARE</p>
+
+            <p class="answer">
+                Answer: B) #define SQUARE(x) ((x)*(x))
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>16. Which directive is commonly used with header guards?</strong></p>
+
+            <p>A) #ifndef</p>
+            <p>B) #repeat</p>
+            <p>C) #includeonly</p>
+            <p>D) #header</p>
+
+            <p class="answer">
+                Answer: A) #ifndef
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>17. When are preprocessing directives handled?</strong></p>
+
+            <p>A) During program execution</p>
+            <p>B) During preprocessing before compilation</p>
+            <p>C) After linking</p>
+            <p>D) After program termination</p>
+
+            <p class="answer">
+                Answer: B) During preprocessing before compilation
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>18. Which directive can conditionally include source code?</strong></p>
+
+            <p>A) #if</p>
+            <p>B) #print</p>
+            <p>C) #run</p>
+            <p>D) #execute</p>
+
+            <p class="answer">
+                Answer: A) #if
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>19. What is a major risk of poorly designed macros?</strong></p>
+
+            <p>A) They always allocate memory</p>
+            <p>B) Unexpected evaluation or precedence problems</p>
+            <p>C) They automatically create files</p>
+            <p>D) They always cause syntax errors</p>
+
+            <p class="answer">
+                Answer: B) Unexpected evaluation or precedence problems
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>20. Which is a good macro practice?</strong></p>
+
+            <p>A) Ignore parentheses</p>
+            <p>B) Use arguments with side effects</p>
+            <p>C) Use meaningful names and careful parenthesization</p>
+            <p>D) Define every variable as a macro</p>
+
+            <p class="answer">
+                Answer: C) Use meaningful names and careful parenthesization
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.65 Interview Questions</h2>
+
+        <ol>
+
+            <li>
+                <strong>What is a preprocessor?</strong>
+                <br>
+                It is the source-processing stage that handles
+                preprocessing directives before compilation.
+            </li>
+
+            <li>
+                <strong>What is a preprocessor directive?</strong>
+                <br>
+                It is an instruction beginning with # that is handled
+                during preprocessing.
+            </li>
+
+            <li>
+                <strong>What is #include?</strong>
+                <br>
+                It is used to include the contents of a file.
+            </li>
+
+            <li>
+                <strong>What is #define?</strong>
+                <br>
+                It defines a macro.
+            </li>
+
+            <li>
+                <strong>What is #undef?</strong>
+                <br>
+                It removes a macro definition.
+            </li>
+
+            <li>
+                <strong>What is conditional compilation?</strong>
+                <br>
+                It is the selection of source-code sections during
+                preprocessing based on conditions.
+            </li>
+
+            <li>
+                <strong>What is #ifdef?</strong>
+                <br>
+                It checks whether a specified macro is defined.
+            </li>
+
+            <li>
+                <strong>What is #ifndef?</strong>
+                <br>
+                It checks whether a specified macro is not defined.
+            </li>
+
+            <li>
+                <strong>What is a macro?</strong>
+                <br>
+                A macro is a preprocessing definition that can cause
+                source text to be substituted or conditionally selected.
+            </li>
+
+            <li>
+                <strong>Why are header guards used?</strong>
+                <br>
+                They prevent a header's contents from being processed
+                multiple times within the same translation unit.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.66 Viva Questions</h2>
+
+        <table>
+
+            <tr>
+                <th>Question</th>
+                <th>Short Answer</th>
+            </tr>
+
+            <tr>
+                <td>Preprocessor symbol?</td>
+                <td>#</td>
+            </tr>
+
+            <tr>
+                <td>Include header?</td>
+                <td>#include</td>
+            </tr>
+
+            <tr>
+                <td>Define macro?</td>
+                <td>#define</td>
+            </tr>
+
+            <tr>
+                <td>Remove macro?</td>
+                <td>#undef</td>
+            </tr>
+
+            <tr>
+                <td>If macro defined?</td>
+                <td>#ifdef</td>
+            </tr>
+
+            <tr>
+                <td>If macro not defined?</td>
+                <td>#ifndef</td>
+            </tr>
+
+            <tr>
+                <td>Conditional expression?</td>
+                <td>#if</td>
+            </tr>
+
+            <tr>
+                <td>Alternative branch?</td>
+                <td>#else</td>
+            </tr>
+
+            <tr>
+                <td>Additional branch?</td>
+                <td>#elif</td>
+            </tr>
+
+            <tr>
+                <td>End conditional block?</td>
+                <td>#endif</td>
+            </tr>
+
+            <tr>
+                <td>Current file macro?</td>
+                <td>__FILE__</td>
+            </tr>
+
+            <tr>
+                <td>Current line macro?</td>
+                <td>__LINE__</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.67 One-Minute Revision 🚀</h2>
+
+        <div class="diagram">
+
+              PREPROCESSOR
+                    |
+        +-----------+-----------+
+        |           |           |
+        v           v           v
+     #include    #define    Conditional
+        |           |       Compilation
+        v           v           |
+      Header      Macro      #if
+       File         |        #ifdef
+                    |        #ifndef
+                    |        #else
+                    |        #elif
+                    |        #endif
+                    |
+                    v
+             Processed Source
+                    |
+                    v
+                 Compiler
+                    |
+                    v
+              Executable
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>20.68 Final Chapter Summary 📚</h2>
+
+        <p>
+            Preprocessor directives are an important part of C
+            programming. They allow source code to be prepared before
+            compilation.
+        </p>
+
+        <p>
+            The most important directives are #include, #define, #undef,
+            #if, #ifdef, #ifndef, #else, #elif and #endif.
+        </p>
+
+        <p>
+            Macros can simplify repeated source substitutions, while
+            conditional compilation can support different configurations
+            and platforms.
+        </p>
+
+        <p>
+            Header guards are commonly used to protect header contents
+            from repeated processing in a translation unit.
+        </p>
+
+        <div class="tip">
+
+            <strong>Exam Formula:</strong>
+
+            <br><br>
+
+            <strong>
+                #include → Include File
+                <br>
+                #define → Define Macro
+                <br>
+                #undef → Remove Macro
+                <br>
+                #if → Test Condition
+                <br>
+                #ifdef → If Defined
+                <br>
+                #ifndef → If Not Defined
+                <br>
+                #else → Alternative
+                <br>
+                #elif → Another Condition
+                <br>
+                #endif → End
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <div class="navigation">
+
+        <a href="19-command-line-arguments.html"
+           class="button">
+            ← Previous Chapter
+        </a>
+
+        <a href="c.html"
+           class="button">
+            C Programming
+        </a>
+
+        <a href="home.html"
+           class="button">
+            Home →
+        </a>
+
+    </div>
+
+
+</main>
+
+
+<footer>
+
+    <h3>ALLIED</h3>
+
+    <p>
+        Learn C Programming with simple explanations,
+        examples and practical programs.
+    </p>
+
+    <p>
+        © 2026 ALLIED. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

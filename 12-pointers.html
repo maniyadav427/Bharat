@@ -1,0 +1,3109 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 12 - Pointers in C | ALLIED</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">
+            ALLIED
+        </a>
+
+        <nav>
+
+            <a href="home.html">
+                Home
+            </a>
+
+            <a href="books.html">
+                Books
+            </a>
+
+            <a href="c.html">
+                C Programming
+            </a>
+
+            <a href="login.html">
+                Login
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <div class="hero">
+
+        <h1>
+            Chapter 12: Pointers in C
+        </h1>
+
+        <p>
+            Learn how pointers store memory addresses and how they are
+            used for accessing data, working with arrays, passing values
+            to functions and performing dynamic memory operations.
+        </p>
+
+    </div>
+
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>
+            After completing this chapter, you will be able to:
+        </p>
+
+        <ul>
+
+            <li>
+                Understand the concept of pointers.
+            </li>
+
+            <li>
+                Understand memory addresses.
+            </li>
+
+            <li>
+                Declare and initialize pointers.
+            </li>
+
+            <li>
+                Use the address-of operator.
+            </li>
+
+            <li>
+                Use the dereference operator.
+            </li>
+
+            <li>
+                Understand pointer arithmetic.
+            </li>
+
+            <li>
+                Understand the relationship between arrays and pointers.
+            </li>
+
+            <li>
+                Pass addresses to functions.
+            </li>
+
+            <li>
+                Understand pointer-to-pointer concepts.
+            </li>
+
+            <li>
+                Understand common pointer errors.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Introduction to Pointers</h2>
+
+        <p>
+            A pointer is a variable that stores the memory address of
+            another variable.
+        </p>
+
+        <p>
+            Normal variables store values, while pointer variables store
+            addresses.
+        </p>
+
+        <h3>Simple Example</h3>
+
+        <pre><code>int number = 10;
+
+int *ptr = &amp;number;</code></pre>
+
+        <p>
+            Here, <code>number</code> stores the value 10 and
+            <code>ptr</code> stores the address of <code>number</code>.
+        </p>
+
+        <div class="note">
+
+            <strong>Simple Definition:</strong>
+
+            A pointer is a variable that stores the memory address of
+            another variable.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Why Are Pointers Needed?</h2>
+
+        <p>
+            Pointers are one of the most important features of C.
+            They provide direct access to memory addresses and allow
+            programs to work efficiently with data.
+        </p>
+
+        <ul>
+
+            <li>
+                Accessing variables through their addresses.
+            </li>
+
+            <li>
+                Passing variables to functions by address.
+            </li>
+
+            <li>
+                Modifying variables inside functions.
+            </li>
+
+            <li>
+                Processing arrays efficiently.
+            </li>
+
+            <li>
+                Working with strings.
+            </li>
+
+            <li>
+                Dynamic memory allocation.
+            </li>
+
+            <li>
+                Creating linked lists and other data structures.
+            </li>
+
+            <li>
+                Working with structures.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Memory Address</h2>
+
+        <p>
+            Every variable stored in computer memory has an address.
+            The address identifies the location where the variable's
+            data is stored.
+        </p>
+
+        <pre><code>int number = 10;</code></pre>
+
+        <div class="diagram">
+
+             Variable
+            +---------+
+            | number  |
+            |   10    |
+            +---------+
+                 |
+                 |
+                 v
+           Memory Address
+
+        </div>
+
+        <p>
+            The address of a variable can be obtained using the
+            address-of operator <code>&amp;</code>.
+        </p>
+
+        <pre><code>printf("%p", (void *)&amp;number);</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Address-of Operator (&amp;)</h2>
+
+        <p>
+            The address-of operator <code>&amp;</code> returns the memory
+            address of a variable.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number = 25;
+
+    printf("Value = %d\n", number);
+    printf("Address = %p", (void *)&amp;number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Value = 25
+Address = 0x7ffd...</code></pre>
+
+        <div class="note">
+
+            The actual memory address can be different every time the
+            program runs.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer Declaration</h2>
+
+        <p>
+            A pointer is declared using the <code>*</code> symbol.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>data_type *pointer_name;</code></pre>
+
+        <h3>Examples</h3>
+
+        <pre><code>int *ptr;
+
+float *price;
+
+char *letter;
+
+double *value;</code></pre>
+
+        <p>
+            The pointer type should correspond to the type of object
+            whose address it is intended to point to.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer Initialization</h2>
+
+        <p>
+            A pointer can be initialized with the address of a compatible
+            variable.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number = 50;
+
+    int *ptr = &amp;number;
+
+    printf("Number = %d\n", number);
+    printf("Pointer = %p", (void *)ptr);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 50
+Pointer = 0x7ffd...</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Dereference Operator (*)</h2>
+
+        <p>
+            The dereference operator <code>*</code> is used with a
+            pointer to access the value stored at the address contained
+            in that pointer.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number = 100;
+
+    int *ptr = &amp;number;
+
+    printf("Value = %d", *ptr);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Value = 100</code></pre>
+
+        <div class="tip">
+
+            <strong>Remember:</strong>
+
+            <code>&amp;number</code> means "address of number".
+
+            <br>
+
+            <code>*ptr</code> means "value stored at the address in ptr".
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer Diagram</h2>
+
+        <div class="diagram">
+
+        int number = 25;
+
+        int *ptr = &amp;number;
+
+
+             ptr
+              |
+              | stores address
+              v
+        +-----------+
+        |   25      |
+        |  number   |
+        +-----------+
+              ^
+              |
+           memory
+           address
+
+        </div>
+
+        <p>
+            The pointer does not normally store the value 25 directly.
+            It stores the address where 25 is located.
+        </p>
+
+    </section>
+        <section>
+
+        <h2>Pointer and Variable Relationship</h2>
+
+        <p>
+            A pointer and a normal variable are different, but they are
+            connected through a memory address.
+        </p>
+
+        <pre><code>int number = 25;
+int *ptr = &amp;number;</code></pre>
+
+        <table>
+
+            <tr>
+                <th>Expression</th>
+                <th>Meaning</th>
+            </tr>
+
+            <tr>
+                <td>number</td>
+                <td>Value stored in number</td>
+            </tr>
+
+            <tr>
+                <td>&amp;number</td>
+                <td>Address of number</td>
+            </tr>
+
+            <tr>
+                <td>ptr</td>
+                <td>Address stored in ptr</td>
+            </tr>
+
+            <tr>
+                <td>*ptr</td>
+                <td>Value stored at the address in ptr</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Changing a Value Using a Pointer</h2>
+
+        <p>
+            A pointer can be used to modify the value of the variable
+            to which it points.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number = 10;
+
+    int *ptr = &amp;number;
+
+    printf("Before = %d\n", number);
+
+    *ptr = 50;
+
+    printf("After = %d", number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Before = 10
+After = 50</code></pre>
+
+        <div class="note">
+
+            Changing <code>*ptr</code> changes the value of the variable
+            whose address is stored in the pointer.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer Data Types</h2>
+
+        <p>
+            Pointers can point to variables of different data types.
+            The pointer type should normally match the type of the
+            object it points to.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Variable</th>
+                <th>Pointer</th>
+            </tr>
+
+            <tr>
+                <td>int number;</td>
+                <td>int *ptr;</td>
+            </tr>
+
+            <tr>
+                <td>float price;</td>
+                <td>float *ptr;</td>
+            </tr>
+
+            <tr>
+                <td>char letter;</td>
+                <td>char *ptr;</td>
+            </tr>
+
+            <tr>
+                <td>double value;</td>
+                <td>double *ptr;</td>
+            </tr>
+
+        </table>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number = 10;
+    float price = 25.5f;
+    char letter = 'A';
+
+    int *p1 = &amp;number;
+    float *p2 = &amp;price;
+    char *p3 = &amp;letter;
+
+    printf("%d\n", *p1);
+    printf("%.2f\n", *p2);
+    printf("%c", *p3);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10
+25.50
+A</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer Arithmetic</h2>
+
+        <p>
+            Pointer arithmetic allows a pointer to move between elements
+            of an array.
+        </p>
+
+        <p>
+            Common pointer operations include:
+        </p>
+
+        <ul>
+
+            <li>Incrementing a pointer.</li>
+
+            <li>Decrementing a pointer.</li>
+
+            <li>Adding an integer to a pointer.</li>
+
+            <li>Subtracting an integer from a pointer.</li>
+
+            <li>Subtracting two pointers that refer into the same array.</li>
+
+        </ul>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[] = {10, 20, 30};
+
+    int *ptr = numbers;
+
+    printf("%d\n", *ptr);
+
+    ptr++;
+
+    printf("%d\n", *ptr);
+
+    ptr++;
+
+    printf("%d", *ptr);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10
+20
+30</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer Increment</h2>
+
+        <p>
+            When a pointer is incremented, it moves to the next element
+            of the type it points to.
+        </p>
+
+        <pre><code>int numbers[] = {10, 20, 30};
+
+int *ptr = numbers;
+
+printf("%d\n", *ptr);
+
+ptr++;
+
+printf("%d", *ptr);</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10
+20</code></pre>
+
+        <div class="tip">
+
+            Pointer arithmetic automatically accounts for the size of
+            the pointed-to type. For example, an <code>int *</code>
+            moves by one <code>int</code> element when incremented.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer Decrement</h2>
+
+        <p>
+            The decrement operator moves a pointer to the previous
+            element of an array.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[] = {10, 20, 30};
+
+    int *ptr = &amp;numbers[2];
+
+    printf("%d\n", *ptr);
+
+    ptr--;
+
+    printf("%d", *ptr);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>30
+20</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer and Array Relationship</h2>
+
+        <p>
+            The name of an array is converted to a pointer to its first
+            element in many expressions.
+        </p>
+
+        <pre><code>int numbers[3] = {10, 20, 30};</code></pre>
+
+        <p>
+            The following expressions access the first element:
+        </p>
+
+        <pre><code>numbers[0]
+
+*numbers</code></pre>
+
+        <p>
+            Both produce the value <code>10</code>.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[] = {10, 20, 30};
+
+    printf("%d\n", numbers[0]);
+    printf("%d\n", *numbers);
+
+    printf("%d\n", numbers[1]);
+    printf("%d", *(numbers + 1));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10
+10
+20
+20</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Accessing Array Elements Using Pointers</h2>
+
+        <p>
+            A pointer can be used to traverse an array.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[] = {10, 20, 30, 40, 50};
+
+    int *ptr = numbers;
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", *(ptr + i));
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10 20 30 40 50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer to Pointer</h2>
+
+        <p>
+            A pointer to pointer is a pointer variable that stores the
+            address of another pointer.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number = 100;
+
+    int *ptr = &amp;number;
+
+    int **ptr2 = &amp;ptr;
+
+    printf("Number = %d\n", number);
+
+    printf("Using ptr = %d\n", *ptr);
+
+    printf("Using ptr2 = %d", **ptr2);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 100
+Using ptr = 100
+Using ptr2 = 100</code></pre>
+
+        <div class="diagram">
+
+        number
+           |
+           v
+        +-------+
+        |  100  |
+        +-------+
+           ^
+           |
+          ptr
+           ^
+           |
+         ptr2
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Null Pointer</h2>
+
+        <p>
+            A null pointer is a pointer that does not point to a valid
+            object or function.
+        </p>
+
+        <p>
+            In C, the null pointer constant is commonly represented by
+            <code>NULL</code>.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int *ptr = NULL;
+
+    if (ptr == NULL)
+    {
+        printf("Pointer is NULL");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Pointer is NULL</code></pre>
+
+        <div class="warning">
+
+            Do not dereference a null pointer. An expression such as
+            <code>*ptr</code> when <code>ptr == NULL</code> has undefined
+            behavior.
+
+        </div>
+
+    </section>
+        <section>
+
+        <h2>Pointer to a Function</h2>
+
+        <p>
+            A function pointer is a pointer that stores the address of
+            a function. It can then be used to call that function.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void message()
+{
+    printf("Hello from function pointer");
+}
+
+int main()
+{
+    void (*ptr)();
+
+    ptr = message;
+
+    (*ptr)();
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Hello from function pointer</code></pre>
+
+        <div class="note">
+
+            Function pointers are useful in callbacks, menus,
+            event handling and other advanced programming techniques.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Passing Pointer to a Function</h2>
+
+        <p>
+            A pointer can be passed to a function when the function needs
+            access to the original variable.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void changeValue(int *ptr)
+{
+    *ptr = 100;
+}
+
+int main()
+{
+    int number = 25;
+
+    printf("Before = %d\n", number);
+
+    changeValue(&amp;number);
+
+    printf("After = %d", number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Before = 25
+After = 100</code></pre>
+
+        <p>
+            The function receives the address of <code>number</code>.
+            Therefore, it can modify the original variable.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>Call by Value and Call by Address</h2>
+
+        <p>
+            C normally passes function arguments by value. When an
+            address is passed through a pointer, the function can modify
+            the original object through that address.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>Passing a Value</th>
+                <th>Passing an Address</th>
+            </tr>
+
+            <tr>
+                <td>What is passed?</td>
+                <td>Copy of the value</td>
+                <td>Address of the object</td>
+            </tr>
+
+            <tr>
+                <td>Original value can be modified?</td>
+                <td>Not through the parameter</td>
+                <td>Yes, through the pointer</td>
+            </tr>
+
+            <tr>
+                <td>Uses pointer?</td>
+                <td>No</td>
+                <td>Yes</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Swap Two Numbers Using Pointers</h2>
+
+        <p>
+            Pointers can be used to swap the values of two variables
+            inside a function.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void swap(int *a, int *b)
+{
+    int temp;
+
+    temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main()
+{
+    int x = 10;
+    int y = 20;
+
+    printf("Before swap:\n");
+    printf("x = %d\n", x);
+    printf("y = %d\n", y);
+
+    swap(&amp;x, &amp;y);
+
+    printf("After swap:\n");
+    printf("x = %d\n", x);
+    printf("y = %d", y);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Before swap:
+x = 10
+y = 20
+
+After swap:
+x = 20
+y = 10</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer with Strings</h2>
+
+        <p>
+            Character pointers are commonly used to traverse and process
+            strings.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char word[] = "HELLO";
+
+    char *ptr = word;
+
+    while (*ptr != '\0')
+    {
+        printf("%c ", *ptr);
+        ptr++;
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>H E L L O</code></pre>
+
+        <p>
+            The pointer starts at the first character and moves forward
+            until it reaches the null character.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer with Character Arrays</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    char name[] = "ALLIED";
+
+    char *ptr = name;
+
+    printf("String = %s\n", ptr);
+
+    printf("First character = %c", *ptr);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>String = ALLIED
+First character = A</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer to Structure</h2>
+
+        <p>
+            A pointer can point to a structure variable. The
+            arrow operator <code>-&gt;</code> is commonly used to access
+            structure members through a pointer.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int age;
+    float marks;
+};
+
+int main()
+{
+    struct Student student = {18, 85.5f};
+
+    struct Student *ptr = &amp;student;
+
+    printf("Age = %d\n", ptr-&gt;age);
+    printf("Marks = %.2f", ptr-&gt;marks);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Age = 18
+Marks = 85.50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer to Structure: . vs -&gt;</h2>
+
+        <p>
+            When accessing a structure directly, the dot operator
+            <code>.</code> is used. When accessing a structure through
+            a pointer, the arrow operator <code>-&gt;</code> is used.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Situation</th>
+                <th>Operator</th>
+                <th>Example</th>
+            </tr>
+
+            <tr>
+                <td>Structure variable</td>
+                <td>.</td>
+                <td>student.age</td>
+            </tr>
+
+            <tr>
+                <td>Pointer to structure</td>
+                <td>-&gt;</td>
+                <td>ptr-&gt;age</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer Arithmetic with Arrays</h2>
+
+        <p>
+            Pointer arithmetic is particularly useful when processing
+            arrays.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[] = {10, 20, 30, 40, 50};
+
+    int *ptr = numbers;
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", *(ptr + i));
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10 20 30 40 50</code></pre>
+
+        <div class="diagram">
+
+        ptr
+         |
+         v
+
+        +----+----+----+----+----+
+        | 10 | 20 | 30 | 40 | 50 |
+        +----+----+----+----+----+
+          0    1    2    3    4
+
+        *(ptr + 0) = 10
+        *(ptr + 1) = 20
+        *(ptr + 2) = 30
+        *(ptr + 3) = 40
+        *(ptr + 4) = 50
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Comparing Pointers</h2>
+
+        <p>
+            Pointers can be compared when they point into the same array
+            or when comparing against a null pointer.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[] = {10, 20, 30};
+
+    int *p1 = &amp;numbers[0];
+    int *p2 = &amp;numbers[2];
+
+    if (p1 &lt; p2)
+    {
+        printf("p1 points before p2");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>p1 points before p2</code></pre>
+
+        <div class="warning">
+
+            Pointer comparisons such as &lt; and &gt; are meaningful for
+            pointers into the same array object. Comparing unrelated
+            object pointers using relational operators is not generally
+            valid for determining their memory ordering.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Subtracting Pointers</h2>
+
+        <p>
+            Two pointers into the same array can be subtracted to find
+            the number of elements between them.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int numbers[] = {10, 20, 30, 40, 50};
+
+    int *p1 = &amp;numbers[1];
+    int *p2 = &amp;numbers[4];
+
+    printf("Difference = %td", p2 - p1);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Difference = 3</code></pre>
+
+        <p>
+            The result represents the number of array elements between
+            the two pointer positions.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer and sizeof</h2>
+
+        <p>
+            The <code>sizeof</code> operator applied to a pointer gives
+            the size of the pointer itself, not the size of the object
+            it points to.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number = 10;
+
+    int *ptr = &amp;number;
+
+    printf("Size of number = %zu bytes\n",
+           sizeof(number));
+
+    printf("Size of pointer = %zu bytes",
+           sizeof(ptr));
+
+    return 0;
+}</code></pre>
+
+        <div class="note">
+
+            The exact size of a pointer depends on the platform and
+            implementation.
+
+        </div>
+
+    </section>
+        <section>
+
+        <h2>Dynamic Memory Allocation</h2>
+
+        <p>
+            Dynamic memory allocation allows a program to request memory
+            while the program is running. In C, dynamic memory is
+            managed using functions provided by <code>&lt;stdlib.h&gt;</code>.
+        </p>
+
+        <p>
+            The main dynamic memory functions are:
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Function</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>malloc()</td>
+                <td>Allocates a block of uninitialized memory.</td>
+            </tr>
+
+            <tr>
+                <td>calloc()</td>
+                <td>Allocates memory for multiple elements and initializes it to zero.</td>
+            </tr>
+
+            <tr>
+                <td>realloc()</td>
+                <td>Changes the size of a previously allocated memory block.</td>
+            </tr>
+
+            <tr>
+                <td>free()</td>
+                <td>Releases dynamically allocated memory.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>malloc() Function</h2>
+
+        <p>
+            The <code>malloc()</code> function allocates a specified
+            number of bytes of memory.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>pointer = malloc(number_of_bytes);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int *ptr;
+
+    ptr = malloc(sizeof(int));
+
+    if (ptr == NULL)
+    {
+        printf("Memory allocation failed");
+        return 1;
+    }
+
+    *ptr = 100;
+
+    printf("Value = %d", *ptr);
+
+    free(ptr);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Value = 100</code></pre>
+
+        <div class="tip">
+
+            Always check whether <code>malloc()</code> returned
+            <code>NULL</code> before using the allocated memory.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>calloc() Function</h2>
+
+        <p>
+            The <code>calloc()</code> function allocates memory for a
+            specified number of elements and initializes all allocated
+            bytes to zero.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>pointer = calloc(number_of_elements,
+                  size_of_each_element);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int *numbers;
+
+    numbers = calloc(5, sizeof(int));
+
+    if (numbers == NULL)
+    {
+        printf("Memory allocation failed");
+        return 1;
+    }
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", numbers[i]);
+    }
+
+    free(numbers);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>0 0 0 0 0</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>malloc() vs calloc()</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>malloc()</th>
+                <th>calloc()</th>
+            </tr>
+
+            <tr>
+                <td>Arguments</td>
+                <td>One size argument</td>
+                <td>Number of elements and size of each element</td>
+            </tr>
+
+            <tr>
+                <td>Initialization</td>
+                <td>Memory is uninitialized</td>
+                <td>Allocated bytes are initialized to zero</td>
+            </tr>
+
+            <tr>
+                <td>Header</td>
+                <td>&lt;stdlib.h&gt;</td>
+                <td>&lt;stdlib.h&gt;</td>
+            </tr>
+
+            <tr>
+                <td>Return value</td>
+                <td>Pointer to allocated memory or NULL</td>
+                <td>Pointer to allocated memory or NULL</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>realloc() Function</h2>
+
+        <p>
+            The <code>realloc()</code> function changes the size of a
+            previously allocated memory block.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>pointer = realloc(pointer, new_size);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int *numbers;
+
+    numbers = malloc(3 * sizeof(int));
+
+    if (numbers == NULL)
+    {
+        printf("Memory allocation failed");
+        return 1;
+    }
+
+    numbers[0] = 10;
+    numbers[1] = 20;
+    numbers[2] = 30;
+
+    int *temp = realloc(numbers, 5 * sizeof(int));
+
+    if (temp == NULL)
+    {
+        free(numbers);
+        printf("Memory reallocation failed");
+        return 1;
+    }
+
+    numbers = temp;
+
+    numbers[3] = 40;
+    numbers[4] = 50;
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf("%d ", numbers[i]);
+    }
+
+    free(numbers);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10 20 30 40 50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>free() Function</h2>
+
+        <p>
+            Dynamically allocated memory should be released when it is
+            no longer required.
+        </p>
+
+        <p>
+            The <code>free()</code> function releases memory previously
+            allocated by <code>malloc()</code>, <code>calloc()</code>,
+            or <code>realloc()</code>.
+        </p>
+
+        <pre><code>int *ptr = malloc(sizeof(int));
+
+/* Use allocated memory */
+
+free(ptr);</code></pre>
+
+        <div class="warning">
+
+            Accessing dynamically allocated memory after it has been
+            released can cause undefined behavior. After freeing a
+            pointer, it is often good practice to set it to
+            <code>NULL</code> if the pointer will remain in use.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Dynamic Array Using malloc()</h2>
+
+        <p>
+            A pointer can be used to work with an array whose size is
+            decided at runtime.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    int n;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &amp;n);
+
+    if (n &lt;= 0)
+    {
+        printf("Invalid size");
+        return 0;
+    }
+
+    int *numbers = malloc((size_t)n * sizeof(int));
+
+    if (numbers == NULL)
+    {
+        printf("Memory allocation failed");
+        return 1;
+    }
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        numbers[i] = (i + 1) * 10;
+    }
+
+    printf("Elements:\n");
+
+    for (int i = 0; i &lt; n; i++)
+    {
+        printf("%d ", numbers[i]);
+    }
+
+    free(numbers);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Enter number of elements: 5
+Elements:
+10 20 30 40 50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Pointer and Dynamic Memory Flow</h2>
+
+        <div class="diagram">
+
+                START
+                  |
+                  v
+          Determine Required Size
+                  |
+                  v
+          Allocate Memory
+          malloc / calloc
+                  |
+                  v
+          Check for NULL
+             /          \
+          NULL          Valid
+           |              |
+           v              v
+         Error        Use Memory
+                          |
+                          v
+                    Reallocate?
+                     /       \
+                   Yes        No
+                    |          |
+                    v          |
+                 realloc       |
+                    |          |
+                    +----+-----+
+                         |
+                         v
+                    free(memory)
+                         |
+                         v
+                        END
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Dangling Pointer</h2>
+
+        <p>
+            A dangling pointer is a pointer that refers to memory that
+            is no longer valid for use.
+        </p>
+
+        <h3>Example of a Dangerous Situation</h3>
+
+        <pre><code>int *ptr = malloc(sizeof(int));
+
+if (ptr != NULL)
+{
+    *ptr = 50;
+    free(ptr);
+
+    /* ptr should not be dereferenced here */
+}</code></pre>
+
+        <p>
+            After <code>free(ptr)</code>, the memory is no longer
+            available to the program through that allocation.
+        </p>
+
+        <div class="tip">
+
+            A common defensive practice is:
+
+        </div>
+
+        <pre><code>free(ptr);
+ptr = NULL;</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Wild Pointer</h2>
+
+        <p>
+            A wild pointer is an uninitialized pointer that does not
+            point to a valid object.
+        </p>
+
+        <h3>Incorrect</h3>
+
+        <pre><code>int *ptr;
+
+*ptr = 100;</code></pre>
+
+        <div class="warning">
+
+            The pointer has not been initialized to a valid address.
+            Dereferencing it can cause undefined behavior.
+
+        </div>
+
+        <h3>Correct Example</h3>
+
+        <pre><code>int number = 100;
+
+int *ptr = &amp;number;
+
+printf("%d", *ptr);</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Void Pointer</h2>
+
+        <p>
+            A <code>void *</code> is a generic object pointer. It can
+            hold the address of an object of any object type, but it
+            must be converted to an appropriate pointer type before
+            dereferencing it in standard C.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number = 25;
+
+    void *ptr = &amp;number;
+
+    printf("Value = %d", *(int *)ptr);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Value = 25</code></pre>
+
+        <div class="note">
+
+            A void pointer does not have a specific object type, so the
+            program must use the correct type when accessing the object
+            through it.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Constant Pointers and Pointers to Constants</h2>
+
+        <p>
+            The position of the <code>const</code> keyword changes what
+            can be modified.
+        </p>
+
+        <h3>Pointer to Constant</h3>
+
+        <pre><code>const int number = 10;
+
+const int *ptr = &amp;number;</code></pre>
+
+        <p>
+            The value cannot be modified through <code>ptr</code>.
+        </p>
+
+        <h3>Constant Pointer</h3>
+
+        <pre><code>int number = 10;
+
+int *const ptr = &amp;number;</code></pre>
+
+        <p>
+            The pointer itself cannot be changed to point somewhere else,
+            but the pointed-to value can be modified through it.
+        </p>
+
+        <h3>Constant Pointer to Constant</h3>
+
+        <pre><code>const int number = 10;
+
+const int *const ptr = &amp;number;</code></pre>
+
+        <p>
+            Neither the pointer nor the pointed-to value can be modified
+            through <code>ptr</code>.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>Common Pointer Errors</h2>
+
+        <ul>
+
+            <li>
+                Using an uninitialized pointer.
+            </li>
+
+            <li>
+                Dereferencing a NULL pointer.
+            </li>
+
+            <li>
+                Accessing memory after it has been freed.
+            </li>
+
+            <li>
+                Accessing memory outside an array.
+            </li>
+
+            <li>
+                Using an incompatible pointer type incorrectly.
+            </li>
+
+            <li>
+                Forgetting to free dynamically allocated memory.
+            </li>
+
+            <li>
+                Freeing the same allocation more than once.
+            </li>
+
+            <li>
+                Losing the original pointer to dynamically allocated
+                memory.
+            </li>
+
+        </ul>
+
+    </section>
+        <section>
+
+        <h2>Multiple Choice Questions (MCQs)</h2>
+
+
+        <div class="mcq">
+
+            <p><strong>1. What is a pointer?</strong></p>
+
+            <ol type="A">
+                <li>A variable that stores a value only</li>
+                <li>A variable that stores a memory address</li>
+                <li>A keyword</li>
+                <li>A function</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. A variable that stores a memory address
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>2. Which symbol is used to declare a pointer?</strong></p>
+
+            <ol type="A">
+                <li>&amp;</li>
+                <li>%</li>
+                <li>*</li>
+                <li>#</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. *
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>3. Which operator gives the address of a variable?</strong></p>
+
+            <ol type="A">
+                <li>*</li>
+                <li>&amp;</li>
+                <li>%</li>
+                <li>-&gt;</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. &amp;
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>4. What does *ptr mean when ptr is a pointer?</strong></p>
+
+            <ol type="A">
+                <li>Address of ptr</li>
+                <li>Value stored at the address in ptr</li>
+                <li>Size of ptr</li>
+                <li>Name of ptr</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. Value stored at the address in ptr
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>5. Which format specifier is commonly used to print a pointer address?</strong></p>
+
+            <ol type="A">
+                <li>%d</li>
+                <li>%f</li>
+                <li>%p</li>
+                <li>%c</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. %p
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>6. Which value represents a null pointer?</strong></p>
+
+            <ol type="A">
+                <li>NULL</li>
+                <li>VOID</li>
+                <li>ZERO_STRING</li>
+                <li>EMPTY</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. NULL
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>7. Which header file provides malloc()?</strong></p>
+
+            <ol type="A">
+                <li>&lt;stdio.h&gt;</li>
+                <li>&lt;string.h&gt;</li>
+                <li>&lt;stdlib.h&gt;</li>
+                <li>&lt;math.h&gt;</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. &lt;stdlib.h&gt;
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>8. Which function releases dynamically allocated memory?</strong></p>
+
+            <ol type="A">
+                <li>delete()</li>
+                <li>remove()</li>
+                <li>free()</li>
+                <li>release()</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. free()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>9. Which function allocates memory and initializes the allocated bytes to zero?</strong></p>
+
+            <ol type="A">
+                <li>malloc()</li>
+                <li>calloc()</li>
+                <li>realloc()</li>
+                <li>free()</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. calloc()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>10. Which function changes the size of allocated memory?</strong></p>
+
+            <ol type="A">
+                <li>malloc()</li>
+                <li>calloc()</li>
+                <li>realloc()</li>
+                <li>sizeof()</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. realloc()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>11. What is a dangling pointer?</strong></p>
+
+            <ol type="A">
+                <li>A pointer to a valid variable</li>
+                <li>A pointer to freed or otherwise invalid memory</li>
+                <li>A pointer to an array</li>
+                <li>A pointer to a function</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. A pointer to freed or otherwise invalid memory
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>12. What is a wild pointer?</strong></p>
+
+            <ol type="A">
+                <li>An initialized pointer</li>
+                <li>A pointer containing an invalid or indeterminate address</li>
+                <li>A null pointer</li>
+                <li>A function pointer</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. A pointer containing an invalid or indeterminate address
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>13. Which operator is used to access a structure member through a pointer?</strong></p>
+
+            <ol type="A">
+                <li>.</li>
+                <li>-&gt;</li>
+                <li>::</li>
+                <li>:</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. -&gt;
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>14. What is a pointer to pointer?</strong></p>
+
+            <ol type="A">
+                <li>A pointer that stores a character</li>
+                <li>A pointer that stores the address of another pointer</li>
+                <li>A pointer that cannot be changed</li>
+                <li>A null pointer</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. A pointer that stores the address of another pointer
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>15. What does ptr++ generally do for a pointer into an array?</strong></p>
+
+            <ol type="A">
+                <li>Moves to the next element</li>
+                <li>Sets the pointer to NULL</li>
+                <li>Deletes the array</li>
+                <li>Copies the pointer</li>
+            </ol>
+
+            <p class="answer">
+                Answer: A. Moves to the next element
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>16. Which expression gives the address of variable x?</strong></p>
+
+            <ol type="A">
+                <li>*x</li>
+                <li>&amp;x</li>
+                <li>%x</li>
+                <li>x*</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. &amp;x
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>17. Which expression accesses the value pointed to by ptr?</strong></p>
+
+            <ol type="A">
+                <li>&amp;ptr</li>
+                <li>ptr&amp;</li>
+                <li>*ptr</li>
+                <li>ptr*</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. *ptr
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>18. Which pointer type can hold the address of an object of any object type?</strong></p>
+
+            <ol type="A">
+                <li>int *</li>
+                <li>char *</li>
+                <li>void *</li>
+                <li>float *</li>
+            </ol>
+
+            <p class="answer">
+                Answer: C. void *
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>19. What should normally be done after dynamically allocated memory is no longer required?</strong></p>
+
+            <ol type="A">
+                <li>Use it again</li>
+                <li>Call free()</li>
+                <li>Call printf()</li>
+                <li>Call scanf()</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. Call free()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p><strong>20. Which statement about pointers is correct?</strong></p>
+
+            <ol type="A">
+                <li>A pointer always stores an integer value</li>
+                <li>A pointer can store an address</li>
+                <li>A pointer cannot point to an array</li>
+                <li>A pointer cannot be passed to a function</li>
+            </ol>
+
+            <p class="answer">
+                Answer: B. A pointer can store an address
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Interview Questions</h2>
+
+        <ol>
+
+            <li>
+                What is a pointer in C?
+            </li>
+
+            <li>
+                Why are pointers used in C?
+            </li>
+
+            <li>
+                What is a memory address?
+            </li>
+
+            <li>
+                What is the address-of operator?
+            </li>
+
+            <li>
+                What is the dereference operator?
+            </li>
+
+            <li>
+                How do you declare a pointer?
+            </li>
+
+            <li>
+                What is a NULL pointer?
+            </li>
+
+            <li>
+                What is a dangling pointer?
+            </li>
+
+            <li>
+                What is a wild pointer?
+            </li>
+
+            <li>
+                What is pointer arithmetic?
+            </li>
+
+            <li>
+                How are arrays related to pointers?
+            </li>
+
+            <li>
+                What is a pointer to pointer?
+            </li>
+
+            <li>
+                What is a void pointer?
+            </li>
+
+            <li>
+                What is a function pointer?
+            </li>
+
+            <li>
+                What is dynamic memory allocation?
+            </li>
+
+            <li>
+                What is the difference between malloc() and calloc()?
+            </li>
+
+            <li>
+                What is the use of realloc()?
+            </li>
+
+            <li>
+                Why is free() used?
+            </li>
+
+            <li>
+                How can pointers be passed to functions?
+            </li>
+
+            <li>
+                What is the difference between . and -&gt; operators?
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>Practice Programs</h2>
+
+        <ol>
+
+            <li>
+                Write a program to display the address of a variable.
+            </li>
+
+            <li>
+                Write a program to access a variable using a pointer.
+            </li>
+
+            <li>
+                Write a program to modify a variable using a pointer.
+            </li>
+
+            <li>
+                Write a program to swap two numbers using pointers.
+            </li>
+
+            <li>
+                Write a program to find the largest of two numbers using
+                pointers.
+            </li>
+
+            <li>
+                Write a program to find the largest element of an array
+                using pointers.
+            </li>
+
+            <li>
+                Write a program to print an array using pointer arithmetic.
+            </li>
+
+            <li>
+                Write a program to reverse an array using pointers.
+            </li>
+
+            <li>
+                Write a program to find the length of a string using a
+                character pointer.
+            </li>
+
+            <li>
+                Write a program to copy a string using pointers.
+            </li>
+
+            <li>
+                Write a program to dynamically allocate an integer array.
+            </li>
+
+            <li>
+                Write a program using malloc().
+            </li>
+
+            <li>
+                Write a program using calloc().
+            </li>
+
+            <li>
+                Write a program using realloc().
+            </li>
+
+            <li>
+                Write a program demonstrating a pointer to pointer.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>Real-World Applications of Pointers</h2>
+
+        <p>
+            Pointers are widely used in systems programming and in many
+            important C programming techniques.
+        </p>
+
+        <ul>
+
+            <li>
+                Dynamic memory management.
+            </li>
+
+            <li>
+                Operating system development.
+            </li>
+
+            <li>
+                Embedded systems.
+            </li>
+
+            <li>
+                Device drivers.
+            </li>
+
+            <li>
+                Linked lists.
+            </li>
+
+            <li>
+                Trees and graphs.
+            </li>
+
+            <li>
+                Dynamic arrays.
+            </li>
+
+            <li>
+                Function callbacks.
+            </li>
+
+            <li>
+                String processing.
+            </li>
+
+            <li>
+                Structure manipulation.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Advantages of Pointers</h2>
+
+        <ul>
+
+            <li>
+                Provide direct access to memory addresses.
+            </li>
+
+            <li>
+                Allow functions to modify caller-owned objects.
+            </li>
+
+            <li>
+                Support dynamic memory allocation.
+            </li>
+
+            <li>
+                Make array and string processing flexible.
+            </li>
+
+            <li>
+                Help implement dynamic data structures.
+            </li>
+
+            <li>
+                Support function pointers and callbacks.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Disadvantages and Risks of Pointers</h2>
+
+        <ul>
+
+            <li>
+                Incorrect pointer use can cause undefined behavior.
+            </li>
+
+            <li>
+                Dereferencing invalid pointers can crash a program.
+            </li>
+
+            <li>
+                Memory leaks can occur when allocated memory is not freed.
+            </li>
+
+            <li>
+                Dangling pointers can access invalid memory.
+            </li>
+
+            <li>
+                Pointer arithmetic can be dangerous when array boundaries
+                are ignored.
+            </li>
+
+            <li>
+                Pointer-based programs can be more difficult to debug.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Best Practices for Pointers</h2>
+
+        <ul>
+
+            <li>
+                Always initialize pointers before using them.
+            </li>
+
+            <li>
+                Use <code>NULL</code> when a pointer intentionally points
+                to no object.
+            </li>
+
+            <li>
+                Check the result of dynamic memory allocation.
+            </li>
+
+            <li>
+                Never dereference a NULL or invalid pointer.
+            </li>
+
+            <li>
+                Do not access memory after it has been freed.
+            </li>
+
+            <li>
+                Free dynamically allocated memory when it is no longer
+                required.
+            </li>
+
+            <li>
+                Avoid accessing memory outside array boundaries.
+            </li>
+
+            <li>
+                Use meaningful pointer names.
+            </li>
+
+            <li>
+                Keep pointer operations simple and clear.
+            </li>
+
+        </ul>
+
+        <div class="tip">
+
+            <strong>Important:</strong>
+
+            A pointer is powerful because it gives access to an address,
+            but incorrect pointer operations can result in serious
+            programming errors.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Summary</h2>
+
+        <p>
+            Pointers are variables that store memory addresses. They are
+            one of the most powerful features of the C programming
+            language.
+        </p>
+
+        <ul>
+
+            <li>
+                A pointer stores the address of an object.
+            </li>
+
+            <li>
+                The <code>&amp;</code> operator obtains an address.
+            </li>
+
+            <li>
+                The <code>*</code> operator dereferences a pointer.
+            </li>
+
+            <li>
+                Pointers can be used with arrays and strings.
+            </li>
+
+            <li>
+                Pointers can be passed to functions.
+            </li>
+
+            <li>
+                Pointer-to-pointer variables store addresses of pointers.
+            </li>
+
+            <li>
+                NULL pointers represent pointers that do not point to a
+                valid object.
+            </li>
+
+            <li>
+                Dynamic memory can be managed using malloc(),
+                calloc(), realloc() and free().
+            </li>
+
+            <li>
+                Pointers can point to structures and functions.
+            </li>
+
+            <li>
+                Careful pointer management is essential for safe C
+                programming.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Quick Revision</h2>
+
+        <table>
+
+            <tr>
+                <th>Concept</th>
+                <th>Important Point</th>
+            </tr>
+
+            <tr>
+                <td>Pointer</td>
+                <td>Variable that stores an address</td>
+            </tr>
+
+            <tr>
+                <td>Address Operator</td>
+                <td>&amp;</td>
+            </tr>
+
+            <tr>
+                <td>Dereference Operator</td>
+                <td>*</td>
+            </tr>
+
+            <tr>
+                <td>Pointer Address Output</td>
+                <td>%p</td>
+            </tr>
+
+            <tr>
+                <td>Null Pointer</td>
+                <td>NULL</td>
+            </tr>
+
+            <tr>
+                <td>Dynamic Allocation</td>
+                <td>malloc()</td>
+            </tr>
+
+            <tr>
+                <td>Zero-Initialized Allocation</td>
+                <td>calloc()</td>
+            </tr>
+
+            <tr>
+                <td>Resize Allocation</td>
+                <td>realloc()</td>
+            </tr>
+
+            <tr>
+                <td>Release Memory</td>
+                <td>free()</td>
+            </tr>
+
+            <tr>
+                <td>Generic Object Pointer</td>
+                <td>void *</td>
+            </tr>
+
+            <tr>
+                <td>Pointer to Pointer</td>
+                <td>**</td>
+            </tr>
+
+            <tr>
+                <td>Structure Pointer Member</td>
+                <td>-&gt;</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Exam Important Questions</h2>
+
+        <ol>
+
+            <li>
+                Define a pointer and explain its declaration with examples.
+            </li>
+
+            <li>
+                Explain the address-of and dereference operators.
+            </li>
+
+            <li>
+                Explain pointer arithmetic with suitable examples.
+            </li>
+
+            <li>
+                Explain the relationship between arrays and pointers.
+            </li>
+
+            <li>
+                Explain passing pointers to functions with a program.
+            </li>
+
+            <li>
+                Write a C program to swap two numbers using pointers.
+            </li>
+
+            <li>
+                Explain pointer to pointer with an example.
+            </li>
+
+            <li>
+                Explain dynamic memory allocation in C.
+            </li>
+
+            <li>
+                Differentiate malloc(), calloc(), realloc() and free().
+            </li>
+
+            <li>
+                Explain NULL, wild and dangling pointers.
+                </li>
+
+</ol>
+
+</section>
+
+<div class="navigation">
+
+<a href="11-strings.html" class="button">
+
+← Previous: Strings
+
+</a>
+
+<a href="13-structures.html" class="button">
+
+Next: Structures →
+
+</a>
+
+</div>
+      </main>
+
+<footer>
+    <h3>ALLIED</h3>
+    <p>C Programming Learning Course</p>
+    <p>Chapter 12 - Pointers in C</p>
+    <p>Learn C Programming Step by Step</p>
+    <p>© 2026 ALLIED. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

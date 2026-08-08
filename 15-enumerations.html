@@ -1,0 +1,3307 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 15 - Enumerations in C | ALLIED</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">
+            ALLIED
+        </a>
+
+        <nav>
+
+            <a href="home.html">Home</a>
+
+            <a href="books.html">Books</a>
+
+            <a href="c.html">C Programming</a>
+
+            <a href="login.html">Login</a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <div class="hero">
+
+        <h1>Chapter 15: Enumerations in C</h1>
+
+        <p>
+            Learn how enumeration types allow programmers to define
+            named integer constants that make C programs easier to
+            understand, read and maintain.
+        </p>
+
+    </div>
+
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>
+            After completing this chapter, you will be able to:
+        </p>
+
+        <ul>
+
+            <li>Understand the concept of enumeration.</li>
+
+            <li>Understand the purpose of the enum keyword.</li>
+
+            <li>Declare enumeration types.</li>
+
+            <li>Create enum variables.</li>
+
+            <li>Understand default enumeration values.</li>
+
+            <li>Assign custom values to enumeration constants.</li>
+
+            <li>Use enum values with switch statements.</li>
+
+            <li>Use enumerations with loops.</li>
+
+            <li>Use enumerations with structures and functions.</li>
+
+            <li>Write practical programs using enumerations.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.1 Introduction to Enumerations</h2>
+
+        <p>
+            An enumeration, commonly called an <code>enum</code>, is a
+            user-defined type in C that consists of a set of named
+            integer constants.
+        </p>
+
+        <p>
+            Enumerations are useful when a variable should represent
+            one value from a fixed collection of named choices.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>enum Day
+{
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY
+};</code></pre>
+
+        <p>
+            Here, <code>MONDAY</code>, <code>TUESDAY</code>,
+            <code>WEDNESDAY</code> and the other names are enumeration
+            constants.
+        </p>
+
+        <div class="note">
+
+            <strong>Simple Definition:</strong>
+
+            An enumeration is a user-defined type that provides a set
+            of named integer constants.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.2 Why Are Enumerations Needed?</h2>
+
+        <p>
+            Enumerations make programs easier to understand when a
+            variable can have only a limited set of meaningful choices.
+        </p>
+
+        <h3>Without enum</h3>
+
+        <pre><code>int day = 1;</code></pre>
+
+        <p>
+            The number <code>1</code> does not clearly tell the reader
+            what it represents.
+        </p>
+
+        <h3>With enum</h3>
+
+        <pre><code>enum Day
+{
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY
+};
+
+enum Day day = MONDAY;</code></pre>
+
+        <p>
+            The name <code>MONDAY</code> makes the meaning much clearer.
+        </p>
+
+        <ul>
+
+            <li>Improves program readability.</li>
+
+            <li>Makes code easier to understand.</li>
+
+            <li>Provides meaningful names for integer constants.</li>
+
+            <li>Helps represent a fixed set of choices.</li>
+
+            <li>Makes programs easier to maintain.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.3 Syntax of Enumeration</h2>
+
+        <p>
+            The general syntax for defining an enumeration is:
+        </p>
+
+        <pre><code>enum enum_name
+{
+    constant1,
+    constant2,
+    constant3
+};</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>enum Color
+{
+    RED,
+    GREEN,
+    BLUE
+};</code></pre>
+
+        <p>
+            <code>Color</code> is the enumeration type and
+            <code>RED</code>, <code>GREEN</code> and <code>BLUE</code>
+            are enumeration constants.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.4 Declaring an Enum Variable</h2>
+
+        <p>
+            After defining an enumeration type, variables of that type
+            can be declared.
+        </p>
+
+        <pre><code>enum Color
+{
+    RED,
+    GREEN,
+    BLUE
+};
+
+enum Color color;</code></pre>
+
+        <p>
+            The variable <code>color</code> can be assigned one of the
+            enumeration constants.
+        </p>
+
+        <pre><code>color = RED;</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.5 Simple Enumeration Program</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Day
+{
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY
+};
+
+int main()
+{
+    enum Day day;
+
+    day = TUESDAY;
+
+    printf("Day value = %d\n",
+           day);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Day value = 1</code></pre>
+
+        <p>
+            By default, enumeration constants begin with the value
+            <code>0</code> and increase by one.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.6 Default Values of enum Constants</h2>
+
+        <p>
+            If values are not explicitly assigned, the first
+            enumeration constant normally has the value
+            <code>0</code>, and each following constant increases by
+            one.
+        </p>
+
+        <pre><code>enum Number
+{
+    ZERO,
+    ONE,
+    TWO,
+    THREE
+};</code></pre>
+
+        <table>
+
+            <tr>
+                <th>Constant</th>
+                <th>Value</th>
+            </tr>
+
+            <tr>
+                <td>ZERO</td>
+                <td>0</td>
+            </tr>
+
+            <tr>
+                <td>ONE</td>
+                <td>1</td>
+            </tr>
+
+            <tr>
+                <td>TWO</td>
+                <td>2</td>
+            </tr>
+
+            <tr>
+                <td>THREE</td>
+                <td>3</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.7 Custom Values in enum</h2>
+
+        <p>
+            Enumeration constants can be assigned specific integer
+            values.
+        </p>
+
+        <pre><code>enum Status
+{
+    SUCCESS = 1,
+    ERROR = 5,
+    UNKNOWN = 10
+};</code></pre>
+
+        <p>
+            Here, the programmer explicitly assigns values to the
+            constants.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Constant</th>
+                <th>Value</th>
+            </tr>
+
+            <tr>
+                <td>SUCCESS</td>
+                <td>1</td>
+            </tr>
+
+            <tr>
+                <td>ERROR</td>
+                <td>5</td>
+            </tr>
+
+            <tr>
+                <td>UNKNOWN</td>
+                <td>10</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.8 Mixed enum Values</h2>
+
+        <p>
+            Some enumeration constants can have explicit values while
+            subsequent constants continue from the previous value.
+        </p>
+
+        <pre><code>enum Numbers
+{
+    A = 10,
+    B,
+    C,
+    D = 20,
+    E
+};</code></pre>
+
+        <table>
+
+            <tr>
+                <th>Constant</th>
+                <th>Value</th>
+            </tr>
+
+            <tr>
+                <td>A</td>
+                <td>10</td>
+            </tr>
+
+            <tr>
+                <td>B</td>
+                <td>11</td>
+            </tr>
+
+            <tr>
+                <td>C</td>
+                <td>12</td>
+            </tr>
+
+            <tr>
+                <td>D</td>
+                <td>20</td>
+            </tr>
+
+            <tr>
+                <td>E</td>
+                <td>21</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.9 Enumeration Flow</h2>
+
+        <div class="diagram">
+
+                 ENUMERATION
+                       |
+                       v
+              +----------------+
+              | Named Constants|
+              +----------------+
+                       |
+          +------------+------------+
+          |            |            |
+          v            v            v
+        RED          GREEN         BLUE
+          |            |            |
+          v            v            v
+          0            1            2
+
+        </div>
+
+        <p>
+            Enumeration constants provide meaningful names for integer
+            values.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.10 Characteristics of enum</h2>
+
+        <ul>
+
+            <li>
+                Enumerations are user-defined types.
+            </li>
+
+            <li>
+                The <code>enum</code> keyword is used to define them.
+            </li>
+
+            <li>
+                Enumeration constants are named integer constants.
+            </li>
+
+            <li>
+                Values can be assigned explicitly.
+            </li>
+
+            <li>
+                If values are omitted, they normally increase from
+                the previous value.
+            </li>
+
+            <li>
+                Enumeration constants make code more readable.
+            </li>
+
+            <li>
+                They are useful for representing a fixed set of
+                choices.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section class="tip">
+
+        <h2>Part 1 Complete ✅</h2>
+
+        <p>
+            You have learned the definition, purpose, syntax,
+            declaration, default values, custom values and basic
+            characteristics of enumerations.
+        </p>
+
+        <p>
+            <strong>Continue directly with Part 2.</strong>
+        </p>
+
+    </section>    <section>
+
+        <h2>15.11 enum Variable Initialization</h2>
+
+        <p>
+            An enumeration variable can be initialized when it is
+            declared.
+        </p>
+
+        <pre><code>enum Color
+{
+    RED,
+    GREEN,
+    BLUE
+};
+
+enum Color color = GREEN;</code></pre>
+
+        <p>
+            Here, <code>color</code> is initialized with the enumeration
+            constant <code>GREEN</code>.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.12 Multiple enum Variables</h2>
+
+        <p>
+            Multiple variables of the same enumeration type can be
+            declared.
+        </p>
+
+        <pre><code>enum Color
+{
+    RED,
+    GREEN,
+    BLUE
+};
+
+enum Color color1;
+enum Color color2;
+enum Color color3;</code></pre>
+
+        <p>
+            Each variable can store a value from the enumeration.
+        </p>
+
+        <pre><code>color1 = RED;
+color2 = GREEN;
+color3 = BLUE;</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.13 enum with switch Statement</h2>
+
+        <p>
+            Enumerations work particularly well with
+            <code>switch</code> statements because each named constant
+            represents a possible choice.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Day
+{
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY
+};
+
+int main()
+{
+    enum Day day = TUESDAY;
+
+    switch (day)
+    {
+        case MONDAY:
+            printf("Monday");
+            break;
+
+        case TUESDAY:
+            printf("Tuesday");
+            break;
+
+        case WEDNESDAY:
+            printf("Wednesday");
+            break;
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Tuesday</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.14 enum with if Statement</h2>
+
+        <p>
+            An enumeration variable can also be compared with
+            enumeration constants using conditional statements.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Status
+{
+    OFF,
+    ON
+};
+
+int main()
+{
+    enum Status status = ON;
+
+    if (status == ON)
+    {
+        printf("System is ON");
+    }
+    else
+    {
+        printf("System is OFF");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>System is ON</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.15 enum with Loops</h2>
+
+        <p>
+            Enumeration constants can be used in loops when the
+            program needs to process a fixed sequence of named values.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Day
+{
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY
+};
+
+int main()
+{
+    enum Day day;
+
+    for (day = MONDAY; day &lt;= FRIDAY; day++)
+    {
+        printf("%d\n", day);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>0
+1
+2
+3
+4</code></pre>
+
+        <div class="note">
+
+            This works because the enumeration values in this example
+            are consecutive integer values.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.16 enum with Arrays</h2>
+
+        <p>
+            Enumeration constants can be used as meaningful indexes
+            or categories for arrays.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Day
+{
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY
+};
+
+int main()
+{
+    int temperature[3] = {30, 32, 31};
+
+    printf("Monday = %d\n",
+           temperature[MONDAY]);
+
+    printf("Tuesday = %d\n",
+           temperature[TUESDAY]);
+
+    printf("Wednesday = %d\n",
+           temperature[WEDNESDAY]);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Monday = 30
+Tuesday = 32
+Wednesday = 31</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.17 enum for Days of the Week</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Day
+{
+    SUNDAY,
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY
+};
+
+int main()
+{
+    enum Day today = FRIDAY;
+
+    printf("Day number = %d",
+           today);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Day number = 5</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.18 enum for Months</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Month
+{
+    JANUARY = 1,
+    FEBRUARY,
+    MARCH,
+    APRIL,
+    MAY,
+    JUNE,
+    JULY,
+    AUGUST,
+    SEPTEMBER,
+    OCTOBER,
+    NOVEMBER,
+    DECEMBER
+};
+
+int main()
+{
+    enum Month month = AUGUST;
+
+    printf("Month number = %d",
+           month);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Month number = 8</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.19 enum for Traffic Light</h2>
+
+        <p>
+            Enumerations are useful for representing states such as
+            traffic-light conditions.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum TrafficLight
+{
+    RED,
+    YELLOW,
+    GREEN
+};
+
+int main()
+{
+    enum TrafficLight light = GREEN;
+
+    switch (light)
+    {
+        case RED:
+            printf("Stop");
+            break;
+
+        case YELLOW:
+            printf("Wait");
+            break;
+
+        case GREEN:
+            printf("Go");
+            break;
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Go</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.20 enum for Student Grade</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Grade
+{
+    GRADE_A,
+    GRADE_B,
+    GRADE_C,
+    GRADE_D,
+    GRADE_F
+};
+
+int main()
+{
+    enum Grade grade = GRADE_A;
+
+    switch (grade)
+    {
+        case GRADE_A:
+            printf("Excellent");
+            break;
+
+        case GRADE_B:
+            printf("Very Good");
+            break;
+
+        case GRADE_C:
+            printf("Good");
+            break;
+
+        case GRADE_D:
+            printf("Pass");
+            break;
+
+        case GRADE_F:
+            printf("Fail");
+            break;
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Excellent</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.21 enum for Boolean-Style Values</h2>
+
+        <p>
+            Enumerations can also be used to define application-specific
+            states.
+        </p>
+
+        <pre><code>enum State
+{
+    FALSE_VALUE = 0,
+    TRUE_VALUE = 1
+};</code></pre>
+
+        <p>
+            Modern C also provides the standard Boolean type through
+            <code>&lt;stdbool.h&gt;</code>, so an enum is not normally
+            necessary just to represent true and false.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.22 enum with User Input</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Choice
+{
+    EXIT = 0,
+    ADD = 1,
+    DELETE = 2
+};
+
+int main()
+{
+    int input;
+    enum Choice choice;
+
+    printf("0. Exit\n");
+    printf("1. Add\n");
+    printf("2. Delete\n");
+
+    printf("Enter choice: ");
+    scanf("%d", &amp;input);
+
+    choice = (enum Choice)input;
+
+    switch (choice)
+    {
+        case ADD:
+            printf("Add selected");
+            break;
+
+        case DELETE:
+            printf("Delete selected");
+            break;
+
+        case EXIT:
+            printf("Exit selected");
+            break;
+
+        default:
+            printf("Invalid choice");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>0. Exit
+1. Add
+2. Delete
+Enter choice: 1
+Add selected</code></pre>
+
+        <div class="warning">
+
+            User input should be validated before treating it as one of
+            the application's expected enumeration values.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.23 enum with typedef</h2>
+
+        <p>
+            The <code>typedef</code> keyword can be used to create a
+            shorter name for an enumeration type.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>typedef enum
+{
+    SMALL,
+    MEDIUM,
+    LARGE
+} Size;</code></pre>
+
+        <p>
+            Now <code>Size</code> can be used as the type name.
+        </p>
+
+        <pre><code>Size shirtSize;
+
+shirtSize = LARGE;</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.24 enum Constants in Expressions</h2>
+
+        <p>
+            Enumeration constants can be used in expressions wherever
+            their integer values are appropriate.
+        </p>
+
+        <pre><code>enum Number
+{
+    ONE = 1,
+    TWO = 2,
+    THREE = 3
+};
+
+int result;
+
+result = TWO + THREE;</code></pre>
+
+        <p>
+            In this example, <code>result</code> receives the integer
+            value <code>5</code>.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.25 enum and Integer Values</h2>
+
+        <p>
+            Enumeration constants have integer values, but the exact
+            representation and some type details are implementation
+            dependent in C.
+        </p>
+
+        <pre><code>enum Number
+{
+    ZERO,
+    ONE,
+    TWO
+};
+
+int x = TWO;</code></pre>
+
+        <p>
+            Here, <code>TWO</code> can be used in an integer expression.
+        </p>
+
+        <div class="note">
+
+            <strong>Exam Point:</strong>
+
+            Enumeration constants are integer constants with names
+            defined by the programmer.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.26 enum with Structure</h2>
+
+        <p>
+            An enumeration can be used as a member of a structure.
+            This is useful for storing a category or state together
+            with other information.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Gender
+{
+    MALE,
+    FEMALE,
+    OTHER
+};
+
+struct Student
+{
+    char name[30];
+    enum Gender gender;
+};
+
+int main()
+{
+    struct Student student =
+    {
+        "Ravi",
+        MALE
+    };
+
+    printf("Name = %s\n",
+           student.name);
+
+    printf("Gender value = %d\n",
+           student.gender);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Name = Ravi
+Gender value = 0</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.27 enum with Multiple Structures</h2>
+
+        <p>
+            The same enumeration type can be used in different
+            structures.
+        </p>
+
+        <pre><code>enum Status
+{
+    ACTIVE,
+    INACTIVE
+};
+
+struct User
+{
+    char name[30];
+    enum Status status;
+};
+
+struct Account
+{
+    int number;
+    enum Status status;
+};</code></pre>
+
+        <p>
+            Both structures can use the same set of named status
+            values.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.28 enum with Functions</h2>
+
+        <p>
+            An enumeration type can be used as a function parameter
+            and as a function return type.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Status
+{
+    OFF,
+    ON
+};
+
+void displayStatus(enum Status status)
+{
+    if (status == ON)
+    {
+        printf("System ON");
+    }
+    else
+    {
+        printf("System OFF");
+    }
+}
+
+int main()
+{
+    enum Status status = ON;
+
+    displayStatus(status);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>System ON</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.29 Function Returning enum</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Status
+{
+    OFF,
+    ON
+};
+
+enum Status getStatus()
+{
+    return ON;
+}
+
+int main()
+{
+    enum Status status;
+
+    status = getStatus();
+
+    if (status == ON)
+    {
+        printf("System is ON");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>System is ON</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.30 Pointer to enum Variable</h2>
+
+        <p>
+            A pointer can store the address of an enumeration variable.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Color
+{
+    RED,
+    GREEN,
+    BLUE
+};
+
+int main()
+{
+    enum Color color = GREEN;
+
+    enum Color *ptr = &amp;color;
+
+    printf("Value = %d\n",
+           *ptr);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Value = 1</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.31 enum Pointer Modification</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Status
+{
+    OFF,
+    ON
+};
+
+int main()
+{
+    enum Status status = OFF;
+
+    enum Status *ptr = &amp;status;
+
+    *ptr = ON;
+
+    printf("Status = %d",
+           status);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Status = 1</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.32 enum with Array of Strings</h2>
+
+        <p>
+            Enumeration values can be used as indexes into an array of
+            strings to display meaningful text.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Color
+{
+    RED,
+    GREEN,
+    BLUE
+};
+
+int main()
+{
+    const char *names[] =
+    {
+        "Red",
+        "Green",
+        "Blue"
+    };
+
+    enum Color color = GREEN;
+
+    printf("Color = %s",
+           names[color]);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Color = Green</code></pre>
+
+        <div class="tip">
+
+            This technique is especially useful when you want to display
+            a readable name for an enumeration value.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.33 Practical Example: Bank Account Status</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum AccountStatus
+{
+    ACTIVE,
+    BLOCKED,
+    CLOSED
+};
+
+int main()
+{
+    enum AccountStatus status = ACTIVE;
+
+    switch (status)
+    {
+        case ACTIVE:
+            printf("Account is Active");
+            break;
+
+        case BLOCKED:
+            printf("Account is Blocked");
+            break;
+
+        case CLOSED:
+            printf("Account is Closed");
+            break;
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Account is Active</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.34 Practical Example: Order Status</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum OrderStatus
+{
+    ORDERED,
+    SHIPPED,
+    DELIVERED,
+    CANCELLED
+};
+
+int main()
+{
+    enum OrderStatus status = SHIPPED;
+
+    switch (status)
+    {
+        case ORDERED:
+            printf("Order placed");
+            break;
+
+        case SHIPPED:
+            printf("Order shipped");
+            break;
+
+        case DELIVERED:
+            printf("Order delivered");
+            break;
+
+        case CANCELLED:
+            printf("Order cancelled");
+            break;
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Order shipped</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.35 Practical Example: User Role</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Role
+{
+    ADMIN,
+    TEACHER,
+    STUDENT
+};
+
+int main()
+{
+    enum Role role = STUDENT;
+
+    switch (role)
+    {
+        case ADMIN:
+            printf("Administrator");
+            break;
+
+        case TEACHER:
+            printf("Teacher");
+            break;
+
+        case STUDENT:
+            printf("Student");
+            break;
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Student</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.36 Important Points About Enumerations</h2>
+
+        <ul>
+
+            <li>
+                Use <code>enum</code> to define an enumeration type.
+            </li>
+
+            <li>
+                Enumeration constants have integer values.
+            </li>
+
+            <li>
+                The first constant normally has value zero if no value
+                is specified.
+            </li>
+
+            <li>
+                Each following unspecified constant normally increases
+                by one.
+            </li>
+
+            <li>
+                Explicit integer values can be assigned.
+            </li>
+
+            <li>
+                Enumeration variables can be used with
+                <code>switch</code>.
+            </li>
+
+            <li>
+                Enumeration types can be used in structures and
+                functions.
+            </li>
+
+            <li>
+                Pointers can point to enumeration variables.
+            </li>
+
+            <li>
+                Enumerations make code more readable than unexplained
+                numeric constants.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section class="tip">
+
+        <h2>Part 3 Complete ✅</h2>
+
+        <p>
+            You have now covered enum variables, custom values,
+            switch statements, loops, arrays, structures, functions,
+            pointers, typedef and practical enumeration programs.
+        </p>
+
+        <p>
+            <strong>Continue with Part 4.</strong>
+        </p>
+
+    </section>
+        <section>
+
+        <h2>15.37 Advantages of Enumerations</h2>
+
+        <p>
+            Enumerations provide several benefits when programming with
+            a fixed set of related values.
+        </p>
+
+        <ul>
+
+            <li>
+                <strong>Improves readability:</strong>
+                Named constants are easier to understand than unexplained
+                numeric values.
+            </li>
+
+            <li>
+                <strong>Improves maintainability:</strong>
+                Meaningful names make programs easier to modify.
+            </li>
+
+            <li>
+                <strong>Represents fixed choices:</strong>
+                Enumerations are useful for states, categories and
+                options.
+            </li>
+
+            <li>
+                <strong>Works well with switch:</strong>
+                Enum values make selection statements easier to read.
+            </li>
+
+            <li>
+                <strong>Reduces magic numbers:</strong>
+                Names such as <code>ACTIVE</code> and
+                <code>INACTIVE</code> are clearer than arbitrary numbers.
+            </li>
+
+            <li>
+                <strong>Useful in large programs:</strong>
+                Named states make complex programs easier to understand.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.38 Disadvantages of Enumerations</h2>
+
+        <ul>
+
+            <li>
+                Enumeration constants represent integer values, so
+                they are not suitable for every kind of data.
+            </li>
+
+            <li>
+                The numerical representation of an enum type can be
+                implementation-dependent.
+            </li>
+
+            <li>
+                Care is required when converting arbitrary integers
+                into enum values.
+            </li>
+
+            <li>
+                Enumeration constants share the same identifier
+                namespace as other ordinary identifiers, so names
+                should be chosen carefully.
+            </li>
+
+            <li>
+                Unnamed numeric values can sometimes make debugging
+                less clear.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.39 enum vs #define</h2>
+
+        <p>
+            Both enumerations and preprocessor macros can be used to
+            give names to constants, but they work differently.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>enum</th>
+                <th>#define</th>
+            </tr>
+
+            <tr>
+                <td>Processed by</td>
+                <td>Compiler</td>
+                <td>Preprocessor</td>
+            </tr>
+
+            <tr>
+                <td>Creates an enumeration type</td>
+                <td>Yes</td>
+                <td>No</td>
+            </tr>
+
+            <tr>
+                <td>Named constants</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+
+            <tr>
+                <td>Useful for related choices</td>
+                <td>Excellent</td>
+                <td>Possible</td>
+            </tr>
+
+            <tr>
+                <td>Type information</td>
+                <td>Associated with an enum type</td>
+                <td>No type is created</td>
+            </tr>
+
+            <tr>
+                <td>Example</td>
+                <td>enum Color { RED, GREEN };</td>
+                <td>#define RED 0</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.40 enum vs const</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>enum</th>
+                <th>const</th>
+            </tr>
+
+            <tr>
+                <td>Purpose</td>
+                <td>Defines named enumeration constants</td>
+                <td>Defines an object whose value should not be modified</td>
+            </tr>
+
+            <tr>
+                <td>Multiple related values</td>
+                <td>Excellent</td>
+                <td>Possible but less structured</td>
+            </tr>
+
+            <tr>
+                <td>Example</td>
+                <td>enum Day { MON, TUE };</td>
+                <td>const int max = 100;</td>
+            </tr>
+
+            <tr>
+                <td>Named set of choices</td>
+                <td>Very suitable</td>
+                <td>Not specifically designed for this</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.41 enum vs Structure</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>enum</th>
+                <th>structure</th>
+            </tr>
+
+            <tr>
+                <td>Purpose</td>
+                <td>Represents named choices</td>
+                <td>Groups related data</td>
+            </tr>
+
+            <tr>
+                <td>Members</td>
+                <td>Named integer constants</td>
+                <td>Data members</td>
+            </tr>
+
+            <tr>
+                <td>Example</td>
+                <td>RED, GREEN, BLUE</td>
+                <td>name, age, marks</td>
+            </tr>
+
+            <tr>
+                <td>Main use</td>
+                <td>States and categories</td>
+                <td>Records and objects</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.42 Common Errors in Enumerations</h2>
+
+        <h3>Error 1: Forgetting the semicolon</h3>
+
+        <pre><code>enum Color
+{
+    RED,
+    GREEN,
+    BLUE
+}   /* Wrong */</code></pre>
+
+        <p>
+            The declaration must end with a semicolon.
+        </p>
+
+        <pre><code>enum Color
+{
+    RED,
+    GREEN,
+    BLUE
+};</code></pre>
+
+
+        <h3>Error 2: Using an undeclared enum type</h3>
+
+        <pre><code>enum Color color;
+
+color = RED;</code></pre>
+
+        <p>
+            The enumeration type containing <code>RED</code> must have
+            been declared before it is used.
+        </p>
+
+
+        <h3>Error 3: Confusing enum constants with strings</h3>
+
+        <pre><code>enum Color
+{
+    RED,
+    GREEN
+};</code></pre>
+
+        <p>
+            <code>RED</code> is an integer enumeration constant. It is
+            not the string <code>"RED"</code>.
+        </p>
+
+
+        <h3>Error 4: Invalid assumptions about numeric values</h3>
+
+        <p>
+            Do not assume that enumeration constants always have
+            particular values when explicit values have been assigned.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.43 Best Practices for Using enum</h2>
+
+        <ul>
+
+            <li>
+                Use meaningful names for enumeration constants.
+            </li>
+
+            <li>
+                Use uppercase names when following a project convention
+                for constants.
+            </li>
+
+            <li>
+                Use an enum when a variable represents one of a fixed
+                set of related choices.
+            </li>
+
+            <li>
+                Prefer enum names that clearly describe the domain.
+            </li>
+
+            <li>
+                Use <code>switch</code> when several enum values require
+                different actions.
+            </li>
+
+            <li>
+                Validate external integer input before converting it
+                to an enum value.
+            </li>
+
+            <li>
+                Avoid relying unnecessarily on the numeric values of
+                enum constants.
+            </li>
+
+            <li>
+                Keep enumeration definitions organized and easy to find.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.44 Real-World Applications of Enumerations</h2>
+
+        <p>
+            Enumerations are widely useful when software needs to
+            represent a limited collection of states or categories.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Application</th>
+                <th>Possible enum values</th>
+            </tr>
+
+            <tr>
+                <td>Traffic signals</td>
+                <td>RED, YELLOW, GREEN</td>
+            </tr>
+
+            <tr>
+                <td>User roles</td>
+                <td>ADMIN, TEACHER, STUDENT</td>
+            </tr>
+
+            <tr>
+                <td>Account status</td>
+                <td>ACTIVE, BLOCKED, CLOSED</td>
+            </tr>
+
+            <tr>
+                <td>Order status</td>
+                <td>ORDERED, SHIPPED, DELIVERED</td>
+            </tr>
+
+            <tr>
+                <td>Device state</td>
+                <td>ON, OFF, SLEEP</td>
+            </tr>
+
+            <tr>
+                <td>Game state</td>
+                <td>START, PLAYING, PAUSED, OVER</td>
+            </tr>
+
+            <tr>
+                <td>Days</td>
+                <td>MONDAY, TUESDAY, etc.</td>
+            </tr>
+
+            <tr>
+                <td>Months</td>
+                <td>JANUARY, FEBRUARY, etc.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.45 Practical Example: Device State</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum DeviceState
+{
+    DEVICE_OFF,
+    DEVICE_ON,
+    DEVICE_SLEEP
+};
+
+int main()
+{
+    enum DeviceState state = DEVICE_ON;
+
+    switch (state)
+    {
+        case DEVICE_OFF:
+            printf("Device is OFF");
+            break;
+
+        case DEVICE_ON:
+            printf("Device is ON");
+            break;
+
+        case DEVICE_SLEEP:
+            printf("Device is in Sleep Mode");
+            break;
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Device is ON</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.46 Practical Example: Game State</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum GameState
+{
+    START,
+    PLAYING,
+    PAUSED,
+    GAME_OVER
+};
+
+int main()
+{
+    enum GameState state = PLAYING;
+
+    switch (state)
+    {
+        case START:
+            printf("Game Started");
+            break;
+
+        case PLAYING:
+            printf("Game is Running");
+            break;
+
+        case PAUSED:
+            printf("Game Paused");
+            break;
+
+        case GAME_OVER:
+            printf("Game Over");
+            break;
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Game is Running</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.47 Practical Example: Menu Selection</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Menu
+{
+    EXIT = 0,
+    LOGIN = 1,
+    REGISTER = 2,
+    SETTINGS = 3
+};
+
+int main()
+{
+    int input;
+
+    printf("0. Exit\n");
+    printf("1. Login\n");
+    printf("2. Register\n");
+    printf("3. Settings\n");
+
+    printf("Enter choice: ");
+    scanf("%d", &amp;input);
+
+    switch (input)
+    {
+        case LOGIN:
+            printf("Login selected");
+            break;
+
+        case REGISTER:
+            printf("Registration selected");
+            break;
+
+        case SETTINGS:
+            printf("Settings selected");
+            break;
+
+        case EXIT:
+            printf("Exit selected");
+            break;
+
+        default:
+            printf("Invalid choice");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>0. Exit
+1. Login
+2. Register
+3. Settings
+Enter choice: 2
+Registration selected</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.48 Important Exam Points</h2>
+
+        <div class="tip">
+
+            <ul>
+
+                <li>
+                    <strong>enum</strong> is a user-defined type.
+                </li>
+
+                <li>
+                    Enumeration constants are named integer constants.
+                </li>
+
+                <li>
+                    The default first value is normally <strong>0</strong>.
+                </li>
+
+                <li>
+                    Unassigned values normally continue from the
+                    previous value.
+                </li>
+
+                <li>
+                    Explicit values can be assigned.
+                </li>
+
+                <li>
+                    Enumerations are useful for fixed sets of choices.
+                </li>
+
+                <li>
+                    Enumerations work especially well with
+                    <strong>switch</strong>.
+                </li>
+
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.49 Frequently Asked Questions</h2>
+
+        <h3>Q1. What is enum?</h3>
+
+        <p>
+            Enum is a C keyword used to define an enumeration containing
+            named integer constants.
+        </p>
+
+
+        <h3>Q2. What is the default value of the first enum constant?</h3>
+
+        <p>
+            If no value is specified, the first enumeration constant
+            normally has the value 0.
+        </p>
+
+
+        <h3>Q3. Can enum values be customized?</h3>
+
+        <p>
+            Yes. Integer values can be explicitly assigned to
+            enumeration constants.
+        </p>
+
+
+        <h3>Q4. Can an enum be used with switch?</h3>
+
+        <p>
+            Yes. This is one of the common uses of enumerations.
+        </p>
+
+
+        <h3>Q5. Can an enum be used in a structure?</h3>
+
+        <p>
+            Yes. An enumeration type can be used as a structure member.
+        </p>
+
+    </section>
+
+
+    <section class="note">
+
+        <h2>15.50 Important Note</h2>
+
+        <p>
+            An enumeration should be used when the possible values have
+            clear names and belong to a related set.
+        </p>
+
+        <p>
+            For example, using
+            <code>RED</code>, <code>GREEN</code> and
+            <code>BLUE</code> is clearer than using unexplained numbers
+            such as <code>0</code>, <code>1</code> and <code>2</code>.
+        </p>
+
+    </section>
+        <section>
+
+        <h2>15.51 Chapter Summary</h2>
+
+        <p>
+            Enumeration is an important user-defined type in C that
+            allows programmers to create a set of named integer
+            constants.
+        </p>
+
+        <p>
+            Enumerations are especially useful when a variable can
+            represent one value from a limited and meaningful set of
+            choices.
+        </p>
+
+        <ul>
+
+            <li>
+                The <code>enum</code> keyword is used to define an
+                enumeration.
+            </li>
+
+            <li>
+                Enumeration constants have integer values.
+            </li>
+
+            <li>
+                The first unspecified enumeration constant normally
+                starts at 0.
+            </li>
+
+            <li>
+                Subsequent unspecified constants normally increase by 1.
+            </li>
+
+            <li>
+                Custom integer values can be assigned.
+            </li>
+
+            <li>
+                Enum variables can be used with conditions and
+                switch statements.
+            </li>
+
+            <li>
+                Enumerations can be used with arrays, structures,
+                functions and pointers.
+            </li>
+
+            <li>
+                Enumerations improve readability by replacing
+                unexplained numeric values with meaningful names.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.52 Quick Revision Table</h2>
+
+        <table>
+
+            <tr>
+                <th>Topic</th>
+                <th>Important Point</th>
+            </tr>
+
+            <tr>
+                <td>Enumeration</td>
+                <td>User-defined type containing named constants</td>
+            </tr>
+
+            <tr>
+                <td>Keyword</td>
+                <td>enum</td>
+            </tr>
+
+            <tr>
+                <td>Default first value</td>
+                <td>0</td>
+            </tr>
+
+            <tr>
+                <td>Default next values</td>
+                <td>Normally increase by 1</td>
+            </tr>
+
+            <tr>
+                <td>Custom values</td>
+                <td>Supported</td>
+            </tr>
+
+            <tr>
+                <td>Common use</td>
+                <td>Fixed set of choices</td>
+            </tr>
+
+            <tr>
+                <td>Common statement</td>
+                <td>switch</td>
+            </tr>
+
+            <tr>
+                <td>Major advantage</td>
+                <td>Readability</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.53 Multiple Choice Questions (MCQs)</h2>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    1. Which keyword is used to define an enumeration?
+                </strong>
+            </p>
+
+            <p>A) struct</p>
+            <p>B) union</p>
+            <p>C) enum</p>
+            <p>D) typedef</p>
+
+            <p class="answer">
+                Answer: C) enum
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    2. What does an enumeration contain?
+                </strong>
+            </p>
+
+            <p>A) Named constants</p>
+            <p>B) Functions only</p>
+            <p>C) Strings only</p>
+            <p>D) Files</p>
+
+            <p class="answer">
+                Answer: A) Named constants
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    3. What is the usual default value of the first
+                    enum constant?
+                </strong>
+            </p>
+
+            <p>A) 1</p>
+            <p>B) 0</p>
+            <p>C) -1</p>
+            <p>D) 10</p>
+
+            <p class="answer">
+                Answer: B) 0
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    4. If no value is specified, what normally happens
+                    to the next enum constant?
+                </strong>
+            </p>
+
+            <p>A) It becomes 0</p>
+            <p>B) It becomes the previous value + 1</p>
+            <p>C) It becomes 100</p>
+            <p>D) It becomes -1</p>
+
+            <p class="answer">
+                Answer: B) It becomes the previous value + 1
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    5. Can enumeration constants have explicitly
+                    assigned values?
+                </strong>
+            </p>
+
+            <p>A) Yes</p>
+            <p>B) No</p>
+            <p>C) Only strings</p>
+            <p>D) Only characters</p>
+
+            <p class="answer">
+                Answer: A) Yes
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    6. Which statement is commonly used with enum?
+                </strong>
+            </p>
+
+            <p>A) switch</p>
+            <p>B) printf only</p>
+            <p>C) include</p>
+            <p>D) scanf only</p>
+
+            <p class="answer">
+                Answer: A) switch
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    7. Which of the following is a valid enumeration?
+                </strong>
+            </p>
+
+            <p>A) enum Color { RED, GREEN, BLUE };</p>
+            <p>B) enumeration Color;</p>
+            <p>C) enum = Color;</p>
+            <p>D) Color enum;</p>
+
+            <p class="answer">
+                Answer: A) enum Color { RED, GREEN, BLUE };
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    8. Which of the following improves code readability?
+                </strong>
+            </p>
+
+            <p>A) Magic numbers</p>
+            <p>B) Meaningful enum constants</p>
+            <p>C) Unnamed variables</p>
+            <p>D) Long comments only</p>
+
+            <p class="answer">
+                Answer: B) Meaningful enum constants
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    9. Can an enum be used as a structure member?
+                </strong>
+            </p>
+
+            <p>A) Yes</p>
+            <p>B) No</p>
+            <p>C) Only in C++</p>
+            <p>D) Only in Java</p>
+
+            <p class="answer">
+                Answer: A) Yes
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    10. Can an enum type be passed to a function?
+                </strong>
+            </p>
+
+            <p>A) Yes</p>
+            <p>B) No</p>
+            <p>C) Only as a string</p>
+            <p>D) Only as a pointer</p>
+
+            <p class="answer">
+                Answer: A) Yes
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    11. Which keyword can create a shorter alias for
+                    an enum type?
+                </strong>
+            </p>
+
+            <p>A) typedef</p>
+            <p>B) alias</p>
+            <p>C) rename</p>
+            <p>D) short</p>
+
+            <p class="answer">
+                Answer: A) typedef
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    12. Which is a suitable use for an enum?
+                </strong>
+            </p>
+
+            <p>A) Traffic-light states</p>
+            <p>B) Storing a complete paragraph</p>
+            <p>C) Storing an image</p>
+            <p>D) Storing a file</p>
+
+            <p class="answer">
+                Answer: A) Traffic-light states
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    13. Which is the correct way to declare an enum
+                    variable?
+                </strong>
+            </p>
+
+            <p>A) enum Color color;</p>
+            <p>B) Color enum;</p>
+            <p>C) enum = color;</p>
+            <p>D) variable Color;</p>
+
+            <p class="answer">
+                Answer: A) enum Color color;
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    14. Can an enum have custom integer values?
+                </strong>
+            </p>
+
+            <p>A) Yes</p>
+            <p>B) No</p>
+            <p>C) Only negative values</p>
+            <p>D) Only zero</p>
+
+            <p class="answer">
+                Answer: A) Yes
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    15. Which is a major advantage of enum?
+                </strong>
+            </p>
+
+            <p>A) Better readability</p>
+            <p>B) Faster internet</p>
+            <p>C) Larger monitor</p>
+            <p>D) Automatic debugging</p>
+
+            <p class="answer">
+                Answer: A) Better readability
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    16. Which operator is commonly used to compare
+                    an enum variable?
+                </strong>
+            </p>
+
+            <p>A) ==</p>
+            <p>B) &amp;&amp;</p>
+            <p>C) ++</p>
+            <p>D) %</p>
+
+            <p class="answer">
+                Answer: A) ==
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    17. Can a pointer point to an enum variable?
+                </strong>
+            </p>
+
+            <p>A) Yes</p>
+            <p>B) No</p>
+            <p>C) Only in C++</p>
+            <p>D) Only in Java</p>
+
+            <p class="answer">
+                Answer: A) Yes
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    18. Which type is useful for named states?
+                </strong>
+            </p>
+
+            <p>A) enum</p>
+            <p>B) float only</p>
+            <p>C) double only</p>
+            <p>D) char only</p>
+
+            <p class="answer">
+                Answer: A) enum
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    19. Which of the following represents a user role?
+                </strong>
+            </p>
+
+            <p>A) ADMIN, TEACHER, STUDENT</p>
+            <p>B) 10.5, 20.5, 30.5</p>
+            <p>C) "Hello"</p>
+            <p>D) 3.14159</p>
+
+            <p class="answer">
+                Answer: A) ADMIN, TEACHER, STUDENT
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    20. What is the main purpose of enumeration?
+                </strong>
+            </p>
+
+            <p>A) Represent related named choices</p>
+            <p>B) Create images</p>
+            <p>C) Create web pages</p>
+            <p>D) Store files</p>
+
+            <p class="answer">
+                Answer: A) Represent related named choices
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.54 Interview Questions</h2>
+
+        <h3>1. What is an enumeration in C?</h3>
+
+        <p>
+            An enumeration is a user-defined type containing a set of
+            named integer constants.
+        </p>
+
+
+        <h3>2. Which keyword is used for enumeration?</h3>
+
+        <p>
+            The <code>enum</code> keyword.
+        </p>
+
+
+        <h3>3. What is the default value of the first enum constant?</h3>
+
+        <p>
+            If no value is specified, it normally starts at 0.
+        </p>
+
+
+        <h3>4. Can enum constants have custom values?</h3>
+
+        <p>
+            Yes. Integer values can be assigned explicitly.
+        </p>
+
+
+        <h3>5. Why should enum be used?</h3>
+
+        <p>
+            It makes programs more readable and clearly represents a
+            fixed set of related choices.
+        </p>
+
+
+        <h3>6. Can enum be used with switch?</h3>
+
+        <p>
+            Yes. Enum values are commonly used in switch statements.
+        </p>
+
+
+        <h3>7. Can enum be used inside a structure?</h3>
+
+        <p>
+            Yes. An enum type can be declared as a structure member.
+        </p>
+
+
+        <h3>8. What is the difference between enum and #define?</h3>
+
+        <p>
+            An enum defines a set of named constants as part of an
+            enumeration type, whereas <code>#define</code> performs
+            preprocessor substitution.
+        </p>
+
+
+        <h3>9. Can a pointer point to an enum variable?</h3>
+
+        <p>
+            Yes. A pointer can store the address of an enum variable.
+        </p>
+
+
+        <h3>10. Give real-world examples of enum.</h3>
+
+        <p>
+            Traffic lights, user roles, account states, order states,
+            game states and days of the week are common examples.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.55 Short Answer Questions</h2>
+
+        <ol>
+
+            <li>Define enumeration.</li>
+
+            <li>Write the syntax of enum.</li>
+
+            <li>What is the enum keyword?</li>
+
+            <li>What is the default value of the first enum constant?</li>
+
+            <li>Can enum constants have custom values?</li>
+
+            <li>What is an enum variable?</li>
+
+            <li>How is enum useful with switch?</li>
+
+            <li>Can enum be used with structures?</li>
+
+            <li>Can enum be passed to a function?</li>
+
+            <li>List two applications of enumeration.</li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.56 Long Answer Questions</h2>
+
+        <ol>
+
+            <li>
+                Explain enumeration in C with syntax and examples.
+            </li>
+
+            <li>
+                Explain default and custom values of enumeration
+                constants.
+            </li>
+
+            <li>
+                Explain the advantages and disadvantages of enum.
+            </li>
+
+            <li>
+                Explain enum with switch statements using a suitable
+                program.
+            </li>
+
+            <li>
+                Explain the difference between enum and #define.
+            </li>
+
+            <li>
+                Explain the difference between enum and structure.
+            </li>
+
+            <li>
+                Write a C program to implement traffic-light states
+                using enum.
+            </li>
+
+            <li>
+                Explain the applications of enumeration in real-world
+                programming.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.57 Viva Revision</h2>
+
+        <div class="diagram">
+
+        Q: What is enum?
+        A: A user-defined type containing named constants.
+
+        Q: Which keyword is used?
+        A: enum
+
+        Q: Default first value?
+        A: 0, when no explicit value is given.
+
+        Q: Can custom values be assigned?
+        A: Yes.
+
+        Q: Common use?
+        A: Representing a fixed set of choices.
+
+        Q: Can enum be used with switch?
+        A: Yes.
+
+        Q: Can enum be used in structures?
+        A: Yes.
+
+        Q: Can a pointer point to an enum?
+        A: Yes.
+
+        Q: Main advantage?
+        A: Better readability.
+
+        Q: Give one example.
+        A: RED, YELLOW and GREEN for traffic lights.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>15.58 Final Exam Tip</h2>
+
+        <div class="tip">
+
+            <p>
+                ⭐ Remember this definition:
+            </p>
+
+            <p>
+                <strong>
+                    "An enumeration is a user-defined type in C that
+                    consists of a set of named integer constants."
+                </strong>
+            </p>
+
+            <p>
+                Also remember:
+            </p>
+
+            <p>
+                <strong>
+                    enum → Named constants → Fixed set of choices
+                </strong>
+            </p>
+
+            <p>
+                Example:
+            </p>
+
+            <pre><code>enum Color
+{
+    RED,
+    GREEN,
+    BLUE
+};</code></pre>
+
+        </div>
+
+    </section>
+
+
+    <div class="navigation">
+
+        <a href="14-unions.html" class="button">
+            ← Chapter 14
+        </a>
+
+        <a href="16-files.html" class="button">
+            Chapter 16 →
+        </a>
+
+    </div>
+
+
+</main>
+
+
+<footer>
+
+    <h2>ALLIED</h2>
+
+    <p>
+        C Programming Learning Portal
+    </p>
+
+    <p>
+        Learn • Practice • Code • Succeed
+    </p>
+
+    <p>
+        © 2026 ALLIED. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

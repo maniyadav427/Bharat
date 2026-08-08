@@ -1,0 +1,4029 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 14 - Unions in C | ALLIED</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">
+            ALLIED
+        </a>
+
+        <nav>
+
+            <a href="home.html">Home</a>
+
+            <a href="books.html">Books</a>
+
+            <a href="c.html">C Programming</a>
+
+            <a href="login.html">Login</a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <!-- TITLE -->
+
+    <div class="hero">
+
+        <h1>Chapter 14: Unions in C</h1>
+
+        <p>
+            Learn how unions allow different members to share the same
+            memory location and how unions are used for memory-efficient
+            data representation in C programming.
+        </p>
+
+    </div>
+
+
+    <!-- LEARNING OBJECTIVES -->
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>
+            After completing this chapter, you will be able to:
+        </p>
+
+        <ul>
+
+            <li>
+                Understand the concept of unions in C.
+            </li>
+
+            <li>
+                Understand the syntax of a union.
+            </li>
+
+            <li>
+                Declare and initialize union variables.
+            </li>
+
+            <li>
+                Access union members.
+            </li>
+
+            <li>
+                Understand how union memory is allocated.
+            </li>
+
+            <li>
+                Understand the difference between structures and unions.
+            </li>
+
+            <li>
+                Use pointers with unions.
+            </li>
+
+            <li>
+                Use arrays of unions.
+            </li>
+
+            <li>
+                Pass unions to functions.
+            </li>
+
+            <li>
+                Write practical programs using unions.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <!-- INTRODUCTION -->
+
+    <section>
+
+        <h2>14.1 Introduction to Unions</h2>
+
+        <p>
+            A union is a user-defined data type in C that allows
+            different members to share the same memory location.
+        </p>
+
+        <p>
+            A union can contain members of different data types.
+            However, all members use the same block of memory.
+        </p>
+
+        <p>
+            Because the members share memory, a union can be useful when
+            only one member needs to hold a meaningful value at a time.
+        </p>
+
+        <h3>Simple Example</h3>
+
+        <pre><code>union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};</code></pre>
+
+        <div class="note">
+
+            <strong>Simple Definition:</strong>
+
+            A union is a user-defined data type in C in which all
+            members share the same memory location.
+
+        </div>
+
+    </section>
+
+
+    <!-- WHY UNIONS -->
+
+    <section>
+
+        <h2>14.2 Why Are Unions Needed?</h2>
+
+        <p>
+            Unions are useful when different types of information need
+            to use the same memory area and only one of those values is
+            needed at a particular time.
+        </p>
+
+        <ul>
+
+            <li>
+                To save memory.
+            </li>
+
+            <li>
+                To represent alternative types of data.
+            </li>
+
+            <li>
+                To work with memory-sensitive applications.
+            </li>
+
+            <li>
+                To represent hardware-related data.
+            </li>
+
+            <li>
+                To implement certain low-level programming techniques.
+            </li>
+
+            <li>
+                To store different possible data representations in
+                the same memory area.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <!-- STRUCTURE OF UNION -->
+
+    <section>
+
+        <h2>14.3 Basic Structure of a Union</h2>
+
+        <p>
+            A union is declared using the <code>union</code> keyword.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>union UnionName
+{
+    dataType member1;
+    dataType member2;
+    dataType member3;
+};</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};</code></pre>
+
+        <p>
+            Here, <code>Data</code> is the name of the union and
+            <code>number</code>, <code>decimal</code> and
+            <code>letter</code> are its members.
+        </p>
+
+    </section>
+
+
+    <!-- UNION VARIABLE -->
+
+    <section>
+
+        <h2>14.4 Declaring Union Variables</h2>
+
+        <p>
+            After defining a union, variables of that union type can be
+            declared.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};
+
+union Data data1;</code></pre>
+
+        <p>
+            Here, <code>data1</code> is a union variable.
+        </p>
+
+        <h3>Multiple Union Variables</h3>
+
+        <pre><code>union Data data1, data2, data3;</code></pre>
+
+    </section>
+
+
+    <!-- ACCESSING MEMBERS -->
+
+    <section>
+
+        <h2>14.5 Accessing Union Members</h2>
+
+        <p>
+            The dot operator <code>.</code> is used to access a member
+            of a union variable.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>union Data data;
+
+data.number = 100;
+
+printf("%d", data.number);</code></pre>
+
+        <p>
+            In this example, the member <code>number</code> is assigned
+            a value and then accessed using the dot operator.
+        </p>
+
+        <div class="tip">
+
+            <strong>Remember:</strong>
+
+            Use the dot operator <code>.</code> when accessing a member
+            through a union variable.
+
+        </div>
+
+    </section>
+
+
+    <!-- BASIC PROGRAM -->
+
+    <section>
+
+        <h2>14.6 Simple Union Program</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};
+
+int main()
+{
+    union Data data;
+
+    data.number = 100;
+
+    printf("Number = %d\n",
+           data.number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 100</code></pre>
+
+    </section>
+
+
+    <!-- UNION MEMORY -->
+
+    <section>
+
+        <h2>14.7 Memory Allocation in a Union</h2>
+
+        <p>
+            The most important feature of a union is that all its
+            members share the same memory location.
+        </p>
+
+        <p>
+            The amount of memory allocated for a union is generally
+            sufficient to hold its largest member, subject to the
+            implementation's alignment requirements.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};</code></pre>
+
+        <div class="diagram">
+
+                 UNION MEMORY
+
+        +---------------------------+
+        |                           |
+        |       Shared Memory       |
+        |                           |
+        +---------------------------+
+             |       |       |
+             |       |       |
+            int    float    char
+          number  decimal  letter
+
+        Only one member's stored value
+        should normally be treated as
+        the active value at a time.
+
+        </div>
+
+    </section>
+
+
+    <!-- SIZEOF -->
+
+    <section>
+
+        <h2>14.8 Size of a Union</h2>
+
+        <p>
+            The <code>sizeof</code> operator can be used to determine
+            the size of a union.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};
+
+int main()
+{
+    printf("Size of union = %zu bytes",
+           sizeof(union Data));
+
+    return 0;
+}</code></pre>
+
+        <p>
+            The exact size depends on the sizes and alignment
+            requirements of the members on the target system.
+        </p>
+
+        <div class="note">
+
+            <strong>Important:</strong>
+
+            Unlike a structure, union members share storage rather than
+            each receiving separate storage.
+
+        </div>
+
+    </section>
+
+
+    <!-- UNION INITIALIZATION -->
+
+    <section>
+
+        <h2>14.9 Union Initialization</h2>
+
+        <p>
+            A union can be initialized when the variable is declared.
+            In a normal initializer, the first member is initialized
+            unless a designated initializer is used.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};
+
+union Data data = {100};</code></pre>
+
+        <p>
+            In this example, the first member
+            <code>number</code> is initialized with the value
+            <code>100</code>.
+        </p>
+
+        <h3>Designated Initialization</h3>
+
+        <pre><code>union Data data =
+{
+    .decimal = 25.5
+};</code></pre>
+
+        <p>
+            The designated initializer explicitly selects the member
+            that should be initialized.
+        </p>
+
+    </section>
+
+
+    <!-- ACTIVE MEMBER -->
+
+    <section>
+
+        <h2>14.10 Active Union Member</h2>
+
+        <p>
+            A union has one shared storage area. When a value is stored
+            through one member, that member is the one whose stored
+            value should normally be interpreted.
+        </p>
+
+        <pre><code>union Data data;
+
+data.number = 100;
+
+printf("%d", data.number);</code></pre>
+
+        <p>
+            Here, <code>number</code> is the member being used to store
+            and retrieve the value.
+        </p>
+
+        <div class="warning">
+
+            Do not assume that assigning one union member leaves the
+            previous member's value unchanged. Writing one member can
+            change the representation of the shared storage.
+
+        </div>
+
+    </section>
+
+
+    <!-- UNION EXAMPLE -->
+
+    <section>
+
+        <h2>14.11 Example with Different Union Members</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};
+
+int main()
+{
+    union Data data;
+
+    data.number = 100;
+
+    printf("Integer = %d\n",
+           data.number);
+
+    data.decimal = 25.5;
+
+    printf("Float = %.2f\n",
+           data.decimal);
+
+    data.letter = 'A';
+
+    printf("Character = %c\n",
+           data.letter);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Integer = 100
+Float = 25.50
+Character = A</code></pre>
+
+        <p>
+            Each assignment uses the same shared memory area.
+        </p>
+
+    </section>
+
+
+    <!-- UNION VS STRUCTURE INTRO -->
+
+    <section>
+
+        <h2>14.12 Union vs Structure: Basic Idea</h2>
+
+        <p>
+            Structures and unions are both user-defined data types in C,
+            but their memory organization is different.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>Structure</th>
+                <th>Union</th>
+            </tr>
+
+            <tr>
+                <td>Memory</td>
+                <td>Members have separate storage, subject to padding</td>
+                <td>Members share the same storage</td>
+            </tr>
+
+            <tr>
+                <td>Values</td>
+                <td>Multiple members can hold values simultaneously</td>
+                <td>Only one member's stored value should normally be treated as active</td>
+            </tr>
+
+            <tr>
+                <td>Size</td>
+                <td>Usually based on combined member storage and padding</td>
+                <td>Usually based on the largest member and alignment</td>
+            </tr>
+
+            <tr>
+                <td>Keyword</td>
+                <td>struct</td>
+                <td>union</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <!-- MEMORY DIAGRAM -->
+
+    <section>
+
+        <h2>14.13 Structure and Union Memory Diagram</h2>
+
+        <h3>Structure</h3>
+
+        <div class="diagram">
+
+        struct Data
+        {
+            int number;
+            float decimal;
+            char letter;
+        };
+
+        Memory:
+
+        +------------+
+        |   number   |
+        +------------+
+        |   decimal  |
+        +------------+
+        |   letter   |
+        +------------+
+
+        Members have separate storage.
+
+        </div>
+
+        <h3>Union</h3>
+
+        <div class="diagram">
+
+        union Data
+        {
+            int number;
+            float decimal;
+            char letter;
+        };
+
+        Memory:
+
+        +----------------------+
+        |                      |
+        |   Shared Storage     |
+        |                      |
+        +----------------------+
+          number
+          decimal
+          letter
+
+        Members share storage.
+
+        </div>
+
+    </section>
+
+
+    <!-- IMPORTANT POINTS -->
+
+    <section>
+
+        <h2>14.14 Important Characteristics of Unions</h2>
+
+        <ul>
+
+            <li>
+                A union is a user-defined data type.
+            </li>
+
+            <li>
+                It is declared using the <code>union</code> keyword.
+            </li>
+
+            <li>
+                Different members can have different data types.
+            </li>
+
+            <li>
+                All members share the same memory location.
+            </li>
+
+            <li>
+                The size of a union is generally related to its largest
+                member and alignment requirements.
+            </li>
+
+            <li>
+                The dot operator is used to access members through a
+                union variable.
+            </li>
+
+            <li>
+                A pointer to a union can be used with the arrow operator.
+            </li>
+
+            <li>
+                Unions can contain arrays, pointers and other suitable
+                members.
+            </li>
+
+            <li>
+                Unions are useful when memory efficiency is important.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <!-- END PART 1 -->
+
+    <section class="tip">
+
+        <h2>Part 1 Complete ✅</h2>
+
+        <p>
+            You have completed the basic concepts of unions, declaration,
+            initialization, memory sharing, member access and the basic
+            difference between structures and unions.
+        </p>
+
+        <p>
+            <strong>Continue with Part 2.</strong>
+        </p>
+
+    </section>
+        <section>
+
+        <h2>14.15 Union Pointer</h2>
+
+        <p>
+            A pointer can store the address of a union variable.
+            A union pointer can be used to access and modify the
+            members of the union.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>union Data data;
+
+union Data *ptr;
+
+ptr = &amp;data;</code></pre>
+
+        <p>
+            When a pointer to a union is used, the arrow operator
+            <code>-&gt;</code> can be used to access its members.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};
+
+int main()
+{
+    union Data data;
+
+    union Data *ptr = &amp;data;
+
+    ptr-&gt;number = 100;
+
+    printf("Number = %d\n",
+           ptr-&gt;number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 100</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.16 Accessing Union Through Pointer</h2>
+
+        <p>
+            There are two common ways to access a union member when a
+            pointer to the union is available.
+        </p>
+
+        <pre><code>ptr-&gt;number</code></pre>
+
+        <p>
+            The arrow operator is the simpler and commonly used form.
+        </p>
+
+        <p>
+            The following expression is equivalent:
+        </p>
+
+        <pre><code>(*ptr).number</code></pre>
+
+        <div class="tip">
+
+            <strong>Remember:</strong>
+
+            <br><br>
+
+            Union variable → use <code>.</code>
+
+            <br>
+
+            Union pointer → use <code>-&gt;</code>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.17 Array of Unions</h2>
+
+        <p>
+            An array can contain multiple union objects of the same
+            union type.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>union Data data[5];</code></pre>
+
+        <p>
+            This creates an array containing five union objects.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    float decimal;
+};
+
+int main()
+{
+    union Data data[3];
+
+    data[0].number = 10;
+    data[1].number = 20;
+    data[2].number = 30;
+
+    printf("%d\n", data[0].number);
+    printf("%d\n", data[1].number);
+    printf("%d\n", data[2].number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>10
+20
+30</code></pre>
+
+        <p>
+            Each array element has its own shared storage area. The
+            members within each individual union element share that
+            element's storage.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.18 Array of Unions with Different Members</h2>
+
+        <p>
+            Different elements of an array of unions can use different
+            members when the program keeps track of which member is
+            currently meaningful for each element.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    float decimal;
+};
+
+int main()
+{
+    union Data data[2];
+
+    data[0].number = 100;
+    data[1].decimal = 25.5;
+
+    printf("Integer = %d\n",
+           data[0].number);
+
+    printf("Float = %.2f\n",
+           data[1].decimal);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Integer = 100
+Float = 25.50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.19 Union Inside a Structure</h2>
+
+        <p>
+            A structure can contain a union as one of its members.
+            This is useful when a record can contain one of several
+            alternative types of data.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Value
+{
+    int number;
+    float decimal;
+};
+
+struct Data
+{
+    int type;
+    union Value value;
+};
+
+int main()
+{
+    struct Data data;
+
+    data.type = 1;
+    data.value.number = 100;
+
+    printf("Type = %d\n",
+           data.type);
+
+    printf("Value = %d\n",
+           data.value.number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Type = 1
+Value = 100</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.20 Structure Containing a Union</h2>
+
+        <p>
+            A common design is to use a structure containing a union
+            together with a separate member that identifies which
+            union member is currently being used.
+        </p>
+
+        <pre><code>struct Item
+{
+    int type;
+
+    union
+    {
+        int number;
+        float price;
+        char grade;
+    } value;
+};</code></pre>
+
+        <div class="note">
+
+            The <code>type</code> member can be used by the program to
+            record which member of the union should be interpreted.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.21 Tagged Union</h2>
+
+        <p>
+            A union combined with a separate tag or discriminator is
+            commonly called a tagged union.
+        </p>
+
+        <p>
+            The tag tells the program which union member currently
+            represents the stored value.
+        </p>
+
+        <div class="diagram">
+
+                    TAGGED UNION
+
+                 +-------------+
+                 |     type    |
+                 +-------------+
+                        |
+              +---------+---------+
+              |                   |
+           type = 1            type = 2
+              |                   |
+              v                   v
+          int number          float price
+
+        </div>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+struct Data
+{
+    int type;
+
+    union
+    {
+        int number;
+        float decimal;
+    } value;
+};
+
+int main()
+{
+    struct Data data;
+
+    data.type = 1;
+    data.value.number = 500;
+
+    if (data.type == 1)
+    {
+        printf("Integer = %d",
+               data.value.number);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Integer = 500</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.22 Anonymous Union</h2>
+
+        <p>
+            An anonymous union is a union declared without a tag name
+            inside another structure or union.
+        </p>
+
+        <p>
+            Its members can be accessed directly through the containing
+            object.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+struct Data
+{
+    int type;
+
+    union
+    {
+        int number;
+        float decimal;
+    };
+};
+
+int main()
+{
+    struct Data data;
+
+    data.type = 1;
+    data.number = 100;
+
+    printf("Type = %d\n",
+           data.type);
+
+    printf("Number = %d\n",
+           data.number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Type = 1
+Number = 100</code></pre>
+
+        <p>
+            Anonymous unions are supported by modern C standards and
+            can make access to union members more convenient.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.23 Nested Union</h2>
+
+        <p>
+            A union can contain another union as a member.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>union Inner
+{
+    int number;
+    float decimal;
+};
+
+union Outer
+{
+    union Inner data;
+    char letter;
+};</code></pre>
+
+        <p>
+            The nested union member can be accessed using the dot
+            operator more than once.
+        </p>
+
+        <pre><code>union Outer value;
+
+value.data.number = 100;</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.24 Union with Character Array</h2>
+
+        <p>
+            A union can contain a character array. Since all members
+            share storage, the character array uses the same memory
+            area as the other union members.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    char text[20];
+};
+
+int main()
+{
+    union Data data;
+
+    data.number = 100;
+
+    printf("Number = %d\n",
+           data.number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 100</code></pre>
+
+        <p>
+            If another member is subsequently written, the shared
+            storage may be changed.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.25 Union with Pointer Member</h2>
+
+        <p>
+            A union can contain pointer members just like other
+            suitable data members.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int *numberPtr;
+    float *decimalPtr;
+};
+
+int main()
+{
+    int number = 100;
+
+    union Data data;
+
+    data.numberPtr = &amp;number;
+
+    printf("Number = %d\n",
+           *data.numberPtr);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 100</code></pre>
+
+        <div class="warning">
+
+            Always make sure a pointer member points to a valid object
+            before dereferencing it.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.26 Passing a Union to a Function</h2>
+
+        <p>
+            A union can be passed to a function by value just like
+            other C objects.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    float decimal;
+};
+
+void display(union Data data)
+{
+    printf("Number = %d\n",
+           data.number);
+}
+
+int main()
+{
+    union Data data;
+
+    data.number = 100;
+
+    display(data);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 100</code></pre>
+
+        <p>
+            The function receives a copy of the union object.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.27 Passing a Union Pointer to a Function</h2>
+
+        <p>
+            A pointer to a union can be passed to a function when the
+            function needs to access or modify the original union
+            object.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    float decimal;
+};
+
+void update(union Data *data)
+{
+    data-&gt;number = 500;
+}
+
+int main()
+{
+    union Data data;
+
+    data.number = 100;
+
+    update(&amp;data);
+
+    printf("Number = %d\n",
+           data.number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 500</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.28 Returning a Union from a Function</h2>
+
+        <p>
+            A function can return a union value.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    float decimal;
+};
+
+union Data createData()
+{
+    union Data data;
+
+    data.number = 100;
+
+    return data;
+}
+
+int main()
+{
+    union Data data;
+
+    data = createData();
+
+    printf("Number = %d\n",
+           data.number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 100</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.29 Union Assignment</h2>
+
+        <p>
+            Two union objects of the same union type can be assigned
+            using the assignment operator.
+        </p>
+
+        <pre><code>union Data data1;
+union Data data2;
+
+data1.number = 100;
+
+data2 = data1;</code></pre>
+
+        <p>
+            The value of the union object is copied to the other union
+            object.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    float decimal;
+};
+
+int main()
+{
+    union Data data1;
+    union Data data2;
+
+    data1.number = 250;
+
+    data2 = data1;
+
+    printf("Data 2 = %d",
+           data2.number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Data 2 = 250</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.30 Union and sizeof Operator</h2>
+
+        <p>
+            The <code>sizeof</code> operator can be applied to a union
+            type or a union variable.
+        </p>
+
+        <pre><code>sizeof(union Data)</code></pre>
+
+        <p>
+            It can also be applied to a union object:
+        </p>
+
+        <pre><code>union Data data;
+
+sizeof(data);</code></pre>
+
+        <p>
+            The result represents the number of bytes occupied by the
+            union object according to the implementation.
+        </p>
+
+        <div class="tip">
+
+            <strong>Exam Point:</strong>
+
+            The size of a union is generally determined by its largest
+            member, together with any alignment requirements.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.31 Union Memory Visualization</h2>
+
+        <p>
+            Consider the following union:
+        </p>
+
+        <pre><code>union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};</code></pre>
+
+        <div class="diagram">
+
+                    SAME MEMORY AREA
+
+        +--------------------------------+
+        |                                |
+        |          UNION STORAGE         |
+        |                                |
+        +--------------------------------+
+             ↑          ↑          ↑
+             |          |          |
+           number     decimal    letter
+
+
+        Writing:
+
+        data.number = 100;
+
+        uses the shared storage.
+
+
+        Later:
+
+        data.decimal = 20.5;
+
+        writes a new value into the same storage.
+
+        </div>
+
+        <div class="warning">
+
+            Do not treat an old member as though it automatically
+            retains its previous value after another member is written.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.32 Important Points About Union Members</h2>
+
+        <ul>
+
+            <li>
+                All union members begin at the same storage location.
+            </li>
+
+            <li>
+                Only one shared storage area is allocated for the union.
+            </li>
+
+            <li>
+                Writing one member can affect the representation of
+                another member.
+            </li>
+
+            <li>
+                A program should keep track of which member is intended
+                to represent the current value.
+            </li>
+
+            <li>
+                A separate tag can be used when multiple possible
+                member types are needed safely.
+            </li>
+
+            <li>
+                The size of a union is not generally the sum of the
+                sizes of all its members.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section class="tip">
+
+        <h2>Part 2 Complete ✅</h2>
+
+        <p>
+            You have now covered union pointers, arrays of unions,
+            nested unions, unions inside structures, tagged unions,
+            anonymous unions, functions, assignment and memory
+            visualization.
+        </p>
+
+        <p>
+            <strong>Continue with Part 3.</strong>
+        </p>
+
+    </section>
+        <section>
+
+        <h2>14.33 Detailed Difference Between Structure and Union</h2>
+
+        <p>
+            Structures and unions are both user-defined data types in C.
+            They can contain members of different data types, but their
+            memory allocation and usage are different.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>Structure</th>
+                <th>Union</th>
+            </tr>
+
+            <tr>
+                <td>Keyword</td>
+                <td>struct</td>
+                <td>union</td>
+            </tr>
+
+            <tr>
+                <td>Memory allocation</td>
+                <td>Separate memory for members, subject to padding</td>
+                <td>Shared memory for all members</td>
+            </tr>
+
+            <tr>
+                <td>Member values</td>
+                <td>Multiple members can hold values simultaneously</td>
+                <td>One member's stored value is normally treated as active</td>
+            </tr>
+
+            <tr>
+                <td>Size</td>
+                <td>Usually based on combined member storage and padding</td>
+                <td>Usually based on the largest member and alignment</td>
+            </tr>
+
+            <tr>
+                <td>Memory usage</td>
+                <td>Generally higher</td>
+                <td>Generally lower</td>
+            </tr>
+
+            <tr>
+                <td>Purpose</td>
+                <td>Store a complete record</td>
+                <td>Store one of several alternative representations</td>
+            </tr>
+
+            <tr>
+                <td>Member access</td>
+                <td>Dot or arrow operator</td>
+                <td>Dot or arrow operator</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.34 Memory Difference Example</h2>
+
+        <p>
+            Consider the following structure and union:
+        </p>
+
+        <pre><code>struct Data
+{
+    int number;
+    float decimal;
+    char letter;
+};
+
+union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};</code></pre>
+
+        <p>
+            In the structure, each member has its own storage.
+            In the union, all members share the same storage.
+        </p>
+
+        <div class="diagram">
+
+        STRUCTURE
+
+        +-------------+
+        |    number   |
+        +-------------+
+        |   decimal   |
+        +-------------+
+        |    letter   |
+        +-------------+
+
+        Each member has separate storage.
+
+
+        UNION
+
+        +----------------------+
+        |                      |
+        |    Shared Storage    |
+        |                      |
+        +----------------------+
+
+        All members use the same storage.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.35 Program to Compare Structure and Union Size</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+struct StructureData
+{
+    int number;
+    float decimal;
+    char letter;
+};
+
+union UnionData
+{
+    int number;
+    float decimal;
+    char letter;
+};
+
+int main()
+{
+    printf("Structure size = %zu bytes\n",
+           sizeof(struct StructureData));
+
+    printf("Union size = %zu bytes\n",
+           sizeof(union UnionData));
+
+    return 0;
+}</code></pre>
+
+        <p>
+            The exact sizes depend on the implementation, including
+            type sizes and alignment requirements.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.36 typedef with Union</h2>
+
+        <p>
+            The <code>typedef</code> keyword can be used to create a
+            shorter and more convenient name for a union type.
+        </p>
+
+        <h3>Without typedef</h3>
+
+        <pre><code>union Data
+{
+    int number;
+    float decimal;
+};
+
+union Data data;</code></pre>
+
+        <h3>With typedef</h3>
+
+        <pre><code>typedef union
+{
+    int number;
+    float decimal;
+} Data;
+
+Data data;</code></pre>
+
+        <p>
+            The second method allows the programmer to use
+            <code>Data</code> directly as the type name.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.37 typedef Union Example</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+typedef union
+{
+    int number;
+    float decimal;
+    char letter;
+} Data;
+
+int main()
+{
+    Data data;
+
+    data.number = 100;
+
+    printf("Number = %d\n",
+           data.number);
+
+    data.decimal = 25.5;
+
+    printf("Decimal = %.2f\n",
+           data.decimal);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 100
+Decimal = 25.50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.38 Union with Functions</h2>
+
+        <p>
+            Unions can be used as parameters and return values in
+            functions.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Number
+{
+    int integer;
+    float decimal;
+};
+
+void display(union Number n)
+{
+    printf("Integer = %d\n",
+           n.integer);
+}
+
+int main()
+{
+    union Number n;
+
+    n.integer = 250;
+
+    display(n);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Integer = 250</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.39 Union Pointer Function Example</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Number
+{
+    int integer;
+    float decimal;
+};
+
+void changeValue(union Number *n)
+{
+    n-&gt;integer = 500;
+}
+
+int main()
+{
+    union Number n;
+
+    n.integer = 100;
+
+    printf("Before = %d\n",
+           n.integer);
+
+    changeValue(&amp;n);
+
+    printf("After = %d\n",
+           n.integer);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Before = 100
+After = 500</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.40 Program: Store Integer or Float</h2>
+
+        <p>
+            A union can be useful when a program needs to store one of
+            several possible data types in the same memory area.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Value
+{
+    int integer;
+    float decimal;
+};
+
+int main()
+{
+    union Value value;
+
+    value.integer = 50;
+
+    printf("Integer value = %d\n",
+           value.integer);
+
+    value.decimal = 12.5;
+
+    printf("Decimal value = %.2f\n",
+           value.decimal);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Integer value = 50
+Decimal value = 12.50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.41 Program: Tagged Union</h2>
+
+        <p>
+            A tagged union uses an additional variable to identify
+            which member of the union is currently meaningful.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+struct Value
+{
+    int type;
+
+    union
+    {
+        int integer;
+        float decimal;
+        char letter;
+    } data;
+};
+
+int main()
+{
+    struct Value value;
+
+    value.type = 1;
+    value.data.integer = 100;
+
+    if (value.type == 1)
+    {
+        printf("Integer = %d",
+               value.data.integer);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Integer = 100</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.42 Union in Embedded and System Programming</h2>
+
+        <p>
+            Unions can be useful in low-level and embedded programming
+            when a program needs to represent the same storage in
+            different ways.
+        </p>
+
+        <ul>
+
+            <li>
+                Hardware-related data representation.
+            </li>
+
+            <li>
+                Memory-sensitive applications.
+            </li>
+
+            <li>
+                Protocol data representation.
+            </li>
+
+            <li>
+                Device configuration data.
+            </li>
+
+            <li>
+                Systems programming.
+            </li>
+
+            <li>
+                Alternative representations of a value.
+            </li>
+
+        </ul>
+
+        <div class="note">
+
+            Union-based low-level techniques require careful attention
+            to the C standard, object representation, alignment and
+            portability.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.43 Union and Memory Efficiency</h2>
+
+        <p>
+            One of the main reasons for using a union is to avoid
+            allocating separate storage for alternative values that do
+            not need to exist simultaneously.
+        </p>
+
+        <div class="diagram">
+
+        Without Union:
+
+        +------------+
+        | Integer    |
+        +------------+
+        | Float      |
+        +------------+
+        | Character  |
+        +------------+
+
+        Separate storage is required.
+
+
+        With Union:
+
+        +----------------------+
+        | Shared Memory Area   |
+        +----------------------+
+
+        Members share storage.
+
+        </div>
+
+        <p>
+            This can reduce memory usage when the application needs
+            only one alternative value at a time.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.44 Union with enum</h2>
+
+        <p>
+            An enumeration can be used as a tag to identify which
+            member of a union is currently meaningful.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum DataType
+{
+    INTEGER,
+    DECIMAL,
+    CHARACTER
+};
+
+union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};
+
+struct Value
+{
+    enum DataType type;
+    union Data data;
+};
+
+int main()
+{
+    struct Value value;
+
+    value.type = INTEGER;
+    value.data.number = 100;
+
+    if (value.type == INTEGER)
+    {
+        printf("Integer = %d",
+               value.data.number);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Integer = 100</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.45 Union with Character Data</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    char letter;
+};
+
+int main()
+{
+    union Data data;
+
+    data.letter = 'A';
+
+    printf("Letter = %c\n",
+           data.letter);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Letter = A</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.46 Important Rules for Unions</h2>
+
+        <ol>
+
+            <li>
+                Use the <code>union</code> keyword to define a union.
+            </li>
+
+            <li>
+                All members share the same storage.
+            </li>
+
+            <li>
+                Use the dot operator with a union variable.
+            </li>
+
+            <li>
+                Use the arrow operator with a pointer to a union.
+            </li>
+
+            <li>
+                Be careful when switching between union members.
+            </li>
+
+            <li>
+                Keep track of which member represents the current value.
+            </li>
+
+            <li>
+                Use a tag or enumeration when multiple alternatives
+                need to be identified explicitly.
+            </li>
+
+            <li>
+                Use unions when shared storage is appropriate.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.47 Common Uses of Unions</h2>
+
+        <table>
+
+            <tr>
+                <th>Application</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>Embedded Systems</td>
+                <td>Represent alternative hardware data</td>
+            </tr>
+
+            <tr>
+                <td>Memory Optimization</td>
+                <td>Share storage between alternatives</td>
+            </tr>
+
+            <tr>
+                <td>Device Drivers</td>
+                <td>Represent device-related data</td>
+            </tr>
+
+            <tr>
+                <td>Communication Protocols</td>
+                <td>Represent alternative data formats</td>
+            </tr>
+
+            <tr>
+                <td>System Programming</td>
+                <td>Work with low-level data representations</td>
+            </tr>
+
+            <tr>
+                <td>Tagged Data</td>
+                <td>Store one of several possible data types</td>
+            </tr>
+
+        </table>
+
+    </section>
+        <section>
+
+        <h2>14.48 Advantages of Unions</h2>
+
+        <p>
+            Unions provide several advantages when multiple alternative
+            values need to share storage.
+        </p>
+
+        <ul>
+
+            <li>
+                <strong>Memory Saving:</strong>
+                All members share the same memory area.
+            </li>
+
+            <li>
+                <strong>Efficient Storage:</strong>
+                Useful when only one member needs to be stored at a time.
+            </li>
+
+            <li>
+                <strong>Flexible Representation:</strong>
+                The same memory can represent different types.
+            </li>
+
+            <li>
+                <strong>Useful in System Programming:</strong>
+                Helpful in low-level and embedded applications.
+            </li>
+
+            <li>
+                <strong>Useful for Tagged Data:</strong>
+                A tag can identify which union member is active.
+            </li>
+
+            <li>
+                <strong>Simple Syntax:</strong>
+                Union declaration and member access are similar to
+                structures.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.49 Disadvantages of Unions</h2>
+
+        <ul>
+
+            <li>
+                Only one member's stored value should normally be
+                interpreted at a time.
+            </li>
+
+            <li>
+                Writing one member can change the representation of the
+                shared storage.
+            </li>
+
+            <li>
+                Incorrect member interpretation can produce unexpected
+                results.
+            </li>
+
+            <li>
+                Programs may need an additional tag to track the
+                currently meaningful member.
+            </li>
+
+            <li>
+                Low-level union techniques can reduce portability if
+                they depend on implementation-specific object
+                representations.
+            </li>
+
+            <li>
+                Unions can be confusing for beginners because all
+                members share memory.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.50 Common Errors in Unions</h2>
+
+        <h3>1. Forgetting the semicolon</h3>
+
+        <pre><code>union Data
+{
+    int number;
+    float decimal;
+}   /* Error */</code></pre>
+
+        <p>
+            A semicolon must be placed after the closing brace.
+        </p>
+
+        <pre><code>union Data
+{
+    int number;
+    float decimal;
+};</code></pre>
+
+
+        <h3>2. Using the wrong operator</h3>
+
+        <p>
+            Use <code>.</code> with a union variable:
+        </p>
+
+        <pre><code>data.number</code></pre>
+
+        <p>
+            Use <code>-&gt;</code> with a pointer to a union:
+        </p>
+
+        <pre><code>ptr-&gt;number</code></pre>
+
+
+        <h3>3. Assuming all members retain independent values</h3>
+
+        <p>
+            Union members share storage. Writing one member can change
+            the representation of the shared storage.
+        </p>
+
+
+        <h3>4. Reading the wrong member</h3>
+
+        <p>
+            A program should normally read the member that corresponds
+            to the current stored representation.
+        </p>
+
+
+        <h3>5. Invalid pointer usage</h3>
+
+        <p>
+            A pointer to a union must point to a valid union object
+            before it is dereferenced.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.51 Best Practices for Using Unions</h2>
+
+        <ul>
+
+            <li>
+                Use unions when alternative values genuinely need to
+                share storage.
+            </li>
+
+            <li>
+                Keep track of which member represents the current value.
+            </li>
+
+            <li>
+                Use an enum or other tag when the active member needs
+                explicit identification.
+            </li>
+
+            <li>
+                Use meaningful names for union members.
+            </li>
+
+            <li>
+                Use pointers carefully.
+            </li>
+
+            <li>
+                Avoid assuming that unrelated union members can always
+                be interpreted interchangeably.
+            </li>
+
+            <li>
+                Consider portability when using low-level object
+                representation techniques.
+            </li>
+
+            <li>
+                Document unusual union usage clearly.
+            </li>
+
+        </ul>
+
+        <div class="tip">
+
+            <strong>Best Practice:</strong>
+
+            If a union contains several possible data types, keep a
+            separate tag that tells the program which member should be
+            interpreted.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.52 Program: Employee Data Using a Union</h2>
+
+        <p>
+            The following example demonstrates a record that can store
+            either an integer ID or a floating-point salary in a shared
+            union.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+struct Employee
+{
+    int type;
+
+    union
+    {
+        int id;
+        float salary;
+    } data;
+};
+
+int main()
+{
+    struct Employee employee;
+
+    employee.type = 1;
+    employee.data.id = 101;
+
+    printf("Employee ID = %d\n",
+           employee.data.id);
+
+    employee.type = 2;
+    employee.data.salary = 45000.0;
+
+    printf("Salary = %.2f\n",
+           employee.data.salary);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Employee ID = 101
+Salary = 45000.00</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.53 Program: Menu-Based Union Example</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};
+
+int main()
+{
+    union Data data;
+    int choice;
+
+    printf("1. Integer\n");
+    printf("2. Float\n");
+    printf("3. Character\n");
+
+    printf("Enter choice: ");
+    scanf("%d", &amp;choice);
+
+    switch (choice)
+    {
+        case 1:
+
+            printf("Enter integer: ");
+            scanf("%d", &amp;data.number);
+
+            printf("Integer = %d",
+                   data.number);
+
+            break;
+
+        case 2:
+
+            printf("Enter float: ");
+            scanf("%f", &amp;data.decimal);
+
+            printf("Float = %.2f",
+                   data.decimal);
+
+            break;
+
+        case 3:
+
+            printf("Enter character: ");
+            scanf(" %c", &amp;data.letter);
+
+            printf("Character = %c",
+                   data.letter);
+
+            break;
+
+        default:
+
+            printf("Invalid choice");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>1. Integer
+2. Float
+3. Character
+Enter choice: 1
+Enter integer: 250
+Integer = 250</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.54 Program: Tagged Union with Multiple Types</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+enum Type
+{
+    TYPE_INT,
+    TYPE_FLOAT,
+    TYPE_CHAR
+};
+
+struct Data
+{
+    enum Type type;
+
+    union
+    {
+        int number;
+        float decimal;
+        char letter;
+    } value;
+};
+
+void display(struct Data data)
+{
+    switch (data.type)
+    {
+        case TYPE_INT:
+
+            printf("Integer: %d\n",
+                   data.value.number);
+
+            break;
+
+        case TYPE_FLOAT:
+
+            printf("Float: %.2f\n",
+                   data.value.decimal);
+
+            break;
+
+        case TYPE_CHAR:
+
+            printf("Character: %c\n",
+                   data.value.letter);
+
+            break;
+    }
+}
+
+int main()
+{
+    struct Data data;
+
+    data.type = TYPE_FLOAT;
+    data.value.decimal = 45.5;
+
+    display(data);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Float: 45.50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.55 Program Explanation</h2>
+
+        <p>
+            In the previous program, the enumeration
+            <code>Type</code> identifies the kind of value stored in
+            the union.
+        </p>
+
+        <ul>
+
+            <li>
+                <code>TYPE_INT</code> represents an integer.
+            </li>
+
+            <li>
+                <code>TYPE_FLOAT</code> represents a floating-point
+                value.
+            </li>
+
+            <li>
+                <code>TYPE_CHAR</code> represents a character.
+            </li>
+
+            <li>
+                The union stores the corresponding value.
+            </li>
+
+            <li>
+                The <code>display()</code> function uses the tag to
+                select the correct member.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.56 Program: Calculate Size of Union</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+union Data
+{
+    int number;
+    double decimal;
+    char letter;
+};
+
+int main()
+{
+    union Data data;
+
+    printf("Size of union = %zu bytes\n",
+           sizeof(data));
+
+    printf("Size of int = %zu bytes\n",
+           sizeof(data.number));
+
+    printf("Size of double = %zu bytes\n",
+           sizeof(data.decimal));
+
+    printf("Size of char = %zu bytes\n",
+           sizeof(data.letter));
+
+    return 0;
+}</code></pre>
+
+        <p>
+            The union's size is determined by the storage requirements
+            and alignment of its members on the target implementation.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.57 Structure or Union? Choosing the Right One</h2>
+
+        <table>
+
+            <tr>
+                <th>Requirement</th>
+                <th>Recommended</th>
+            </tr>
+
+            <tr>
+                <td>Store student name, roll number and marks together</td>
+                <td>Structure</td>
+            </tr>
+
+            <tr>
+                <td>Store employee ID, name and salary simultaneously</td>
+                <td>Structure</td>
+            </tr>
+
+            <tr>
+                <td>Store one of integer, float or character alternatives</td>
+                <td>Union</td>
+            </tr>
+
+            <tr>
+                <td>Reduce memory for mutually exclusive alternatives</td>
+                <td>Union</td>
+            </tr>
+
+            <tr>
+                <td>Represent a complete record</td>
+                <td>Structure</td>
+            </tr>
+
+            <tr>
+                <td>Represent a tagged alternative value</td>
+                <td>Union + tag</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.58 Real-World Applications of Unions</h2>
+
+        <ul>
+
+            <li>
+                <strong>Embedded Systems:</strong>
+                Represent alternative hardware-related values.
+            </li>
+
+            <li>
+                <strong>Device Drivers:</strong>
+                Store alternative forms of device data.
+            </li>
+
+            <li>
+                <strong>Networking:</strong>
+                Represent alternative protocol data structures.
+            </li>
+
+            <li>
+                <strong>Memory Optimization:</strong>
+                Share memory between mutually exclusive values.
+            </li>
+
+            <li>
+                <strong>System Software:</strong>
+                Represent low-level data formats.
+            </li>
+
+            <li>
+                <strong>Compilers:</strong>
+                Internal representations can use tagged alternatives.
+            </li>
+
+            <li>
+                <strong>Communication Systems:</strong>
+                Store different possible forms of message data.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.59 Exam Important Points</h2>
+
+        <ul>
+
+            <li>
+                A union is a user-defined data type in C.
+            </li>
+
+            <li>
+                The keyword used is <code>union</code>.
+            </li>
+
+            <li>
+                All members share the same memory.
+            </li>
+
+            <li>
+                The union's size is generally based on its largest
+                member and alignment requirements.
+            </li>
+
+            <li>
+                Use <code>.</code> with a union variable.
+            </li>
+
+            <li>
+                Use <code>-&gt;</code> with a union pointer.
+            </li>
+
+            <li>
+                A union can contain members of different data types.
+            </li>
+
+            <li>
+                A union can be passed to a function.
+            </li>
+
+            <li>
+                A union can be returned from a function.
+            </li>
+
+            <li>
+                A union can be used inside a structure.
+            </li>
+
+            <li>
+                A structure can contain a union member.
+            </li>
+
+            <li>
+                Tagged unions use a separate tag to identify the
+                meaningful member.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section class="tip">
+
+        <h2>Part 4 Complete ✅</h2>
+
+        <p>
+            You have now completed the main concepts, differences,
+            programs, advantages, disadvantages, applications,
+            common errors and best practices of unions.
+        </p>
+
+        <p>
+            <strong>Part 5 will finish Chapter 14.</strong>
+        </p>
+
+    </section>
+        <section>
+
+        <h2>14.60 Chapter Summary</h2>
+
+        <p>
+            A union is a user-defined data type in C that allows
+            different members to share the same memory location.
+            Unlike a structure, the members of a union do not have
+            separate storage.
+        </p>
+
+        <p>
+            A union is useful when a program needs to store one of
+            several alternative types of data and memory efficiency
+            is important.
+        </p>
+
+        <ul>
+
+            <li>
+                A union is declared using the <code>union</code>
+                keyword.
+            </li>
+
+            <li>
+                All members of a union share the same storage.
+            </li>
+
+            <li>
+                The size of a union is generally based on its largest
+                member and alignment requirements.
+            </li>
+
+            <li>
+                The dot operator <code>.</code> accesses members through
+                a union variable.
+            </li>
+
+            <li>
+                The arrow operator <code>-&gt;</code> accesses members
+                through a pointer to a union.
+            </li>
+
+            <li>
+                A union can be passed to and returned from functions.
+            </li>
+
+            <li>
+                A union can be used inside a structure.
+            </li>
+
+            <li>
+                A tagged union can use an additional tag to identify
+                the currently meaningful member.
+            </li>
+
+            <li>
+                Unions are useful in memory-sensitive and
+                low-level applications.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.61 Quick Revision Table</h2>
+
+        <table>
+
+            <tr>
+                <th>Topic</th>
+                <th>Important Point</th>
+            </tr>
+
+            <tr>
+                <td>Union</td>
+                <td>User-defined data type</td>
+            </tr>
+
+            <tr>
+                <td>Keyword</td>
+                <td>union</td>
+            </tr>
+
+            <tr>
+                <td>Memory</td>
+                <td>Members share storage</td>
+            </tr>
+
+            <tr>
+                <td>Size</td>
+                <td>Generally based on largest member and alignment</td>
+            </tr>
+
+            <tr>
+                <td>Variable access</td>
+                <td>Dot operator (.)</td>
+            </tr>
+
+            <tr>
+                <td>Pointer access</td>
+                <td>Arrow operator (-&gt;)</td>
+            </tr>
+
+            <tr>
+                <td>Main advantage</td>
+                <td>Memory efficiency</td>
+            </tr>
+
+            <tr>
+                <td>Main limitation</td>
+                <td>Members share the same storage</td>
+            </tr>
+
+            <tr>
+                <td>Structure</td>
+                <td>Members have separate storage</td>
+            </tr>
+
+            <tr>
+                <td>Tagged union</td>
+                <td>Uses a tag to identify the meaningful member</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.62 Important Syntax</h2>
+
+        <h3>Union Declaration</h3>
+
+        <pre><code>union Data
+{
+    int number;
+    float decimal;
+    char letter;
+};</code></pre>
+
+        <h3>Union Variable</h3>
+
+        <pre><code>union Data data;</code></pre>
+
+        <h3>Accessing a Member</h3>
+
+        <pre><code>data.number = 100;
+
+printf("%d", data.number);</code></pre>
+
+        <h3>Union Pointer</h3>
+
+        <pre><code>union Data *ptr;
+
+ptr = &amp;data;
+
+ptr-&gt;number = 100;</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.63 Important Programs for Practice</h2>
+
+        <ol>
+
+            <li>
+                Create and display a union variable.
+            </li>
+
+            <li>
+                Demonstrate shared memory in a union.
+            </li>
+
+            <li>
+                Find the size of a union using
+                <code>sizeof</code>.
+            </li>
+
+            <li>
+                Access union members using a pointer.
+            </li>
+
+            <li>
+                Create an array of unions.
+            </li>
+
+            <li>
+                Pass a union to a function.
+            </li>
+
+            <li>
+                Pass a pointer to a union to a function.
+            </li>
+
+            <li>
+                Return a union from a function.
+            </li>
+
+            <li>
+                Create a structure containing a union.
+            </li>
+
+            <li>
+                Create a tagged union using an enumeration.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.64 Multiple Choice Questions (MCQs)</h2>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>1. Which keyword is used to define a union in C?</strong>
+            </p>
+
+            <p>A) struct</p>
+            <p>B) union</p>
+            <p>C) enum</p>
+            <p>D) typedef</p>
+
+            <p class="answer">
+                Answer: B) union
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>2. What do union members share?</strong>
+            </p>
+
+            <p>A) Different functions</p>
+            <p>B) Different files</p>
+            <p>C) Same memory storage</p>
+            <p>D) Different programs</p>
+
+            <p class="answer">
+                Answer: C) Same memory storage
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>3. Which operator accesses a union member through a union variable?</strong>
+            </p>
+
+            <p>A) -&gt;</p>
+            <p>B) .</p>
+            <p>C) &amp;</p>
+            <p>D) *</p>
+
+            <p class="answer">
+                Answer: B) .
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>4. Which operator accesses a union member through a pointer?</strong>
+            </p>
+
+            <p>A) .</p>
+            <p>B) -&gt;</p>
+            <p>C) &amp;</p>
+            <p>D) %</p>
+
+            <p class="answer">
+                Answer: B) -&gt;
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>5. Which operator is used to determine the size of a union?</strong>
+            </p>
+
+            <p>A) length</p>
+            <p>B) size</p>
+            <p>C) sizeof</p>
+            <p>D) memory</p>
+
+            <p class="answer">
+                Answer: C) sizeof
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>6. What is the main advantage of a union?</strong>
+            </p>
+
+            <p>A) Faster internet</p>
+            <p>B) Memory sharing</p>
+            <p>C) Automatic compilation</p>
+            <p>D) File creation</p>
+
+            <p class="answer">
+                Answer: B) Memory sharing
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>7. Can a union contain members of different data types?</strong>
+            </p>
+
+            <p>A) Yes</p>
+            <p>B) No</p>
+            <p>C) Only integers</p>
+            <p>D) Only characters</p>
+
+            <p class="answer">
+                Answer: A) Yes
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>8. Which data type is used to create named integer constants?</strong>
+            </p>
+
+            <p>A) enum</p>
+            <p>B) union</p>
+            <p>C) pointer</p>
+            <p>D) array</p>
+
+            <p class="answer">
+                Answer: A) enum
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>9. Can a union be passed to a function?</strong>
+            </p>
+
+            <p>A) Yes</p>
+            <p>B) No</p>
+            <p>C) Only with arrays</p>
+            <p>D) Only with strings</p>
+
+            <p class="answer">
+                Answer: A) Yes
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>10. Can a pointer point to a union?</strong>
+            </p>
+
+            <p>A) Yes</p>
+            <p>B) No</p>
+            <p>C) Only in C++</p>
+            <p>D) Only in Java</p>
+
+            <p class="answer">
+                Answer: A) Yes
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>11. Which generally determines the storage requirement of a union?</strong>
+            </p>
+
+            <p>A) Smallest member only</p>
+            <p>B) Largest member and alignment requirements</p>
+            <p>C) Number of functions</p>
+            <p>D) Number of variables in main()</p>
+
+            <p class="answer">
+                Answer: B) Largest member and alignment requirements
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>12. Which keyword creates an alias for a type?</strong>
+            </p>
+
+            <p>A) typedef</p>
+            <p>B) define</p>
+            <p>C) alias</p>
+            <p>D) type</p>
+
+            <p class="answer">
+                Answer: A) typedef
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>13. What happens when one union member is written?</strong>
+            </p>
+
+            <p>A) A completely separate memory area is created</p>
+            <p>B) The shared storage is updated</p>
+            <p>C) The program always terminates</p>
+            <p>D) The union becomes a structure</p>
+
+            <p class="answer">
+                Answer: B) The shared storage is updated
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>14. Which data type is useful as a tag for a tagged union?</strong>
+            </p>
+
+            <p>A) enum</p>
+            <p>B) float</p>
+            <p>C) double</p>
+            <p>D) void</p>
+
+            <p class="answer">
+                Answer: A) enum
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>15. Which one normally stores all members separately?</strong>
+            </p>
+
+            <p>A) Union</p>
+            <p>B) Structure</p>
+            <p>C) Pointer</p>
+            <p>D) Enum</p>
+
+            <p class="answer">
+                Answer: B) Structure
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>16. Which one normally allows members to share storage?</strong>
+            </p>
+
+            <p>A) Structure</p>
+            <p>B) Union</p>
+            <p>C) Array</p>
+            <p>D) Function</p>
+
+            <p class="answer">
+                Answer: B) Union
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>17. Which operator is used with a pointer to a union?</strong>
+            </p>
+
+            <p>A) .</p>
+            <p>B) -&gt;</p>
+            <p>C) []</p>
+            <p>D) %</p>
+
+            <p class="answer">
+                Answer: B) -&gt;
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>18. What is a tagged union?</strong>
+            </p>
+
+            <p>A) A union with a separate value identifying the meaningful member</p>
+            <p>B) A union without members</p>
+            <p>C) A union containing only characters</p>
+            <p>D) A union containing only pointers</p>
+
+            <p class="answer">
+                Answer: A) A union with a separate value identifying the meaningful member
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>19. Can a structure contain a union?</strong>
+            </p>
+
+            <p>A) Yes</p>
+            <p>B) No</p>
+            <p>C) Only in C++</p>
+            <p>D) Only in Java</p>
+
+            <p class="answer">
+                Answer: A) Yes
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>20. Which is a common application of unions?</strong>
+            </p>
+
+            <p>A) Memory-sensitive programming</p>
+            <p>B) Web browsing</p>
+            <p>C) Word processing only</p>
+            <p>D) Playing music only</p>
+
+            <p class="answer">
+                Answer: A) Memory-sensitive programming
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.65 Interview Questions</h2>
+
+        <h3>1. What is a union in C?</h3>
+
+        <p>
+            A union is a user-defined data type in which all members
+            share the same memory location.
+        </p>
+
+
+        <h3>2. What is the main difference between structure and union?</h3>
+
+        <p>
+            Structure members have separate storage, while union
+            members share the same storage.
+        </p>
+
+
+        <h3>3. Why are unions memory efficient?</h3>
+
+        <p>
+            Because all members use the same memory area instead of
+            having separate storage for every member.
+        </p>
+
+
+        <h3>4. Which keyword is used to declare a union?</h3>
+
+        <p>
+            The <code>union</code> keyword.
+        </p>
+
+
+        <h3>5. Which operator accesses a union member?</h3>
+
+        <p>
+            The dot operator <code>.</code> is used with a union
+            variable.
+        </p>
+
+
+        <h3>6. Which operator is used with a union pointer?</h3>
+
+        <p>
+            The arrow operator <code>-&gt;</code>.
+        </p>
+
+
+        <h3>7. Can a union contain different data types?</h3>
+
+        <p>
+            Yes. A union can contain members of different data types.
+        </p>
+
+
+        <h3>8. Can a union be passed to a function?</h3>
+
+        <p>
+            Yes. A union can be passed by value or through a pointer.
+        </p>
+
+
+        <h3>9. What is a tagged union?</h3>
+
+        <p>
+            A tagged union combines a union with a separate tag that
+            identifies which member should currently be interpreted.
+        </p>
+
+
+        <h3>10. Why are unions useful in embedded systems?</h3>
+
+        <p>
+            They can provide a memory-efficient way to represent
+            alternative forms of data.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.66 Short Answer Questions</h2>
+
+        <ol>
+
+            <li>Define a union.</li>
+
+            <li>Write the syntax for declaring a union.</li>
+
+            <li>What is the purpose of the union keyword?</li>
+
+            <li>How are union members stored in memory?</li>
+
+            <li>What is the difference between union and structure?</li>
+
+            <li>How do you access a union member?</li>
+
+            <li>What is a union pointer?</li>
+
+            <li>What is a tagged union?</li>
+
+            <li>What is the purpose of typedef with a union?</li>
+
+            <li>List two applications of unions.</li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.67 Long Answer Questions</h2>
+
+        <ol>
+
+            <li>
+                Explain unions in C with syntax and examples.
+            </li>
+
+            <li>
+                Explain memory allocation in unions with a suitable
+                diagram.
+            </li>
+
+            <li>
+                Explain the difference between structures and unions.
+            </li>
+
+            <li>
+                Explain pointers to unions with examples.
+            </li>
+
+            <li>
+                Explain tagged unions with an example.
+            </li>
+
+            <li>
+                Explain the advantages and disadvantages of unions.
+            </li>
+
+            <li>
+                Write a C program demonstrating a union containing
+                different data types.
+            </li>
+
+            <li>
+                Explain the applications of unions in system and
+                embedded programming.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.68 Viva Revision</h2>
+
+        <div class="diagram">
+
+        Q: What is a union?
+        A: A user-defined data type with shared member storage.
+
+        Q: Which keyword is used?
+        A: union
+
+        Q: Do union members have separate storage?
+        A: No.
+
+        Q: Which operator accesses a member?
+        A: Dot (.)
+
+        Q: Which operator accesses a member through a pointer?
+        A: Arrow (-&gt;)
+
+        Q: Main advantage?
+        A: Memory efficiency.
+
+        Q: Structure or union for a complete record?
+        A: Structure.
+
+        Q: Structure or union for alternative values?
+        A: Union.
+
+        Q: What identifies the current alternative
+           in a tagged union?
+        A: A separate tag/discriminator.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>14.69 Final Exam Tip</h2>
+
+        <div class="tip">
+
+            <p>
+                ⭐ Remember this important line for examinations:
+            </p>
+
+            <p>
+                <strong>
+                    "A union is a user-defined data type in C in which
+                    all members share the same memory location."
+                </strong>
+            </p>
+
+            <p>
+                The most important comparison is:
+            </p>
+
+            <p>
+                <strong>
+                    Structure → Separate memory for members
+                    <br>
+                    Union → Shared memory for members
+                </strong>
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- NAVIGATION -->
+
+    <div class="navigation">
+
+        <a href="13-structures.html" class="button">
+            ← Chapter 13
+        </a>
+
+        <a href="15-enumerations.html" class="button">
+            Chapter 15 →
+        </a>
+
+    </div>
+
+
+</main>
+
+
+<footer>
+
+    <h2>ALLIED</h2>
+
+    <p>
+        C Programming Learning Portal
+    </p>
+
+    <p>
+        Learn • Practice • Code • Succeed
+    </p>
+
+    <p>
+        © 2026 ALLIED. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

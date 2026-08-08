@@ -1,0 +1,2914 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 19 - Command Line Arguments in C | ALLIED</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">ALLIED</a>
+
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="books.html">Books</a>
+            <a href="c.html">C Programming</a>
+            <a href="login.html">Login</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <div class="hero">
+
+        <h1>Chapter 19: Command Line Arguments in C</h1>
+
+        <p>
+            Learn how values can be supplied to a C program when it is
+            started from a command-line environment using argc and argv.
+        </p>
+
+    </div>
+
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>
+            After completing this chapter, you will be able to:
+        </p>
+
+        <ul>
+
+            <li>Understand command line arguments.</li>
+
+            <li>Understand the main() function parameters.</li>
+
+            <li>Understand argc.</li>
+
+            <li>Understand argv.</li>
+
+            <li>Access command line arguments.</li>
+
+            <li>Convert string arguments into numbers.</li>
+
+            <li>Process multiple arguments.</li>
+
+            <li>Use loops with command line arguments.</li>
+
+            <li>Write practical command-line programs.</li>
+
+            <li>Understand common errors and best practices.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.1 Introduction to Command Line Arguments</h2>
+
+        <p>
+            A command line argument is a value supplied to a program when
+            the program is started from a command-line environment.
+        </p>
+
+        <p>
+            Command line arguments allow users to provide information to
+            a program without entering it after the program has already
+            started.
+        </p>
+
+        <h3>Simple Example</h3>
+
+        <pre><code>program Hello</code></pre>
+
+        <p>
+            In this example, <code>Hello</code> is supplied to the program
+            as a command line argument.
+        </p>
+
+        <div class="note">
+
+            <strong>Simple Definition:</strong>
+
+            <br><br>
+
+            Command line arguments are values supplied to a program when
+            it is executed from the command line.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.2 Why Are Command Line Arguments Needed?</h2>
+
+        <p>
+            Command line arguments are useful when a program needs input
+            immediately when it starts.
+        </p>
+
+        <ul>
+
+            <li>
+                To provide input when starting a program.
+            </li>
+
+            <li>
+                To avoid repeated keyboard input.
+            </li>
+
+            <li>
+                To automate program execution.
+            </li>
+
+            <li>
+                To pass filenames to programs.
+            </li>
+
+            <li>
+                To pass configuration options.
+            </li>
+
+            <li>
+                To create command-line utilities.
+            </li>
+
+            <li>
+                To process multiple values efficiently.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.3 main() Function with Arguments</h2>
+
+        <p>
+            A C program can define main() with parameters that receive
+            command line information.
+        </p>
+
+        <pre><code>int main(int argc, char *argv[])
+{
+    /* Program statements */
+}</code></pre>
+
+        <p>
+            The two commonly used parameters are:
+        </p>
+
+        <ul>
+
+            <li>
+                <code>argc</code> — argument count
+            </li>
+
+            <li>
+                <code>argv</code> — argument vector
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.4 What is argc?</h2>
+
+        <p>
+            <code>argc</code> stands for <strong>argument count</strong>.
+            It contains the number of command-line arguments available
+            to the program.
+        </p>
+
+        <p>
+            The program name is normally included in this count.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>program Hello World</code></pre>
+
+        <p>
+            Here, there are normally three argument strings:
+        </p>
+
+        <ol>
+
+            <li>program</li>
+            <li>Hello</li>
+            <li>World</li>
+
+        </ol>
+
+        <p>
+            Therefore:
+        </p>
+
+        <pre><code>argc = 3</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.5 What is argv?</h2>
+
+        <p>
+            <code>argv</code> stands for <strong>argument vector</strong>.
+            It provides access to the individual command line argument
+            strings.
+        </p>
+
+        <p>
+            It is commonly declared as:
+        </p>
+
+        <pre><code>char *argv[]</code></pre>
+
+        <p>
+            Each element of <code>argv</code> points to a null-terminated
+            character string.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.6 Understanding argc and argv</h2>
+
+        <div class="diagram">
+
+        Command:
+        
+        program Hello World
+
+                 |
+                 v
+
+              argc = 3
+
+              argv
+                |
+        +-------+-------+-------+
+        |       |       |       |
+        v       v       v       v
+      argv[0] argv[1] argv[2] argv[3]
+        |       |       |       |
+      program Hello   World    NULL
+
+        </div>
+
+        <p>
+            The exact text stored in <code>argv[0]</code> depends on how
+            the program was invoked, but it commonly represents the
+            program name or invocation path.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.7 First Command Line Argument Program</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    if (argc &gt; 1)
+    {
+        printf("Argument = %s", argv[1]);
+    }
+    else
+    {
+        printf("No argument supplied");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Command</h3>
+
+        <pre><code>program Hello</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Argument = Hello</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.8 Printing All Command Line Arguments</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    for (int i = 0; i &lt; argc; i++)
+    {
+        printf("%s\n", argv[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Command</h3>
+
+        <pre><code>program Hello World</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>program
+Hello
+World</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.9 Command Line Arguments Flow Diagram</h2>
+
+        <div class="diagram">
+
+                 START
+                   |
+                   v
+             Run the program
+                   |
+                   v
+          Operating system passes
+          command line arguments
+                   |
+                   v
+             main(argc, argv)
+                   |
+          +--------+--------+
+          |                 |
+          v                 v
+        argc              argv
+          |                 |
+          v                 v
+       Count             Strings
+          |                 |
+          +--------+--------+
+                   |
+                   v
+             Process input
+                   |
+                   v
+                  END
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.10 argc and argv Table</h2>
+
+        <table>
+
+            <tr>
+                <th>Term</th>
+                <th>Meaning</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>argc</td>
+                <td>Argument Count</td>
+                <td>Stores the number of arguments.</td>
+            </tr>
+
+            <tr>
+                <td>argv</td>
+                <td>Argument Vector</td>
+                <td>Provides access to argument strings.</td>
+            </tr>
+
+            <tr>
+                <td>argv[0]</td>
+                <td>Program invocation</td>
+                <td>Usually contains the program name or path.</td>
+            </tr>
+
+            <tr>
+                <td>argv[1]</td>
+                <td>First user-supplied argument</td>
+                <td>Contains the first argument after the program name.</td>
+            </tr>
+
+        </table>
+
+    </section>
+        <section>
+
+        <h2>19.11 Syntax of Command Line Arguments</h2>
+
+        <pre><code>int main(int argc, char *argv[])
+{
+    statements;
+}</code></pre>
+
+        <p>
+            Another equivalent form is:
+        </p>
+
+        <pre><code>int main(int argc, char **argv)
+{
+    statements;
+}</code></pre>
+
+        <p>
+            Both forms represent an array of pointers to character
+            strings.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.12 Meaning of char *argv[]</h2>
+
+        <p>
+            The declaration:
+        </p>
+
+        <pre><code>char *argv[]</code></pre>
+
+        <p>
+            means that <code>argv</code> is an array whose elements are
+            pointers to characters.
+        </p>
+
+        <p>
+            Each element points to a null-terminated string.
+        </p>
+
+        <div class="diagram">
+
+              argv
+                |
+                v
+        +-------+-------+-------+
+        |       |       |       |
+        v       v       v       v
+       char*   char*   char*   NULL
+        |       |       |
+        v       v       v
+      "program" "Hello" "World"
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.13 Argument Indexing</h2>
+
+        <p>
+            Command line arguments are accessed using array indexing.
+        </p>
+
+        <pre><code>argv[0]
+argv[1]
+argv[2]
+argv[3]</code></pre>
+
+        <p>
+            The first element, <code>argv[0]</code>, normally refers to
+            the program invocation.
+        </p>
+
+        <p>
+            User-provided arguments generally begin at
+            <code>argv[1]</code>.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.14 Example with Three Arguments</h2>
+
+        <h3>Command</h3>
+
+        <pre><code>program Apple Mango Orange</code></pre>
+
+        <table>
+
+            <tr>
+                <th>Expression</th>
+                <th>Value</th>
+            </tr>
+
+            <tr>
+                <td>argc</td>
+                <td>4</td>
+            </tr>
+
+            <tr>
+                <td>argv[0]</td>
+                <td>program</td>
+            </tr>
+
+            <tr>
+                <td>argv[1]</td>
+                <td>Apple</td>
+            </tr>
+
+            <tr>
+                <td>argv[2]</td>
+                <td>Mango</td>
+            </tr>
+
+            <tr>
+                <td>argv[3]</td>
+                <td>Orange</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.15 Program to Display argc</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    printf("Argument count = %d", argc);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Command</h3>
+
+        <pre><code>program One Two Three</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Argument count = 4</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.16 Program to Display argv[0]</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    printf("Program = %s", argv[0]);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Program = program</code></pre>
+
+        <p>
+            The actual value may contain a path or another invocation
+            name depending on the environment.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.17 Program to Display the First Argument</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    if (argc &lt; 2)
+    {
+        printf("Please provide an argument.");
+        return 0;
+    }
+
+    printf("First argument = %s", argv[1]);
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program Computer</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>First argument = Computer</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.18 Program to Display Multiple Arguments</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    if (argc &lt; 2)
+    {
+        printf("No arguments supplied.");
+        return 0;
+    }
+
+    for (int i = 1; i &lt; argc; i++)
+    {
+        printf("Argument %d = %s\n", i, argv[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program C Java Python</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Argument 1 = C
+Argument 2 = Java
+Argument 3 = Python</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.19 Strings and Command Line Arguments</h2>
+
+        <p>
+            Command line arguments are received as strings.
+        </p>
+
+        <pre><code>argv[1]</code></pre>
+
+        <p>
+            does not directly represent an integer, even if the user
+            types:
+        </p>
+
+        <pre><code>25</code></pre>
+
+        <p>
+            It is received as a character string.
+        </p>
+
+        <div class="note">
+
+            <strong>Important:</strong>
+
+            Command line arguments are text. If numerical calculations
+            are required, the strings must be converted to numeric types.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.20 Converting a String to Integer</h2>
+
+        <p>
+            The <code>atoi()</code> function can convert a string to an
+            integer.
+        </p>
+
+        <p>
+            It is declared in <code>stdlib.h</code>.
+        </p>
+
+        <pre><code>#include &lt;stdlib.h&gt;
+
+int number = atoi(argv[1]);</code></pre>
+
+        <div class="warning">
+
+            atoi() provides limited error reporting. For robust programs,
+            strtol() is generally preferred because it can report
+            conversion errors.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.21 Program: Add Two Numbers</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[])
+{
+    if (argc != 3)
+    {
+        printf("Usage: program number1 number2");
+        return 1;
+    }
+
+    int a = atoi(argv[1]);
+    int b = atoi(argv[2]);
+
+    printf("Sum = %d", a + b);
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program 10 20</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum = 30</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.22 Using strtol() for Safer Integer Conversion</h2>
+
+        <p>
+            The <code>strtol()</code> function provides more control over
+            integer conversion and error checking.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;limits.h&gt;
+
+int main(int argc, char *argv[])
+{
+    char *end;
+    long value;
+
+    if (argc != 2)
+    {
+        printf("Usage: program number");
+        return 1;
+    }
+
+    errno = 0;
+
+    value = strtol(argv[1], &amp;end, 10);
+
+    if (errno != 0 ||
+        end == argv[1] ||
+        *end != '\0' ||
+        value &lt; INT_MIN ||
+        value &gt; INT_MAX)
+    {
+        printf("Invalid integer");
+        return 1;
+    }
+
+    printf("Number = %ld", value);
+
+    return 0;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.23 Command Line Arguments with Spaces</h2>
+
+        <p>
+            Arguments are normally separated by spaces. If a single
+            argument needs to contain spaces, the command-line shell
+            generally requires quotation marks.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>program "Hello World"</code></pre>
+
+        <p>
+            In this case, <code>Hello World</code> is treated as one
+            argument by typical command-line shells.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.24 argc and argv Relationship</h2>
+
+        <div class="diagram">
+
+                argc
+                 |
+                 v
+        Number of argument strings
+                 |
+                 v
+                argv
+                 |
+                 v
+        +-----------------------+
+        | Array of string       |
+        | pointers              |
+        +-----------------------+
+                 |
+        +--------+--------+
+        |        |        |
+        v        v        v
+      argv[0]  argv[1]  argv[2]
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.25 Important Rules</h2>
+
+        <ul>
+
+            <li>
+                argc represents the number of argument strings.
+            </li>
+
+            <li>
+                argv provides access to the argument strings.
+            </li>
+
+            <li>
+                argv[0] normally identifies the program invocation.
+            </li>
+
+            <li>
+                User arguments normally begin at argv[1].
+            </li>
+
+            <li>
+                argv[argc] is a null pointer.
+            </li>
+
+            <li>
+                Command line arguments are strings.
+            </li>
+
+            <li>
+                Numeric arguments need conversion before arithmetic.
+            </li>
+
+        </ul>
+
+    </section>
+        <section>
+
+        <h2>19.26 Program: Find Largest of Two Numbers</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[])
+{
+    if (argc != 3)
+    {
+        printf("Usage: program number1 number2");
+        return 1;
+    }
+
+    int a = atoi(argv[1]);
+    int b = atoi(argv[2]);
+
+    if (a &gt; b)
+    {
+        printf("Largest = %d", a);
+    }
+    else
+    {
+        printf("Largest = %d", b);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program 50 30</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Largest = 50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.27 Program: Add Multiple Numbers</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[])
+{
+    int sum = 0;
+
+    if (argc &lt; 2)
+    {
+        printf("No numbers supplied.");
+        return 1;
+    }
+
+    for (int i = 1; i &lt; argc; i++)
+    {
+        sum += atoi(argv[i]);
+    }
+
+    printf("Sum = %d", sum);
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program 10 20 30 40</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum = 100</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.28 Program: Count Arguments</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    printf("Number of user arguments = %d",
+           argc - 1);
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program Apple Mango Orange</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number of user arguments = 3</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.29 Program: Print Arguments in Reverse</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    for (int i = argc - 1; i &gt;= 1; i--)
+    {
+        printf("%s\n", argv[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program One Two Three</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Three
+Two
+One</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.30 Program: Calculate Average</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[])
+{
+    if (argc &lt; 2)
+    {
+        printf("Provide at least one number.");
+        return 1;
+    }
+
+    double sum = 0;
+
+    for (int i = 1; i &lt; argc; i++)
+    {
+        sum += atof(argv[i]);
+    }
+
+    printf("Average = %.2f",
+           sum / (argc - 1));
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program 10 20 30</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Average = 20.00</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.31 Program: Multiplication Using Arguments</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[])
+{
+    if (argc != 3)
+    {
+        printf("Usage: program number1 number2");
+        return 1;
+    }
+
+    int a = atoi(argv[1]);
+    int b = atoi(argv[2]);
+
+    printf("Product = %d", a * b);
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program 6 7</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Product = 42</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.32 Program: Simple Calculator</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[])
+{
+    if (argc != 4)
+    {
+        printf("Usage: program number operator number");
+        return 1;
+    }
+
+    int a = atoi(argv[1]);
+    int b = atoi(argv[3]);
+    char op = argv[2][0];
+
+    switch (op)
+    {
+        case '+':
+            printf("Result = %d", a + b);
+            break;
+
+        case '-':
+            printf("Result = %d", a - b);
+            break;
+
+        case '*':
+            printf("Result = %d", a * b);
+            break;
+
+        case '/':
+            if (b == 0)
+            {
+                printf("Division by zero is not allowed.");
+            }
+            else
+            {
+                printf("Result = %d", a / b);
+            }
+            break;
+
+        default:
+            printf("Invalid operator");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program 10 + 5</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Result = 15</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.33 Program: Search an Argument</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[])
+{
+    if (argc &lt; 2)
+    {
+        printf("No arguments supplied.");
+        return 0;
+    }
+
+    char target[100];
+
+    printf("Enter value to search: ");
+    scanf("%99s", target);
+
+    for (int i = 1; i &lt; argc; i++)
+    {
+        if (strcmp(argv[i], target) == 0)
+        {
+            printf("Found");
+            return 0;
+        }
+    }
+
+    printf("Not found");
+
+    return 0;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.34 Program: Display Arguments with Index</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    for (int i = 0; i &lt; argc; i++)
+    {
+        printf("argv[%d] = %s\n",
+               i,
+               argv[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program C Java</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>argv[0] = program
+argv[1] = C
+argv[2] = Java</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.35 Program: Sum of Even Arguments</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[])
+{
+    int sum = 0;
+
+    for (int i = 1; i &lt; argc; i++)
+    {
+        int value = atoi(argv[i]);
+
+        if (value % 2 == 0)
+        {
+            sum += value;
+        }
+    }
+
+    printf("Sum of even numbers = %d", sum);
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program 10 15 20 25 30</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum of even numbers = 60</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.36 Program: Find Maximum Argument</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[])
+{
+    if (argc &lt; 2)
+    {
+        printf("No numbers supplied.");
+        return 1;
+    }
+
+    int max = atoi(argv[1]);
+
+    for (int i = 2; i &lt; argc; i++)
+    {
+        int value = atoi(argv[i]);
+
+        if (value &gt; max)
+        {
+            max = value;
+        }
+    }
+
+    printf("Maximum = %d", max);
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program 15 90 25 70</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Maximum = 90</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.37 Command Line Arguments and Loops</h2>
+
+        <p>
+            Since <code>argv</code> behaves like an array of strings,
+            loops can be used to process an unknown number of arguments.
+        </p>
+
+        <pre><code>for (int i = 1; i &lt; argc; i++)
+{
+    printf("%s\n", argv[i]);
+}</code></pre>
+
+        <div class="tip">
+
+            The loop usually starts at <code>1</code> when processing
+            user-supplied arguments because <code>argv[0]</code> normally
+            represents the program invocation.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.38 Command Line Arguments and Strings</h2>
+
+        <p>
+            Since command line arguments are strings, functions from
+            <code>string.h</code> can be used to compare and manipulate
+            them.
+        </p>
+
+        <pre><code>#include &lt;string.h&gt;
+
+if (strcmp(argv[1], "hello") == 0)
+{
+    printf("Hello command received");
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.39 Command Line Arguments and Files</h2>
+
+        <p>
+            Command line arguments are commonly used to provide file
+            names to programs.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[])
+{
+    FILE *fp;
+
+    if (argc != 2)
+    {
+        printf("Usage: program filename");
+        return 1;
+    }
+
+    fp = fopen(argv[1], "r");
+
+    if (fp == NULL)
+    {
+        printf("Unable to open file");
+        return 1;
+    }
+
+    printf("File opened successfully");
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program data.txt</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.40 Command Line Options</h2>
+
+        <p>
+            Command line programs often use arguments beginning with
+            symbols such as <code>-</code> or <code>--</code> to represent
+            options.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>program --help</code></pre>
+
+        <p>
+            The program can inspect <code>argv[1]</code> and decide what
+            action should be performed.
+        </p>
+
+    </section>
+        <section>
+
+        <h2>19.41 Advantages of Command Line Arguments</h2>
+
+        <ul>
+
+            <li>
+                Input can be provided when the program starts.
+            </li>
+
+            <li>
+                Useful for automation and scripting.
+            </li>
+
+            <li>
+                Suitable for command-line utilities.
+            </li>
+
+            <li>
+                Reduces interactive input for repeated tasks.
+            </li>
+
+            <li>
+                Can pass filenames and options easily.
+            </li>
+
+            <li>
+                Supports batch processing.
+            </li>
+
+            <li>
+                Makes programs convenient to use from scripts.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.42 Disadvantages of Command Line Arguments</h2>
+
+        <ul>
+
+            <li>
+                Users must understand the correct command syntax.
+            </li>
+
+            <li>
+                Arguments are initially strings.
+            </li>
+
+            <li>
+                Invalid input must be handled by the program.
+            </li>
+
+            <li>
+                Complex command syntax can become difficult to manage.
+            </li>
+
+            <li>
+                Programs should not assume that required arguments were
+                supplied.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.43 Common Errors</h2>
+
+        <div class="mcq">
+
+            <h3>❌ Error 1: Accessing argv[1] Without Checking argc</h3>
+
+            <pre><code>printf("%s", argv[1]);</code></pre>
+
+            <p>
+                If no user argument was supplied, accessing argv[1] is
+                invalid.
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <h3>❌ Error 2: Treating String as Integer</h3>
+
+            <pre><code>int x = argv[1];</code></pre>
+
+            <p>
+                argv[1] is a string pointer, not an integer.
+                Convert it using an appropriate conversion function.
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <h3>❌ Error 3: Wrong Argument Count</h3>
+
+            <pre><code>program 10 20</code></pre>
+
+            <p>
+                If the program expects exactly two user arguments, it
+                should verify that <code>argc == 3</code>.
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <h3>❌ Error 4: Invalid Numeric Input</h3>
+
+            <p>
+                Functions such as atoi() do not provide strong error
+                reporting. For robust applications, use strtol(),
+                strtoll(), strtod() or another suitable conversion
+                function with proper validation.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.44 Best Practices</h2>
+
+        <ol>
+
+            <li>
+                Always validate the value of argc before accessing argv.
+            </li>
+
+            <li>
+                Remember that argv values are strings.
+            </li>
+
+            <li>
+                Validate numeric conversions.
+            </li>
+
+            <li>
+                Display a usage message when arguments are missing or
+                incorrect.
+            </li>
+
+            <li>
+                Use descriptive command-line options.
+            </li>
+
+            <li>
+                Handle invalid input gracefully.
+            </li>
+
+            <li>
+                Avoid assumptions about argv[0].
+            </li>
+
+            <li>
+                Use loops when processing an arbitrary number of
+                arguments.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.45 Usage Message</h2>
+
+        <p>
+            A usage message tells the user how a command should be
+            executed.
+        </p>
+
+        <pre><code>if (argc != 3)
+{
+    printf("Usage: program number1 number2\n");
+    return 1;
+}</code></pre>
+
+        <p>
+            Usage messages are especially useful for command-line
+            utilities.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.46 Real-World Applications</h2>
+
+        <ul>
+
+            <li>
+                File processing utilities.
+            </li>
+
+            <li>
+                Compiler commands.
+            </li>
+
+            <li>
+                System administration tools.
+            </li>
+
+            <li>
+                Database command-line utilities.
+            </li>
+
+            <li>
+                Backup programs.
+            </li>
+
+            <li>
+                Text processing tools.
+            </li>
+
+            <li>
+                Build systems.
+            </li>
+
+            <li>
+                Automation scripts.
+            </li>
+
+            <li>
+                Data conversion utilities.
+            </li>
+
+            <li>
+                Developer tools.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.47 Command Line Arguments vs scanf()</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>Command Line Arguments</th>
+                <th>scanf()</th>
+            </tr>
+
+            <tr>
+                <td>Input time</td>
+                <td>When program starts</td>
+                <td>During program execution</td>
+            </tr>
+
+            <tr>
+                <td>Input type</td>
+                <td>Initially strings</td>
+                <td>Can directly read specified types</td>
+            </tr>
+
+            <tr>
+                <td>Useful for</td>
+                <td>Command-line utilities</td>
+                <td>Interactive input</td>
+            </tr>
+
+            <tr>
+                <td>Automation</td>
+                <td>Very useful</td>
+                <td>Less convenient</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.48 Command Line Arguments vs Environment Variables</h2>
+
+        <table>
+
+            <tr>
+                <th>Command Line Arguments</th>
+                <th>Environment Variables</th>
+            </tr>
+
+            <tr>
+                <td>Passed specifically when starting a program.</td>
+                <td>Provided through the process environment.</td>
+            </tr>
+
+            <tr>
+                <td>Available through argc and argv.</td>
+                <td>Can be accessed using environment-related mechanisms.</td>
+            </tr>
+
+            <tr>
+                <td>Good for per-run input.</td>
+                <td>Good for configuration shared across programs or sessions.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.49 Important Exam Points ⭐</h2>
+
+        <ul>
+
+            <li>
+                argc means argument count.
+            </li>
+
+            <li>
+                argv means argument vector.
+            </li>
+
+            <li>
+                argv contains pointers to argument strings.
+            </li>
+
+            <li>
+                argv[0] normally represents the program invocation.
+            </li>
+
+            <li>
+                User arguments normally begin at argv[1].
+            </li>
+
+            <li>
+                argc includes argv[0].
+            </li>
+
+            <li>
+                argv[argc] is a null pointer.
+            </li>
+
+            <li>
+                Command line arguments are strings.
+            </li>
+
+            <li>
+                Numeric strings must be converted before arithmetic.
+            </li>
+
+            <li>
+                argc should be checked before accessing arguments.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.50 Quick Revision Table</h2>
+
+        <table>
+
+            <tr>
+                <th>Concept</th>
+                <th>Meaning</th>
+            </tr>
+
+            <tr>
+                <td>argc</td>
+                <td>Number of command-line argument strings.</td>
+            </tr>
+
+            <tr>
+                <td>argv</td>
+                <td>Array of pointers to argument strings.</td>
+            </tr>
+
+            <tr>
+                <td>argv[0]</td>
+                <td>Usually program name or invocation path.</td>
+            </tr>
+
+            <tr>
+                <td>argv[1]</td>
+                <td>First user-supplied argument.</td>
+            </tr>
+
+            <tr>
+                <td>argv[argc]</td>
+                <td>Null pointer.</td>
+            </tr>
+
+            <tr>
+                <td>atoi()</td>
+                <td>Converts a string to int with limited error reporting.</td>
+            </tr>
+
+            <tr>
+                <td>strtol()</td>
+                <td>Converts a string to long with better error handling.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.51 Complete Working Example</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[])
+{
+    if (argc != 3)
+    {
+        printf("Usage: program number1 number2\n");
+        return 1;
+    }
+
+    int a = atoi(argv[1]);
+    int b = atoi(argv[2]);
+
+    printf("First number  = %d\n", a);
+    printf("Second number = %d\n", b);
+    printf("Sum           = %d\n", a + b);
+    printf("Difference    = %d\n", a - b);
+    printf("Product       = %d\n", a * b);
+
+    if (b != 0)
+    {
+        printf("Quotient      = %d\n", a / b);
+    }
+    else
+    {
+        printf("Quotient      = undefined\n");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Command</h3>
+
+        <pre><code>program 20 5</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>First number  = 20
+Second number = 5
+Sum           = 25
+Difference    = 15
+Product       = 100
+Quotient      = 4</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.52 Final Flow Diagram</h2>
+
+        <div class="diagram">
+
+                    START
+                      |
+                      v
+               Run the program
+                      |
+                      v
+             Receive command line
+                 arguments
+                      |
+                      v
+              main(argc, argv)
+                      |
+             +--------+--------+
+             |                 |
+             v                 v
+           argc              argv
+             |                 |
+             v                 v
+       Count arguments     Access strings
+             |                 |
+             +--------+--------+
+                      |
+                      v
+              Validate input
+                      |
+                      v
+             Convert if needed
+                      |
+                      v
+               Process data
+                      |
+                      v
+                    END
+
+        </div>
+
+    </section>
+        <section>
+
+        <h2>19.53 Summary</h2>
+
+        <p>
+            Command line arguments allow a C program to receive input
+            when the program is started.
+        </p>
+
+        <p>
+            The main() function can receive two commonly used
+            parameters: <code>argc</code> and <code>argv</code>.
+        </p>
+
+        <p>
+            <code>argc</code> stores the number of argument strings,
+            while <code>argv</code> provides access to those strings.
+        </p>
+
+        <p>
+            Command line arguments are initially represented as
+            null-terminated character strings. Numeric arguments must be
+            converted before mathematical operations are performed.
+        </p>
+
+        <div class="tip">
+
+            <strong>Easy Formula to Remember:</strong>
+
+            <br><br>
+
+            <strong>
+                argc → Count
+                <br>
+                argv → Values
+                <br>
+                argv[0] → Program
+                <br>
+                argv[1] → First User Argument
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.54 MCQs – Multiple Choice Questions</h2>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    1. What does argc stand for?
+                </strong>
+            </p>
+
+            <p>A) Argument Character</p>
+            <p>B) Argument Count</p>
+            <p>C) Argument Code</p>
+            <p>D) Array Count</p>
+
+            <p class="answer">
+                Answer: B) Argument Count
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    2. What does argv stand for?
+                </strong>
+            </p>
+
+            <p>A) Argument Variable</p>
+            <p>B) Argument Vector</p>
+            <p>C) Array Value</p>
+            <p>D) Argument Version</p>
+
+            <p class="answer">
+                Answer: B) Argument Vector
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    3. Which parameter stores the number of arguments?
+                </strong>
+            </p>
+
+            <p>A) argv</p>
+            <p>B) argc</p>
+            <p>C) main</p>
+            <p>D) args</p>
+
+            <p class="answer">
+                Answer: B) argc
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    4. Which parameter provides access to argument strings?
+                </strong>
+            </p>
+
+            <p>A) argc</p>
+            <p>B) argv</p>
+            <p>C) count</p>
+            <p>D) input</p>
+
+            <p class="answer">
+                Answer: B) argv
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    5. What does argv[0] normally contain?
+                </strong>
+            </p>
+
+            <p>A) First user number</p>
+            <p>B) Program invocation</p>
+            <p>C) Last argument</p>
+            <p>D) argc value</p>
+
+            <p class="answer">
+                Answer: B) Program invocation
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    6. Where does the first user-supplied argument
+                    normally begin?
+                </strong>
+            </p>
+
+            <p>A) argv[0]</p>
+            <p>B) argv[1]</p>
+            <p>C) argv[2]</p>
+            <p>D) argv[argc]</p>
+
+            <p class="answer">
+                Answer: B) argv[1]
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    7. Command line arguments are initially:
+                </strong>
+            </p>
+
+            <p>A) Integers</p>
+            <p>B) Floats</p>
+            <p>C) Strings</p>
+            <p>D) Structures</p>
+
+            <p class="answer">
+                Answer: C) Strings
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    8. Which header declares atoi()?
+                </strong>
+            </p>
+
+            <p>A) stdio.h</p>
+            <p>B) stdlib.h</p>
+            <p>C) string.h</p>
+            <p>D) math.h</p>
+
+            <p class="answer">
+                Answer: B) stdlib.h
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    9. Which function can convert a string to int?
+                </strong>
+            </p>
+
+            <p>A) atoi()</p>
+            <p>B) printf()</p>
+            <p>C) strlen()</p>
+            <p>D) scanf()</p>
+
+            <p class="answer">
+                Answer: A) atoi()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    10. Which function provides better error handling
+                    for integer conversion?
+                </strong>
+            </p>
+
+            <p>A) atoi()</p>
+            <p>B) strtol()</p>
+            <p>C) puts()</p>
+            <p>D) gets()</p>
+
+            <p class="answer">
+                Answer: B) strtol()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    11. If argc is 4, how many argument strings are
+                    available?
+                </strong>
+            </p>
+
+            <p>A) 3</p>
+            <p>B) 4</p>
+            <p>C) 5</p>
+            <p>D) 2</p>
+
+            <p class="answer">
+                Answer: B) 4
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    12. If a program is executed as
+                    program A B, what is argc normally?
+                </strong>
+            </p>
+
+            <p>A) 1</p>
+            <p>B) 2</p>
+            <p>C) 3</p>
+            <p>D) 4</p>
+
+            <p class="answer">
+                Answer: C) 3
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    13. What is argv[2] for
+                    program A B?
+                </strong>
+            </p>
+
+            <p>A) program</p>
+            <p>B) A</p>
+            <p>C) B</p>
+            <p>D) NULL</p>
+
+            <p class="answer">
+                Answer: C) B
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    14. What is argv[argc]?
+                </strong>
+            </p>
+
+            <p>A) First argument</p>
+            <p>B) Program name</p>
+            <p>C) Null pointer</p>
+            <p>D) argc value</p>
+
+            <p class="answer">
+                Answer: C) Null pointer
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    15. Which operator is used to access an argv element?
+                </strong>
+            </p>
+
+            <p>A) Array indexing []</p>
+            <p>B) &amp;</p>
+            <p>C) *</p>
+            <p>D) -&gt;</p>
+
+            <p class="answer">
+                Answer: A) Array indexing []
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    16. Command line arguments are especially useful for:
+                </strong>
+            </p>
+
+            <p>A) Automation</p>
+            <p>B) Only graphics</p>
+            <p>C) Only sound</p>
+            <p>D) Only hardware</p>
+
+            <p class="answer">
+                Answer: A) Automation
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    17. What should be checked before using argv[1]?
+                </strong>
+            </p>
+
+            <p>A) argc</p>
+            <p>B) printf</p>
+            <p>C) sizeof main</p>
+            <p>D) return value of printf</p>
+
+            <p class="answer">
+                Answer: A) argc
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    18. Which header is required for strcmp()?
+                </strong>
+            </p>
+
+            <p>A) stdio.h</p>
+            <p>B) string.h</p>
+            <p>C) stdlib.h</p>
+            <p>D) math.h</p>
+
+            <p class="answer">
+                Answer: B) string.h
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    19. Which parameter is normally an array of character
+                    pointers?
+                </strong>
+            </p>
+
+            <p>A) argc</p>
+            <p>B) argv</p>
+            <p>C) main</p>
+            <p>D) return</p>
+
+            <p class="answer">
+                Answer: B) argv
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    20. Which is a good practice for command line
+                    programs?
+                </strong>
+            </p>
+
+            <p>A) Ignore argc</p>
+            <p>B) Access every argv index without checking</p>
+            <p>C) Validate arguments</p>
+            <p>D) Assume all arguments are integers</p>
+
+            <p class="answer">
+                Answer: C) Validate arguments
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.55 Interview Questions</h2>
+
+        <ol>
+
+            <li>
+                <strong>What are command line arguments?</strong>
+                <br>
+                They are values supplied to a program when it is started
+                from a command-line environment.
+            </li>
+
+            <li>
+                <strong>What is argc?</strong>
+                <br>
+                argc stores the number of command-line argument strings.
+            </li>
+
+            <li>
+                <strong>What is argv?</strong>
+                <br>
+                argv provides access to the command-line argument strings.
+            </li>
+
+            <li>
+                <strong>What is argv[0]?</strong>
+                <br>
+                It normally contains the program invocation name or path.
+            </li>
+
+            <li>
+                <strong>Where does the first user argument normally begin?</strong>
+                <br>
+                At argv[1].
+            </li>
+
+            <li>
+                <strong>What type of data are command line arguments?</strong>
+                <br>
+                Null-terminated character strings.
+            </li>
+
+            <li>
+                <strong>How can a string argument be converted to an integer?</strong>
+                <br>
+                atoi() can be used for simple conversion; strtol() is
+                preferred when robust error checking is needed.
+            </li>
+
+            <li>
+                <strong>Why should argc be checked?</strong>
+                <br>
+                To ensure the requested argv elements actually exist
+                before accessing them.
+            </li>
+
+            <li>
+                <strong>What is argv[argc]?</strong>
+                <br>
+                It is a null pointer.
+            </li>
+
+            <li>
+                <strong>What are command line arguments useful for?</strong>
+                <br>
+                They are useful for utilities, automation, file
+                processing and scripts.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.56 Viva Questions</h2>
+
+        <table>
+
+            <tr>
+                <th>Question</th>
+                <th>Short Answer</th>
+            </tr>
+
+            <tr>
+                <td>argc full form?</td>
+                <td>Argument Count</td>
+            </tr>
+
+            <tr>
+                <td>argv full form?</td>
+                <td>Argument Vector</td>
+            </tr>
+
+            <tr>
+                <td>First user argument?</td>
+                <td>argv[1]</td>
+            </tr>
+
+            <tr>
+                <td>Program invocation?</td>
+                <td>Normally argv[0]</td>
+            </tr>
+
+            <tr>
+                <td>Arguments are initially?</td>
+                <td>Strings</td>
+            </tr>
+
+            <tr>
+                <td>Simple string-to-int function?</td>
+                <td>atoi()</td>
+            </tr>
+
+            <tr>
+                <td>Robust integer conversion?</td>
+                <td>strtol()</td>
+            </tr>
+
+            <tr>
+                <td>Last sentinel?</td>
+                <td>argv[argc] is NULL</td>
+            </tr>
+
+            <tr>
+                <td>Check before argv[1]?</td>
+                <td>argc</td>
+            </tr>
+
+            <tr>
+                <td>Common use?</td>
+                <td>Command-line utilities</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.57 One-Minute Revision 🚀</h2>
+
+        <div class="diagram">
+
+              COMMAND LINE ARGUMENTS
+
+                       |
+                       v
+              int main(argc, argv)
+                       |
+             +---------+---------+
+             |                   |
+             v                   v
+           argc                argv
+             |                   |
+             v                   v
+          COUNT              STRINGS
+                                 |
+                  +--------------+--------------+
+                  |              |              |
+                  v              v              v
+               argv[0]        argv[1]        argv[2]
+               Program        Argument       Argument
+                  |
+                  v
+             Process Input
+                  |
+                  v
+                 END
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>19.58 Final Chapter Summary 📚</h2>
+
+        <p>
+            Command line arguments provide a convenient way to pass
+            information to a C program when it is launched.
+        </p>
+
+        <p>
+            The two important parameters are <code>argc</code> and
+            <code>argv</code>. argc gives the number of argument strings,
+            while argv provides access to those strings.
+        </p>
+
+        <p>
+            Command line arguments are initially text, so programs must
+            convert them when numerical calculations are required.
+        </p>
+
+        <div class="tip">
+
+            <strong>Exam Formula:</strong>
+
+            <br><br>
+
+            <strong>
+                argc = Count
+                <br>
+                argv = Argument Values
+                <br>
+                argv[0] = Program
+                <br>
+                argv[1] = First User Input
+                <br>
+                argv[argc] = NULL
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <div class="navigation">
+
+        <a href="18-dynamic-memory.html" class="button">
+            ← Previous Chapter
+        </a>
+
+        <a href="c.html" class="button">
+            C Programming
+        </a>
+
+        <a href="home.html" class="button">
+            Home →
+        </a>
+
+    </div>
+
+
+</main>
+
+
+<footer>
+
+    <h3>ALLIED</h3>
+
+    <p>
+        Learn C Programming with simple explanations,
+        examples and practical programs.
+    </p>
+
+    <p>
+        © 2026 ALLIED. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

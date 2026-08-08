@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 7 - Control Statements in C | ALLIED</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="nav">
+
+        <a href="home.html" class="logo">ALLIED</a>
+
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="books.html">Books</a>
+            <a href="c.html">C Programming</a>
+            <a href="login.html">Login</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<main class="container">
+
+
+    <!-- TITLE -->
+
+    <div class="hero">
+
+        <h1>Chapter 7: Control Statements in C</h1>
+
+        <p>
+            Learn how control statements allow a C program to make
+            decisions, choose between alternatives and control the
+            order in which statements execute.
+        </p>
+
+    </div>
+
+
+    <!-- OBJECTIVES -->
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>After completing this chapter, you will be able to:</p>
+
+        <ul>
+            <li>Understand program control flow.</li>
+            <li>Understand decision-making statements.</li>
+            <li>Use if statements.</li>
+            <li>Use if-else statements.</li>
+            <li>Use nested if statements.</li>
+            <li>Use the else-if ladder.</li>
+            <li>Use switch statements.</li>
+            <li>Use break and continue where appropriate.</li>
+            <li>Choose suitable control statements for problems.</li>
+            <li>Write programs using conditional logic.</li>
+        </ul>
+
+    </section>
+
+
+    <!-- INTRODUCTION -->
+
+    <section>
+
+        <h2>7.1 Introduction to Control Statements</h2>
+
+        <p>
+            Normally, a C program executes statements in sequence.
+            Control statements allow the program to change that normal
+            flow according to conditions or program requirements.
+        </p>
+
+        <p>
+            For example, a program can check whether a student has passed
+            an examination and display a different message depending on
+            the result.
+        </p>
+
+        <pre><code>if (marks &gt;= 40)
+{
+    printf("Pass");
+}</code></pre>
+
+        <div class="note">
+            <strong>Simple definition:</strong>
+            Control statements determine the order in which statements
+            are executed.
+        </div>
+
+    </section>
+
+
+    <!-- HISTORY -->
+
+    <section>
+
+        <h2>7.2 Historical Background</h2>
+
+        <p>
+            Control flow is a fundamental concept shared by most
+            procedural programming languages. C provides a compact set
+            of control statements that can express decisions,
+            repetition and jumps.
+        </p>
+
+        <p>
+            The decision-making statements in C are especially useful
+            for writing programs that respond differently to different
+            input values.
+        </p>
+
+        <p>
+            In later chapters, loops will be studied in greater detail.
+            This chapter focuses primarily on conditional and selection
+            control statements.
+        </p>
+
+    </section>
+
+
+    <!-- TYPES -->
+
+    <section>
+
+        <h2>7.3 Types of Control Statements</h2>
+
+        <div class="diagram">
+
+                    CONTROL STATEMENTS
+                           |
+          +----------------+----------------+
+          |                |                |
+     Sequential        Selection        Jump
+          |                |                |
+       Normal          if              break
+       execution       if-else         continue
+                      else-if
+                      switch
+                      ?: 
+
+        </div>
+
+        <table>
+
+            <tr>
+                <th>Category</th>
+                <th>Statements</th>
+            </tr>
+
+            <tr>
+                <td>Sequential</td>
+                <td>Normal statement-by-statement execution</td>
+            </tr>
+
+            <tr>
+                <td>Selection</td>
+                <td>if, if-else, else-if, switch</td>
+            </tr>
+
+            <tr>
+                <td>Conditional expression</td>
+                <td>? :</td>
+            </tr>
+
+            <tr>
+                <td>Jump</td>
+                <td>break, continue, return, goto</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <!-- IF -->
+
+    <section>
+
+        <h2>7.4 if Statement</h2>
+
+        <p>
+            The <code>if</code> statement executes a block of code when
+            its condition evaluates to true.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>if (condition)
+{
+    statements;
+}</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int age = 20;
+
+    if (age &gt;= 18)
+    {
+        printf("You are an adult.");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>You are an adult.</code></pre>
+
+    </section>
+
+
+    <!-- IF FLOWCHART -->
+
+    <section>
+
+        <h2>7.5 if Statement Flow Diagram</h2>
+
+        <div class="diagram">
+
+             START
+               |
+               v
+        +---------------+
+        |   Condition   |
+        +---------------+
+           /         \
+        True         False
+         |             |
+         v             |
+   Execute block       |
+         |             |
+         +------->-----+
+                 |
+                 v
+                END
+
+        </div>
+
+    </section>
+
+
+    <!-- IF ELSE -->
+
+    <section>
+
+        <h2>7.6 if-else Statement</h2>
+
+        <p>
+            The <code>if-else</code> statement provides two alternatives.
+            One block executes when the condition is true, and the other
+            executes when it is false.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>if (condition)
+{
+    statements;
+}
+else
+{
+    statements;
+}</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number = 10;
+
+    if (number % 2 == 0)
+    {
+        printf("Even");
+    }
+    else
+    {
+        printf("Odd");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Even</code></pre>
+
+    </section>
+
+
+    <!-- IF ELSE DIAGRAM -->
+
+    <section>
+
+        <h2>7.7 if-else Flow Diagram</h2>
+
+        <div class="diagram">
+
+               START
+                 |
+                 v
+          +-------------+
+          |  Condition  |
+          +-------------+
+            /         \
+         True         False
+          |             |
+          v             v
+     Block A          Block B
+          |             |
+          +------ + -----+
+                 |
+                 v
+                END
+
+        </div>
+
+    </section>
+
+
+    <!-- NESTED IF -->
+
+    <section>
+
+        <h2>7.8 Nested if Statement</h2>
+
+        <p>
+            An <code>if</code> statement placed inside another
+            <code>if</code> statement is called a nested if.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int age = 20;
+    int hasId = 1;
+
+    if (age &gt;= 18)
+    {
+        if (hasId)
+        {
+            printf("Entry allowed");
+        }
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Entry allowed</code></pre>
+
+        <div class="warning">
+            Deeply nested conditions can make code difficult to read.
+            Use them only when the logic genuinely requires nesting.
+        </div>
+
+    </section>
+
+
+    <!-- ELSE IF -->
+
+    <section>
+
+        <h2>7.9 else-if Ladder</h2>
+
+        <p>
+            An else-if ladder is useful when several conditions need to
+            be checked in sequence.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>if (condition1)
+{
+    statements;
+}
+else if (condition2)
+{
+    statements;
+}
+else if (condition3)
+{
+    statements;
+}
+else
+{
+    statements;
+}</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int marks = 75;
+
+    if (marks &gt;= 90)
+    {
+        printf("Grade A+");
+    }
+    else if (marks &gt;= 75)
+    {
+        printf("Grade A");
+    }
+    else if (marks &gt;= 60)
+    {
+        printf("Grade B");
+    }
+    else if (marks &gt;= 40)
+    {
+        printf("Grade C");
+    }
+    else
+    {
+        printf("Fail");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Grade A</code></pre>
+
+    </section>
+
+
+    <!-- ELSE IF TABLE -->
+
+    <section>
+
+        <h2>7.10 Example of Grade Conditions</h2>
+
+        <table>
+
+            <tr>
+                <th>Marks</th>
+                <th>Result</th>
+            </tr>
+
+            <tr>
+                <td>90 and above</td>
+                <td>A+</td>
+            </tr>
+
+            <tr>
+                <td>75 - 89</td>
+                <td>A</td>
+            </tr>
+
+            <tr>
+                <td>60 - 74</td>
+                <td>B</td>
+            </tr>
+
+            <tr>
+                <td>40 - 59</td>
+                <td>C</td>
+            </tr>
+
+            <tr>
+                <td>Below 40</td>
+                <td>Fail</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <!-- SWITCH -->
+
+    <section>
+
+        <h2>7.11 switch Statement</h2>
+
+        <p>
+            The <code>switch</code> statement selects one of several
+            statement blocks based on the value of an integer-like
+            controlling expression.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>switch (expression)
+{
+    case constant1:
+        statements;
+        break;
+
+    case constant2:
+        statements;
+        break;
+
+    default:
+        statements;
+}</code></pre>
+
+    </section>
+
+
+    <!-- SWITCH EXAMPLE -->
+
+    <section>
+
+        <h2>7.12 switch Example</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int day = 2;
+
+    switch (day)
+    {
+        case 1:
+            printf("Monday");
+            break;
+
+        case 2:
+            printf("Tuesday");
+            break;
+
+        case 3:
+            printf("Wednesday");
+            break;
+
+        default:
+            printf("Invalid day");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Tuesday</code></pre>
+
+    </section>
+
+
+    <!-- SWITCH FLOW -->
+
+    <section>
+
+        <h2>7.13 switch Flow Diagram</h2>
+
+        <div class="diagram">
+
+                 START
+                   |
+                   v
+             switch(expression)
+                   |
+       +-----------+-----------+
+       |           |           |
+     case 1      case 2      case 3
+       |           |           |
+       v           v           v
+     Code 1      Code 2      Code 3
+       |           |           |
+       +-----------+-----------+
+                   |
+                   v
+                  END
+
+        </div>
+
+    </section>
+
+
+    <!-- BREAK -->
+
+    <section>
+
+        <h2>7.14 break Statement</h2>
+
+        <p>
+            The <code>break</code> statement terminates the nearest
+            enclosing loop or switch statement.
+        </p>
+
+        <h3>Example with switch</h3>
+
+        <pre><code>switch (choice)
+{
+    case 1:
+        printf("One");
+        break;
+
+    case 2:
+        printf("Two");
+        break;
+}</code></pre>
+
+        <p>
+            In a switch, <code>break</code> normally prevents execution
+            from continuing into the next case.
+        </p>
+
+    </section>
+
+
+    <!-- FALL THROUGH -->
+
+    <section>
+
+        <h2>7.15 switch Fall-Through</h2>
+
+        <p>
+            If a case does not contain a <code>break</code>, execution
+            can continue into the following case.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number = 1;
+
+    switch (number)
+    {
+        case 1:
+            printf("One\n");
+
+        case 2:
+            printf("Two\n");
+
+        default:
+            printf("End");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>One
+Two
+End</code></pre>
+
+        <div class="warning">
+            Fall-through can be intentional, but accidental fall-through
+            is a common source of bugs.
+        </div>
+
+    </section>
+
+
+    <!-- DEFAULT -->
+
+    <section>
+
+        <h2>7.16 default Case</h2>
+
+        <p>
+            The <code>default</code> label is used when none of the
+            listed case values match.
+        </p>
+
+        <pre><code>switch (choice)
+{
+    case 1:
+        printf("Add");
+        break;
+
+    case 2:
+        printf("Exit");
+        break;
+
+    default:
+        printf("Invalid choice");
+}</code></pre>
+
+        <p>
+            The default case is optional, but it is often useful for
+            handling unexpected values.
+        </p>
+
+    </section>
+
+
+    <!-- SWITCH VS IF -->
+
+    <section>
+
+        <h2>7.17 if-else vs switch</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>if-else</th>
+                <th>switch</th>
+            </tr>
+
+            <tr>
+                <td>Complex conditions</td>
+                <td>Excellent</td>
+                <td>Limited</td>
+            </tr>
+
+            <tr>
+                <td>Ranges</td>
+                <td>Easy to express</td>
+                <td>Not directly suited</td>
+            </tr>
+
+            <tr>
+                <td>Many fixed choices</td>
+                <td>Possible</td>
+                <td>Often convenient</td>
+            </tr>
+
+            <tr>
+                <td>

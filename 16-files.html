@@ -1,0 +1,4254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 16 - File Handling in C | ALLIED</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">
+            ALLIED
+        </a>
+
+        <nav>
+
+            <a href="home.html">Home</a>
+
+            <a href="books.html">Books</a>
+
+            <a href="c.html">C Programming</a>
+
+            <a href="login.html">Login</a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <div class="hero">
+
+        <h1>Chapter 16: File Handling in C</h1>
+
+        <p>
+            Learn how C programs create, open, read, write, update and
+            close files using standard file handling functions.
+            File handling allows data to be stored permanently instead
+            of disappearing when a program terminates.
+        </p>
+
+    </div>
+
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>
+            After completing this chapter, you will be able to:
+        </p>
+
+        <ul>
+
+            <li>Understand the concept of files.</li>
+
+            <li>Understand why file handling is required.</li>
+
+            <li>Understand text and binary files.</li>
+
+            <li>Understand the FILE pointer.</li>
+
+            <li>Open and close files.</li>
+
+            <li>Understand different file opening modes.</li>
+
+            <li>Read data from files.</li>
+
+            <li>Write data to files.</li>
+
+            <li>Append data to files.</li>
+
+            <li>Use file positioning functions.</li>
+
+            <li>Handle file errors.</li>
+
+            <li>Write practical file handling programs.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.1 Introduction to File Handling</h2>
+
+        <p>
+            A file is a collection of data stored on a storage device.
+            Files allow information to remain available even after a
+            program has finished execution.
+        </p>
+
+        <p>
+            Normally, variables store data temporarily in memory.
+            When the program terminates, the data stored in ordinary
+            variables is lost.
+        </p>
+
+        <p>
+            File handling provides a way to store data permanently in
+            files such as text files and binary files.
+        </p>
+
+        <div class="note">
+
+            <strong>Simple Definition:</strong>
+
+            File handling is the process of creating, opening, reading,
+            writing, updating and closing files using a program.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.2 Why Is File Handling Needed?</h2>
+
+        <p>
+            File handling is required when information needs to be
+            stored permanently.
+        </p>
+
+        <ul>
+
+            <li>To store data permanently.</li>
+
+            <li>To save program results.</li>
+
+            <li>To read previously stored information.</li>
+
+            <li>To maintain student records.</li>
+
+            <li>To maintain employee records.</li>
+
+            <li>To store application settings.</li>
+
+            <li>To store logs.</li>
+
+            <li>To process large amounts of data.</li>
+
+            <li>To exchange data between programs.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.3 Temporary Data vs Permanent Data</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>Memory Variable</th>
+                <th>File</th>
+            </tr>
+
+            <tr>
+                <td>Storage</td>
+                <td>Main memory</td>
+                <td>Storage device</td>
+            </tr>
+
+            <tr>
+                <td>Persistence</td>
+                <td>Usually temporary</td>
+                <td>Persistent</td>
+            </tr>
+
+            <tr>
+                <td>Available after program ends</td>
+                <td>No</td>
+                <td>Yes</td>
+            </tr>
+
+            <tr>
+                <td>Suitable for large stored data</td>
+                <td>Limited</td>
+                <td>Yes</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.4 Types of Files in C</h2>
+
+        <div class="diagram">
+
+                       FILES
+                         |
+              +----------+----------+
+              |                     |
+          TEXT FILES           BINARY FILES
+              |                     |
+        Human-readable       Machine-oriented
+        character data       byte representation
+
+        </div>
+
+        <h3>1. Text Files</h3>
+
+        <p>
+            Text files store data as characters. They can generally be
+            opened and understood using a text editor.
+        </p>
+
+        <p>
+            Example:
+        </p>
+
+        <pre><code>Hello
+Welcome to ALLIED
+C Programming</code></pre>
+
+
+        <h3>2. Binary Files</h3>
+
+        <p>
+            Binary files store data as bytes. They are commonly used
+            when efficient storage or direct binary representation is
+            required.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.5 Text Files vs Binary Files</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>Text File</th>
+                <th>Binary File</th>
+            </tr>
+
+            <tr>
+                <td>Data representation</td>
+                <td>Characters</td>
+                <td>Binary bytes</td>
+            </tr>
+
+            <tr>
+                <td>Human-readable</td>
+                <td>Generally yes</td>
+                <td>Generally no</td>
+            </tr>
+
+            <tr>
+                <td>Typical functions</td>
+                <td>fprintf, fscanf, fgets, fputs</td>
+                <td>fread, fwrite</td>
+            </tr>
+
+            <tr>
+                <td>Common use</td>
+                <td>Text and configuration data</td>
+                <td>Structured binary data</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.6 File Stream</h2>
+
+        <p>
+            C represents input and output operations through streams.
+            A file stream provides a connection between the program and
+            an external file.
+        </p>
+
+        <div class="diagram">
+
+        PROGRAM
+           |
+           |  File Stream
+           v
+        +---------+
+        |  FILE   |
+        |  System |
+        +---------+
+           |
+           v
+        STORAGE
+           |
+           v
+        File
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.7 FILE Pointer</h2>
+
+        <p>
+            C uses the <code>FILE</code> type to represent an open file
+            stream.
+        </p>
+
+        <p>
+            A pointer to a <code>FILE</code> object is commonly used
+            when performing file operations.
+        </p>
+
+        <pre><code>FILE *fp;</code></pre>
+
+        <p>
+            Here, <code>fp</code> is a file pointer.
+        </p>
+
+        <div class="note">
+
+            The <code>FILE</code> type is declared by the standard I/O
+            header file.
+
+        </div>
+
+        <pre><code>#include &lt;stdio.h&gt;</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.8 Basic File Handling Steps</h2>
+
+        <div class="diagram">
+
+              START
+                |
+                v
+          Declare FILE *
+                |
+                v
+           Open File
+                |
+                v
+       Check for Error
+                |
+                v
+        Read / Write Data
+                |
+                v
+          Close File
+                |
+                v
+               END
+
+        </div>
+
+        <ol>
+
+            <li>Declare a file pointer.</li>
+
+            <li>Open the file.</li>
+
+            <li>Check whether opening succeeded.</li>
+
+            <li>Perform read or write operations.</li>
+
+            <li>Close the file.</li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.9 Opening a File</h2>
+
+        <p>
+            The <code>fopen()</code> function is used to open a file.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>FILE *fopen(const char *filename,
+            const char *mode);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>FILE *fp;
+
+fp = fopen("data.txt", "r");</code></pre>
+
+        <p>
+            The first argument specifies the file name and the second
+            argument specifies the opening mode.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.10 Closing a File</h2>
+
+        <p>
+            The <code>fclose()</code> function closes an opened file.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>fclose(fp);</code></pre>
+
+        <p>
+            Closing files is important because it releases resources
+            associated with the open stream and ensures buffered output
+            is properly handled.
+        </p>
+
+        <div class="warning">
+
+            Always close a file after finishing the required file
+            operations.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.11 Simple File Opening Program</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+
+    fp = fopen("data.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("Unable to open file.");
+        return 1;
+    }
+
+    printf("File opened successfully.");
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <h3>Explanation</h3>
+
+        <ul>
+
+            <li>
+                <code>FILE *fp</code> declares a file pointer.
+            </li>
+
+            <li>
+                <code>fopen()</code> attempts to open the file.
+            </li>
+
+            <li>
+                <code>NULL</code> indicates that opening failed.
+            </li>
+
+            <li>
+                <code>fclose()</code> closes the file.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.12 File Handling Functions</h2>
+
+        <table>
+
+            <tr>
+                <th>Function</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>fopen()</td>
+                <td>Opens a file</td>
+            </tr>
+
+            <tr>
+                <td>fclose()</td>
+                <td>Closes a file</td>
+            </tr>
+
+            <tr>
+                <td>fgetc()</td>
+                <td>Reads one character</td>
+            </tr>
+
+            <tr>
+                <td>fputc()</td>
+                <td>Writes one character</td>
+            </tr>
+
+            <tr>
+                <td>fgets()</td>
+                <td>Reads a string or line</td>
+            </tr>
+
+            <tr>
+                <td>fputs()</td>
+                <td>Writes a string</td>
+            </tr>
+
+            <tr>
+                <td>fprintf()</td>
+                <td>Writes formatted data</td>
+            </tr>
+
+            <tr>
+                <td>fscanf()</td>
+                <td>Reads formatted data</td>
+            </tr>
+
+            <tr>
+                <td>fread()</td>
+                <td>Reads binary data</td>
+            </tr>
+
+            <tr>
+                <td>fwrite()</td>
+                <td>Writes binary data</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section class="tip">
+
+        <h2>Part 1 Complete ✅</h2>
+
+        <p>
+            You have learned the basics of file handling, file types,
+            streams, FILE pointers, opening and closing files.
+        </p>
+
+        <p>
+            Continue directly with Part 2.
+        </p>
+
+    </section>
+        <section>
+
+        <h2>16.13 File Opening Modes</h2>
+
+        <p>
+            The mode passed to <code>fopen()</code> determines how the
+            file will be accessed.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Mode</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>r</td>
+                <td>Open an existing file for reading</td>
+            </tr>
+
+            <tr>
+                <td>w</td>
+                <td>Open for writing; creates or truncates the file</td>
+            </tr>
+
+            <tr>
+                <td>a</td>
+                <td>Open for appending; creates if necessary</td>
+            </tr>
+
+            <tr>
+                <td>r+</td>
+                <td>Open an existing file for reading and writing</td>
+            </tr>
+
+            <tr>
+                <td>w+</td>
+                <td>Open for reading and writing; creates or truncates</td>
+            </tr>
+
+            <tr>
+                <td>a+</td>
+                <td>Open for reading and appending</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.14 Binary File Modes</h2>
+
+        <p>
+            The character <code>b</code> can be added to a mode when
+            binary mode is required.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Mode</th>
+                <th>Meaning</th>
+            </tr>
+
+            <tr>
+                <td>rb</td>
+                <td>Read binary file</td>
+            </tr>
+
+            <tr>
+                <td>wb</td>
+                <td>Write binary file</td>
+            </tr>
+
+            <tr>
+                <td>ab</td>
+                <td>Append binary file</td>
+            </tr>
+
+            <tr>
+                <td>rb+</td>
+                <td>Read and write binary file</td>
+            </tr>
+
+            <tr>
+                <td>wb+</td>
+                <td>Read and write, creating or truncating binary file</td>
+            </tr>
+
+            <tr>
+                <td>ab+</td>
+                <td>Read and append binary file</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.15 Mode r</h2>
+
+        <p>
+            The <code>r</code> mode opens an existing file for reading.
+            If the file does not exist, opening fails.
+        </p>
+
+        <pre><code>FILE *fp;
+
+fp = fopen("data.txt", "r");</code></pre>
+
+        <div class="warning">
+
+            The <code>r</code> mode does not create a missing file.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.16 Mode w</h2>
+
+        <p>
+            The <code>w</code> mode opens a file for writing.
+            If the file does not exist, it is created.
+            If it already exists, its previous contents are discarded.
+        </p>
+
+        <pre><code>FILE *fp;
+
+fp = fopen("data.txt", "w");</code></pre>
+
+        <div class="warning">
+
+            Be careful with <code>w</code> mode because opening an
+            existing file for writing truncates its contents.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.17 Mode a</h2>
+
+        <p>
+            The <code>a</code> mode opens a file for appending.
+            New data is written at the end of the file.
+        </p>
+
+        <pre><code>FILE *fp;
+
+fp = fopen("data.txt", "a");</code></pre>
+
+        <p>
+            If the file does not exist, it is created.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.18 Mode r+</h2>
+
+        <p>
+            The <code>r+</code> mode opens an existing file for both
+            reading and writing.
+        </p>
+
+        <pre><code>FILE *fp;
+
+fp = fopen("data.txt", "r+");</code></pre>
+
+        <p>
+            The file must already exist.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.19 Mode w+</h2>
+
+        <p>
+            The <code>w+</code> mode opens a file for both reading and
+            writing.
+        </p>
+
+        <p>
+            If the file exists, its contents are truncated. If it does
+            not exist, a new file is created.
+        </p>
+
+        <pre><code>FILE *fp;
+
+fp = fopen("data.txt", "w+");</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.20 Mode a+</h2>
+
+        <p>
+            The <code>a+</code> mode opens a file for reading and
+            appending.
+        </p>
+
+        <pre><code>FILE *fp;
+
+fp = fopen("data.txt", "a+");</code></pre>
+
+        <p>
+            New output is appended to the end of the file.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.21 Writing a Character Using fputc()</h2>
+
+        <p>
+            The <code>fputc()</code> function writes one character to a
+            file stream.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>fputc(character, file_pointer);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+
+    fp = fopen("data.txt", "w");
+
+    if (fp == NULL)
+    {
+        printf("File could not be opened.");
+        return 1;
+    }
+
+    fputc('A', fp);
+
+    fclose(fp);
+
+    printf("Character written.");
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Character written.</code></pre>
+
+        <p>
+            The file <code>data.txt</code> will contain:
+        </p>
+
+        <pre><code>A</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.22 Reading a Character Using fgetc()</h2>
+
+        <p>
+            The <code>fgetc()</code> function reads one character from a
+            file stream.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+    int ch;
+
+    fp = fopen("data.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("File could not be opened.");
+        return 1;
+    }
+
+    ch = fgetc(fp);
+
+    if (ch != EOF)
+    {
+        printf("Character = %c", ch);
+    }
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Character = A</code></pre>
+
+        <div class="note">
+
+            The return value of <code>fgetc()</code> should be stored in
+            an <code>int</code> so it can also represent the special
+            <code>EOF</code> value.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.23 Writing a String Using fputs()</h2>
+
+        <p>
+            The <code>fputs()</code> function writes a string to a file.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>fputs(string, file_pointer);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+
+    fp = fopen("message.txt", "w");
+
+    if (fp == NULL)
+    {
+        printf("File could not be opened.");
+        return 1;
+    }
+
+    fputs("Welcome to ALLIED\n", fp);
+    fputs("Learn C Programming", fp);
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <p>
+            The file will contain:
+        </p>
+
+        <pre><code>Welcome to ALLIED
+Learn C Programming</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.24 Reading a Line Using fgets()</h2>
+
+        <p>
+            The <code>fgets()</code> function reads characters from a
+            file into a character array.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>fgets(buffer, size, file_pointer);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+    char text[100];
+
+    fp = fopen("message.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("File could not be opened.");
+        return 1;
+    }
+
+    while (fgets(text, sizeof(text), fp) != NULL)
+    {
+        printf("%s", text);
+    }
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Welcome to ALLIED
+Learn C Programming</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.25 Reading a File Character by Character</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+    int ch;
+
+    fp = fopen("message.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("File could not be opened.");
+        return 1;
+    }
+
+    while ((ch = fgetc(fp)) != EOF)
+    {
+        putchar(ch);
+    }
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <p>
+            The loop continues until <code>fgetc()</code> returns
+            <code>EOF</code>.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.26 Writing Multiple Characters</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+
+    fp = fopen("letters.txt", "w");
+
+    if (fp == NULL)
+    {
+        printf("File could not be opened.");
+        return 1;
+    }
+
+    fputc('A', fp);
+    fputc('B', fp);
+    fputc('C', fp);
+    fputc('D', fp);
+    fputc('E', fp);
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <p>
+            The file contains:
+        </p>
+
+        <pre><code>ABCDE</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.27 Appending Data to a File</h2>
+
+        <p>
+            The append mode <code>a</code> adds new data to the end of
+            an existing file.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+
+    fp = fopen("message.txt", "a");
+
+    if (fp == NULL)
+    {
+        printf("File could not be opened.");
+        return 1;
+    }
+
+    fputs("\nNew line added.", fp);
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.28 File Opening Mode Comparison</h2>
+
+        <table>
+
+            <tr>
+                <th>Mode</th>
+                <th>Read</th>
+                <th>Write</th>
+                <th>Create</th>
+                <th>Truncate</th>
+            </tr>
+
+            <tr>
+                <td>r</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+
+            <tr>
+                <td>w</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+
+            <tr>
+                <td>a</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+            </tr>
+
+            <tr>
+                <td>r+</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+
+            <tr>
+                <td>w+</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+
+            <tr>
+                <td>a+</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section class="tip">
+
+        <h2>Part 2 Complete ✅</h2>
+
+        <p>
+            You have learned file modes and character/string input and
+            output functions including <code>fputc()</code>,
+            <code>fgetc()</code>, <code>fputs()</code> and
+            <code>fgets()</code>.
+        </p>
+
+    </section>    <section>
+
+        <h2>16.29 Formatted File Output Using fprintf()</h2>
+
+        <p>
+            The <code>fprintf()</code> function writes formatted data
+            to a file.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>fprintf(file_pointer, "format", values);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+
+    fp = fopen("student.txt", "w");
+
+    if (fp == NULL)
+    {
+        printf("File could not be opened.");
+        return 1;
+    }
+
+    fprintf(fp, "Name: Ravi\n");
+    fprintf(fp, "Age: %d\n", 18);
+    fprintf(fp, "Marks: %.2f\n", 85.50);
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <p>
+            The file will contain:
+        </p>
+
+        <pre><code>Name: Ravi
+Age: 18
+Marks: 85.50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.30 Formatted File Input Using fscanf()</h2>
+
+        <p>
+            The <code>fscanf()</code> function reads formatted data from
+            a file.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>fscanf(file_pointer, "format", &amp;variables);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+
+    char name[30];
+    int age;
+
+    fp = fopen("student.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("File could not be opened.");
+        return 1;
+    }
+
+    fscanf(fp, "Name: %29s", name);
+    fscanf(fp, "Age: %d", &amp;age);
+
+    printf("Name = %s\n", name);
+    printf("Age = %d\n", age);
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <h3>Example Output</h3>
+
+        <pre><code>Name = Ravi
+Age = 18</code></pre>
+
+        <div class="note">
+
+            When using <code>fscanf()</code> with strings, remember that
+            <code>%s</code> stops at whitespace. For complete lines,
+            <code>fgets()</code> is often more appropriate.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.31 fprintf() vs printf()</h2>
+
+        <table>
+
+            <tr>
+                <th>Function</th>
+                <th>Destination</th>
+            </tr>
+
+            <tr>
+                <td>printf()</td>
+                <td>Standard output</td>
+            </tr>
+
+            <tr>
+                <td>fprintf()</td>
+                <td>Specified file stream or output stream</td>
+            </tr>
+
+        </table>
+
+        <pre><code>printf("Hello");</code></pre>
+
+        <pre><code>fprintf(fp, "Hello");</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.32 fscanf() vs scanf()</h2>
+
+        <table>
+
+            <tr>
+                <th>Function</th>
+                <th>Input Source</th>
+            </tr>
+
+            <tr>
+                <td>scanf()</td>
+                <td>Standard input</td>
+            </tr>
+
+            <tr>
+                <td>fscanf()</td>
+                <td>Specified file stream or input stream</td>
+            </tr>
+
+        </table>
+
+        <pre><code>scanf("%d", &amp;number);</code></pre>
+
+        <pre><code>fscanf(fp, "%d", &amp;number);</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.33 Binary File Handling</h2>
+
+        <p>
+            Binary file handling allows a program to read and write
+            objects as sequences of bytes.
+        </p>
+
+        <p>
+            The two important functions for binary data are:
+        </p>
+
+        <ul>
+
+            <li><code>fread()</code></li>
+
+            <li><code>fwrite()</code></li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.34 fwrite() Function</h2>
+
+        <p>
+            The <code>fwrite()</code> function writes blocks of data
+            to a binary file.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>fwrite(pointer, size, count, file_pointer);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int id;
+    char name[30];
+};
+
+int main()
+{
+    FILE *fp;
+
+    struct Student student =
+    {
+        101,
+        "Ravi"
+    };
+
+    fp = fopen("student.dat", "wb");
+
+    if (fp == NULL)
+    {
+        printf("File could not be opened.");
+        return 1;
+    }
+
+    fwrite(&amp;student,
+           sizeof(student),
+           1,
+           fp);
+
+    fclose(fp);
+
+    printf("Data written successfully.");
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Data written successfully.</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.35 fread() Function</h2>
+
+        <p>
+            The <code>fread()</code> function reads blocks of data from
+            a binary file.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>fread(pointer, size, count, file_pointer);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int id;
+    char name[30];
+};
+
+int main()
+{
+    FILE *fp;
+
+    struct Student student;
+
+    fp = fopen("student.dat", "rb");
+
+    if (fp == NULL)
+    {
+        printf("File could not be opened.");
+        return 1;
+    }
+
+    if (fread(&amp;student,
+              sizeof(student),
+              1,
+              fp) == 1)
+    {
+        printf("ID = %d\n",
+               student.id);
+
+        printf("Name = %s\n",
+               student.name);
+    }
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>ID = 101
+Name = Ravi</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.36 fread() and fwrite() Comparison</h2>
+
+        <table>
+
+            <tr>
+                <th>Function</th>
+                <th>Operation</th>
+            </tr>
+
+            <tr>
+                <td>fread()</td>
+                <td>Reads binary data</td>
+            </tr>
+
+            <tr>
+                <td>fwrite()</td>
+                <td>Writes binary data</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.37 Writing Multiple Structures to a File</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int id;
+    char name[30];
+};
+
+int main()
+{
+    FILE *fp;
+
+    struct Student students[3] =
+    {
+        {101, "Ravi"},
+        {102, "Anil"},
+        {103, "Kiran"}
+    };
+
+    fp = fopen("students.dat", "wb");
+
+    if (fp == NULL)
+    {
+        printf("File could not be opened.");
+        return 1;
+    }
+
+    fwrite(students,
+           sizeof(struct Student),
+           3,
+           fp);
+
+    fclose(fp);
+
+    printf("Records written.");
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Records written.</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.38 Reading Multiple Structures</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+struct Student
+{
+    int id;
+    char name[30];
+};
+
+int main()
+{
+    FILE *fp;
+
+    struct Student student;
+
+    fp = fopen("students.dat", "rb");
+
+    if (fp == NULL)
+    {
+        printf("File could not be opened.");
+        return 1;
+    }
+
+    while (fread(&amp;student,
+                 sizeof(struct Student),
+                 1,
+                 fp) == 1)
+    {
+        printf("ID = %d\n",
+               student.id);
+
+        printf("Name = %s\n\n",
+               student.name);
+    }
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.39 File Position Indicator</h2>
+
+        <p>
+            An open file stream maintains a current file position.
+            Reading and writing operations normally occur relative to
+            this position.
+        </p>
+
+        <div class="diagram">
+
+        FILE
+         |
+         |---- Data
+         |
+         |---- Data
+         |
+         |---- Data
+         |
+         v
+       Current
+       Position
+
+        </div>
+
+        <p>
+            File positioning functions allow a program to move this
+            position.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.40 fseek() Function</h2>
+
+        <p>
+            The <code>fseek()</code> function changes the current
+            position of a file stream.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>fseek(file_pointer,
+      offset,
+      origin);</code></pre>
+
+        <p>
+            Common origins include:
+        </p>
+
+        <ul>
+
+            <li><code>SEEK_SET</code> – beginning of file</li>
+
+            <li><code>SEEK_CUR</code> – current position</li>
+
+            <li><code>SEEK_END</code> – end of file</li>
+
+        </ul>
+
+        <h3>Example</h3>
+
+        <pre><code>fseek(fp, 0, SEEK_SET);</code></pre>
+
+        <p>
+            This moves the file position to the beginning.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.41 ftell() Function</h2>
+
+        <p>
+            The <code>ftell()</code> function returns the current file
+            position as a value of type <code>long</code>.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>long position;
+
+position = ftell(fp);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+    long position;
+
+    fp = fopen("data.txt", "r");
+
+    if (fp == NULL)
+    {
+        return 1;
+    }
+
+    position = ftell(fp);
+
+    printf("Position = %ld",
+           position);
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Position = 0</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.42 rewind() Function</h2>
+
+        <p>
+            The <code>rewind()</code> function moves the file position
+            back to the beginning of the file.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>rewind(fp);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>rewind(fp);</code></pre>
+
+        <p>
+            It is useful when a program needs to read the file again
+            from the beginning.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.43 File Position Functions Comparison</h2>
+
+        <table>
+
+            <tr>
+                <th>Function</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>fseek()</td>
+                <td>Moves the file position</td>
+            </tr>
+
+            <tr>
+                <td>ftell()</td>
+                <td>Reports the current file position</td>
+            </tr>
+
+            <tr>
+                <td>rewind()</td>
+                <td>Moves position to the beginning</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.44 Random Access to a File</h2>
+
+        <p>
+            Random access means moving directly to a particular
+            position in a file instead of reading everything from the
+            beginning.
+        </p>
+
+        <pre><code>fseek(fp, 10, SEEK_SET);</code></pre>
+
+        <p>
+            This requests a position relative to the beginning of the
+            stream.
+        </p>
+
+        <div class="tip">
+
+            Random access is useful when working with structured data
+            where a program needs to reach a particular part of a file.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.45 File End Indicator and EOF</h2>
+
+        <p>
+            <code>EOF</code> is a special value used by input functions
+            to indicate that no more input can be read from the stream.
+        </p>
+
+        <pre><code>int ch;
+
+while ((ch = fgetc(fp)) != EOF)
+{
+    putchar(ch);
+}</code></pre>
+
+        <p>
+            The variable is declared as <code>int</code> because it must
+            be able to represent every possible character value as well
+            as the special <code>EOF</code> value.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.46 feof() Function</h2>
+
+        <p>
+            The <code>feof()</code> function tests whether the end-of-file
+            indicator for a stream is set.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>feof(fp);</code></pre>
+
+        <p>
+            A common pattern is to test the result of the read operation
+            itself rather than using <code>feof()</code> as the loop
+            condition.
+        </p>
+
+        <pre><code>while (fgets(text, sizeof(text), fp) != NULL)
+{
+    printf("%s", text);
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.47 File Error Checking</h2>
+
+        <p>
+            File operations can fail. A program should check whether
+            opening and reading or writing operations succeed.
+        </p>
+
+        <pre><code>FILE *fp;
+
+fp = fopen("data.txt", "r");
+
+if (fp == NULL)
+{
+    printf("File opening failed.");
+    return 1;
+}</code></pre>
+
+        <div class="warning">
+
+            Never assume that a file always exists or that every file
+            operation will succeed.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.48 perror() Function</h2>
+
+        <p>
+            The <code>perror()</code> function can display a
+            system-provided error message associated with the most
+            recent library operation that set the error indicator.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+
+    fp = fopen("missing.txt", "r");
+
+    if (fp == NULL)
+    {
+        perror("File error");
+        return 1;
+    }
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+        <p>
+            The exact message depends on the operating system and
+            environment.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.49 File Handling Flow Diagram</h2>
+
+        <div class="diagram">
+
+                    START
+                      |
+                      v
+                FILE *fp
+                      |
+                      v
+                 fopen()
+                      |
+                      v
+               +-------------+
+               | fp == NULL ?|
+               +-------------+
+                 /         \
+               Yes          No
+                |            |
+                v            v
+          Show Error     Read / Write
+                |            |
+                |            v
+                |        fclose()
+                |            |
+                +------->----+
+                             |
+                             v
+                            END
+
+        </div>
+
+    </section>
+
+
+    <section class="tip">
+
+        <h2>Part 3 Complete ✅</h2>
+
+        <p>
+            You have now learned formatted file operations, binary
+            files, <code>fread()</code>, <code>fwrite()</code>, file
+            positioning and basic error handling.
+        </p>
+
+    </section>
+        <section>
+
+        <h2>16.50 Program: Create and Write a File</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+
+    fp = fopen("hello.txt", "w");
+
+    if (fp == NULL)
+    {
+        printf("Unable to create file.");
+        return 1;
+    }
+
+    fprintf(fp,
+            "Hello, welcome to ALLIED.\n");
+
+    fprintf(fp,
+            "This is C file handling.");
+
+    fclose(fp);
+
+    printf("File created successfully.");
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>File created successfully.</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.51 Program: Read a Complete Text File</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+    char line[200];
+
+    fp = fopen("hello.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("Unable to open file.");
+        return 1;
+    }
+
+    while (fgets(line,
+                 sizeof(line),
+                 fp) != NULL)
+    {
+        printf("%s", line);
+    }
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.52 Program: Count Characters in a File</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+    int ch;
+    long count = 0;
+
+    fp = fopen("hello.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("Unable to open file.");
+        return 1;
+    }
+
+    while ((ch = fgetc(fp)) != EOF)
+    {
+        count++;
+    }
+
+    fclose(fp);
+
+    printf("Characters = %ld",
+           count);
+
+    return 0;
+}</code></pre>
+
+        <p>
+            This program reads each character and increases the counter.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.53 Program: Copy One File to Another</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *source;
+    FILE *destination;
+
+    int ch;
+
+    source = fopen("source.txt", "r");
+
+    if (source == NULL)
+    {
+        printf("Source file could not be opened.");
+        return 1;
+    }
+
+    destination = fopen("copy.txt", "w");
+
+    if (destination == NULL)
+    {
+        printf("Destination file could not be opened.");
+        fclose(source);
+        return 1;
+    }
+
+    while ((ch = fgetc(source)) != EOF)
+    {
+        fputc(ch, destination);
+    }
+
+    fclose(source);
+    fclose(destination);
+
+    printf("File copied successfully.");
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>File copied successfully.</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.54 Program: Append Student Data</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+
+    char name[30];
+    int marks;
+
+    fp = fopen("students.txt", "a");
+
+    if (fp == NULL)
+    {
+        printf("Unable to open file.");
+        return 1;
+    }
+
+    printf("Enter name: ");
+    scanf("%29s", name);
+
+    printf("Enter marks: ");
+    scanf("%d", &amp;marks);
+
+    fprintf(fp,
+            "Name: %s, Marks: %d\n",
+            name,
+            marks);
+
+    fclose(fp);
+
+    printf("Student data saved.");
+
+    return 0;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.55 Program: Search Data in a File</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    FILE *fp;
+
+    char line[200];
+    char search[50];
+
+    int found = 0;
+
+    fp = fopen("students.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("Unable to open file.");
+        return 1;
+    }
+
+    printf("Enter search text: ");
+    scanf("%49s", search);
+
+    while (fgets(line,
+                 sizeof(line),
+                 fp) != NULL)
+    {
+        if (strstr(line, search) != NULL)
+        {
+            printf("Found: %s", line);
+            found = 1;
+        }
+    }
+
+    if (!found)
+    {
+        printf("Data not found.");
+    }
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.56 Program: Count Lines in a File</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    FILE *fp;
+
+    int ch;
+    long lines = 0;
+
+    fp = fopen("hello.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("Unable to open file.");
+        return 1;
+    }
+
+    while ((ch = fgetc(fp)) != EOF)
+    {
+        if (ch == '\n')
+        {
+            lines++;
+        }
+    }
+
+    fclose(fp);
+
+    printf("Number of lines = %ld",
+           lines);
+
+    return 0;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.57 Program: Store Structure in Binary File</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+struct Employee
+{
+    int id;
+    char name[30];
+    float salary;
+};
+
+int main()
+{
+    FILE *fp;
+
+    struct Employee employee =
+    {
+        101,
+        "Ravi",
+        35000.50f
+    };
+
+    fp = fopen("employee.dat", "wb");
+
+    if (fp == NULL)
+    {
+        printf("Unable to open file.");
+        return 1;
+    }
+
+    if (fwrite(&amp;employee,
+               sizeof(employee),
+               1,
+               fp) == 1)
+    {
+        printf("Employee saved.");
+    }
+    else
+    {
+        printf("Write failed.");
+    }
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.58 Program: Read Structure from Binary File</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+struct Employee
+{
+    int id;
+    char name[30];
+    float salary;
+};
+
+int main()
+{
+    FILE *fp;
+
+    struct Employee employee;
+
+    fp = fopen("employee.dat", "rb");
+
+    if (fp == NULL)
+    {
+        printf("Unable to open file.");
+        return 1;
+    }
+
+    if (fread(&amp;employee,
+              sizeof(employee),
+              1,
+              fp) == 1)
+    {
+        printf("ID = %d\n",
+               employee.id);
+
+        printf("Name = %s\n",
+               employee.name);
+
+        printf("Salary = %.2f\n",
+               employee.salary);
+    }
+    else
+    {
+        printf("Read failed.");
+    }
+
+    fclose(fp);
+
+    return 0;
+}</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.59 Common File Handling Errors</h2>
+
+        <h3>Error 1: Not checking fopen()</h3>
+
+        <pre><code>fp = fopen("data.txt", "r");
+
+fgets(text, 100, fp);</code></pre>
+
+        <p>
+            If opening fails, using a null file pointer can cause
+            undefined behavior.
+        </p>
+
+        <p>
+            Always check:
+        </p>
+
+        <pre><code>if (fp == NULL)
+{
+    printf("File error");
+    return 1;
+}</code></pre>
+
+
+        <h3>Error 2: Forgetting fclose()</h3>
+
+        <p>
+            Leaving files open unnecessarily can waste system resources
+            and may prevent buffered output from being properly handled.
+        </p>
+
+
+        <h3>Error 3: Using w accidentally</h3>
+
+        <p>
+            Opening an existing file with <code>w</code> truncates its
+            contents.
+        </p>
+
+
+        <h3>Error 4: Wrong file mode</h3>
+
+        <p>
+            Use a mode that matches the intended operation, such as
+            <code>r</code>, <code>w</code>, <code>a</code>,
+            <code>rb</code> or <code>wb</code>.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.60 Best Practices for File Handling</h2>
+
+        <ul>
+
+            <li>
+                Always include <code>&lt;stdio.h&gt;</code> when using
+                standard C file I/O functions.
+            </li>
+
+            <li>
+                Always check whether <code>fopen()</code> returned
+                <code>NULL</code>.
+            </li>
+
+            <li>
+                Use the correct file mode.
+            </li>
+
+            <li>
+                Close files with <code>fclose()</code>.
+            </li>
+
+            <li>
+                Check the return value of important read and write
+                operations.
+            </li>
+
+            <li>
+                Use <code>fgets()</code> when reading lines of text.
+            </li>
+
+            <li>
+                Use <code>fread()</code> and <code>fwrite()</code> for
+                binary data when appropriate.
+            </li>
+
+            <li>
+                Be careful when using <code>w</code> mode because it
+                truncates an existing file.
+            </li>
+
+            <li>
+                Use meaningful file names.
+            </li>
+
+            <li>
+                Handle errors clearly.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.61 Real-World Applications</h2>
+
+        <table>
+
+            <tr>
+                <th>Application</th>
+                <th>Use of Files</th>
+            </tr>
+
+            <tr>
+                <td>Student Management</td>
+                <td>Store student records</td>
+            </tr>
+
+            <tr>
+                <td>Banking Systems</td>
+                <td>Store account information and logs</td>
+            </tr>
+
+            <tr>
+                <td>Employee Management</td>
+                <td>Store employee details</td>
+            </tr>
+
+            <tr>
+                <td>Inventory Systems</td>
+                <td>Store product information</td>
+            </tr>
+
+            <tr>
+                <td>Configuration</td>
+                <td>Store application settings</td>
+            </tr>
+
+            <tr>
+                <td>Logging</td>
+                <td>Store application events</td>
+            </tr>
+
+            <tr>
+                <td>Data Processing</td>
+                <td>Read and process large datasets</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.62 File Handling Flow Summary</h2>
+
+        <div class="diagram">
+
+        DECLARE FILE POINTER
+                |
+                v
+             fopen()
+                |
+                v
+         Check for NULL
+                |
+                v
+        +----------------+
+        | Read / Write   |
+        +----------------+
+                |
+                v
+          Check Result
+                |
+                v
+             fclose()
+                |
+                v
+               END
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.63 Important File Functions</h2>
+
+        <table>
+
+            <tr>
+                <th>Function</th>
+                <th>Use</th>
+            </tr>
+
+            <tr>
+                <td>fopen()</td>
+                <td>Open a file</td>
+            </tr>
+
+            <tr>
+                <td>fclose()</td>
+                <td>Close a file</td>
+            </tr>
+
+            <tr>
+                <td>fgetc()</td>
+                <td>Read one character</td>
+            </tr>
+
+            <tr>
+                <td>fputc()</td>
+                <td>Write one character</td>
+            </tr>
+
+            <tr>
+                <td>fgets()</td>
+                <td>Read a line/string</td>
+            </tr>
+
+            <tr>
+                <td>fputs()</td>
+                <td>Write a string</td>
+            </tr>
+
+            <tr>
+                <td>fprintf()</td>
+                <td>Write formatted data</td>
+            </tr>
+
+            <tr>
+                <td>fscanf()</td>
+                <td>Read formatted data</td>
+            </tr>
+
+            <tr>
+                <td>fread()</td>
+                <td>Read binary data</td>
+            </tr>
+
+            <tr>
+                <td>fwrite()</td>
+                <td>Write binary data</td>
+            </tr>
+
+            <tr>
+                <td>fseek()</td>
+                <td>Move file position</td>
+            </tr>
+
+            <tr>
+                <td>ftell()</td>
+                <td>Get file position</td>
+            </tr>
+
+            <tr>
+                <td>rewind()</td>
+                <td>Move to beginning</td>
+            </tr>
+
+            <tr>
+                <td>feof()</td>
+                <td>Test end-of-file indicator</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section class="tip">
+
+        <h2>Part 4 Complete ✅</h2>
+
+        <p>
+            You have now completed the main concepts, practical
+            programs, file positioning, error handling, common errors,
+            best practices and applications of file handling.
+        </p>
+
+        <p>
+            <strong>
+                Continue with Part 5 to finish the HTML file.
+            </strong>
+        </p>
+
+    </section>
+        <section>
+
+        <h2>16.64 Advantages of File Handling</h2>
+
+        <ul>
+
+            <li>
+                <strong>Permanent Storage:</strong>
+                Data can be stored even after the program terminates.
+            </li>
+
+            <li>
+                <strong>Large Data Storage:</strong>
+                Files can store large amounts of information.
+            </li>
+
+            <li>
+                <strong>Data Reusability:</strong>
+                Stored data can be used again later.
+            </li>
+
+            <li>
+                <strong>Easy Data Management:</strong>
+                Information can be organized into files.
+            </li>
+
+            <li>
+                <strong>Data Sharing:</strong>
+                Files can be used to exchange information between
+                programs.
+            </li>
+
+            <li>
+                <strong>Reduced Re-entry:</strong>
+                Previously stored information does not need to be
+                entered again.
+            </li>
+
+            <li>
+                <strong>Useful for Records:</strong>
+                Files are useful for student, employee, customer and
+                inventory records.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.65 Disadvantages of File Handling</h2>
+
+        <ul>
+
+            <li>
+                File operations can be slower than accessing data
+                already in memory.
+            </li>
+
+            <li>
+                Files can become corrupted because of software,
+                hardware or storage problems.
+            </li>
+
+            <li>
+                Incorrect file modes can accidentally modify or delete
+                existing contents.
+            </li>
+
+            <li>
+                Programs must handle file errors properly.
+            </li>
+
+            <li>
+                Text files may require additional processing when
+                handling structured data.
+            </li>
+
+            <li>
+                Binary files may not be directly readable by humans.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.66 Important File Modes – Quick Revision</h2>
+
+        <table>
+
+            <tr>
+                <th>Mode</th>
+                <th>Meaning</th>
+                <th>Important Point</th>
+            </tr>
+
+            <tr>
+                <td>r</td>
+                <td>Read</td>
+                <td>File must already exist</td>
+            </tr>
+
+            <tr>
+                <td>w</td>
+                <td>Write</td>
+                <td>Creates or truncates file</td>
+            </tr>
+
+            <tr>
+                <td>a</td>
+                <td>Append</td>
+                <td>Writes at the end</td>
+            </tr>
+
+            <tr>
+                <td>r+</td>
+                <td>Read + Write</td>
+                <td>Existing file required</td>
+            </tr>
+
+            <tr>
+                <td>w+</td>
+                <td>Read + Write</td>
+                <td>Creates or truncates</td>
+            </tr>
+
+            <tr>
+                <td>a+</td>
+                <td>Read + Append</td>
+                <td>Writes at the end</td>
+            </tr>
+
+            <tr>
+                <td>rb</td>
+                <td>Read Binary</td>
+                <td>Binary input</td>
+            </tr>
+
+            <tr>
+                <td>wb</td>
+                <td>Write Binary</td>
+                <td>Binary output</td>
+            </tr>
+
+            <tr>
+                <td>ab</td>
+                <td>Append Binary</td>
+                <td>Binary append</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.67 File Handling Functions – Quick Revision</h2>
+
+        <table>
+
+            <tr>
+                <th>Function</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>fopen()</td>
+                <td>Opens a file</td>
+            </tr>
+
+            <tr>
+                <td>fclose()</td>
+                <td>Closes a file</td>
+            </tr>
+
+            <tr>
+                <td>fgetc()</td>
+                <td>Reads one character</td>
+            </tr>
+
+            <tr>
+                <td>fputc()</td>
+                <td>Writes one character</td>
+            </tr>
+
+            <tr>
+                <td>fgets()</td>
+                <td>Reads a line/string</td>
+            </tr>
+
+            <tr>
+                <td>fputs()</td>
+                <td>Writes a string</td>
+            </tr>
+
+            <tr>
+                <td>fprintf()</td>
+                <td>Writes formatted data</td>
+            </tr>
+
+            <tr>
+                <td>fscanf()</td>
+                <td>Reads formatted data</td>
+            </tr>
+
+            <tr>
+                <td>fread()</td>
+                <td>Reads binary data</td>
+            </tr>
+
+            <tr>
+                <td>fwrite()</td>
+                <td>Writes binary data</td>
+            </tr>
+
+            <tr>
+                <td>fseek()</td>
+                <td>Moves file position</td>
+            </tr>
+
+            <tr>
+                <td>ftell()</td>
+                <td>Returns current position</td>
+            </tr>
+
+            <tr>
+                <td>rewind()</td>
+                <td>Moves position to beginning</td>
+            </tr>
+
+            <tr>
+                <td>feof()</td>
+                <td>Tests end-of-file indicator</td>
+            </tr>
+
+            <tr>
+                <td>perror()</td>
+                <td>Displays an error message associated with the latest relevant library error</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.68 Important Differences</h2>
+
+        <h3>Text File vs Binary File</h3>
+
+        <table>
+
+            <tr>
+                <th>Text File</th>
+                <th>Binary File</th>
+            </tr>
+
+            <tr>
+                <td>Stores character-oriented data</td>
+                <td>Stores data as bytes</td>
+            </tr>
+
+            <tr>
+                <td>Generally human-readable</td>
+                <td>Generally not human-readable</td>
+            </tr>
+
+            <tr>
+                <td>Often uses fprintf(), fscanf()</td>
+                <td>Often uses fread(), fwrite()</td>
+            </tr>
+
+            <tr>
+                <td>Useful for ordinary text</td>
+                <td>Useful for structured binary data</td>
+            </tr>
+
+        </table>
+
+
+        <h3>fgetc() vs fgets()</h3>
+
+        <table>
+
+            <tr>
+                <th>fgetc()</th>
+                <th>fgets()</th>
+            </tr>
+
+            <tr>
+                <td>Reads one character</td>
+                <td>Reads a string or line</td>
+            </tr>
+
+            <tr>
+                <td>Returns an int</td>
+                <td>Returns char pointer on success</td>
+            </tr>
+
+            <tr>
+                <td>Useful for character-by-character processing</td>
+                <td>Useful for line-based reading</td>
+            </tr>
+
+        </table>
+
+
+        <h3>fputc() vs fputs()</h3>
+
+        <table>
+
+            <tr>
+                <th>fputc()</th>
+                <th>fputs()</th>
+            </tr>
+
+            <tr>
+                <td>Writes one character</td>
+                <td>Writes a string</td>
+            </tr>
+
+            <tr>
+                <td>Example: fputc('A', fp)</td>
+                <td>Example: fputs("Hello", fp)</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.69 Common Errors in File Handling</h2>
+
+        <div class="mcq">
+
+            <h3>❌ Error 1: Forgetting stdio.h</h3>
+
+            <pre><code>#include &lt;stdio.h&gt;</code></pre>
+
+            <p>
+                Standard C file I/O functions are declared through
+                <code>stdio.h</code>.
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <h3>❌ Error 2: Not Checking NULL</h3>
+
+            <pre><code>fp = fopen("data.txt", "r");
+
+if (fp == NULL)
+{
+    printf("File opening failed.");
+    return 1;
+}</code></pre>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <h3>❌ Error 3: Forgetting fclose()</h3>
+
+            <p>
+                Always close files after completing the required
+                operations.
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <h3>❌ Error 4: Using Wrong Mode</h3>
+
+            <p>
+                Select the mode according to the required operation.
+                For example, use <code>r</code> for reading and
+                <code>a</code> for appending.
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <h3>❌ Error 5: Accidentally Using w Mode</h3>
+
+            <p>
+                Opening an existing file using <code>w</code> truncates
+                its contents.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.70 Best Practices</h2>
+
+        <ol>
+
+            <li>
+                Always check the result of <code>fopen()</code>.
+            </li>
+
+            <li>
+                Use the correct file mode.
+            </li>
+
+            <li>
+                Close every successfully opened file.
+            </li>
+
+            <li>
+                Check important read and write return values.
+            </li>
+
+            <li>
+                Use meaningful file names.
+            </li>
+
+            <li>
+                Avoid accidentally overwriting important files.
+            </li>
+
+            <li>
+                Use text files when human readability is important.
+            </li>
+
+            <li>
+                Use binary files when binary representation is
+                appropriate.
+            </li>
+
+            <li>
+                Keep file operations organized and easy to understand.
+            </li>
+
+            <li>
+                Handle possible errors clearly.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.71 Exam Important Points ⭐</h2>
+
+        <ul>
+
+            <li>
+                File handling provides permanent data storage.
+            </li>
+
+            <li>
+                <code>FILE *</code> is commonly used as a file pointer.
+            </li>
+
+            <li>
+                <code>fopen()</code> opens a file.
+            </li>
+
+            <li>
+                <code>fclose()</code> closes a file.
+            </li>
+
+            <li>
+                <code>r</code> opens an existing file for reading.
+            </li>
+
+            <li>
+                <code>w</code> opens a file for writing and truncates an
+                existing file.
+            </li>
+
+            <li>
+                <code>a</code> opens a file for appending.
+            </li>
+
+            <li>
+                <code>fgetc()</code> reads one character.
+            </li>
+
+            <li>
+                <code>fputc()</code> writes one character.
+            </li>
+
+            <li>
+                <code>fgets()</code> reads a line/string.
+            </li>
+
+            <li>
+                <code>fputs()</code> writes a string.
+            </li>
+
+            <li>
+                <code>fprintf()</code> writes formatted data.
+            </li>
+
+            <li>
+                <code>fscanf()</code> reads formatted data.
+            </li>
+
+            <li>
+                <code>fread()</code> reads binary data.
+            </li>
+
+            <li>
+                <code>fwrite()</code> writes binary data.
+            </li>
+
+            <li>
+                <code>fseek()</code> changes the file position.
+            </li>
+
+            <li>
+                <code>ftell()</code> obtains the current file position.
+            </li>
+
+            <li>
+                <code>rewind()</code> moves the file position to the
+                beginning.
+            </li>
+
+            <li>
+                <code>EOF</code> indicates an end-of-input condition for
+                relevant input functions.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.72 Summary</h2>
+
+        <p>
+            File handling is an important feature of C programming that
+            allows programs to store and retrieve information from
+            external files.
+        </p>
+
+        <p>
+            C provides many standard functions for file operations.
+            Files can be opened using <code>fopen()</code>, processed
+            using functions such as <code>fgetc()</code>,
+            <code>fputc()</code>, <code>fgets()</code>,
+            <code>fputs()</code>, <code>fprintf()</code>,
+            <code>fscanf()</code>, <code>fread()</code> and
+            <code>fwrite()</code>, and finally closed using
+            <code>fclose()</code>.
+        </p>
+
+        <p>
+            File positioning functions such as <code>fseek()</code>,
+            <code>ftell()</code> and <code>rewind()</code> provide
+            additional control over the current file position.
+        </p>
+
+        <div class="tip">
+
+            <strong>Remember:</strong>
+
+            <br><br>
+
+            Declare → Open → Check → Read/Write → Close
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.73 MCQs – Multiple Choice Questions</h2>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>1. Which header file is required for standard
+                C file handling?</strong>
+            </p>
+
+            <p>A) string.h</p>
+            <p>B) math.h</p>
+            <p>C) stdio.h</p>
+            <p>D) stdlib.h</p>
+
+            <p class="answer">
+                Answer: C) stdio.h
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>2. Which function is used to open a file?</strong>
+            </p>
+
+            <p>A) open()</p>
+            <p>B) fopen()</p>
+            <p>C) fileopen()</p>
+            <p>D) create()</p>
+
+            <p class="answer">
+                Answer: B) fopen()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>3. Which function closes a file?</strong>
+            </p>
+
+            <p>A) close()</p>
+            <p>B) fclose()</p>
+            <p>C) endfile()</p>
+            <p>D) stop()</p>
+
+            <p class="answer">
+                Answer: B) fclose()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>4. Which mode is used to read an existing
+                file?</strong>
+            </p>
+
+            <p>A) w</p>
+            <p>B) a</p>
+            <p>C) r</p>
+            <p>D) x</p>
+
+            <p class="answer">
+                Answer: C) r
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>5. Which mode truncates an existing file?</strong>
+            </p>
+
+            <p>A) r</p>
+            <p>B) w</p>
+            <p>C) a</p>
+            <p>D) rb</p>
+
+            <p class="answer">
+                Answer: B) w
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>6. Which mode is used for appending?</strong>
+            </p>
+
+            <p>A) r</p>
+            <p>B) w</p>
+            <p>C) a</p>
+            <p>D) b</p>
+
+            <p class="answer">
+                Answer: C) a
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>7. Which function reads one character from a
+                file?</strong>
+            </p>
+
+            <p>A) fgetc()</p>
+            <p>B) fgets()</p>
+            <p>C) fread()</p>
+            <p>D) fscanf()</p>
+
+            <p class="answer">
+                Answer: A) fgetc()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>8. Which function writes one character?</strong>
+            </p>
+
+            <p>A) fputs()</p>
+            <p>B) fprintf()</p>
+            <p>C) fputc()</p>
+            <p>D) fwrite()</p>
+
+            <p class="answer">
+                Answer: C) fputc()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>9. Which function reads a line of text?</strong>
+            </p>
+
+            <p>A) fgetc()</p>
+            <p>B) fgets()</p>
+            <p>C) fputc()</p>
+            <p>D) fputs()</p>
+
+            <p class="answer">
+                Answer: B) fgets()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>10. Which function writes a string to a
+                file?</strong>
+            </p>
+
+            <p>A) fgets()</p>
+            <p>B) fputs()</p>
+            <p>C) fscanf()</p>
+            <p>D) fread()</p>
+
+            <p class="answer">
+                Answer: B) fputs()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>11. Which function writes formatted data to a
+                file?</strong>
+            </p>
+
+            <p>A) fprintf()</p>
+            <p>B) fscanf()</p>
+            <p>C) fgetc()</p>
+            <p>D) fread()</p>
+
+            <p class="answer">
+                Answer: A) fprintf()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>12. Which function reads formatted data from a
+                file?</strong>
+            </p>
+
+            <p>A) fprintf()</p>
+            <p>B) fscanf()</p>
+            <p>C) fputs()</p>
+            <p>D) fwrite()</p>
+
+            <p class="answer">
+                Answer: B) fscanf()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>13. Which function is commonly used to write
+                binary data?</strong>
+            </p>
+
+            <p>A) fwrite()</p>
+            <p>B) fputs()</p>
+            <p>C) fprintf()</p>
+            <p>D) fputc()</p>
+
+            <p class="answer">
+                Answer: A) fwrite()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>14. Which function reads binary data?</strong>
+            </p>
+
+            <p>A) fscanf()</p>
+            <p>B) fread()</p>
+            <p>C) fgets()</p>
+            <p>D) fgetc()</p>
+
+            <p class="answer">
+                Answer: B) fread()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>15. Which function changes the current file
+                position?</strong>
+            </p>
+
+            <p>A) ftell()</p>
+            <p>B) fseek()</p>
+            <p>C) rewind()</p>
+            <p>D) position()</p>
+
+            <p class="answer">
+                Answer: B) fseek()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>16. Which function returns the current file
+                position?</strong>
+            </p>
+
+            <p>A) ftell()</p>
+            <p>B) fseek()</p>
+            <p>C) fpos()</p>
+            <p>D) tellfile()</p>
+
+            <p class="answer">
+                Answer: A) ftell()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>17. Which function moves the file position to
+                the beginning?</strong>
+            </p>
+
+            <p>A) start()</p>
+            <p>B) rewind()</p>
+            <p>C) beginning()</p>
+            <p>D) fstart()</p>
+
+            <p class="answer">
+                Answer: B) rewind()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>18. What does EOF commonly represent?</strong>
+            </p>
+
+            <p>A) Start of file</p>
+            <p>B) End-of-file condition</p>
+            <p>C) File opening</p>
+            <p>D) File creation</p>
+
+            <p class="answer">
+                Answer: B) End-of-file condition
+            </p>
+
+        <div class="mcq">
+
+            <p>
+                <strong>19. What should be checked after fopen()?</strong>
+            </p>
+
+            <p>A) fp == NULL</p>
+            <p>B) fp == 1</p>
+            <p>C) fp == EOF</p>
+            <p>D) fp == 0 always</p>
+
+            <p class="answer">
+                Answer: A) fp == NULL
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    20. Which function is used to display an
+                    associated library error message?
+                </strong>
+            </p>
+
+            <p>A) error()</p>
+            <p>B) perror()</p>
+            <p>C) printerror()</p>
+            <p>D) fileerror()</p>
+
+            <p class="answer">
+                Answer: B) perror()
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.74 Interview Questions</h2>
+
+        <ol>
+
+            <li>
+                <strong>What is file handling?</strong>
+                <br>
+                File handling is the process of storing, reading,
+                writing and managing data in external files.
+            </li>
+
+            <li>
+                <strong>Why is file handling required?</strong>
+                <br>
+                It allows data to be stored permanently and retrieved
+                later.
+            </li>
+
+            <li>
+                <strong>What is a FILE pointer?</strong>
+                <br>
+                It is a pointer to a FILE object used to work with an
+                open file stream.
+            </li>
+
+            <li>
+                <strong>Which function opens a file?</strong>
+                <br>
+                <code>fopen()</code>.
+            </li>
+
+            <li>
+                <strong>Which function closes a file?</strong>
+                <br>
+                <code>fclose()</code>.
+            </li>
+
+            <li>
+                <strong>What is the difference between r and w?</strong>
+                <br>
+                <code>r</code> opens an existing file for reading,
+                while <code>w</code> opens a file for writing and
+                truncates an existing file.
+            </li>
+
+            <li>
+                <strong>What is append mode?</strong>
+                <br>
+                Append mode <code>a</code> writes new data at the end
+                of the file.
+            </li>
+
+            <li>
+                <strong>What is EOF?</strong>
+                <br>
+                EOF is a special value used by relevant input functions
+                to indicate that no more input can be read.
+            </li>
+
+            <li>
+                <strong>What is fseek()?</strong>
+                <br>
+                It changes the current file position.
+            </li>
+
+            <li>
+                <strong>What is ftell()?</strong>
+                <br>
+                It returns the current file position.
+            </li>
+
+            <li>
+                <strong>What is rewind()?</strong>
+                <br>
+                It moves the file position to the beginning.
+            </li>
+
+            <li>
+                <strong>
+                    What is the difference between text and binary
+                    files?
+                </strong>
+                <br>
+                Text files store character-oriented data, whereas
+                binary files store data as bytes.
+            </li>
+
+            <li>
+                <strong>What is fread()?</strong>
+                <br>
+                It reads blocks of binary data from a file.
+            </li>
+
+            <li>
+                <strong>What is fwrite()?</strong>
+                <br>
+                It writes blocks of binary data to a file.
+            </li>
+
+            <li>
+                <strong>Why should fopen() be checked?</strong>
+                <br>
+                Because file opening can fail, in which case
+                <code>fopen()</code> returns <code>NULL</code>.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.75 Viva Questions</h2>
+
+        <table>
+
+            <tr>
+                <th>Question</th>
+                <th>Short Answer</th>
+            </tr>
+
+            <tr>
+                <td>Header file for file handling?</td>
+                <td>stdio.h</td>
+            </tr>
+
+            <tr>
+                <td>Function to open a file?</td>
+                <td>fopen()</td>
+            </tr>
+
+            <tr>
+                <td>Function to close a file?</td>
+                <td>fclose()</td>
+            </tr>
+
+            <tr>
+                <td>Read character?</td>
+                <td>fgetc()</td>
+            </tr>
+
+            <tr>
+                <td>Write character?</td>
+                <td>fputc()</td>
+            </tr>
+
+            <tr>
+                <td>Read line?</td>
+                <td>fgets()</td>
+            </tr>
+
+            <tr>
+                <td>Write string?</td>
+                <td>fputs()</td>
+            </tr>
+
+            <tr>
+                <td>Formatted output to file?</td>
+                <td>fprintf()</td>
+            </tr>
+
+            <tr>
+                <td>Formatted input from file?</td>
+                <td>fscanf()</td>
+            </tr>
+
+            <tr>
+                <td>Binary read?</td>
+                <td>fread()</td>
+            </tr>
+
+            <tr>
+                <td>Binary write?</td>
+                <td>fwrite()</td>
+            </tr>
+
+            <tr>
+                <td>Move file position?</td>
+                <td>fseek()</td>
+            </tr>
+
+            <tr>
+                <td>Get file position?</td>
+                <td>ftell()</td>
+            </tr>
+
+            <tr>
+                <td>Go to beginning?</td>
+                <td>rewind()</td>
+            </tr>
+
+            <tr>
+                <td>Read mode?</td>
+                <td>r</td>
+            </tr>
+
+            <tr>
+                <td>Write mode?</td>
+                <td>w</td>
+            </tr>
+
+            <tr>
+                <td>Append mode?</td>
+                <td>a</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.76 One-Minute Revision 🚀</h2>
+
+        <div class="diagram">
+
+        FILE HANDLING IN C
+
+                |
+                v
+        +----------------+
+        | Declare FILE * |
+        +----------------+
+                |
+                v
+        +----------------+
+        |    fopen()     |
+        +----------------+
+                |
+                v
+        +----------------+
+        | Check for NULL |
+        +----------------+
+                |
+                v
+        +----------------+
+        |  Read / Write  |
+        +----------------+
+                |
+        +---------+---------+
+        |         |         |
+        v         v         v
+      Text     Binary    Position
+        |         |         |
+        v         v         v
+      fgets    fread     fseek
+      fputs    fwrite    ftell
+      fprintf            rewind
+      fscanf
+        |
+        v
+        +----------------+
+        |    fclose()    |
+        +----------------+
+                |
+                v
+               END
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>16.77 Final Chapter Summary 📚</h2>
+
+        <p>
+            File handling is an essential part of C programming because
+            it allows programs to store and retrieve information from
+            external storage.
+        </p>
+
+        <p>
+            In this chapter, we learned how to create and open files,
+            read data, write data, append information, work with text
+            and binary files, move through files and handle file errors.
+        </p>
+
+        <p>
+            The most important functions include
+            <code>fopen()</code>, <code>fclose()</code>,
+            <code>fgetc()</code>, <code>fputc()</code>,
+            <code>fgets()</code>, <code>fputs()</code>,
+            <code>fprintf()</code>, <code>fscanf()</code>,
+            <code>fread()</code>, <code>fwrite()</code>,
+            <code>fseek()</code>, <code>ftell()</code> and
+            <code>rewind()</code>.
+        </p>
+
+        <div class="tip">
+
+            <strong>Exam Formula to Remember:</strong>
+
+            <br><br>
+
+            <strong>
+                Open → Check → Read/Write → Close
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <div class="navigation">
+
+        <a href="15-enumerations.html" class="button">
+            ← Previous Chapter
+        </a>
+
+        <a href="c.html" class="button">
+            C Programming
+        </a>
+
+        <a href="home.html" class="button">
+            Home →
+        </a>
+
+    </div>
+
+
+</main>
+
+
+<footer>
+
+    <h3>ALLIED</h3>
+
+    <p>
+        Learn C Programming with simple explanations,
+        examples and practical programs.
+    </p>
+
+    <p>
+        © 2026 ALLIED. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

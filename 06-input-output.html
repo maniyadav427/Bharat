@@ -1,0 +1,649 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 6 - Input and Output in C | ALLIED</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">ALLIED</a>
+
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="books.html">Books</a>
+            <a href="c.html">C Programming</a>
+            <a href="login.html">Login</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <!-- TITLE -->
+
+    <div class="hero">
+
+        <h1>Chapter 6: Input and Output in C</h1>
+
+        <p>
+            Learn how C programs communicate with users using standard
+            input and output functions such as printf(), scanf(),
+            getchar(), putchar(), fgets() and puts().
+        </p>
+
+    </div>
+
+
+    <!-- OBJECTIVES -->
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>After completing this chapter, you will be able to:</p>
+
+        <ul>
+            <li>Understand input and output in C.</li>
+            <li>Understand standard input and standard output.</li>
+            <li>Use printf() to display formatted output.</li>
+            <li>Use scanf() to read formatted input.</li>
+            <li>Use getchar() and putchar().</li>
+            <li>Use fgets() and puts() for text input and output.</li>
+            <li>Understand format specifiers.</li>
+            <li>Understand escape sequences.</li>
+            <li>Handle simple user input correctly.</li>
+            <li>Write complete input/output programs.</li>
+        </ul>
+
+    </section>
+
+
+    <!-- INTRODUCTION -->
+
+    <section>
+
+        <h2>6.1 Introduction to Input and Output</h2>
+
+        <p>
+            Input means receiving data from an external source, usually
+            from the user through the keyboard. Output means displaying
+            information, commonly on the screen.
+        </p>
+
+        <p>
+            Input and output make programs interactive. Instead of using
+            only fixed values, a program can ask the user for information,
+            process it and display a result.
+        </p>
+
+        <pre><code>Enter your age: 20
+
+Your age is 20</code></pre>
+
+        <div class="note">
+            <strong>Simple definition:</strong>
+            Input is data supplied to a program. Output is information
+            produced by a program.
+        </div>
+
+    </section>
+
+
+    <!-- HISTORY -->
+
+    <section>
+
+        <h2>6.2 Historical Background</h2>
+
+        <p>
+            C provides input and output facilities through its standard
+            library. The standard I/O library is declared in the header
+            file <code>stdio.h</code>.
+        </p>
+
+        <p>
+            Functions such as <code>printf()</code> and
+            <code>scanf()</code> became widely associated with C
+            programming because they provide convenient formatted
+            console input and output.
+        </p>
+
+        <p>
+            The C standard library also provides character and line-based
+            functions such as <code>getchar()</code>,
+            <code>putchar()</code>, <code>fgets()</code> and
+            <code>puts()</code>.
+        </p>
+
+    </section>
+
+
+    <!-- STDIO -->
+
+    <section>
+
+        <h2>6.3 The stdio.h Header File</h2>
+
+        <p>
+            The standard input/output header is included using:
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;</code></pre>
+
+        <p>
+            It provides declarations for many standard input and output
+            functions and related facilities.
+        </p>
+
+        <div class="diagram">
+
+             C PROGRAM
+                 |
+                 v
+        +------------------+
+        |     stdio.h      |
+        +------------------+
+                 |
+       +---------+---------+
+       |         |         |
+       v         v         v
+    printf()   scanf()   getchar()
+       |
+       v
+     Output
+
+        </div>
+
+    </section>
+
+
+    <!-- TYPES -->
+
+    <section>
+
+        <h2>6.4 Types of Input and Output</h2>
+
+        <table>
+
+            <tr>
+                <th>Type</th>
+                <th>Purpose</th>
+                <th>Common Function</th>
+            </tr>
+
+            <tr>
+                <td>Formatted Output</td>
+                <td>Display formatted data</td>
+                <td>printf()</td>
+            </tr>
+
+            <tr>
+                <td>Formatted Input</td>
+                <td>Read formatted data</td>
+                <td>scanf()</td>
+            </tr>
+
+            <tr>
+                <td>Character Input</td>
+                <td>Read one character</td>
+                <td>getchar()</td>
+            </tr>
+
+            <tr>
+                <td>Character Output</td>
+                <td>Write one character</td>
+                <td>putchar()</td>
+            </tr>
+
+            <tr>
+                <td>Line Input</td>
+                <td>Read a line of text</td>
+                <td>fgets()</td>
+            </tr>
+
+            <tr>
+                <td>String Output</td>
+                <td>Write a string</td>
+                <td>puts()</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <!-- PRINTF -->
+
+    <section>
+
+        <h2>6.5 printf() Function</h2>
+
+        <p>
+            The <code>printf()</code> function is used to write formatted
+            output to the standard output stream.
+        </p>
+
+        <p>Basic syntax:</p>
+
+        <pre><code>printf("format string", values);</code></pre>
+
+        <h3>Simple Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("Hello World!");
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Hello World!</code></pre>
+
+    </section>
+
+
+    <!-- PRINT VARIABLES -->
+
+    <section>
+
+        <h2>6.6 Printing Variables</h2>
+
+        <p>
+            Format specifiers are used to tell <code>printf()</code>
+            how a value should be formatted.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int age = 20;
+    float price = 99.50f;
+    char grade = 'A';
+
+    printf("Age = %d\n", age);
+    printf("Price = %.2f\n", price);
+    printf("Grade = %c\n", grade);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Age = 20
+Price = 99.50
+Grade = A</code></pre>
+
+    </section>
+
+
+    <!-- FORMAT SPECIFIERS -->
+
+    <section>
+
+        <h2>6.7 Common Format Specifiers</h2>
+
+        <table>
+
+            <tr>
+                <th>Specifier</th>
+                <th>Common Use</th>
+                <th>Example</th>
+            </tr>
+
+            <tr>
+                <td>%d</td>
+                <td>Signed decimal integer</td>
+                <td>printf("%d", age);</td>
+            </tr>
+
+            <tr>
+                <td>%u</td>
+                <td>Unsigned decimal integer</td>
+                <td>printf("%u", count);</td>
+            </tr>
+
+            <tr>
+                <td>%f</td>
+                <td>Floating-point output in printf</td>
+                <td>printf("%f", price);</td>
+            </tr>
+
+            <tr>
+                <td>%c</td>
+                <td>Character</td>
+                <td>printf("%c", grade);</td>
+            </tr>
+
+            <tr>
+                <td>%s</td>
+                <td>String</td>
+                <td>printf("%s", name);</td>
+            </tr>
+
+            <tr>
+                <td>%x</td>
+                <td>Unsigned hexadecimal</td>
+                <td>printf("%x", number);</td>
+            </tr>
+
+            <tr>
+                <td>%o</td>
+                <td>Unsigned octal</td>
+                <td>printf("%o", number);</td>
+            </tr>
+
+            <tr>
+                <td>%p</td>
+                <td>Pointer address</td>
+                <td>printf("%p", (void *)ptr);</td>
+            </tr>
+
+        </table>
+
+        <div class="tip">
+            Format specifiers depend on the function and the type being
+            processed. Always use the appropriate specification for the
+            particular input or output operation.
+        </div>
+
+    </section>
+
+
+    <!-- ESCAPE SEQUENCES -->
+
+    <section>
+
+        <h2>6.8 Escape Sequences</h2>
+
+        <p>
+            Escape sequences are special character combinations used
+            inside character and string literals.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Escape Sequence</th>
+                <th>Meaning</th>
+            </tr>
+
+            <tr>
+                <td>\n</td>
+                <td>New line</td>
+            </tr>
+
+            <tr>
+                <td>\t</td>
+                <td>Horizontal tab</td>
+            </tr>
+
+            <tr>
+                <td>\\</td>
+                <td>Backslash</td>
+            </tr>
+
+            <tr>
+                <td>\"</td>
+                <td>Double quotation mark</td>
+            </tr>
+
+            <tr>
+                <td>\'</td>
+                <td>Single quotation mark</td>
+            </tr>
+
+            <tr>
+                <td>\0</td>
+                <td>Null character</td>
+            </tr>
+
+        </table>
+
+       

@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 4 - Data Types in C | ALLIED</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">ALLIED</a>
+
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="books.html">Books</a>
+            <a href="c.html">C Programming</a>
+            <a href="login.html">Login</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <!-- TITLE -->
+
+    <div class="hero">
+
+        <h1>Chapter 4: Data Types in C</h1>
+
+        <p>
+            Understand how C represents different kinds of data and how
+            data types are used when declaring variables.
+        </p>
+
+    </div>
+
+
+    <!-- OBJECTIVES -->
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <ul>
+            <li>Understand the meaning of a data type.</li>
+            <li>Learn the basic data types available in C.</li>
+            <li>Understand integer and floating-point types.</li>
+            <li>Understand the character data type.</li>
+            <li>Learn signed and unsigned types.</li>
+            <li>Understand short and long integer types.</li>
+            <li>Understand derived and user-defined data types.</li>
+            <li>Use data types correctly in C programs.</li>
+            <li>Understand type size and ranges.</li>
+            <li>Avoid common data-type mistakes.</li>
+        </ul>
+
+    </section>
+
+
+    <!-- INTRODUCTION -->
+
+    <section>
+
+        <h2>4.1 Introduction to Data Types</h2>
+
+        <p>
+            A data type tells the C compiler what kind of value a variable
+            is intended to store and how operations on that value should
+            be interpreted.
+        </p>
+
+        <p>
+            For example, an age is normally represented using an integer,
+            while a temperature may require a floating-point type.
+        </p>
+
+        <pre><code>int age = 20;
+
+float temperature = 36.5f;
+
+char grade = 'A';</code></pre>
+
+        <p>
+            In these declarations, <code>int</code>, <code>float</code>
+            and <code>char</code> are data types.
+        </p>
+
+        <div class="note">
+            <strong>Simple definition:</strong>
+            A data type describes the kind of data that a variable,
+            expression or object can represent.
+        </div>
+
+    </section>
+
+
+    <!-- HISTORY -->
+
+    <section>
+
+        <h2>4.2 Historical Background</h2>
+
+        <p>
+            C was designed with efficiency and relatively direct control
+            over computer resources in mind. Data types are an important
+            part of this design because they help the compiler determine
+            how values should be represented and manipulated.
+        </p>
+
+        <p>
+            C provides several fundamental arithmetic and character types,
+            along with ways to construct more complex types such as
+            arrays, pointers, structures and unions.
+        </p>
+
+        <p>
+            Different C implementations can have different sizes for
+            some types, so programmers should not assume that every
+            integer or floating-point type has exactly the same size on
+            every platform.
+        </p>
+
+    </section>
+
+
+    <!-- CATEGORIES -->
+
+    <section>
+
+        <h2>4.3 Categories of C Data Types</h2>
+
+        <div class="diagram">
+
+                    C DATA TYPES
+                         |
+          +--------------+--------------+
+          |              |              |
+       Basic          Derived       User-defined
+          |              |              |
+     int, char       arrays          struct
+     float, double   pointers        union
+                    functions        enum
+                                   typedef
+
+        </div>
+
+        <p>
+            C data types can be broadly organized into fundamental types,
+            derived types and user-defined types. The language also
+            provides the <code>void</code> type for situations where no
+            value is represented.
+        </p>
+
+    </section>
+
+
+    <!-- BASIC TYPES -->
+
+    <section>
+
+        <h2>4.4 Basic Data Types</h2>
+
+        <table>
+
+            <tr>
+                <th>Data Type</th>
+                <th>Typical Purpose</th>
+                <th>Example</th>
+            </tr>
+
+            <tr>
+                <td>char</td>
+                <td>Character and small integer values</td>
+                <td>char grade = 'A';</td>
+            </tr>
+
+            <tr>
+                <td>int</td>
+                <td>Integer values</td>
+                <td>int age = 20;</td>
+            </tr>
+
+            <tr>
+                <td>float</td>
+                <td>Single-precision floating-point values</td>
+                <td>float price = 25.5f;</td>
+            </tr>
+
+            <tr>
+                <td>double</td>
+                <td>Double-precision floating-point values</td>
+                <td>double pi = 3.14159;</td>
+            </tr>
+
+            <tr>
+                <td>void</td>
+                <td>No value</td>
+                <td>void function(void);</td>
+            </tr>
+
+        </table>
+
+        <div class="tip">
+            Exact sizes and ranges depend on the C implementation.
+            Use <code>sizeof</code> and the appropriate limits from
+            standard headers when portability matters.
+        </div>
+
+    </section>
+
+
+    <!-- INTEGER -->
+
+    <section>
+
+        <h2>4.5 Integer Data Type</h2>
+
+        <p>
+            The <code>int</code> type is commonly used for whole-number
+            values.
+        </p>
+
+        <pre><code>int age = 21;
+int marks = 95;
+int temperature = -5;</code></pre>
+
+        <p>
+            Integer variables can represent positive numbers, negative
+            numbers and zero, subject to their range.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number = 100;
+
+    printf("Number = %d", number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 100</code></pre>
+
+    </section>
+
+
+    <!-- CHAR -->
+
+    <section>
+
+        <h2>4.6 Character Data Type</h2>
+
+        <p>
+            The <code>char</code> type is commonly used to store a
+            character, such as a letter or digit character.
+        </p>
+
+        <pre><code>char grade = 'A';
+char symbol = '#';
+char digit = '7';</code></pre>
+
+        <p>
+            Character constants are written using single quotation marks.
+        </p>
+
+        <div class="warning">
+            <strong>Remember:</strong>
+            <code>'A'</code> is a character constant, while
+            <code>"A"</code> is a string literal.
+        </div>
+
+    </section>
+
+
+    <!-- FLOAT -->
+
+    <section>
+
+        <h2>4.7 Float Data Type</h2>
+
+        <p>
+            The <code>float</code> type represents single-precision
+            floating-point values.
+        </p>
+
+        <pre><code>float price = 99.50f;
+float temperature = 36.5f;</code></pre>
+
+        <p>
+            The suffix <code>f</code> can be used to indicate a
+            floating-point constant of type <code>float</code>.
+        </p>
+
+    </section>
+
+
+    <!-- DOUBLE -->
+
+    <section>
+
+        <h2>4.8 Double Data Type</h2>
+
+        <p>
+            The <code>double</code> type is used for double-precision
+            floating-point values and generally provides more precision
+            than <code>float</code>.
+        </p>
+
+        <pre><code>double pi = 3.141592653589793;</code></pre>
+
+        <p>
+            It is commonly used when greater floating-point precision is
+            useful.
+        </p>
+
+    </section>
+
+
+    <!-- VOID -->
+
+    <section>
+
+        <h2>4.9 Void Data Type</h2>
+
+        <p>
+            The <code>void</code> type indicates that no value is
+            represented in a particular context.
+        </p>
+
+        <p>
+            A common use is a function that does not return a value.
+        </p>
+
+        <pre><code>void display()
+{
+    printf("Hello");
+}</code></pre>
+
+        <p>
+            Here, <code>display()</code> performs an action but does not
+            return a value to its caller.
+        </p>
+
+    </section>
+
+
+    <!-- SIGNED UNSIGNED -->
+
+    <section>
+
+        <h2>4.10 Signed and Unsigned Types</h2>
+
+        <p>
+            Integer types can be qualified with <code>signed</code> or
+            <code>unsigned</code>.
+        </p>
+
+        <h3>Signed</h3>
+
+        <p>
+            A signed integer type can represent negative values, zero
+            and positive values.
+        </p>
+
+        <pre><code>signed int temperature = -10;</code></pre>
+
+        <h3>Unsigned</h3>
+
+        <p>
+            An unsigned integer type represents non-negative values.
+        </p>
+
+        <pre><code>unsigned int count = 100;</code></pre>
+
+        <table>
+
+            <tr>
+                <th>Type</th>
+                <th>Can Represent Negative Values?</th>
+            </tr>
+
+            <tr>
+                <td>signed int</td>
+                <td>Yes</td>
+            </tr>
+
+            <tr>
+                <td>unsigned int</td>
+                <td>No</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <!-- SHORT LONG -->
+
+    <section>
+
+        <h2>4.11 Short and Long Integer Types</h2>
+
+        <p>
+            C provides type modifiers such as <code>short</code> and
+            <code>long</code> to provide integer types with different
+            minimum ranges.
+        </p>
+
+        <pre><code>short int smallNumber;
+
+long int largeNumber;</code></pre>
+
+        <p>
+            The exact sizes are implementation-defined, so portable
+            programs should use the limits defined by the implementation
+            rather than assuming a particular number of bytes.
+        </p>
+
+    </section>
+
+
+    <!-- SIZEOF -->
+
+    <section>
+
+        <h2>4.12 sizeof Operator</h2>
+
+        <p>
+            The <code>sizeof</code> operator can be used to determine
+            the size, in bytes, of a type or expression.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("char   = %zu bytes\n", sizeof(char));
+    printf("int    = %zu bytes\n", sizeof(int));
+    printf("float  = %zu bytes\n", sizeof(float));
+    printf("double = %zu bytes\n", sizeof(double));
+
+    return 0;
+}</code></pre>
+
+        <p>
+            The actual output depends on the compiler and platform.
+        </p>
+
+    </section>
+
+
+    <!-- TABLE -->
+
+    <section>
+
+        <h2>4.13 Data Type Comparison</h2>
+
+        <table>
+
+            <tr>
+                <th>Type</th>
+                <th>Typical Data</th>
+                <th>Example</th>
+                <th>Common Format Specifier</th>
+            </tr>
+
+            <tr>
+                <td>char</td>
+                <td>Character</td>
+                <td>'A'</td>
+                <td>%c</td>
+            </tr>
+
+            <tr>
+                <td>int</td>
+                <td>Integer</td>
+                <td>100</td>
+                <td>%d</td>
+            </tr>
+
+            <tr>
+                <td>unsigned int</td>
+                <td>Non-negative integer</td>
+                <td>100</td>
+                <td>%u</td>
+            </tr>
+
+            <tr>
+                <td>float</td>
+                <td>Floating-point value</td>
+                <td>3.14f</td>
+                <td>%f</td>
+            </tr>
+
+            <tr>
+                <td>double</td>
+                <td>Double-precision floating-point value</td>
+                <td>3.14159</td>
+                <td>%f</td>
+            </tr>
+
+        </table>
+
+        <div class="note">
+            Format specifiers are context-dependent. For example,
+            <code>printf()</code> and <code>scanf()</code> do not always
+            use exactly the same specifier rules for every type.
+        </div>
+
+    </section>
+
+
+    <!-- DERIVED -->
+
+    <section>
+
+        <h2>4.14 Derived Data Types</h2>
+
+        <p>
+            Derived types are constructed from other types.
+        </p>
+
+        <h3>1. Arrays</h3>
+
+        <pre><code>int marks[5];</code></pre>
+
+        <p>
+            An array stores multiple elements of the same type.
+        </p>
+
+        <h3>2. Pointers</h3>
+
+        <pre><code>int *ptr;</code></pre>
+
+        <p>
+            A pointer stores an address associated with an object or
+            function according to the applicable pointer type.
+        </p>
+
+        <h3>3. Functions</h3>
+
+        <pre><code>int add(int a, int b);</code></pre>
+
+        <p>
+            Function declarations describe functions and their return
+            and parameter types.
+        </p>
+
+    </section>
+
+
+    <!-- STRUCT UNION ENUM -->
+
+    <section>
+
+        <h2>4.15 User-Defined Types</h2>
+
+        <h3>Structure</h3>
+
+        <p>
+            A structure groups related members that may have different
+            types.
+        </p>
+
+        <pre><code>struct Student
+{
+    int age;
+    char grade;
+};</code></pre>
+
+        <h3>Union</h3>
+
+        <p>
+            A union provides several members that share the same storage.
+        </p>
+
+        <pre><code>union Data
+{
+    int number;
+    float value;
+};</code></pre>
+
+        <h3>Enumeration</h3>
+
+        <p>
+            An enumeration defines a set of named integer constants.
+        </p>
+
+        <pre><code>enum Day
+{
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY
+};</code></pre>
+
+        <h3>typedef</h3>
+
+        <p>
+            <code>typedef</code> creates an alternative name for an
+            existing type.
+        </p>
+
+        <pre><code>typedef unsigned int uint;</code></pre>
+
+    </section>
+
+
+    <!-- DIAGRAM -->
+
+    <section>
+
+        <h2>4.16 Data Type Classification Diagram</h2>
+
+        <div class="diagram">
+
+                         DATA TYPES
+                              |
+              +---------------+---------------+
+              |                               |
+        Fundamental                       Constructed
+              |                               |
+       +------+-------+               +-------+--------+
+       |      |       |               |       |        |
+      char   int    floating        array  pointer   function
+                    point
+                    |
+               float/double
+
+              User-defined
+                    |
+             +------+------+ 
+             |      |      |
+           struct union  enum
+                    |
+                  typedef
+
+        </div>
+
+    </section>
+
+
+    <!-- PROGRAM 1 -->
+
+    <section>
+
+        <h2>4.17 Program Example: Basic Data Types</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int age = 20;
+    float height = 5.8f;
+    double pi = 3.14159;
+    char grade = 'A';
+
+    printf("Age = %d\n", age);
+    printf("Height = %.1f\n", height);
+    printf("Pi = %.5f\n", pi);
+    printf("Grade = %c\n", grade);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Age = 20
+Height = 5.8
+Pi = 3.14159
+Grade = A</code></pre>
+
+    </section>
+
+
+    <!-- PROGRAM 2 -->
+
+    <section>
+
+        <h2>4.18 Program

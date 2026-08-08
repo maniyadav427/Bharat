@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 8 - Loops in C | ALLIED</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">ALLIED</a>
+
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="books.html">Books</a>
+            <a href="c.html">C Programming</a>
+            <a href="login.html">Login</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="hero">
+
+        <h1>Chapter 8: Loops in C</h1>
+
+        <p>
+            Loops are used to execute a block of statements repeatedly.
+            They are one of the most important concepts in C programming
+            because they reduce code repetition and make programs more
+            efficient and easier to understand.
+        </p>
+
+    </div>
+
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>After completing this chapter, you will be able to:</p>
+
+        <ul>
+            <li>Understand the concept of loops.</li>
+            <li>Understand why loops are required.</li>
+            <li>Understand different types of loops.</li>
+            <li>Use while loops.</li>
+            <li>Use do-while loops.</li>
+            <li>Use for loops.</li>
+            <li>Understand nested loops.</li>
+            <li>Use break and continue statements.</li>
+            <li>Identify infinite loops.</li>
+            <li>Write practical programs using loops.</li>
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Introduction to Loops</h2>
+
+        <p>
+            In programming, many tasks need to be performed repeatedly.
+            For example, printing numbers from 1 to 100 would require
+            many statements if loops were not available.
+        </p>
+
+        <p>
+            A loop allows a programmer to execute the same block of code
+            multiple times based on a condition.
+        </p>
+
+        <h3>Without a Loop</h3>
+
+        <pre><code>printf("Hello\n");
+printf("Hello\n");
+printf("Hello\n");
+printf("Hello\n");
+printf("Hello\n");</code></pre>
+
+        <h3>With a Loop</h3>
+
+        <pre><code>for (int i = 1; i &lt;= 5; i++)
+{
+    printf("Hello\n");
+}</code></pre>
+
+        <div class="note">
+
+            <strong>Simple Definition:</strong>
+
+            A loop is a control structure that repeatedly executes
+            a block of statements while a specified condition is true.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Why Are Loops Needed?</h2>
+
+        <p>
+            Loops are needed whenever the same operation has to be
+            performed multiple times.
+        </p>
+
+        <ul>
+            <li>To reduce code repetition.</li>
+            <li>To make programs shorter.</li>
+            <li>To process large amounts of data.</li>
+            <li>To calculate mathematical values.</li>
+            <li>To process arrays.</li>
+            <li>To search data.</li>
+            <li>To generate patterns.</li>
+            <li>To display multiplication tables.</li>
+            <li>To repeatedly display menus.</li>
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Types of Loops in C</h2>
+
+        <div class="diagram">
+
+                       LOOPS
+                         |
+          +--------------+--------------+
+          |              |              |
+        while          do-while        for
+          |              |              |
+       Condition      Executes first   Initialization
+       checked        then condition   Condition
+       first          is checked       Update
+
+        </div>
+
+        <table>
+
+            <tr>
+                <th>Loop</th>
+                <th>Condition Checking</th>
+                <th>Minimum Execution</th>
+            </tr>
+
+            <tr>
+                <td>while</td>
+                <td>Before the loop body</td>
+                <td>0</td>
+            </tr>
+
+            <tr>
+                <td>do-while</td>
+                <td>After the loop body</td>
+                <td>1</td>
+            </tr>
+
+            <tr>
+                <td>for</td>
+                <td>Before each iteration</td>
+                <td>0</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>while Loop</h2>
+
+        <p>
+            The while loop executes a block of statements as long as
+            its condition remains true.
+        </p>
+
+        <p>
+            The condition is checked before the loop body executes.
+            Therefore, while is an entry-controlled loop.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>while (condition)
+{
+    statements;
+}</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int i = 1;
+
+    while (i &lt;= 5)
+    {
+        printf("%d\n", i);
+        i++;
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>1
+2
+3
+4
+5</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>while Loop Flow Diagram</h2>
+
+        <div class="diagram">
+
+                 START
+                   |
+                   v
+            Initialization
+                   |
+                   v
+             +-----------+
+             | Condition |
+             +-----------+
+              /         \
+           True         False
+             |             |
+             v             |
+         Loop Body         |
+             |             |
+             v             |
+           Update          |
+             |             |
+             +------&lt;------+
+                   |
+                   v
+                  END
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>do-while Loop</h2>
+
+        <p>
+            The do-while loop executes its body first and checks the
+            condition after execution.
+        </p>
+
+        <p>
+            Therefore, the do-while loop executes at least once.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>do
+{
+    statements;
+}
+while (condition);</code></pre>
+
+        <div class="warning">
+
+            The semicolon after the while condition is required.
+
+        </div>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int i = 1;
+
+    do
+    {
+        printf("%d\n", i);
+        i++;
+    }
+    while (i &lt;= 5);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>1
+2
+3
+4
+5</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>do-while Executes At Least Once</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int i = 10;
+
+    do
+    {
+        printf("Executed once");
+    }
+    while (i &lt; 5);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Executed once</code></pre>
+
+        <div class="note">
+
+            Even though the condition is false, the body executes once
+            because the condition is checked after the body.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>do-while Flow Diagram</h2>
+
+        <div class="diagram">
+
+                 START
+                   |
+                   v
+               Loop Body
+                   |
+                   v
+               Condition
+                /     \
+             True     False
+               |         |
+               |         v
+               |        END
+               |
+               +------&gt; Loop Body
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>for Loop</h2>
+
+        <p>
+            The for loop is commonly used when initialization, condition
+            and update can be written together.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>for (initialization; condition; update)
+{
+    statements;
+}</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int i = 1; i &lt;= 5; i++)
+    {
+        printf("%d\n", i);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>1
+2
+3
+4
+5</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>for Loop Flow Diagram</h2>
+
+        <div class="diagram">
+
+                 START
+                   |
+                   v
+             Initialization
+                   |
+                   v
+             +-----------+
+             | Condition |
+             +-----------+
+              /         \
+           True         False
+             |             |
+             v             |
+          Loop Body        |
+             |             |
+             v             |
+           Update          |
+             |             |
+             +------&lt;------+
+                   |
+                   v
+                  END
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Parts of a for Loop</h2>
+
+        <pre><code>for (int i = 1; i &lt;= 10; i++)</code></pre>
+
+        <table>
+
+            <tr>
+                <th>Part</th>
+                <th>Example</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>Initialization</td>
+                <td>int i = 1</td>
+                <td>Sets the starting value.</td>
+            </tr>
+
+            <tr>
+                <td>Condition</td>
+                <td>i &lt;= 10</td>
+                <td>Controls whether another iteration occurs.</td>
+            </tr>
+
+            <tr>
+                <td>Update</td>
+                <td>i++</td>
+                <td>Changes the loop variable.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Difference Between while, do-while and for</h2>
+
+        <table>
+
+            <tr>
+                <th>Feature</th>
+                <th>while</th>
+                <th>do-while</th>
+                <th>for</th>
+            </tr>
+
+            <tr>
+                <td>Condition</td>
+                <td>Before body</td>
+                <td>After body</td>
+                <td>Before body</td>
+            </tr>
+
+            <tr>
+                <td>Minimum execution</td>
+                <td>0</td>
+                <td>1</td>
+                <td>0</td>
+            </tr>
+
+            <tr>
+                <td>Type</td>
+                <td>Entry-controlled</td>
+                <td>Exit-controlled</td>
+                <td>Entry-controlled</td>
+            </tr>
+
+            <tr>
+                <td>Best suited for</td>
+                <td>Condition-based repetition</td>
+                <td>At-least-once execution</td>
+                <td>Count-based repetition</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Nested Loops</h2>
+
+        <p>
+            A loop placed inside another loop is called a nested loop.
+        </p>
+
+        <p>
+            The inner loop completes all of its iterations for every
+            iteration of the outer loop.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int i = 1; i &lt;= 3; i++)
+    {
+        for (int j = 1; j &lt;= 3; j++)
+        {
+            printf("* ");
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>* * *
+* * *
+* * *</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>break Statement</h2>
+
+        <p>
+            The break statement immediately terminates the nearest
+            enclosing loop.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int i = 1; i &lt;= 10; i++)
+    {
+        if (i == 6)
+        {
+            break;
+        }
+
+        printf("%d\n", i);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>1
+2
+3
+4
+5</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>continue Statement</h2>
+
+        <p>
+            The continue statement skips the remaining statements in
+            the current iteration and proceeds to the next iteration.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int i = 1; i &lt;= 5; i++)
+    {
+        if (i == 3)
+        {
+            continue;
+        }
+
+        printf("%d\n", i);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>1
+2
+4
+5</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Infinite Loop</h2>
+
+        <p>
+            An infinite loop is a loop that does not terminate because
+            its condition never becomes false.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>while (1)
+{
+    printf("Running...\n");
+}</code></pre>
+
+        <div class="warning">
+
+            Accidental infinite loops are usually programming errors.
+            Always make sure that the loop has a way to terminate.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Loop Control Variable</h2>
+
+        <p>
+            A loop-control variable is a variable used to control the
+            number of iterations of a loop.
+        </p>
+
+        <pre><code>for (int i = 1; i &lt;= 10; i++)
+{
+    printf("%d\n", i);
+}</code></pre>
+
+        <p>
+            In this example, <code>i</code> is the loop-control variable.
+        </p>
+
+        <div class="tip">
+
+            Make sure the loop-control variable is initialized correctly
+            and updated properly.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Sum of First N Natural Numbers</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int sum = 0;
+
+    printf("Enter n: ");
+    scanf("%d", &amp;n);
+
+    for (int i = 1; i &lt;= n; i++)
+    {
+        sum += i;
+    }
+
+    printf("Sum = %d", sum);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter n: 5
+Sum = 15</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Multiplication Table</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number;
+
+    printf("Enter a number: ");
+    scanf("%d", &amp;number);
+
+    for (int i = 1; i &lt;= 10; i++)
+    {
+        printf("%d x %d = %d\n",
+               number, i, number * i);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter a number: 5
+
+5 x 1 = 5
+5 x 2 = 10
+5 x 3 = 15
+5 x 4 = 20
+5 x 5 = 25
+5 x 6 = 30
+5 x 7 = 35
+5 x 8 = 40
+5 x 9 = 45
+5 x 10 = 50</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Factorial of a Number</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    unsigned long long factorial = 1;
+
+    printf("Enter a number: ");
+    scanf("%d", &amp;n);
+
+    if (n &lt; 0)
+    {
+        printf("Factorial is not defined for negative integers.");
+        return 0;
+    }
+
+    for (int i = 1; i &lt;= n; i++)
+    {
+        factorial *= i;
+    }
+
+    printf("Factorial = %llu", factorial);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter a number: 5
+Factorial = 120</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Print Even Numbers</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int i = 2; i &lt;= 20; i += 2)
+    {
+        printf("%d ", i);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+<pre><code>2 4 6 8 10 12 14 16 18 20</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Print Odd Numbers</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int i = 1; i &lt;= 20; i += 2)
+    {
+        printf("%d ", i);
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>1 3 5 7 9 11 13 15 17 19</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Reverse a Number</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number;
+    int reverse = 0;
+    int remainder;
+
+    printf("Enter a number: ");
+    scanf("%d", &amp;number);
+
+    while (number != 0)
+    {
+        remainder = number % 10;
+        reverse = reverse * 10 + remainder;
+        number /= 10;
+    }
+
+    printf("Reverse = %d", reverse);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter a number: 12345
+Reverse = 54321</code></pre>
+
+    </section>
+        <section>
+
+        <h2>Program: Check Palindrome Number</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number;
+    int original;
+    int reverse = 0;
+    int remainder;
+
+    printf("Enter a number: ");
+    scanf("%d", &amp;number);
+
+    original = number;
+
+    while (number != 0)
+    {
+        remainder = number % 10;
+        reverse = reverse * 10 + remainder;
+        number /= 10;
+    }
+
+    if (original == reverse)
+    {
+        printf("Palindrome number");
+    }
+    else
+    {
+        printf("Not a palindrome number");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter a number: 121
+Palindrome number</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Check Prime Number</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int number;
+    int isPrime = 1;
+
+    printf("Enter a number: ");
+    scanf("%d", &amp;number);
+
+    if (number &lt; 2)
+    {
+        isPrime = 0;
+    }
+    else
+    {
+        for (int i = 2; i * i &lt;= number; i++)
+        {
+            if (number % i == 0)
+            {
+                isPrime = 0;
+                break;
+            }
+        }
+    }
+
+    if (isPrime)
+    {
+        printf("Prime number");
+    }
+    else
+    {
+        printf("Not a prime number");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter a number: 17
+Prime number</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Fibonacci Series</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int n;
+    int first = 0;
+    int second = 1;
+    int next;
+
+    printf("Enter number of terms: ");
+    scanf("%d", &amp;n);
+
+    for (int i = 1; i &lt;= n; i++)
+    {
+        printf("%d ", first);
+
+        next = first + second;
+        first = second;
+        second = next;
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Enter number of terms: 8
+0 1 1 2 3 5 8 13</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Star Pattern Using Nested Loops</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    for (int i = 1; i &lt;= 5; i++)
+    {
+        for (int j = 1; j &lt;= i; j++)
+        {
+            printf("* ");
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>*
+* *
+* * *
+* * * *
+* * * * *</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Common Errors in Loops</h2>
+
+        <ul>
+            <li>Forgetting to initialize the loop variable.</li>
+            <li>Forgetting to update the loop variable.</li>
+            <li>Using the wrong loop condition.</li>
+            <li>Creating an accidental infinite loop.</li>
+            <li>Using an incorrect starting value.</li>
+            <li>Using an incorrect ending value.</li>
+            <li>Using the wrong increment or decrement.</li>
+            <li>Incorrectly nesting loops.</li>
+        </ul>
+
+        <h3>Incorrect Example</h3>
+
+        <pre><code>int i = 1;
+
+while (i &lt;= 5)
+{
+    printf("%d", i);
+}</code></pre>
+
+        <p>
+            The value of <code>i</code> never changes, so the condition
+            always remains true.
+        </p>
+
+        <h3>Correct Example</h3>
+
+        <pre><code>int i = 1;
+
+while (i &lt;= 5)
+{
+    printf("%d", i);
+    i++;
+}</code></pre>
+
+    </section>
+        <section>
+
+        <h2>Best Practices for Loops</h2>
+
+        <ul>
+            <li>Initialize loop variables properly.</li>
+            <li>Use meaningful variable names.</li>
+            <li>Make sure the loop can terminate.</li>
+            <li>Keep loop conditions simple.</li>
+            <li>Avoid unnecessary nested loops.</li>
+            <li>Use break carefully.</li>
+            <li>Use continue carefully.</li>
+            <li>Check boundary conditions carefully.</li>
+            <li>Test loops with small values first.</li>
+        </ul>
+
+        <div class="tip">
+
+            <strong>Exam Tip:</strong>
+
+            When explaining a for loop, remember the three important
+            parts: initialization, condition and update.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Real-World Applications of Loops</h2>
+
+        <p>
+            Loops are used in almost every type of software application.
+            They help programs perform repeated tasks efficiently.
+        </p>
+
+        <ul>
+            <li>Student mark processing.</li>
+            <li>Bank transaction processing.</li>
+            <li>Customer record processing.</li>
+            <li>Searching data.</li>
+            <li>Sorting data.</li>
+            <li>Processing arrays.</li>
+            <li>Generating reports.</li>
+            <li>Game programming.</li>
+            <li>Menu-driven applications.</li>
+            <li>Sensor data processing.</li>
+            <li>Mathematical calculations.</li>
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Choosing the Correct Loop</h2>
+
+        <table>
+
+            <tr>
+                <th>Requirement</th>
+                <th>Recommended Loop</th>
+            </tr>
+
+            <tr>
+                <td>Number of repetitions is known</td>
+                <td>for loop</td>
+            </tr>
+
+            <tr>
+                <td>Condition-controlled repetition</td>
+                <td>while loop</td>
+            </tr>
+
+            <tr>
+                <td>Body must execute at least once</td>
+                <td>do-while loop</td>
+            </tr>
+
+            <tr>
+                <td>Loop inside another loop</td>
+                <td>Nested loop</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Important Exam Questions</h2>
+
+        <ol>
+            <li>What is a loop in C?</li>
+            <li>Why are loops required?</li>
+            <li>Explain the different types of loops in C.</li>
+            <li>Explain the while loop with syntax and example.</li>
+            <li>Explain the do-while loop with syntax and example.</li>
+            <li>Explain the for loop with syntax and example.</li>
+            <li>Differentiate between while and do-while.</li>
+            <li>Differentiate between for and while.</li>
+            <li>Explain nested loops with an example.</li>
+            <li>Explain break and continue statements.</li>
+            <li>What is an infinite loop?</li>
+            <li>Write a program to find factorial using a loop.</li>
+            <li>Write a program to generate Fibonacci series.</li>
+            <li>Write a program to check whether a number is prime.</li>
+            <li>Write a program to reverse a number.</li>
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>Multiple Choice Questions</h2>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>1. Which loop is commonly used when the number
+                of iterations is known?</strong>
+            </p>
+
+            <ol type="A">
+                <li>while</li>
+                <li>do-while</li>
+                <li>for</li>
+                <li>switch</li>
+            </ol>
+
+            <p class="answer">Answer: C. for</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>2. Which loop executes its body at least once?</strong>
+            </p>
+
+            <ol type="A">
+                <li>for</li>
+                <li>while</li>
+                <li>do-while</li>
+                <li>switch</li>
+            </ol>
+
+            <p class="answer">Answer: C. do-while</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>3. Which statement terminates a loop immediately?</strong>
+            </p>
+
+            <ol type="A">
+                <li>continue</li>
+                <li>break</li>
+                <li>skip</li>
+                <li>stop</li>
+            </ol>
+
+            <p class="answer">Answer: B. break</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>4. Which statement skips the current iteration?</strong>
+            </p>
+
+            <ol type="A">
+                <li>break</li>
+                <li>continue</li>
+                <li>stop</li>
+                <li>exit</li>
+            </ol>
+
+            <p class="answer">Answer: B. continue</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>5. A loop placed inside another loop is called:</strong>
+            </p>
+
+            <ol type="A">
+                <li>Infinite loop</li>
+                <li>Nested loop</li>
+                <li>Repeated loop</li>
+                <li>Double loop</li>
+            </ol>
+
+            <p class="answer">Answer: B. Nested loop</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>6. Which loop checks its condition after executing
+                its body?</strong>
+            </p>
+
+            <ol type="A">
+                <li>for</li>
+                <li>while</li>
+                <li>do-while</li>
+                <li>nested loop</li>
+            </ol>
+
+            <p class="answer">Answer: C. do-while</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>7. What can happen if the loop variable is
+                never updated?</strong>
+            </p>
+
+            <ol type="A">
+                <li>The program always terminates</li>
+                <li>The loop may become infinite</li>
+                <li>The compiler updates it automatically</li>
+                <li>The loop is skipped</li>
+            </ol>
+
+            <p class="answer">Answer: B. The loop may become infinite</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>8. Which loop commonly contains initialization,
+                condition and update in its header?</strong>
+            </p>
+
+            <ol type="A">
+                <li>while</li>
+                <li>do-while</li>
+                <li>for</li>
+                <li>switch</li>
+            </ol>
+
+            <p class="answer">Answer: C. for</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>9. What is the minimum execution count of
+                a while loop?</strong>
+            </p>
+
+            <ol type="A">
+                <li>1</li>
+                <li>2</li>
+                <li>0</li>
+                <li>10</li>
+            </ol>
+
+            <p class="answer">Answer: C. 0</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>10. What is the minimum execution count of
+                a do-while loop?</strong>
+            </p>
+
+            <ol type="A">
+                <li>0</li>
+                <li>1</li>
+                <li>2</li>
+                <li>10</li>
+            </ol>
+
+            <p class="answer">Answer: B. 1</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>11. Which loops are entry-controlled?</strong>
+            </p>
+
+            <ol type="A">
+                <li>do-while only</li>
+                <li>while and for</li>
+                <li>switch</li>
+                <li>none</li>
+            </ol>
+
+            <p class="answer">Answer: B. while and for</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>12. Which loop is exit-controlled?</strong>
+            </p>
+
+            <ol type="A">
+                <li>for</li>
+                <li>while</li>
+                <li>do-while</li>
+                <li>nested for</li>
+            </ol>
+
+            <p class="answer">Answer: C. do-while</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>13. Which operator commonly increments a
+                variable by one?</strong>
+            </p>
+
+            <ol type="A">
+                <li>--</li>
+                <li>++</li>
+                <li>**</li>
+                <li>//</li>
+            </ol>
+
+            <p class="answer">Answer: B. ++</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>14. Which statement skips the remaining part
+                of the current iteration?</strong>
+            </p>
+
+            <ol type="A">
+                <li>break</li>
+                <li>continue</li>
+                <li>stop</li>
+                <li>exit</li>
+            </ol>
+
+            <p class="answer">Answer: B. continue</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>15. Which statement immediately terminates
+                the nearest loop?</strong>
+            </p>
+
+            <ol type="A">
+                <li>continue</li>
+                <li>break</li>
+                <li>next</li>
+                <li>skip</li>
+            </ol>
+
+            <p class="answer">Answer: B. break</p>
+
+        </div>
+                <div class="mcq">
+
+            <p>
+                <strong>16. Which loop is useful for a menu that repeats
+                until the user chooses Exit?</strong>
+            </p>
+
+            <ol type="A">
+                <li>while</li>
+                <li>Only for</li>
+                <li>Only switch</li>
+                <li>None</li>
+            </ol>
+
+            <p class="answer">Answer: A. while</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>17. What is a nested loop?</strong>
+            </p>
+
+            <ol type="A">
+                <li>A loop without a condition</li>
+                <li>A loop inside another loop</li>
+                <li>An infinite loop</li>
+                <li>A loop without a variable</li>
+            </ol>
+
+            <p class="answer">Answer: B. A loop inside another loop</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>18. Which is commonly used to generate patterns?</strong>
+            </p>
+
+            <ol type="A">
+                <li>Nested loops</li>
+                <li>Only while</li>
+                <li>Only do-while</li>
+                <li>switch</li>
+            </ol>
+
+            <p class="answer">Answer: A. Nested loops</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>19. Which can create an infinite loop?</strong>
+            </p>
+
+            <ol type="A">
+                <li>while (1)</li>
+                <li>for (i = 1; i &lt;= 5; i++)</li>
+                <li>while (i &lt; 5) with i++</li>
+                <li>for (i = 0; i &lt; 0; i++)</li>
+            </ol>
+
+            <p class="answer">Answer: A. while (1)</p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>20. Which loop is best when the body must
+                execute at least once?</strong>
+            </p>
+
+            <ol type="A">
+                <li>for</li>
+                <li>while</li>
+                <li>do-while</li>
+                <li>switch</li>
+            </ol>
+
+            <p class="answer">Answer: C. do-while</p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Interview Questions</h2>
+
+        <ol>
+
+            <li>What is a loop in C?</li>
+
+            <li>Why are loops used in programming?</li>
+
+            <li>What are the different types of loops in C?</li>
+
+            <li>What is a while loop?</li>
+
+            <li>What is a do-while loop?</li>
+
+            <li>What is a for loop?</li>
+
+            <li>What is the difference between while and do-while?</li>
+
+            <li>What is the difference between for and while?</li>
+
+            <li>Why does a do-while loop execute at least once?</li>
+
+            <li>What is a nested loop?</li>
+
+            <li>What is an infinite loop?</li>
+
+            <li>What is the purpose of break?</li>
+
+            <li>What is the purpose of continue?</li>
+
+            <li>What is a loop-control variable?</li>
+
+            <li>When should a for loop be used?</li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>Practice Programs</h2>
+
+        <ol>
+
+            <li>Print numbers from 1 to 100.</li>
+
+            <li>Print even numbers from 1 to 100.</li>
+
+            <li>Print odd numbers from 1 to 100.</li>
+
+            <li>Find the sum of first N natural numbers.</li>
+
+            <li>Find the factorial of a number.</li>
+
+            <li>Print the multiplication table of a number.</li>
+
+            <li>Reverse a number.</li>
+
+            <li>Check whether a number is palindrome.</li>
+
+            <li>Check whether a number is prime.</li>
+
+            <li>Generate Fibonacci series.</li>
+
+            <li>Print a star pattern using nested loops.</li>
+
+            <li>Find the sum of digits of a number.</li>
+
+            <li>Count the number of digits in a number.</li>
+
+            <li>Find the largest digit in a number.</li>
+
+            <li>Calculate the power of a number using a loop.</li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>Chapter Summary</h2>
+
+        <p>
+            Loops are control structures used to execute a block of
+            statements repeatedly.
+        </p>
+
+        <ul>
+
+            <li>
+                <strong>while:</strong>
+                Checks the condition before executing the body.
+            </li>
+
+            <li>
+                <strong>do-while:</strong>
+                Executes the body first and checks the condition afterward.
+            </li>
+
+            <li>
+                <strong>for:</strong>
+                Commonly combines initialization, condition and update.
+            </li>
+
+            <li>
+                <strong>Nested loop:</strong>
+                A loop inside another loop.
+            </li>
+
+            <li>
+                <strong>break:</strong>
+                Terminates the nearest enclosing loop.
+            </li>
+
+            <li>
+                <strong>continue:</strong>
+                Skips the remaining statements of the current iteration.
+            </li>
+
+            <li>
+                <strong>Infinite loop:</strong>
+                A loop that does not terminate normally.
+            </li>
+
+        </ul>
+
+        <div class="tip">
+
+            <strong>Key Point:</strong>
+
+            Use a <code>for</code> loop when the number of iterations is
+            known, a <code>while</code> loop when repetition depends on
+            a condition, and a <code>do-while</code> loop when the body
+            must execute at least once.
+
+        </div>
+
+    </section>
+
+
+    <div class="navigation">
+
+        <a href="07-control-statements.html" class="button">
+            ← Previous: Control Statements
+        </a>
+
+        <a href="09-functions.html" class="button">
+            Next: Functions →
+        </a>
+
+    </div>
+
+
+</main>
+
+
+<footer>
+
+    <h3>ALLIED</h3>
+
+    <p>
+        C Programming Learning Course
+    </p>
+
+    <p>
+        © 2026 ALLIED. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+</body>
+</html>

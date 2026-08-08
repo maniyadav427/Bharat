@@ -1,0 +1,1021 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 5 - Operators in C | ALLIED</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">ALLIED</a>
+
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="books.html">Books</a>
+            <a href="c.html">C Programming</a>
+            <a href="login.html">Login</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <!-- TITLE -->
+
+    <div class="hero">
+
+        <h1>Chapter 5: Operators in C</h1>
+
+        <p>
+            Learn how operators perform calculations, comparisons,
+            logical operations, assignments, bit manipulation and
+            other operations in C programs.
+        </p>
+
+    </div>
+
+
+    <!-- OBJECTIVES -->
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>After completing this chapter, you will be able to:</p>
+
+        <ul>
+            <li>Understand what an operator is.</li>
+            <li>Identify different categories of C operators.</li>
+            <li>Use arithmetic operators.</li>
+            <li>Use relational and equality operators.</li>
+            <li>Use logical operators.</li>
+            <li>Use assignment operators.</li>
+            <li>Understand increment and decrement operators.</li>
+            <li>Use bitwise operators.</li>
+            <li>Use the conditional operator.</li>
+            <li>Understand operator precedence and associativity.</li>
+            <li>Write programs using different operators.</li>
+        </ul>
+
+    </section>
+
+
+    <!-- INTRODUCTION -->
+
+    <section>
+
+        <h2>5.1 Introduction to Operators</h2>
+
+        <p>
+            An operator is a symbol or keyword that tells the C language
+            to perform an operation on one or more operands.
+        </p>
+
+        <p>
+            For example:
+        </p>
+
+        <pre><code>int sum = a + b;</code></pre>
+
+        <p>
+            Here, <code>+</code> is an arithmetic operator and
+            <code>a</code> and <code>b</code> are operands.
+        </p>
+
+        <div class="note">
+            <strong>Simple definition:</strong>
+            An operator performs an operation on one or more values.
+        </div>
+
+    </section>
+
+
+    <!-- HISTORY -->
+
+    <section>
+
+        <h2>5.2 Historical Background</h2>
+
+        <p>
+            Operators are fundamental to programming languages because
+            programs need a way to calculate values, compare data,
+            assign results and manipulate individual bits.
+        </p>
+
+        <p>
+            C provides a particularly rich set of operators. Its
+            operators include arithmetic operations as well as
+            low-level operations such as bitwise manipulation and
+            address-related operators.
+        </p>
+
+        <p>
+            This combination is one reason C can be used for both
+            general application programming and systems programming.
+        </p>
+
+    </section>
+
+
+    <!-- CATEGORIES -->
+
+    <section>
+
+        <h2>5.3 Categories of C Operators</h2>
+
+        <div class="diagram">
+
+                         C OPERATORS
+                              |
+       +----------+-----------+-----------+-----------+
+       |          |           |           |           |
+   Arithmetic  Relational  Logical   Assignment  Bitwise
+       |
+       +------------------------------------------------+
+       |
+   Increment / Decrement
+       |
+   Conditional
+       |
+   Special / Other Operators
+
+        </div>
+
+        <table>
+
+            <tr>
+                <th>Category</th>
+                <th>Examples</th>
+            </tr>
+
+            <tr>
+                <td>Arithmetic</td>
+                <td>+, -, *, /, %</td>
+            </tr>
+
+            <tr>
+                <td>Relational</td>
+                <td>&lt;, &gt;, &lt;=, &gt;=</td>
+            </tr>
+
+            <tr>
+                <td>Equality</td>
+                <td>==, !=</td>
+            </tr>
+
+            <tr>
+                <td>Logical</td>
+                <td>&amp;&amp;, ||, !</td>
+            </tr>
+
+            <tr>
+                <td>Assignment</td>
+                <td>=, +=, -=, *=, /=, %=</td>
+            </tr>
+
+            <tr>
+                <td>Increment / Decrement</td>
+                <td>++, --</td>
+            </tr>
+
+            <tr>
+                <td>Bitwise</td>
+                <td>&amp;, |, ^, ~, &lt;&lt;, &gt;&gt;</td>
+            </tr>
+
+            <tr>
+                <td>Conditional</td>
+                <td>? :</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <!-- ARITHMETIC -->
+
+    <section>
+
+        <h2>5.4 Arithmetic Operators</h2>
+
+        <p>
+            Arithmetic operators are used to perform mathematical
+            operations.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Operator</th>
+                <th>Name</th>
+                <th>Example</th>
+            </tr>
+
+            <tr>
+                <td>+</td>
+                <td>Addition</td>
+                <td>a + b</td>
+            </tr>
+
+            <tr>
+                <td>-</td>
+                <td>Subtraction</td>
+                <td>a - b</td>
+            </tr>
+
+            <tr>
+                <td>*</td>
+                <td>Multiplication</td>
+                <td>a * b</td>
+            </tr>
+
+            <tr>
+                <td>/</td>
+                <td>Division</td>
+                <td>a / b</td>
+            </tr>
+
+            <tr>
+                <td>%</td>
+                <td>Remainder</td>
+                <td>a % b</td>
+            </tr>
+
+        </table>
+
+        <h3>Example</h3>
+
+        <pre><code>int a = 20;
+int b = 6;
+
+printf("%d\n", a + b);
+printf("%d\n", a - b);
+printf("%d\n", a * b);
+printf("%d\n", a / b);
+printf("%d\n", a % b);</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>26
+14
+120
+3
+2</code></pre>
+
+        <div class="warning">
+            When both operands of <code>/</code> are integers, C performs
+            integer division. The fractional part is discarded.
+        </div>
+
+    </section>
+
+
+    <!-- RELATIONAL -->
+
+    <section>
+
+        <h2>5.5 Relational Operators</h2>
+
+        <p>
+            Relational operators compare two values.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Operator</th>
+                <th>Meaning</th>
+                <th>Example</th>
+            </tr>
+
+            <tr>
+                <td>&lt;</td>
+                <td>Less than</td>
+                <td>a &lt; b</td>
+            </tr>
+
+            <tr>
+                <td>&gt;</td>
+                <td>Greater than</td>
+                <td>a &gt; b</td>
+            </tr>
+
+            <tr>
+                <td>&lt;=</td>
+                <td>Less than or equal to</td>
+                <td>a &lt;= b</td>
+            </tr>
+
+            <tr>
+                <td>&gt;=</td>
+                <td>Greater than or equal to</td>
+                <td>a &gt;= b</td>
+            </tr>
+
+            <tr>
+                <td>==</td>
+                <td>Equal to</td>
+                <td>a == b</td>
+            </tr>
+
+            <tr>
+                <td>!=</td>
+                <td>Not equal to</td>
+                <td>a != b</td>
+            </tr>
+
+        </table>
+
+        <p>
+            In C, a comparison expression produces an integer result:
+            zero represents false and nonzero represents true.
+        </p>
+
+    </section>
+
+
+    <!-- LOGICAL -->
+
+    <section>
+
+        <h2>5.6 Logical Operators</h2>
+
+        <p>
+            Logical operators combine or reverse conditions.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Operator</th>
+                <th>Name</th>
+                <th>Meaning</th>
+            </tr>
+
+            <tr>
+                <td>&amp;&amp;</td>
+                <td>Logical AND</td>
+                <td>True when both operands are true</td>
+            </tr>
+
+            <tr>
+                <td>||</td>
+                <td>Logical OR</td>
+                <td>True when at least one operand is true</td>
+            </tr>
+
+            <tr>
+                <td>!</td>
+                <td>Logical NOT</td>
+                <td>Reverses the truth value</td>
+            </tr>
+
+        </table>
+
+        <h3>Example</h3>
+
+        <pre><code>int age = 20;
+
+if (age &gt;= 18 &amp;&amp; age &lt;= 60)
+{
+    printf("Eligible");
+}</code></pre>
+
+        <p>
+            The condition is true only when both comparisons are true.
+        </p>
+
+    </section>
+
+
+    <!-- ASSIGNMENT -->
+
+    <section>
+
+        <h2>5.7 Assignment Operators</h2>
+
+        <p>
+            Assignment operators store values in variables.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Operator</th>
+                <th>Meaning</th>
+                <th>Equivalent Form</th>
+            </tr>
+
+            <tr>
+                <td>=</td>
+                <td>Assignment</td>
+                <td>a = b</td>
+            </tr>
+
+            <tr>
+                <td>+=</td>
+                <td>Add and assign</td>
+                <td>a = a + b</td>
+            </tr>
+
+            <tr>
+                <td>-=</td>
+                <td>Subtract and assign</td>
+                <td>a = a - b</td>
+            </tr>
+
+            <tr>
+                <td>*=</td>
+                <td>Multiply and assign</td>
+                <td>a = a * b</td>
+            </tr>
+
+            <tr>
+                <td>/=</td>
+                <td>Divide and assign</td>
+                <td>a = a / b</td>
+            </tr>
+
+            <tr>
+                <td>%=</td>
+                <td>Remainder and assign</td>
+                <td>a = a % b</td>
+            </tr>
+
+        </table>
+
+        <h3>Example</h3>
+
+        <pre><code>int number = 10;
+
+number += 5;
+
+printf("%d", number);</code></pre>
+
+        <p>Output:</p>
+
+        <pre><code>15</code></pre>
+
+    </section>
+
+
+    <!-- INCREMENT -->
+
+    <section>
+
+        <h2>5.8 Increment and Decrement Operators</h2>
+
+        <p>
+            The increment operator <code>++</code> increases a value by
+            one. The decrement operator <code>--</code> decreases a
+            value by one.
+        </p>
+
+        <pre><code>int x = 10;
+
+x++;
+
+printf("%d\n", x);
+
+x--;
+
+printf("%d", x);</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>11
+10</code></pre>
+
+    </section>
+
+
+    <!-- PREFIX POSTFIX -->
+
+    <section>
+
+        <h2>5.9 Prefix and Postfix</h2>
+
+        <p>
+            The increment and decrement operators can be used before or
+            after an expression.
+        </p>
+
+        <h3>Prefix</h3>
+
+        <pre><code>++x;
+--x;</code></pre>
+
+        <p>
+            The value is changed before its value is used in the larger
+            expression.
+        </p>
+
+        <h3>Postfix</h3>
+
+        <pre><code>x++;
+x--;</code></pre>
+
+        <p>
+            The previous value is used in the larger expression before
+            the increment or decrement takes effect.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x = 5;
+
+    printf("%d\n", x++);
+    printf("%d\n", x);
+
+    x = 5;
+
+    printf("%d\n", ++x);
+    printf("%d\n", x);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>5
+6
+6
+6</code></pre>
+
+    </section>
+
+
+    <!-- BITWISE -->
+
+    <section>
+
+        <h2>5.10 Bitwise Operators</h2>
+
+        <p>
+            Bitwise operators operate on the individual bits of integer
+            operands.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Operator</th>
+                <th>Name</th>
+            </tr>
+
+            <tr>
+                <td>&amp;</td>
+                <td>Bitwise AND</td>
+            </tr>
+
+            <tr>
+                <td>|</td>
+                <td>Bitwise OR</td>
+            </tr>
+
+            <tr>
+                <td>^</td>
+                <td>Bitwise XOR</td>
+            </tr>
+
+            <tr>
+                <td>~</td>
+                <td>Bitwise NOT</td>
+            </tr>
+
+            <tr>
+                <td>&lt;&lt;</td>
+                <td>Left shift</td>
+            </tr>
+
+            <tr>
+                <td>&gt;&gt;</td>
+                <td>Right shift</td>
+            </tr>
+
+        </table>
+
+        <h3>Example</h3>
+
+        <pre><code>int a = 5;
+int b = 3;
+
+printf("AND = %d\n", a &amp; b);
+printf("OR  = %d\n", a | b);
+printf("XOR = %d\n", a ^ b);</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>AND = 1
+OR  = 7
+XOR = 6</code></pre>
+
+    </section>
+
+
+    <!-- BITWISE DIAGRAM -->
+
+    <section>
+
+        <h2>5.11 Bitwise Diagram</h2>
+
+        <p>
+            Consider the values 5 and 3:
+        </p>
+
+        <div class="diagram">
+
+5 = 0101
+3 = 0011
+
+AND (&amp;)
+    0101
+    0011
+    ----
+    0001 = 1
+
+OR (|)
+    0101
+    0011
+    ----
+    0111 = 7
+
+XOR (^)
+    0101
+    0011
+    ----
+    0110 = 6
+
+        </div>
+
+    </section>
+
+
+    <!-- SHIFT -->
+
+    <section>
+
+        <h2>5.12 Shift Operators</h2>
+
+        <p>
+            Shift operators move the bits of an integer value.
+        </p>
+
+        <h3>Left Shift</h3>
+
+        <pre><code>int x = 5;
+
+printf("%d", x &lt;&lt; 1);</code></pre>
+
+        <p>
+            Output:
+        </p>
+
+        <pre><code>10</code></pre>
+
+        <h3>Right Shift</h3>
+
+        <pre><code>int x = 8;
+
+printf("%d", x &gt;&gt; 1);</code></pre>
+
+        <p>
+            On common implementations this produces:
+        </p>
+
+        <pre><code>4</code></pre>
+
+        <div class="warning">
+            The exact behavior of some shift operations, especially
+            involving negative signed values, requires care. Bitwise
+            programming is safest when you understand the type and
+            implementation involved.
+        </div>
+
+    </section>
+
+
+    <!-- CONDITIONAL -->
+
+    <section>
+
+        <h2>5.13 Conditional Operator</h2>
+
+        <p>
+            The conditional operator <code>? :</code> is a compact
+            three-operand operator.
+        </p>
+
+        <p>Syntax:</p>
+
+        <pre><code>condition ? expression1 : expression2;</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>int a = 10;
+int b = 20;
+
+int max = (a &gt; b) ? a : b;
+
+printf("Maximum = %d", max);</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Maximum = 20</code></pre>
+
+    </section>
+
+
+    <!-- SIZEOF -->
+
+    <section>
+
+        <h2>5.14 sizeof Operator</h2>
+
+        <p>
+            The <code>sizeof</code> operator determines the size in
+            bytes of a type or expression.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int x;
+
+    printf("Size = %zu bytes", sizeof(x));
+
+    return 0;
+}</code></pre>
+
+        <p>
+            The actual size depends on the implementation.
+        </p>
+
+    </section>
+
+
+    <!-- ADDRESS -->
+
+    <section>
+
+        <h2>5.15 Address-of Operator</h2>
+
+        <p>
+            The unary <code>&amp;</code> operator can be used to obtain
+            the address of an object.
+        </p>
+
+        <pre><code>int age = 20;
+
+printf("%p", (void *)&amp;age);</code></pre>
+
+        <p>
+       

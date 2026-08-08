@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>C Tokens - ALLIED</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px 20px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #4b5563;
+        }
+
+        section {
+            background: white;
+            padding: 30px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            margin: 20px 0 10px;
+            color: #374151;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        ul,
+        ol {
+            margin: 10px 0 20px 25px;
+        }
+
+        li {
+            margin: 7px 0;
+        }
+
+        .objectives {
+            background: #eef6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff8e1;
+            border-left: 5px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            margin: 20px 0;
+            padding: 18px;
+            background: #f9fafb;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="navbar">
+
+        <a href="home.html" class="logo">ALLIED</a>
+
+        <nav class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="books.html">Books</a>
+            <a href="c.html">C Programming</a>
+        </nav>
+
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- HERO -->
+
+    <div class="hero">
+        <h1>Chapter 2: C Tokens</h1>
+        <p>
+            Learn the basic building blocks of the C programming language.
+        </p>
+    </div>
+
+
+    <!-- LEARNING OBJECTIVES -->
+
+    <section class="objectives">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>After completing this chapter, you will be able to:</p>
+
+        <ul>
+            <li>Understand the meaning of C tokens.</li>
+            <li>Identify different types of tokens.</li>
+            <li>Understand keywords and identifiers.</li>
+            <li>Understand constants and string literals.</li>
+            <li>Identify operators and special symbols.</li>
+            <li>Recognize tokens in a C program.</li>
+            <li>Avoid common token-related errors.</li>
+        </ul>
+
+    </section>
+
+
+    <!-- INTRODUCTION -->
+
+    <section>
+
+        <h2>2.1 Introduction to C Tokens</h2>
+
+        <p>
+            Every programming language has rules for writing programs.
+            In C programming, a program is made up of many small building
+            blocks called <strong>tokens</strong>.
+        </p>
+
+        <p>
+            A token is the smallest meaningful unit of a C program that
+            can be recognized by the compiler.
+        </p>
+
+        <p>
+            A simple C program may contain keywords, variable names,
+            constants, operators, strings, and special symbols. Each of
+            these elements has a specific meaning and forms part of the
+            program's syntax.
+        </p>
+
+        <div class="note">
+            <strong>Important:</strong>
+            Tokens are the basic building blocks of a C program.
+        </div>
+
+    </section>
+
+
+    <!-- WHAT ARE TOKENS -->
+
+    <section>
+
+        <h2>2.2 What are C Tokens?</h2>
+
+        <p>
+            A <strong>C token</strong> is the smallest meaningful element
+            of a C source program that the compiler can identify.
+        </p>
+
+        <p>
+            Consider this statement:
+        </p>
+
+        <pre><code>int age = 20;</code></pre>
+
+        <p>The statement can be divided into these tokens:</p>
+
+        <table>
+
+            <tr>
+                <th>Token</th>
+                <th>Type</th>
+            </tr>
+
+            <tr>
+                <td>int</td>
+                <td>Keyword</td>
+            </tr>
+
+            <tr>
+                <td>age</td>
+                <td>Identifier</td>
+            </tr>
+
+            <tr>
+                <td>=</td>
+                <td>Operator</td>
+            </tr>
+
+            <tr>
+                <td>20</td>
+                <td>Integer Constant</td>
+            </tr>
+
+            <tr>
+                <td>;</td>
+                <td>Special Symbol</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <!-- TYPES -->
+
+    <section>
+
+        <h2>2.3 Types of C Tokens</h2>
+
+        <p>
+            C tokens can be classified into several major categories.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+
+            <tr>
+                <td>Keywords</td>
+                <td>Reserved words of C</td>
+                <td>int, return, if</td>
+            </tr>
+
+            <tr>
+                <td>Identifiers</td>
+                <td>User-defined names</td>
+                <td>age, total</td>
+            </tr>
+
+            <tr>
+                <td>Constants</td>
+                <td>Fixed values</td>
+                <td>100, 3.14</td>
+            </tr>
+
+            <tr>
+                <td>String Literals</td>
+                <td>Text enclosed in double quotes</td>
+                <td>"Hello"</td>
+            </tr>
+
+            <tr>
+                <td>Operators</td>
+                <td>Perform operations</td>
+                <td>+, -, *, =</td>
+            </tr>
+
+            <tr>
+                <td>Special Symbols</td>
+                <td>Symbols used in program syntax</td>
+                <td>;, (), {}, []</td>
+            </tr>
+
+        </table>
+
+        <div class="diagram">
+
+C TOKENS
+   |
+   +-------------------+
+   |                   |
+Keywords          Identifiers
+   |
+Constants
+   |
+String Literals
+   |
+Operators
+   |
+Special Symbols
+
+        </div>
+
+    </section>
+
+
+    <!-- KEYWORDS -->
+
+    <section>
+
+        <h2>2.4 Keywords</h2>
+
+        <p>
+            Keywords are reserved words that have predefined meanings
+            in the C language.
+        </p>
+
+        <p>
+            A keyword cannot normally be used as the name of a variable,
+            function, or other user-defined identifier.
+        </p>
+
+        <h3>Examples</h3>
+
+        <pre><code>int
+float
+char
+if
+else
+for
+while
+return
+switch
+break
+continue</code></pre>
+
+        <p>Example:</p>
+
+        <pre><code>int marks = 90;</code></pre>
+
+        <p>
+            Here, <code>int</code> is a keyword and
+            <code>marks</code> is an identifier.
+        </p>
+
+    </section>
+
+
+    <!-- IDENTIFIERS -->
+
+    <section>
+
+        <h2>2.5 Identifiers</h2>
+
+        <p>
+            Identifiers are names created by programmers to identify
+            variables, functions, arrays, structures, and other program
+            elements.
+        </p>
+
+        <h3>Valid Identifiers</h3>
+
+        <pre><code>age
+studentName
+total_marks
+number1
+_count</code></pre>
+
+        <h3>Invalid Identifiers</h3>
+
+        <pre><code>1age
+student-name
+student name
+return</code></pre>
+
+        <h3>Rules</h3>
+
+        <ul>
+            <li>An identifier can contain letters.</li>
+            <li>It can contain digits after the first character.</li>
+            <li>Underscore is allowed.</li>
+            <li>It cannot begin with a digit.</li>
+            <li>Spaces are not allowed.</li>
+            <li>Keywords should not be used as identifiers.</li>
+            <li>C identifiers are case-sensitive.</li>
+        </ul>
+
+    </section>
+
+
+    <!-- CONSTANTS -->
+
+    <section>
+
+        <h2>2.6 Constants</h2>
+
+        <p>
+            Constants are fixed values used in a program.
+        </p>
+
+        <h3>Integer Constants</h3>
+
+        <pre><code>10
+25
+100
+-50</code></pre>
+
+        <h3>Floating-Point Constants</h3>
+
+        <pre><code>3.14
+25.50
+0.001</code></pre>
+
+        <h3>Character Constants</h3>
+
+        <pre><code>'A'
+'B'
+'7'</code></pre>
+
+        <h3>String Constants</h3>
+
+        <pre><code>"ALLIED"
+"Hello"
+"C Programming"</code></pre>
+
+    </section>
+
+
+    <!-- STRING LITERALS -->
+
+    <section>
+
+        <h2>2.7 String Literals</h2>
+
+        <p>
+            A string literal is a sequence of characters enclosed in
+            double quotation marks.
+        </p>
+
+        <pre><code>printf("Welcome to ALLIED");</code></pre>
+
+        <p>
+            The text <code>"Welcome to ALLIED"</code> is a string literal.
+        </p>
+
+        <h3>Examples</h3>
+
+        <pre><code>"Hello"
+"Programming"
+"ALLIED Academy"
+"Welcome Student"</code></pre>
+
+    </section>
+
+
+    <!-- OPERATORS -->
+
+    <section>
+
+        <h2>2.8 Operators</h2>
+
+        <p>
+            Operators are symbols used to perform operations on values
+            and variables.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Operator Type</th>
+                <th>Examples</th>
+            </tr>
+
+            <tr>
+                <td>Arithmetic</td>
+                <td>+ - * / %</td>
+            </tr>
+
+            <tr>
+                <td>Relational</td>
+                <td>== != &gt; &lt; &gt;= &lt;=</td>
+            </tr>
+
+            <tr>
+                <td>Logical</td>
+                <td>&amp;&amp; || !</td>
+            </tr>
+
+            <tr>
+                <td>Assignment</td>
+                <td>= += -= *= /=</td>
+            </tr>
+
+            <tr>
+                <td>Increment / Decrement</td>
+                <td>++ --</td>
+            </tr>
+
+        </table>
+
+        <h3>Example</h3>
+
+        <pre><code>int a = 10;
+int b = 20;
+
+int sum = a + b;</code></pre>
+
+        <p>
+            Here, <code>=</code> and <code>+</code> are operators.
+        </p>
+
+    </section>
+
+
+    <!-- SPECIAL SYMBOLS -->
+
+    <section>
+
+        <h2>2.9 Special Symbols</h2>
+
+        <p>
+            Special symbols are characters that have specific purposes
+            in C program syntax.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Symbol</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>;</td>
+                <td>Ends a statement</td>
+            </tr>
+
+            <tr>
+                <td>()</td>
+                <td>Function calls and grouping</td>
+            </tr>
+
+            <tr>
+                <td>{}</td>
+                <td>Defines a block</td>
+            </tr>
+
+            <tr>
+                <td>[]</td>
+                <td>Array declaration/access</td>
+            </tr>
+
+            <tr>
+                <td>,</td>
+                <td>Separates items</td>
+            </tr>
+
+            <tr>
+                <td>#</td>
+                <td>Used in preprocessor directives</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <!-- TOKENIZATION -->
+
+    <section>
+
+        <h2>2.10 Tokenization Process</h2>
+
+        <p>
+            Before a C program is compiled into machine code, the source
+            code is processed and analyzed. One important part of this
+            process is recognizing meaningful lexical elements.
+        </p>
+
+        <div class="diagram">
+
+C SOURCE CODE
+      |
+      v
+Lexical Analysis
+      |
+      v
+Identify Tokens
+      |
+      +--------+---------+---------+
+      |        |         |         |
+ Keywords  Names     Constants  Operators
+      |
+      v
+Further Compilation
+      |
+      v
+Machine Code
+
+        </div>
+
+        <p>
+            This process allows the compiler to understand the structure
+            of the source program.
+        </p>
+
+    </section>
+
+
+    <!-- COMPLETE PROGRAM -->
+
+    <section>
+
+        <h2>2.11 Complete Token Example</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int age = 20;
+
+    printf("Age = %d", age);
+
+    return 0;
+}</code></pre>
+
+        <h3>Token Analysis</h3>
+
+        <table>
+
+            <tr>
+                <th>Token</th>
+                <th>Category</th>
+            </tr>
+
+            <tr>
+                <td>int</td>
+                <td>Keyword</td>
+            </tr>
+
+            <tr>
+                <td>main</td>
+                <td>Identifier</td>
+            </tr>
+
+            <tr>
+                <td>age</td>
+                <td>Identifier</td>
+            </tr>
+
+            <tr>
+                <td>=</td>
+                <td>Operator</td>
+            </tr>
+
+            <tr>
+                <td>20</td>
+                <td>Constant</td>
+            </tr>
+
+            <tr>
+                <td>printf</td>
+                <td>Identifier</td>
+            </tr>
+
+            <tr>
+                <td>"Age = %d"</td>
+                <td>String Literal</td>
+            </tr>
+
+            <tr>
+                <td>return</td>
+                <td>Keyword</td>
+            </tr>
+
+            <tr>
+                <td>0</td>
+                <td>Constant</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <!-- PROGRAM EXAMPLES -->
+
+    <section>
+
+        <h2>2.12 Program Examples</h2>
+
+        <h3>Example 1: Addition</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int a = 10;
+    int b = 20;
+
+    int sum = a + b;
+
+    printf("Sum = %d", sum);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum = 30</code></pre>
+
+        <h3>Explanation</h3>
+
+        <p>
+            The program contains keywords, identifiers, constants,
+            operators, string literals, and special symbols. The
+            compiler recognizes each of these elements as part of the
+            program.
+        </p>
+
+
+        <h3>Example 2: Student Information</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    int age = 18;
+    char grade = 'A';
+
+    printf("Age = %d\n", age);
+    printf("Grade = %c", grade);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Age = 18
+Grade = A</code></pre>
+
+    </section>
+
+
+    <!-- COMMON ERRORS -->
+
+    <section>
+
+        <h2>2.13 Common Errors</h2>
+
+        <h3>Error 1: Invalid Identifier</h3>
+
+        <pre><code>int 1age;</code></pre>
+
+        <p>
+            An identifier cannot begin with a number.
+        </p>
+
+        <p class="tip">
+            Correct example:
+        </p>
+
+        <pre><code>int age1;</code></pre>
+
+
+        <h3>Error 2: Keyword Used as Identifier</h3>
+
+        <pre><code>int return;</code></pre>
+
+        <p>
+            <code>return</code> is a reserved keyword.
+        </p>
+
+
+        <h3>Error 3: Missing Semicolon</h3>
+
+        <pre><code>int age = 20</code></pre>
+
+        <p>
+            Most C statements need a semicolon.
+        </p>
+
+        <pre><code>int age = 20;</code></pre>
+
+
+        <h3>Error 4: Incorrect Character Constant</h3>
+
+        <pre><code>char grade = "A";</code></pre>
+
+        <p>
+            A single character should normally use single quotation marks.
+        </p>
+
+        <pre><code>char grade = 'A';</code></pre>
+
+    </section>
+
+
+    <!-- BEST PRACTICES -->
+
+    <section>
+
+        <h2>2.14 Best Practices</h2>
+
+        <ul>
+            <li>Use meaningful identifier names.</li>
+            <li>Follow consistent naming conventions.</li>
+            <li>Keep your code properly indented.</li>
+            <li>Use comments when they improve understanding.</li>
+            <li>Check semicolons carefully.</li>
+            <li>Do not use keywords as identifiers.</li>
+            <li>Compile programs frequently while learning.</li>
+            <li>Read compiler error messages carefully.</li>
+        </ul>
+
+    </section>
+
+
+    <!-- REAL WORLD -->
+
+    <section>
+
+        <h2>2.15 Real-World Example</h2>
+
+        <p>
+            Consider a simple banking program:
+        </p>
+
+        <pre><code>balance = deposit - withdrawal;</code></pre>
+
+        <p>
+            Here:
+        </p>
+
+        <ul>
+            <li><code>balance</code> is an identifier.</li>
+            <li><code>=</code> is an assignment operator.</li>

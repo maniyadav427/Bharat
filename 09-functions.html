@@ -1,0 +1,2921 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter 9 - Functions in C | ALLIED</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.7;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 18px 60px;
+        }
+
+        .hero {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        section {
+            background: white;
+            padding: 28px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #374151;
+            margin-top: 22px;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .objective {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+        }
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .tip {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .diagram {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .mcq {
+            background: #f9fafb;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .answer {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="nav">
+
+        <a href="home.html" class="logo">
+            ALLIED
+        </a>
+
+        <nav>
+
+            <a href="home.html">
+                Home
+            </a>
+
+            <a href="books.html">
+                Books
+            </a>
+
+            <a href="c.html">
+                C Programming
+            </a>
+
+            <a href="login.html">
+                Login
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <div class="hero">
+
+        <h1>
+            Chapter 9: Functions in C
+        </h1>
+
+        <p>
+            Learn how functions divide a C program into smaller,
+            reusable and organized blocks of code.
+        </p>
+
+    </div>
+
+
+    <section class="objective">
+
+        <h2>🎯 Learning Objectives</h2>
+
+        <p>
+            After completing this chapter, you will be able to:
+        </p>
+
+        <ul>
+
+            <li>
+                Understand the concept of functions.
+            </li>
+
+            <li>
+                Understand why functions are required.
+            </li>
+
+            <li>
+                Identify library and user-defined functions.
+            </li>
+
+            <li>
+                Declare and define functions.
+            </li>
+
+            <li>
+                Call functions from a program.
+            </li>
+
+            <li>
+                Pass arguments to functions.
+            </li>
+
+            <li>
+                Return values from functions.
+            </li>
+
+            <li>
+                Understand call by value.
+            </li>
+
+            <li>
+                Understand recursion.
+            </li>
+
+            <li>
+                Write practical programs using functions.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Introduction to Functions</h2>
+
+        <p>
+            A function is a named block of statements that performs
+            a specific task.
+        </p>
+
+        <p>
+            Functions help divide a large program into smaller,
+            manageable and reusable parts.
+        </p>
+
+        <p>
+            Instead of writing the same code repeatedly, we can place
+            that code inside a function and call the function whenever
+            it is required.
+        </p>
+
+        <h3>Simple Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void message()
+{
+    printf("Welcome to ALLIED");
+}
+
+int main()
+{
+    message();
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Welcome to ALLIED</code></pre>
+
+        <div class="note">
+
+            <strong>Simple Definition:</strong>
+
+            A function is a reusable block of code designed to perform
+            a particular task.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Why Are Functions Needed?</h2>
+
+        <p>
+            Functions are needed to make programs easier to develop,
+            understand, test and maintain.
+        </p>
+
+        <ul>
+
+            <li>
+                To reduce code repetition.
+            </li>
+
+            <li>
+                To divide a large program into smaller parts.
+            </li>
+
+            <li>
+                To improve program readability.
+            </li>
+
+            <li>
+                To make code reusable.
+            </li>
+
+            <li>
+                To simplify debugging.
+            </li>
+
+            <li>
+                To make maintenance easier.
+            </li>
+
+            <li>
+                To support modular programming.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Advantages of Functions</h2>
+
+        <ul>
+
+            <li>
+                <strong>Reusability:</strong>
+                A function can be called multiple times.
+            </li>
+
+            <li>
+                <strong>Modularity:</strong>
+                Large programs can be divided into smaller modules.
+            </li>
+
+            <li>
+                <strong>Readability:</strong>
+                Functions make programs easier to understand.
+            </li>
+
+            <li>
+                <strong>Debugging:</strong>
+                Individual functions can be tested separately.
+            </li>
+
+            <li>
+                <strong>Maintenance:</strong>
+                Changes can be made in one function without rewriting
+                the entire program.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Basic Structure of a Function</h2>
+
+        <pre><code>return_type function_name(parameters)
+{
+    statements;
+
+    return value;
+}</code></pre>
+
+        <table>
+
+            <tr>
+                <th>Part</th>
+                <th>Description</th>
+            </tr>
+
+            <tr>
+                <td>Return type</td>
+                <td>
+                    Specifies the type of value returned by the function.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Function name</td>
+                <td>
+                    The name used to identify and call the function.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Parameters</td>
+                <td>
+                    Values received by the function.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Function body</td>
+                <td>
+                    Contains the statements that perform the task.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Return statement</td>
+                <td>
+                    Sends a value back to the calling function.
+                </td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Function Working</h2>
+
+        <div class="diagram">
+
+                  START
+                    |
+                    v
+              main() function
+                    |
+                    v
+              Function Call
+                    |
+                    v
+             +--------------+
+             |   Function   |
+             |     Body     |
+             +--------------+
+                    |
+                    v
+             Return Value
+                    |
+                    v
+              Back to main()
+                    |
+                    v
+                   END
+
+        </div>
+
+    </section>
+        <section>
+
+        <h2>Types of Functions in C</h2>
+
+        <p>
+            Functions in C can be broadly classified into library
+            functions and user-defined functions.
+        </p>
+
+        <div class="diagram">
+
+                    FUNCTIONS
+                       |
+              +--------+--------+
+              |                 |
+       Library Functions   User-Defined
+              |              Functions
+              |                 |
+          printf()          Created by
+          scanf()           programmer
+          strlen()             |
+          sqrt()          Specific task
+
+        </div>
+
+        <table>
+
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Examples</th>
+            </tr>
+
+            <tr>
+                <td>Library Functions</td>
+                <td>
+                    Functions already provided by C libraries.
+                </td>
+                <td>
+                    printf(), scanf(), strlen()
+                </td>
+            </tr>
+
+            <tr>
+                <td>User-Defined Functions</td>
+                <td>
+                    Functions created by the programmer.
+                </td>
+                <td>
+                    add(), display(), factorial()
+                </td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Library Functions</h2>
+
+        <p>
+            Library functions are predefined functions provided by
+            the C standard library.
+        </p>
+
+        <p>
+            These functions can be used by including the appropriate
+            header file.
+        </p>
+
+        <h3>Examples</h3>
+
+        <table>
+
+            <tr>
+                <th>Function</th>
+                <th>Header File</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>printf()</td>
+                <td>&lt;stdio.h&gt;</td>
+                <td>Displays output.</td>
+            </tr>
+
+            <tr>
+                <td>scanf()</td>
+                <td>&lt;stdio.h&gt;</td>
+                <td>Reads input.</td>
+            </tr>
+
+            <tr>
+                <td>strlen()</td>
+                <td>&lt;string.h&gt;</td>
+                <td>Finds string length.</td>
+            </tr>
+
+            <tr>
+                <td>sqrt()</td>
+                <td>&lt;math.h&gt;</td>
+                <td>Calculates square root.</td>
+            </tr>
+
+            <tr>
+                <td>pow()</td>
+                <td>&lt;math.h&gt;</td>
+                <td>Calculates powers.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>User-Defined Functions</h2>
+
+        <p>
+            A user-defined function is a function created by the
+            programmer to perform a specific task.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void greet()
+{
+    printf("Hello from ALLIED");
+}
+
+int main()
+{
+    greet();
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Hello from ALLIED</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Function Declaration</h2>
+
+        <p>
+            A function declaration, also called a function prototype,
+            tells the compiler about the function before it is used.
+        </p>
+
+        <h3>Syntax</h3>
+
+        <pre><code>return_type function_name(parameter_list);</code></pre>
+
+        <h3>Example</h3>
+
+        <pre><code>int add(int, int);</code></pre>
+
+        <p>
+            This tells the compiler that a function named
+            <code>add</code> exists, accepts two integer arguments,
+            and returns an integer.
+        </p>
+
+        <div class="note">
+
+            <strong>Important:</strong>
+
+            A function prototype normally ends with a semicolon.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Function Definition</h2>
+
+        <p>
+            A function definition contains the actual statements that
+            perform the required task.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>int add(int a, int b)
+{
+    return a + b;
+}</code></pre>
+
+        <p>
+            Here, <code>a</code> and <code>b</code> are parameters and
+            the function returns their sum.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>Function Calling</h2>
+
+        <p>
+            A function is executed when it is called.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void display()
+{
+    printf("Welcome to C Programming");
+}
+
+int main()
+{
+    display();
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Welcome to C Programming</code></pre>
+
+        <p>
+            In this program, <code>display()</code> is called from
+            the <code>main()</code> function.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <h2>Function Declaration, Definition and Call</h2>
+
+        <div class="diagram">
+
+        FUNCTION PROTOTYPE
+                |
+                v
+        FUNCTION DEFINITION
+                |
+                v
+          FUNCTION CALL
+                |
+                v
+         FUNCTION EXECUTES
+                |
+                v
+          RETURN TO CALLER
+
+        </div>
+
+        <table>
+
+            <tr>
+                <th>Stage</th>
+                <th>Purpose</th>
+            </tr>
+
+            <tr>
+                <td>Declaration</td>
+                <td>Tells the compiler about the function.</td>
+            </tr>
+
+            <tr>
+                <td>Definition</td>
+                <td>Contains the actual function code.</td>
+            </tr>
+
+            <tr>
+                <td>Call</td>
+                <td>Executes the function.</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Arguments and Parameters</h2>
+
+        <p>
+            Parameters are variables declared in the function definition.
+            Arguments are the actual values passed when the function
+            is called.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void add(int a, int b)
+{
+    printf("Sum = %d", a + b);
+}
+
+int main()
+{
+    add(10, 20);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum = 30</code></pre>
+
+        <table>
+
+            <tr>
+                <th>Term</th>
+                <th>Example</th>
+            </tr>
+
+            <tr>
+                <td>Parameters</td>
+                <td>int a, int b</td>
+            </tr>
+
+            <tr>
+                <td>Arguments</td>
+                <td>10, 20</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Return Value</h2>
+
+        <p>
+            A function can return a value to the calling function using
+            the <code>return</code> statement.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int main()
+{
+    int result;
+
+    result = add(10, 20);
+
+    printf("Sum = %d", result);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum = 30</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Function Categories Based on Arguments and Return Value</h2>
+
+        <p>
+            User-defined functions can commonly be classified into
+            four categories based on whether they accept arguments and
+            whether they return a value.
+        </p>
+
+        <table>
+
+            <tr>
+                <th>Type</th>
+                <th>Arguments</th>
+                <th>Return Value</th>
+            </tr>
+
+            <tr>
+                <td>Type 1</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+
+            <tr>
+                <td>Type 2</td>
+                <td>Yes</td>
+                <td>No</td>
+            </tr>
+
+            <tr>
+                <td>Type 3</td>
+                <td>No</td>
+                <td>Yes</td>
+            </tr>
+
+            <tr>
+                <td>Type 4</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+
+        </table>
+
+    </section>
+        <section>
+
+        <h2>Function Type 1: No Arguments and No Return Value</h2>
+
+        <p>
+            In this type of function, no values are passed to the function
+            and the function does not return any value.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void display()
+{
+    printf("Hello, World!");
+}
+
+int main()
+{
+    display();
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Hello, World!</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Function Type 2: Arguments and No Return Value</h2>
+
+        <p>
+            In this type, arguments are passed to the function, but the
+            function does not return a value.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void add(int a, int b)
+{
+    printf("Sum = %d", a + b);
+}
+
+int main()
+{
+    add(10, 20);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum = 30</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Function Type 3: No Arguments and Return Value</h2>
+
+        <p>
+            In this type, the function does not receive arguments but
+            returns a value to the calling function.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int getNumber()
+{
+    return 100;
+}
+
+int main()
+{
+    int value;
+
+    value = getNumber();
+
+    printf("Value = %d", value);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Value = 100</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Function Type 4: Arguments and Return Value</h2>
+
+        <p>
+            In this type, arguments are passed to the function and the
+            function returns a value.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int main()
+{
+    int result;
+
+    result = add(15, 25);
+
+    printf("Sum = %d", result);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum = 40</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Comparison of Four Function Types</h2>
+
+        <table>
+
+            <tr>
+                <th>Type</th>
+                <th>Arguments</th>
+                <th>Return Value</th>
+                <th>Example</th>
+            </tr>
+
+            <tr>
+                <td>Type 1</td>
+                <td>No</td>
+                <td>No</td>
+                <td>void display()</td>
+            </tr>
+
+            <tr>
+                <td>Type 2</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>void add(int, int)</td>
+            </tr>
+
+            <tr>
+                <td>Type 3</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>int getNumber()</td>
+            </tr>
+
+            <tr>
+                <td>Type 4</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>int add(int, int)</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section>
+
+        <h2>Call by Value</h2>
+
+        <p>
+            In C, arguments are passed to functions by value by default.
+            This means that the function receives copies of the values
+            supplied by the caller.
+        </p>
+
+        <p>
+            Changes made to the parameters inside the function do not
+            change the original variables in the calling function.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void change(int x)
+{
+    x = 100;
+}
+
+int main()
+{
+    int number = 10;
+
+    change(number);
+
+    printf("Number = %d", number);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 10</code></pre>
+
+        <div class="note">
+
+            <strong>Important:</strong>
+
+            The function changes its local copy of the value, not the
+            original variable in <code>main()</code>.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Call by Value Flow</h2>
+
+        <div class="diagram">
+
+                 main()
+                   |
+                   |
+              number = 10
+                   |
+                   v
+             change(number)
+                   |
+                   v
+             x = 10 (copy)
+                   |
+                   v
+               x = 100
+                   |
+                   v
+              Return to main()
+                   |
+                   v
+             number = 10
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Function Scope and Local Variables</h2>
+
+        <p>
+            A variable declared inside a function is generally local
+            to that function and cannot be directly accessed from
+            another function.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void display()
+{
+    int number = 50;
+
+    printf("Number = %d", number);
+}
+
+int main()
+{
+    display();
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Number = 50</code></pre>
+
+        <div class="warning">
+
+            A local variable exists only within its scope. Do not try
+            to use a local variable outside the function where it is
+            declared.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Multiple Function Calls</h2>
+
+        <p>
+            A function can be called multiple times from the same
+            program.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void message()
+{
+    printf("Hello\n");
+}
+
+int main()
+{
+    message();
+    message();
+    message();
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Hello
+Hello
+Hello</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Nested Function Calls</h2>
+
+        <p>
+            One function can call another function. This allows a
+            program to divide a complex task into smaller tasks.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void second()
+{
+    printf("Second function\n");
+}
+
+void first()
+{
+    printf("First function\n");
+    second();
+}
+
+int main()
+{
+    first();
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>First function
+Second function</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Recursion</h2>
+
+        <p>
+            Recursion is a technique in which a function calls itself
+            to solve a problem.
+        </p>
+
+        <p>
+            A recursive function must have a base condition that stops
+            further recursive calls.
+        </p>
+
+        <h3>Basic Structure</h3>
+
+        <pre><code>return_type function()
+{
+    if (condition)
+    {
+        return value;
+    }
+
+    function();
+}</code></pre>
+
+        <div class="warning">
+
+            Without a proper base condition, recursion can continue
+            indefinitely and may cause stack overflow.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Recursive Function Example</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void count(int n)
+{
+    if (n == 0)
+    {
+        return;
+    }
+
+    printf("%d\n", n);
+
+    count(n - 1);
+}
+
+int main()
+{
+    count(5);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>5
+4
+3
+2
+1</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Factorial Using Recursion</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int factorial(int n)
+{
+    if (n == 0 || n == 1)
+    {
+        return 1;
+    }
+
+    return n * factorial(n - 1);
+}
+
+int main()
+{
+    int n = 5;
+
+    printf("Factorial = %d", factorial(n));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Factorial = 120</code></pre>
+
+    </section>
+        <section>
+
+        <h2>Program: Find Sum Using Function</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+int main()
+{
+    int result;
+
+    result = add(25, 35);
+
+    printf("Sum = %d", result);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Sum = 60</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Find Largest of Two Numbers</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int largest(int a, int b)
+{
+    if (a &gt; b)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
+}
+
+int main()
+{
+    int result;
+
+    result = largest(25, 40);
+
+    printf("Largest = %d", result);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Largest = 40</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Check Even or Odd Using Function</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void checkEvenOdd(int number)
+{
+    if (number % 2 == 0)
+    {
+        printf("Even number");
+    }
+    else
+    {
+        printf("Odd number");
+    }
+}
+
+int main()
+{
+    checkEvenOdd(15);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Odd number</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Check Prime Number Using Function</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int isPrime(int number)
+{
+    if (number &lt; 2)
+    {
+        return 0;
+    }
+
+    for (int i = 2; i * i &lt;= number; i++)
+    {
+        if (number % i == 0)
+        {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int main()
+{
+    int number = 17;
+
+    if (isPrime(number))
+    {
+        printf("Prime number");
+    }
+    else
+    {
+        printf("Not a prime number");
+    }
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Prime number</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Factorial Using Function</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int factorial(int n)
+{
+    int fact = 1;
+
+    for (int i = 1; i &lt;= n; i++)
+    {
+        fact = fact * i;
+    }
+
+    return fact;
+}
+
+int main()
+{
+    int number = 5;
+
+    printf("Factorial = %d", factorial(number));
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Factorial = 120</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Fibonacci Using Function</h2>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void fibonacci(int n)
+{
+    int first = 0;
+    int second = 1;
+    int next;
+
+    for (int i = 1; i &lt;= n; i++)
+    {
+        printf("%d ", first);
+
+        next = first + second;
+        first = second;
+        second = next;
+    }
+}
+
+int main()
+{
+    fibonacci(8);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>0 1 1 2 3 5 8 13</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Program: Swap Two Numbers Using Function</h2>
+
+        <p>
+            In C, passing ordinary variables to a function passes their
+            values. Therefore, changing the parameters alone does not
+            change the original variables.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+void swap(int a, int b)
+{
+    int temp;
+
+    temp = a;
+    a = b;
+    b = temp;
+
+    printf("Inside function:\n");
+    printf("a = %d\n", a);
+    printf("b = %d\n", b);
+}
+
+int main()
+{
+    int x = 10;
+    int y = 20;
+
+    swap(x, y);
+
+    printf("Inside main:\n");
+    printf("x = %d\n", x);
+    printf("y = %d\n", y);
+
+    return 0;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Inside function:
+a = 20
+b = 10
+Inside main:
+x = 10
+y = 20</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Function Prototype Example</h2>
+
+        <p>
+            A function prototype can be written before the main function
+            when the function definition appears later in the program.
+        </p>
+
+        <pre><code>#include &lt;stdio.h&gt;
+
+int square(int);
+
+int main()
+{
+    int result;
+
+    result = square(6);
+
+    printf("Square = %d", result);
+
+    return 0;
+}
+
+int square(int number)
+{
+    return number * number;
+}</code></pre>
+
+        <h3>Output</h3>
+
+        <pre><code>Square = 36</code></pre>
+
+    </section>
+
+
+    <section>
+
+        <h2>Advantages of Using Functions</h2>
+
+        <ul>
+
+            <li>
+                <strong>Code Reusability:</strong>
+                The same function can be called many times.
+            </li>
+
+            <li>
+                <strong>Modularity:</strong>
+                A large program can be divided into smaller modules.
+            </li>
+
+            <li>
+                <strong>Easy Debugging:</strong>
+                Errors can be isolated within individual functions.
+            </li>
+
+            <li>
+                <strong>Easy Maintenance:</strong>
+                Changes can be made in a particular function.
+            </li>
+
+            <li>
+                <strong>Better Readability:</strong>
+                Functions make program logic easier to understand.
+            </li>
+
+            <li>
+                <strong>Reduced Repetition:</strong>
+                Repeated code can be placed inside a function.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Disadvantages or Limitations of Functions</h2>
+
+        <ul>
+
+            <li>
+                Excessive use of small functions can make a program
+                difficult to follow.
+            </li>
+
+            <li>
+                Function calls introduce some execution overhead.
+            </li>
+
+            <li>
+                Incorrect parameter handling can produce unexpected results.
+            </li>
+
+            <li>
+                Recursive functions can consume significant stack memory.
+            </li>
+
+            <li>
+                Poorly designed functions can make program structure
+                unnecessarily complicated.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Common Errors in Functions</h2>
+
+        <ul>
+
+            <li>Forgetting to declare a function when required.</li>
+
+            <li>Using an incorrect return type.</li>
+
+            <li>Passing the wrong number of arguments.</li>
+
+            <li>Passing arguments of inappropriate types.</li>
+
+            <li>Forgetting the return statement when a value is required.</li>
+
+            <li>Calling a function with the wrong name.</li>
+
+            <li>Using a local variable outside its scope.</li>
+
+            <li>Forgetting the semicolon in a function prototype.</li>
+
+            <li>Creating recursion without a proper base condition.</li>
+
+        </ul>
+
+        <h3>Incorrect Example</h3>
+
+        <pre><code>int add(int a, int b)
+{
+    printf("%d", a + b);
+}
+
+int main()
+{
+    int result;
+
+    result = add(10, 20);
+
+    return 0;
+}</code></pre>
+
+        <p>
+            The function is declared to return an <code>int</code>, but
+            it does not return an integer value.
+        </p>
+
+        <h3>Correct Example</h3>
+
+        <pre><code>int add(int a, int b)
+{
+    return a + b;
+}</code></pre>
+
+    </section>
+        <section>
+
+        <h2>Best Practices for Functions</h2>
+
+        <ul>
+
+            <li>
+                Give functions meaningful and descriptive names.
+            </li>
+
+            <li>
+                Keep each function focused on one specific task.
+            </li>
+
+            <li>
+                Use function prototypes when necessary.
+            </li>
+
+            <li>
+                Use appropriate parameter and return types.
+            </li>
+
+            <li>
+                Avoid unnecessary global variables.
+            </li>
+
+            <li>
+                Keep functions reasonably small and readable.
+            </li>
+
+            <li>
+                Use comments when the purpose of a function is not obvious.
+            </li>
+
+            <li>
+                Always provide a proper base condition for recursive
+                functions.
+            </li>
+
+            <li>
+                Test each function with different inputs.
+            </li>
+
+        </ul>
+
+        <div class="tip">
+
+            <strong>Programming Tip:</strong>
+
+            A good function should normally have one clear responsibility.
+            This makes the program easier to understand, test and maintain.
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Real-World Applications of Functions</h2>
+
+        <p>
+            Functions are used in almost every large software application.
+            They help programmers divide complex systems into manageable
+            modules.
+        </p>
+
+        <ul>
+
+            <li>Banking applications.</li>
+
+            <li>Student management systems.</li>
+
+            <li>Hospital management systems.</li>
+
+            <li>Online shopping applications.</li>
+
+            <li>Games and graphics programs.</li>
+
+            <li>Operating systems.</li>
+
+            <li>Database applications.</li>
+
+            <li>Scientific and mathematical software.</li>
+
+            <li>Embedded systems.</li>
+
+            <li>Artificial intelligence applications.</li>
+
+        </ul>
+
+    </section>
+
+
+    <section>
+
+        <h2>Function Calling Flow Diagram</h2>
+
+        <div class="diagram">
+
+                 START
+                   |
+                   v
+                main()
+                   |
+                   v
+            Call Function
+                   |
+                   v
+          +----------------+
+          | Function Body  |
+          +----------------+
+                   |
+                   v
+             Perform Task
+                   |
+                   v
+              Return Value
+                   |
+                   v
+             Back to Caller
+                   |
+                   v
+                  END
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Important Exam Questions</h2>
+
+        <ol>
+
+            <li>
+                What is a function in C?
+            </li>
+
+            <li>
+                Why are functions required in C programming?
+            </li>
+
+            <li>
+                Explain the advantages of functions.
+            </li>
+
+            <li>
+                Explain library functions with examples.
+            </li>
+
+            <li>
+                Explain user-defined functions.
+            </li>
+
+            <li>
+                What is a function prototype?
+            </li>
+
+            <li>
+                Explain function declaration, definition and calling.
+            </li>
+
+            <li>
+                What are arguments and parameters?
+            </li>
+
+            <li>
+                Explain the four categories of user-defined functions.
+            </li>
+
+            <li>
+                What is a return value?
+            </li>
+
+            <li>
+                Explain call by value.
+            </li>
+
+            <li>
+                What is recursion?
+            </li>
+
+            <li>
+                Explain recursion with a suitable example.
+            </li>
+
+            <li>
+                Write a C program to find factorial using a function.
+            </li>
+
+            <li>
+                Write a C program to check whether a number is prime
+                using a function.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>Multiple Choice Questions</h2>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    1. What is a function?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>A variable</li>
+
+                <li>A named block of code that performs a task</li>
+
+                <li>A data type</li>
+
+                <li>An operator</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: B. A named block of code that performs a task
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    2. Which function is the usual starting point of
+                    a C program?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>start()</li>
+
+                <li>begin()</li>
+
+                <li>main()</li>
+
+                <li>program()</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: C. main()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    3. Which keyword is used to return a value from
+                    a function?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>send</li>
+
+                <li>return</li>
+
+                <li>back</li>
+
+                <li>value</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: B. return
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    4. Which function does not return a value?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>int</li>
+
+                <li>float</li>
+
+                <li>void</li>
+
+                <li>char</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: C. void
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    5. What is a function prototype?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>A function call</li>
+
+                <li>A function declaration</li>
+
+                <li>A loop</li>
+
+                <li>A variable</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: B. A function declaration
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    6. Which of the following is a library function?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>myFunction()</li>
+
+                <li>calculate()</li>
+
+                <li>printf()</li>
+
+                <li>display()</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: C. printf()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    7. Which header file contains printf()?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>&lt;string.h&gt;</li>
+
+                <li>&lt;stdio.h&gt;</li>
+
+                <li>&lt;math.h&gt;</li>
+
+                <li>&lt;stdlib.h&gt;</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: B. &lt;stdio.h&gt;
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    8. What is recursion?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>A loop only</li>
+
+                <li>A function calling itself</li>
+
+                <li>A variable calling itself</li>
+
+                <li>A header file</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: B. A function calling itself
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    9. What is required to stop recursion?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>Loop</li>
+
+                <li>Pointer</li>
+
+                <li>Base condition</li>
+
+                <li>Array</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: C. Base condition
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    10. In C, ordinary function arguments are passed
+                    by value by default.
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>True</li>
+
+                <li>False</li>
+
+                <li>Sometimes only</li>
+
+                <li>None</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: A. True
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    11. Which part specifies the type of value returned
+                    by a function?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>Function name</li>
+
+                <li>Parameter</li>
+
+                <li>Return type</li>
+
+                <li>Argument</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: C. Return type
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    12. Which is an example of a user-defined function?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>printf()</li>
+
+                <li>scanf()</li>
+
+                <li>strlen()</li>
+
+                <li>calculate()</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: D. calculate()
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    13. What are actual values passed during a function
+                    call called?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>Parameters</li>
+
+                <li>Arguments</li>
+
+                <li>Returns</li>
+
+                <li>Declarations</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: B. Arguments
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    14. What are variables declared in a function
+                    definition called?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>Arguments</li>
+
+                <li>Parameters</li>
+
+                <li>Constants</li>
+
+                <li>Operators</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: B. Parameters
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    15. Which function category accepts arguments and
+                    returns a value?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>No arguments, no return value</li>
+
+                <li>Arguments, no return value</li>
+
+                <li>No arguments, return value</li>
+
+                <li>Arguments, return value</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: D. Arguments, return value
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    16. Which header file is commonly used for
+                    sqrt()?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>&lt;stdio.h&gt;</li>
+
+                <li>&lt;string.h&gt;</li>
+
+                <li>&lt;math.h&gt;</li>
+
+                <li>&lt;ctype.h&gt;</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: C. &lt;math.h&gt;
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    17. What happens when a function is called?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>The function body is executed</li>
+
+                <li>The program always terminates</li>
+
+                <li>The compiler stops</li>
+
+                <li>The variable is deleted</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: A. The function body is executed
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    18. Which of the following improves code
+                    reusability?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>Functions</li>
+
+                <li>Comments only</li>
+
+                <li>Constants only</li>
+
+                <li>Operators only</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: A. Functions
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    19. A variable declared inside a function is
+                    generally:
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>Global</li>
+
+                <li>Local</li>
+
+                <li>External</li>
+
+                <li>Constant</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: B. Local
+            </p>
+
+        </div>
+
+
+        <div class="mcq">
+
+            <p>
+                <strong>
+                    20. Which is an important advantage of functions?
+                </strong>
+            </p>
+
+            <ol type="A">
+
+                <li>Code reuse</li>
+
+                <li>More repetition</li>
+
+                <li>More errors</li>
+
+                <li>Less organization</li>
+
+            </ol>
+
+            <p class="answer">
+                Answer: A. Code reuse
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Interview Questions</h2>
+
+        <ol>
+
+            <li>
+                What is a function in C?
+            </li>
+
+            <li>
+                Why do we use functions?
+            </li>
+
+            <li>
+                What is a function prototype?
+            </li>
+
+            <li>
+                What is the difference between declaration and definition?
+            </li>
+
+            <li>
+                What are parameters and arguments?
+            </li>
+
+            <li>
+                What is a return value?
+            </li>
+
+            <li>
+                What is a void function?
+            </li>
+
+            <li>
+                What are library functions?
+            </li>
+
+            <li>
+                What are user-defined functions?
+            </li>
+
+            <li>
+                What is call by value?
+            </li>
+
+            <li>
+                What is recursion?
+            </li>
+
+            <li>
+                Why is a base condition required in recursion?
+            </li>
+
+            <li>
+                What is a local variable?
+            </li>
+
+            <li>
+                Can a function be called multiple times?
+            </li>
+
+            <li>
+                What are the four common categories of user-defined
+                functions?
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>Practice Programs</h2>
+
+        <ol>
+
+            <li>
+                Write a function to add two numbers.
+            </li>
+
+            <li>
+                Write a function to subtract two numbers.
+            </li>
+
+            <li>
+                Write a function to multiply two numbers.
+            </li>
+
+            <li>
+                Write a function to find the largest of two numbers.
+            </li>
+
+            <li>
+                Write a function to find the largest of three numbers.
+            </li>
+
+            <li>
+                Write a function to check whether a number is even or odd.
+            </li>
+
+            <li>
+                Write a function to check whether a number is prime.
+            </li>
+
+            <li>
+                Write a function to calculate factorial.
+            </li>
+
+            <li>
+                Write a function to generate Fibonacci series.
+            </li>
+
+            <li>
+                Write a recursive function to calculate factorial.
+            </li>
+
+            <li>
+                Write a function to reverse a number.
+            </li>
+
+            <li>
+                Write a function to check palindrome.
+            </li>
+
+            <li>
+                Write a function to find the sum of digits.
+            </li>
+
+            <li>
+                Write a function to calculate the square of a number.
+            </li>
+
+            <li>
+                Write a function to calculate the power of a number.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <section>
+
+        <h2>Chapter Summary</h2>
+
+        <p>
+            Functions are one of the most important concepts in C
+            programming. They allow a large program to be divided into
+            smaller and reusable blocks.
+        </p>
+
+        <ul>
+
+            <li>
+                A function performs a specific task.
+            </li>
+
+            <li>
+                Functions improve code organization and reusability.
+            </li>
+
+            <li>
+                C provides library functions and allows programmers
+                to create user-defined functions.
+            </li>
+
+            <li>
+                A function may have parameters and may return a value.
+            </li>
+
+            <li>
+                A function prototype declares a function before its use
+                when necessary.
+            </li>
+
+            <li>
+                Function arguments are passed by value by default in C.
+            </li>
+
+            <li>
+                Recursion occurs when a function calls itself.
+            </li>
+
+            <li>
+                Recursive functions require a proper base condition.
+            </li>
+
+            <li>
+                Local variables are generally accessible only within
+                their scope.
+            </li>
+
+        </ul>
+
+        <div class="tip">
+
+            <strong>Key Point:</strong>
+
+            Functions make programs modular, reusable, readable and
+            easier to test and maintain.
+
+        </div>
+
+    </section>
+
+
+    <div class="navigation">
+
+        <a href="08-loops.html" class="button">
+            ← Previous: Loops
+        </a>
+
+        <a href="10-arrays.html" class="button">
+            Next: Arrays →
+        </a>
+
+    </div>
+
+
+</main>
+
+
+<footer>
+
+    <h3>ALLIED</h3>
+
+    <p>
+        C Programming Learning Course
+    </p>
+
+    <p>
+        © 2026 ALLIED. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
