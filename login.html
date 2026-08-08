@@ -1,59 +1,297 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login</title>
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
 <header>
-<h1>E-Book Management System</h1>
+
+    <h1>E-Book Management System</h1>
+
 </header>
 
+
 <section class="hero">
-<h2>Login</h2>
 
-<input type="email" id="username" placeholder="Enter Email"><br><br>
+    <h2>Login</h2>
 
-<input type="password" id="password" placeholder="Enter Password"><br><br>
 
-<button onclick="login()">Login</button>
+    <input
+        type="email"
+        id="username"
+        placeholder="Enter Email"
+    >
 
-<p><br>Don't have an account?
-<a href="register.html">Register</a></p>
+    <br><br>
+
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Enter Password"
+    >
+
+    <br><br>
+
+
+    <button id="loginButton">
+        Login
+    </button>
+
+
+    <p id="message"></p>
+
+
+    <p>
+
+        <br>
+
+        Don't have an account?
+
+        <a href="register.html">
+            Register
+        </a>
+
+    </p>
 
 </section>
 
-<script type="module" src="firebase.js"></script>
-<script type="module" src="firebase.js?v=2"></script>
-<footer><br>
-If any problem in login 
-contact me:
-<br>
- <form action="https://formsubmit.co/YOUR_EMAIL@gmail.com" method="POST">
 
-<input type="text" name="Name" placeholder="Name" required>
+<script type="module">
 
-<input type="email" name="Email" placeholder="Email" required>
+    import {
+        auth,
+        signInWithEmailAndPassword,
+        sendEmailVerification,
+        signOut
+    } from "./firebase.js";
 
-<textarea name="Message" placeholder="Message"></textarea>
-<button type="button" onclick="sendData()">Submit</button>
-<script>
-function sendData() {
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("message").value;
 
-    submitForm(name, email, message);
-}
+    const loginButton =
+        document.getElementById("loginButton");
+
+    const message =
+        document.getElementById("message");
+
+
+    loginButton.addEventListener("click", async () => {
+
+        const email =
+            document.getElementById("username").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+
+        if (email === "") {
+
+            message.textContent =
+                "Please enter your email.";
+
+            return;
+
+        }
+
+
+        if (password === "") {
+
+            message.textContent =
+                "Please enter your password.";
+
+            return;
+
+        }
+
+
+        try {
+
+            message.textContent =
+                "Logging in...";
+
+
+            const userCredential =
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            const user =
+                userCredential.user;
+
+
+            /*
+             * Refresh the user's information
+             * so emailVerified is up to date.
+             */
+
+            await user.reload();
+
+
+            if (!auth.currentUser.emailVerified) {
+
+                await sendEmailVerification(
+                    auth.currentUser
+                );
+
+                await signOut(auth);
+
+
+                message.textContent =
+                    "Your email is not verified. " +
+                    "A new verification email has been sent. " +
+                    "Please verify your email and try again.";
+
+                return;
+
+            }
+
+
+            /*
+             * Email is verified.
+             * Allow access to home page.
+             */
+
+            message.textContent =
+                "Login successful!";
+
+
+            window.location.href =
+                "home.html";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            if (
+                error.code ===
+                "auth/invalid-credential"
+            ) {
+
+                message.textContent =
+                    "Incorrect email or password.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/user-not-found"
+            ) {
+
+                message.textContent =
+                    "No account found with this email.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/wrong-password"
+            ) {
+
+                message.textContent =
+                    "Incorrect password.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/invalid-email"
+            ) {
+
+                message.textContent =
+                    "Please enter a valid email.";
+
+            }
+
+            else {
+
+                message.textContent =
+                    "Login failed: " +
+                    error.message;
+
+            }
+
+        }
+
+    });
+
 </script>
 
-</form>
-</br>
-Thankyou for visiting my website🙏
+
+<footer>
+
+    <br>
+
+    If any problem in login
+
+    <br>
+
+    contact me:
+
+    <br><br>
+
+
+    <form
+        action="https://formsubmit.co/YOUR_EMAIL@gmail.com"
+        method="POST"
+    >
+
+        <input
+            type="text"
+            name="Name"
+            placeholder="Name"
+            required
+        >
+
+        <br><br>
+
+
+        <input
+            type="email"
+            name="Email"
+            placeholder="Email"
+            required
+        >
+
+        <br><br>
+
+
+        <textarea
+            name="Message"
+            placeholder="Message"
+        ></textarea>
+
+        <br><br>
+
+
+        <button type="submit">
+            Submit
+        </button>
+
+    </form>
+
+
+    <br>
+
+    Thankyou for visiting my website 🙏
+
 </footer>
+
+
 </body>
+
 </html>
