@@ -92,6 +92,7 @@
             Home
         </a>
 
+
         <!-- LOGIN -->
 
         <a href="login.html"
@@ -327,10 +328,7 @@
     <br>
 
 
-
-    <!-- =========================
-         C PROGRAMMING
-    ========================== -->
+    <!-- C PROGRAMMING -->
 
     <button
         type="button"
@@ -344,10 +342,7 @@
     <br><br>
 
 
-
-    <!-- =========================
-         JAVA PROGRAMMING
-    ========================== -->
+    <!-- JAVA PROGRAMMING -->
 
     <button
         type="button"
@@ -361,10 +356,7 @@
     <br><br>
 
 
-
-    <!-- =========================
-         PYTHON PROGRAMMING
-    ========================== -->
+    <!-- PYTHON PROGRAMMING -->
 
     <button
         type="button"
@@ -378,10 +370,7 @@
     <br><br>
 
 
-
-    <!-- =========================
-         DATA STRUCTURES
-    ========================== -->
+    <!-- DATA STRUCTURES -->
 
     <button
         type="button"
@@ -540,13 +529,11 @@
     } from "./firebase.js";
 
 
-
     /* =========================
        CURRENT USER
     ========================== */
 
     let currentUser = null;
-
 
 
     /* =========================
@@ -569,122 +556,120 @@
         document.getElementById("logoutLink");
 
 
+    /* =========================
+       SHOW LOGGED OUT STATE
+    ========================== */
 
-    /* ==================================================
-       CHECK FIREBASE LOGIN STATUS
-    =================================================== */
+    function showLoggedOut() {
 
-    onAuthStateChanged(auth, (user) => {
+        loginLink.style.display =
+            "inline-block";
 
-        currentUser = user;
+        registerLink.style.display =
+            "inline-block";
+
+        logoutLink.style.display =
+            "none";
+
+        loginStatus.textContent =
+            "Please login to access the books. 🔐";
+
+    }
 
 
+    /* =========================
+       SHOW LOGGED IN STATE
+    ========================== */
 
-        /* ==========================================
-           USER LOGGED IN + EMAIL VERIFIED
-        =========================================== */
+    function showLoggedIn(user) {
 
-        if (user && user.emailVerified) {
+        loginLink.style.display =
+            "none";
 
+        registerLink.style.display =
+            "none";
+
+        logoutLink.style.display =
+            "inline-block";
+
+
+        if (user.emailVerified) {
 
             loginStatus.textContent =
                 "You are logged in and your email is verified. You can open the books. ✅";
 
-
-
-            /* Hide Login */
-
-            loginLink.style.display =
-                "none";
-
-
-
-            /* Hide Register */
-
-            registerLink.style.display =
-                "none";
-
-
-
-            /* Show Logout */
-
-            logoutLink.style.display =
-                "inline-block";
-
-        }
-
-
-
-        /* ==========================================
-           USER LOGGED IN BUT EMAIL NOT VERIFIED
-        =========================================== */
-
-        else if (user && !user.emailVerified) {
-
+        } else {
 
             loginStatus.textContent =
                 "Please verify your email before opening the books. 📧";
 
+        }
+
+    }
 
 
-            /* Show Login */
+    /* ==================================================
+       FIREBASE AUTH STATE
+    =================================================== */
 
-            loginLink.style.display =
-                "inline-block";
+    onAuthStateChanged(auth, async (user) => {
 
-
-
-            /* Show Register */
-
-            registerLink.style.display =
-                "inline-block";
+        currentUser = user;
 
 
+        /* =========================
+           NO USER
+        ========================== */
 
-            /* Hide Logout */
+        if (!user) {
 
-            logoutLink.style.display =
-                "none";
+            showLoggedOut();
+
+            return;
 
         }
 
 
+        /* =========================
+           REFRESH USER INFORMATION
+        ========================== */
 
-        /* ==========================================
-           USER NOT LOGGED IN
-        =========================================== */
+        try {
+
+            await user.reload();
+
+            currentUser =
+                auth.currentUser;
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "User reload error:",
+                error
+            );
+
+        }
+
+
+        /* =========================
+           CHECK USER
+        ========================== */
+
+        if (currentUser) {
+
+            showLoggedIn(currentUser);
+
+        }
 
         else {
 
-
-            loginStatus.textContent =
-                "Please login to access the books. 🔐";
-
-
-
-            /* Show Login */
-
-            loginLink.style.display =
-                "inline-block";
-
-
-
-            /* Show Register */
-
-            registerLink.style.display =
-                "inline-block";
-
-
-
-            /* Hide Logout */
-
-            logoutLink.style.display =
-                "none";
+            showLoggedOut();
 
         }
 
     });
-
 
 
     /* ==================================================
@@ -700,32 +685,39 @@
 
             try {
 
-
-                /* Sign out from Firebase */
-
                 await signOut(auth);
 
 
+                /* Clear current user */
 
-                /* Remove remembered book */
+                currentUser = null;
+
+
+                /* Remove requested book */
 
                 sessionStorage.removeItem(
                     "requestedBook"
                 );
 
 
+                /* Show logged out navigation */
 
-                /* Go to login page */
+                showLoggedOut();
+
+
+                /* Go to Home */
 
                 window.location.href =
-                    "login.html";
-
+                    "home.html";
 
             }
 
             catch (error) {
 
-                console.error(error);
+                console.error(
+                    "Logout error:",
+                    error
+                );
 
 
                 alert(
@@ -738,7 +730,6 @@
     );
 
 
-
     /* ==================================================
        OPEN BOOK
     =================================================== */
@@ -746,23 +737,17 @@
     window.openBook = function(bookPage) {
 
 
-        /* ==========================================
-           USER NOT LOGGED IN
-        =========================================== */
+        /* =========================
+           NOT LOGGED IN
+        ========================== */
 
         if (!currentUser) {
-
-
-            /* Remember selected book */
 
             sessionStorage.setItem(
                 "requestedBook",
                 bookPage
             );
 
-
-
-            /* Send to login */
 
             window.location.href =
                 "login.html";
@@ -773,21 +758,16 @@
         }
 
 
-
-        /* ==========================================
-           USER EMAIL NOT VERIFIED
-        =========================================== */
+        /* =========================
+           EMAIL NOT VERIFIED
+        ========================== */
 
         if (!currentUser.emailVerified) {
-
-
-            /* Remember selected book */
 
             sessionStorage.setItem(
                 "requestedBook",
                 bookPage
             );
-
 
 
             alert(
@@ -795,9 +775,6 @@
             );
 
 
-
-            /* Send to login */
-
             window.location.href =
                 "login.html";
 
@@ -807,16 +784,14 @@
         }
 
 
-
-        /* ==========================================
-           USER VERIFIED
-        =========================================== */
+        /* =========================
+           VERIFIED USER
+        ========================== */
 
         window.location.href =
             bookPage;
 
     };
-
 
 
     /* ==================================================
@@ -844,8 +819,9 @@
             ).value.trim();
 
 
-
-        /* Check username */
+        /* =========================
+           USERNAME CHECK
+        ========================== */
 
         if (!username) {
 
@@ -858,8 +834,9 @@
         }
 
 
-
-        /* Check email */
+        /* =========================
+           EMAIL CHECK
+        ========================== */
 
         if (!email) {
 
@@ -872,8 +849,9 @@
         }
 
 
-
-        /* Check phone */
+        /* =========================
+           PHONE CHECK
+        ========================== */
 
         if (!phone) {
 
@@ -886,8 +864,9 @@
         }
 
 
-
-        /* Success */
+        /* =========================
+           SUCCESS
+        ========================== */
 
         alert(
             "Thank you! Your information has been submitted successfully."
