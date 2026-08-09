@@ -22,6 +22,10 @@
 <body>
 
 
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
 
     <h1>
@@ -32,12 +36,18 @@
 
 
 
+<!-- =========================
+     LOGIN SECTION
+========================= -->
+
 <section class="hero">
 
     <h2>
         🔐 Login
     </h2>
 
+
+    <!-- EMAIL -->
 
     <input
         type="email"
@@ -46,8 +56,11 @@
         autocomplete="email"
     >
 
+
     <br><br>
 
+
+    <!-- PASSWORD -->
 
     <input
         type="password"
@@ -56,8 +69,11 @@
         autocomplete="current-password"
     >
 
+
     <br><br>
 
+
+    <!-- LOGIN BUTTON -->
 
     <button
         type="button"
@@ -68,8 +84,12 @@
     </button>
 
 
+    <!-- MESSAGE -->
+
     <p id="message"></p>
 
+
+    <!-- REGISTER -->
 
     <p>
 
@@ -99,25 +119,46 @@ import {
 } from "./firebase.js";
 
 
+
+/* =========================
+   GET HTML ELEMENTS
+========================= */
+
 const loginButton =
-    document.getElementById("loginButton");
+    document.getElementById(
+        "loginButton"
+    );
 
 
 const message =
-    document.getElementById("message");
+    document.getElementById(
+        "message"
+    );
 
 
+
+/* =========================
+   LOGIN BUTTON
+========================= */
 
 loginButton.addEventListener(
     "click",
     async () => {
 
 
+        /* =========================
+           GET EMAIL
+        ========================== */
+
         const email =
             document.getElementById(
                 "username"
             ).value.trim();
 
+
+        /* =========================
+           GET PASSWORD
+        ========================== */
 
         const password =
             document.getElementById(
@@ -127,9 +168,8 @@ loginButton.addEventListener(
 
 
         /* =========================
-           VALIDATION
+           VALIDATE EMAIL
         ========================== */
-
 
         if (email === "") {
 
@@ -140,6 +180,11 @@ loginButton.addEventListener(
 
         }
 
+
+
+        /* =========================
+           VALIDATE PASSWORD
+        ========================== */
 
         if (password === "") {
 
@@ -153,14 +198,23 @@ loginButton.addEventListener(
 
 
         /* =========================
-           LOGIN
+           START LOGIN
         ========================== */
 
         try {
 
+
             message.textContent =
                 "Logging in...";
 
+
+            loginButton.disabled = true;
+
+
+
+            /* =========================
+               FIREBASE LOGIN
+            ========================== */
 
             const userCredential =
                 await signInWithEmailAndPassword(
@@ -184,24 +238,41 @@ loginButton.addEventListener(
 
 
             /* =========================
-               EMAIL VERIFICATION
+               CHECK EMAIL VERIFICATION
             ========================== */
 
-            if (!auth.currentUser.emailVerified) {
+            if (
+                !auth.currentUser.emailVerified
+            ) {
 
+
+                /*
+                 * Send verification email
+                 */
 
                 await sendEmailVerification(
                     auth.currentUser
                 );
 
 
+                /*
+                 * Sign the user out
+                 */
+
                 await signOut(auth);
 
+
+                /*
+                 * Show message
+                 */
 
                 message.textContent =
                     "Your email is not verified. " +
                     "A new verification email has been sent. " +
-                    "Please verify your email and try again.";
+                    "Please verify your email and login again.";
+
+
+                loginButton.disabled = false;
 
 
                 return;
@@ -215,14 +286,13 @@ loginButton.addEventListener(
             ========================== */
 
             message.textContent =
-                "Login successful!";
+                "Login successful! ✅";
 
 
-            /*
-             * Check whether the user
-             * selected a book before
-             * coming to the login page.
-             */
+
+            /* =========================
+               CHECK REQUESTED BOOK
+            ========================== */
 
             const requestedBook =
                 sessionStorage.getItem(
@@ -232,15 +302,15 @@ loginButton.addEventListener(
 
 
             /* =========================
-               OPEN SELECTED BOOK
+               BOOK WAS SELECTED
             ========================== */
 
             if (requestedBook) {
 
 
                 /*
-                 * Remove it so it isn't
-                 * opened again later.
+                 * Remove saved book
+                 * so it won't open again
                  */
 
                 sessionStorage.removeItem(
@@ -249,25 +319,46 @@ loginButton.addEventListener(
 
 
                 /*
-                 * Open the selected book.
+                 * Small delay so
+                 * login success can show
                  */
 
-                window.location.href =
-                    requestedBook;
+                setTimeout(
+                    () => {
+
+                        window.location.href =
+                            requestedBook;
+
+                    },
+                    300
+                );
 
 
             }
+
+
+
+            /* =========================
+               NO BOOK WAS SELECTED
+            ========================== */
 
             else {
 
 
                 /*
-                 * User logged in normally.
-                 * Go to home page.
+                 * Normal login
+                 * → Home page
                  */
 
-                window.location.href =
-                    "home.html";
+                setTimeout(
+                    () => {
+
+                        window.location.href =
+                            "home.html";
+
+                    },
+                    300
+                );
 
             }
 
@@ -275,14 +366,24 @@ loginButton.addEventListener(
         }
 
 
+
         /* =========================
-           LOGIN ERRORS
+           LOGIN ERROR
         ========================== */
 
         catch (error) {
 
+
             console.error(error);
 
+
+            loginButton.disabled = false;
+
+
+
+            /* =========================
+               INVALID CREDENTIAL
+            ========================== */
 
             if (
                 error.code ===
@@ -295,6 +396,11 @@ loginButton.addEventListener(
             }
 
 
+
+            /* =========================
+               USER NOT FOUND
+            ========================== */
+
             else if (
                 error.code ===
                 "auth/user-not-found"
@@ -305,6 +411,11 @@ loginButton.addEventListener(
 
             }
 
+
+
+            /* =========================
+               WRONG PASSWORD
+            ========================== */
 
             else if (
                 error.code ===
@@ -317,6 +428,11 @@ loginButton.addEventListener(
             }
 
 
+
+            /* =========================
+               INVALID EMAIL
+            ========================== */
+
             else if (
                 error.code ===
                 "auth/invalid-email"
@@ -327,6 +443,27 @@ loginButton.addEventListener(
 
             }
 
+
+
+            /* =========================
+               TOO MANY REQUESTS
+            ========================== */
+
+            else if (
+                error.code ===
+                "auth/too-many-requests"
+            ) {
+
+                message.textContent =
+                    "Too many login attempts. Please try again later.";
+
+            }
+
+
+
+            /* =========================
+               OTHER ERROR
+            ========================== */
 
             else {
 
@@ -354,10 +491,12 @@ loginButton.addEventListener(
 
     <br>
 
+
     <p>
         If you have any problem with login,
         please contact the website administrator.
     </p>
+
 
     <p>
         Thank you for visiting the
