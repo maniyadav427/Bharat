@@ -1,36 +1,49 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>Login</title>
+    <title>Login - ALLIED E-Book Management System</title>
 
-    <link rel="stylesheet" href="style.css">
+    <meta name="description"
+          content="Login to access the ALLIED E-Book Management System.">
+
+    <link rel="stylesheet"
+          href="style.css">
 
 </head>
 
+
 <body>
+
 
 <header>
 
-    <h1>E-Book Management System</h1>
+    <h1>
+        ALLIED E-Book Management System
+    </h1>
 
 </header>
 
 
+
 <section class="hero">
 
-    <h2>Login</h2>
+    <h2>
+        🔐 Login
+    </h2>
 
 
     <input
         type="email"
         id="username"
         placeholder="Enter Email"
+        autocomplete="email"
     >
 
     <br><br>
@@ -40,13 +53,18 @@
         type="password"
         id="password"
         placeholder="Enter Password"
+        autocomplete="current-password"
     >
 
     <br><br>
 
 
-    <button id="loginButton">
+    <button
+        type="button"
+        id="loginButton">
+
         Login
+
     </button>
 
 
@@ -54,8 +72,6 @@
 
 
     <p>
-
-        <br>
 
         Don't have an account?
 
@@ -68,30 +84,51 @@
 </section>
 
 
+
+<!-- =========================
+     FIREBASE LOGIN
+========================= -->
+
 <script type="module">
 
-    import {
-        auth,
-        signInWithEmailAndPassword,
-        sendEmailVerification,
-        signOut
-    } from "./firebase.js";
+import {
+    auth,
+    signInWithEmailAndPassword,
+    sendEmailVerification,
+    signOut
+} from "./firebase.js";
 
 
-    const loginButton =
-        document.getElementById("loginButton");
-
-    const message =
-        document.getElementById("message");
+const loginButton =
+    document.getElementById("loginButton");
 
 
-    loginButton.addEventListener("click", async () => {
+const message =
+    document.getElementById("message");
+
+
+
+loginButton.addEventListener(
+    "click",
+    async () => {
+
 
         const email =
-            document.getElementById("username").value.trim();
+            document.getElementById(
+                "username"
+            ).value.trim();
+
 
         const password =
-            document.getElementById("password").value;
+            document.getElementById(
+                "password"
+            ).value;
+
+
+
+        /* =========================
+           VALIDATION
+        ========================== */
 
 
         if (email === "") {
@@ -114,6 +151,11 @@
         }
 
 
+
+        /* =========================
+           LOGIN
+        ========================== */
+
         try {
 
             message.textContent =
@@ -132,19 +174,26 @@
                 userCredential.user;
 
 
-            /*
-             * Refresh the user's information
-             * so emailVerified is up to date.
-             */
+
+            /* =========================
+               REFRESH USER
+            ========================== */
 
             await user.reload();
 
 
+
+            /* =========================
+               EMAIL VERIFICATION
+            ========================== */
+
             if (!auth.currentUser.emailVerified) {
+
 
                 await sendEmailVerification(
                     auth.currentUser
                 );
+
 
                 await signOut(auth);
 
@@ -154,25 +203,83 @@
                     "A new verification email has been sent. " +
                     "Please verify your email and try again.";
 
+
                 return;
 
             }
 
 
-            /*
-             * Email is verified.
-             * Allow access to home page.
-             */
+
+            /* =========================
+               LOGIN SUCCESS
+            ========================== */
 
             message.textContent =
                 "Login successful!";
 
 
-            window.location.href =
-                "home.html";
+            /*
+             * Check whether the user
+             * selected a book before
+             * coming to the login page.
+             */
+
+            const requestedBook =
+                sessionStorage.getItem(
+                    "requestedBook"
+                );
 
 
-        } catch (error) {
+
+            /* =========================
+               OPEN SELECTED BOOK
+            ========================== */
+
+            if (requestedBook) {
+
+
+                /*
+                 * Remove it so it isn't
+                 * opened again later.
+                 */
+
+                sessionStorage.removeItem(
+                    "requestedBook"
+                );
+
+
+                /*
+                 * Open the selected book.
+                 */
+
+                window.location.href =
+                    requestedBook;
+
+
+            }
+
+            else {
+
+
+                /*
+                 * User logged in normally.
+                 * Go to home page.
+                 */
+
+                window.location.href =
+                    "home.html";
+
+            }
+
+
+        }
+
+
+        /* =========================
+           LOGIN ERRORS
+        ========================== */
+
+        catch (error) {
 
             console.error(error);
 
@@ -187,6 +294,7 @@
 
             }
 
+
             else if (
                 error.code ===
                 "auth/user-not-found"
@@ -196,6 +304,7 @@
                     "No account found with this email.";
 
             }
+
 
             else if (
                 error.code ===
@@ -207,6 +316,7 @@
 
             }
 
+
             else if (
                 error.code ===
                 "auth/invalid-email"
@@ -216,6 +326,7 @@
                     "Please enter a valid email.";
 
             }
+
 
             else {
 
@@ -227,26 +338,31 @@
 
         }
 
-    });
+    }
+
+);
 
 </script>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
     <br>
 
-    If any problem in login
+    <p>
+        If you have any problem with login,
+        please contact the website administrator.
+    </p>
 
-    <br>
-
-
-    contact me:
-
- 
-
-    <br>
-
-    Thankyou for visiting my website 🙏
+    <p>
+        Thank you for visiting the
+        ALLIED E-Book Management System. 🙏
+    </p>
 
 </footer>
 
