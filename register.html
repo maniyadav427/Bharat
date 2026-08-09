@@ -1,210 +1,506 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>Register</title>
+    <title>Register - ALLIED E-Book Management System</title>
 
-    <link rel="stylesheet" href="style.css">
+    <meta name="description"
+          content="Create an account for the ALLIED E-Book Management System.">
+
+    <link rel="stylesheet"
+          href="style.css">
 
 </head>
 
+
 <body>
 
+
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
-    <h1>E-Book Management System</h1>
+
+    <h1>
+        ALLIED E-Book Management System
+    </h1>
+
 </header>
 
 
+
+<!-- =========================
+     REGISTER SECTION
+========================= -->
+
 <section class="hero">
 
-    <h2>Create Account</h2>
+    <h2>
+        📝 Create Account
+    </h2>
+
+
+    <!-- USERNAME -->
 
     <input
         type="text"
         id="newUsername"
         placeholder="Enter Username"
+        autocomplete="name"
     >
 
+
     <br><br>
+
+
+    <!-- EMAIL -->
 
     <input
         type="email"
         id="newEmail"
         placeholder="Enter Email"
+        autocomplete="email"
     >
 
+
     <br><br>
+
+
+    <!-- PASSWORD -->
 
     <input
         type="password"
         id="newPassword"
         placeholder="Enter Password"
+        autocomplete="new-password"
     >
+
 
     <br><br>
 
-    <button id="registerButton">
+
+    <!-- REGISTER BUTTON -->
+
+    <button
+        type="button"
+        id="registerButton">
+
         Register
+
     </button>
+
+
+    <!-- MESSAGE -->
 
     <p id="message"></p>
 
+
+    <!-- LOGIN -->
+
     <p>
-        <br>
+
         Already have an account?
-        <a href="login.html">Login</a>
+
+        <a href="login.html">
+            Login
+        </a>
+
     </p>
 
 </section>
 
 
+
+<!-- =========================
+     FIREBASE REGISTRATION
+========================= -->
+
 <script type="module">
 
     import {
         auth,
+        db,
+        doc,
+        setDoc,
         createUserWithEmailAndPassword,
         sendEmailVerification,
         signOut
     } from "./firebase.js";
 
 
+
+    /* =========================
+       GET ELEMENTS
+    ========================== */
+
     const registerButton =
-        document.getElementById("registerButton");
+        document.getElementById(
+            "registerButton"
+        );
+
 
     const message =
-        document.getElementById("message");
+        document.getElementById(
+            "message"
+        );
 
 
-    registerButton.addEventListener("click", async () => {
 
-        const username =
-            document.getElementById("newUsername").value.trim();
+    /* =========================
+       REGISTER BUTTON
+    ========================== */
 
-        const email =
-            document.getElementById("newEmail").value.trim();
-
-        const password =
-            document.getElementById("newPassword").value;
+    registerButton.addEventListener(
+        "click",
+        async () => {
 
 
-        // Check username
-        if (username === "") {
+            /* =========================
+               GET USERNAME
+            ========================== */
 
-            message.textContent =
-                "Please enter your username.";
-
-            return;
-        }
-
-
-        // Check email
-        if (email === "") {
-
-            message.textContent =
-                "Please enter your email.";
-
-            return;
-        }
+            const username =
+                document.getElementById(
+                    "newUsername"
+                ).value.trim();
 
 
-        // Check password
-        if (password.length < 6) {
 
-            message.textContent =
-                "Password must be at least 6 characters.";
+            /* =========================
+               GET EMAIL
+            ========================== */
 
-            return;
-        }
-
-
-        try {
-
-            message.textContent =
-                "Creating your account...";
+            const email =
+                document.getElementById(
+                    "newEmail"
+                ).value.trim();
 
 
-            // Create Firebase account
-            const userCredential =
-                await createUserWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
+
+            /* =========================
+               GET PASSWORD
+            ========================== */
+
+            const password =
+                document.getElementById(
+                    "newPassword"
+                ).value;
+
+
+
+            /* =========================
+               USERNAME VALIDATION
+            ========================== */
+
+            if (username === "") {
+
+                message.textContent =
+                    "Please enter your username.";
+
+                return;
+
+            }
+
+
+
+            /* =========================
+               EMAIL VALIDATION
+            ========================== */
+
+            if (email === "") {
+
+                message.textContent =
+                    "Please enter your email.";
+
+                return;
+
+            }
+
+
+
+            /* =========================
+               PASSWORD VALIDATION
+            ========================== */
+
+            if (password === "") {
+
+                message.textContent =
+                    "Please enter a password.";
+
+                return;
+
+            }
+
+
+            if (password.length < 6) {
+
+                message.textContent =
+                    "Password must be at least 6 characters.";
+
+                return;
+
+            }
+
+
+
+            /* =========================
+               START REGISTRATION
+            ========================== */
+
+            try {
+
+
+                message.textContent =
+                    "Creating your account...";
+
+
+                registerButton.disabled = true;
+
+
+
+                /* =========================
+                   CREATE FIREBASE ACCOUNT
+                ========================== */
+
+                const userCredential =
+                    await createUserWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+
+
+                const user =
+                    userCredential.user;
+
+
+
+                /* =========================
+                   SAVE USER TO FIRESTORE
+                ========================== */
+
+                await setDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    ),
+                    {
+
+                        name: username,
+
+                        email: email,
+
+                        emailVerified:
+                            user.emailVerified,
+
+                        createdAt:
+                            new Date()
+
+                    }
                 );
 
 
-            const user =
-                userCredential.user;
+
+                /* =========================
+                   SEND VERIFICATION EMAIL
+                ========================== */
+
+                await sendEmailVerification(
+                    user
+                );
 
 
-            // Send verification email
-            await sendEmailVerification(user);
+
+                /* =========================
+                   SIGN OUT
+                ========================== */
+
+                await signOut(auth);
 
 
-            // Sign out until email is verified
-            await signOut(auth);
 
-
-            message.textContent =
-                "Registration successful! " +
-                "Verification email sent to " +
-                email +
-                ". Please verify your email before logging in.";
-
-
-            // Clear form
-            document.getElementById("newUsername").value = "";
-            document.getElementById("newEmail").value = "";
-            document.getElementById("newPassword").value = "";
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            if (error.code === "auth/email-already-in-use") {
+                /* =========================
+                   SUCCESS MESSAGE
+                ========================== */
 
                 message.textContent =
-                    "This email is already registered.";
+                    "Registration successful! " +
+                    "A verification email has been sent to " +
+                    email +
+                    ". Please verify your email before logging in.";
 
-            } else if (error.code === "auth/invalid-email") {
 
-                message.textContent =
-                    "Please enter a valid email address.";
 
-            } else if (error.code === "auth/weak-password") {
+                /* =========================
+                   CLEAR FORM
+                ========================== */
 
-                message.textContent =
-                    "Password is too weak.";
+                document.getElementById(
+                    "newUsername"
+                ).value = "";
 
-            } else if (error.code === "auth/operation-not-allowed") {
 
-                message.textContent =
-                    "Email/Password authentication is not enabled.";
+                document.getElementById(
+                    "newEmail"
+                ).value = "";
 
-            } else {
 
-                message.textContent =
-                    "Registration failed: " +
-                    error.message;
+                document.getElementById(
+                    "newPassword"
+                ).value = "";
+
+
+
+                registerButton.disabled =
+                    false;
+
+
+
+                /* =========================
+                   GO TO LOGIN
+                ========================== */
+
+                setTimeout(
+                    () => {
+
+                        window.location.href =
+                            "login.html";
+
+                    },
+                    3000
+                );
+
+
+            }
+
+
+
+            /* =========================
+               REGISTRATION ERROR
+            ========================== */
+
+            catch (error) {
+
+                console.error(error);
+
+
+                registerButton.disabled =
+                    false;
+
+
+
+                /* =========================
+                   EMAIL ALREADY EXISTS
+                ========================== */
+
+                if (
+                    error.code ===
+                    "auth/email-already-in-use"
+                ) {
+
+                    message.textContent =
+                        "This email is already registered.";
+
+                }
+
+
+
+                /* =========================
+                   INVALID EMAIL
+                ========================== */
+
+                else if (
+                    error.code ===
+                    "auth/invalid-email"
+                ) {
+
+                    message.textContent =
+                        "Please enter a valid email address.";
+
+                }
+
+
+
+                /* =========================
+                   WEAK PASSWORD
+                ========================== */
+
+                else if (
+                    error.code ===
+                    "auth/weak-password"
+                ) {
+
+                    message.textContent =
+                        "Password is too weak. Use at least 6 characters.";
+
+                }
+
+
+
+                /* =========================
+                   AUTH NOT ENABLED
+                ========================== */
+
+                else if (
+                    error.code ===
+                    "auth/operation-not-allowed"
+                ) {
+
+                    message.textContent =
+                        "Email/Password authentication is not enabled.";
+
+                }
+
+
+
+                /* =========================
+                   OTHER ERROR
+                ========================== */
+
+                else {
+
+                    message.textContent =
+                        "Registration failed: " +
+                        error.message;
+
+                }
+
             }
 
         }
 
-    });
+    );
 
 </script>
 
 
+
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer>
+
+    <br>
 
     <a href="https://instagram.com/_obito_112__">
         Instagram Page
     </a>
+
+    <br><br>
+
+    <p>
+        Thank you for visiting the
+        ALLIED E-Book Management System. 🙏
+    </p>
 
 </footer>
 
