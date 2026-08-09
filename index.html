@@ -19,21 +19,225 @@
     <meta name="robots"
           content="index, follow">
 
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-family: Arial, sans-serif;
+
+            background: linear-gradient(
+                135deg,
+                #0f3443,
+                #34a9c5
+            );
+
+            color: white;
+
+        }
+
+
+        .container {
+
+            width: 90%;
+
+            max-width: 450px;
+
+            text-align: center;
+
+            background: white;
+
+            color: #123;
+
+            padding: 40px 25px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.25);
+
+        }
+
+
+        .logo {
+
+            width: 80px;
+
+            height: 80px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #e8f8fc;
+
+            font-size: 42px;
+
+        }
+
+
+        h1 {
+
+            font-size: 26px;
+
+            margin-bottom: 10px;
+
+            color: #176b87;
+
+        }
+
+
+        .tagline {
+
+            font-size: 15px;
+
+            color: #666;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .loading {
+
+            font-size: 16px;
+
+            margin-bottom: 18px;
+
+            color: #444;
+
+        }
+
+
+        .loader {
+
+            width: 45px;
+
+            height: 45px;
+
+            margin: 0 auto;
+
+            border: 5px solid #e0e0e0;
+
+            border-top: 5px solid #176b87;
+
+            border-radius: 50%;
+
+            animation: spin 1s linear infinite;
+
+        }
+
+
+        @keyframes spin {
+
+            from {
+
+                transform: rotate(0deg);
+
+            }
+
+            to {
+
+                transform: rotate(360deg);
+
+            }
+
+        }
+
+
+        .footer {
+
+            margin-top: 25px;
+
+            font-size: 12px;
+
+            color: #888;
+
+        }
+
+    </style>
+
 </head>
 
 
 <body>
 
-    <p>
-        Loading ALLIED E-Book Management System...
-    </p>
+
+    <div class="container">
+
+
+        <div class="logo">
+
+            📚
+
+        </div>
+
+
+        <h1>
+
+            ALLIED E-Book
+
+        </h1>
+
+
+        <p class="tagline">
+
+            Read • Learn • Manage
+
+        </p>
+
+
+        <p class="loading">
+
+            Loading your E-Book Library...
+
+        </p>
+
+
+        <div class="loader"></div>
+
+
+        <p class="footer">
+
+            ALLIED E-Book Management System
+
+        </p>
+
+    </div>
+
 
 
     <script>
 
-        window.location.replace("home.html");
+        setTimeout(function() {
+
+            window.location.replace("home.html");
+
+        }, 800);
 
     </script>
+
 
 </body>
 
