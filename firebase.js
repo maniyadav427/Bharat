@@ -22,7 +22,7 @@ import {
 
 
 // ==========================================
-// FIRESTORE DATABASE
+// CLOUD FIRESTORE
 // ==========================================
 
 import {
@@ -36,7 +36,7 @@ import {
 
 
 // ==========================================
-// FIREBASE CONFIGURATION
+// FIREBASE CONFIG
 // ==========================================
 
 const firebaseConfig = {
@@ -61,7 +61,6 @@ const firebaseConfig = {
 
     measurementId:
         "G-N5M1C672D0"
-
 };
 
 
@@ -120,5 +119,4 @@ export {
     signOut,
 
     onAuthStateChanged
-
 };
