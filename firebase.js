@@ -1,11 +1,15 @@
-// ===============================
-// FIREBASE SDK
-// ===============================
+// ==========================================
+// FIREBASE APP
+// ==========================================
 
 import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 
+
+// ==========================================
+// FIREBASE AUTHENTICATION
+// ==========================================
 
 import {
     getAuth,
@@ -17,6 +21,10 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
 
+// ==========================================
+// FIRESTORE DATABASE
+// ==========================================
+
 import {
     getFirestore,
     doc,
@@ -27,10 +35,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 
-
-// ===============================
+// ==========================================
 // FIREBASE CONFIGURATION
-// ===============================
+// ==========================================
 
 const firebaseConfig = {
 
@@ -58,58 +65,60 @@ const firebaseConfig = {
 };
 
 
-
-// ===============================
+// ==========================================
 // INITIALIZE FIREBASE
-// ===============================
+// ==========================================
 
 const app =
     initializeApp(firebaseConfig);
 
 
-
-// ===============================
-// INITIALIZE AUTHENTICATION
-// ===============================
+// ==========================================
+// INITIALIZE AUTH
+// ==========================================
 
 const auth =
     getAuth(app);
 
 
-
-// ===============================
+// ==========================================
 // INITIALIZE FIRESTORE
-// ===============================
+// ==========================================
 
 const db =
     getFirestore(app);
 
 
-
-// ===============================
-// EXPORT FIREBASE SERVICES
-// ===============================
+// ==========================================
+// EXPORT
+// ==========================================
 
 export {
 
-    // Firebase App
     app,
 
-    // Authentication
     auth,
 
-    createUserWithEmailAndPassword,
-    sendEmailVerification,
-    signInWithEmailAndPassword,
-    signOut,
-    onAuthStateChanged,
-
-    // Firestore
     db,
+
     doc,
+
     setDoc,
+
     collection,
+
     addDoc,
-    serverTimestamp
+
+    serverTimestamp,
+
+    createUserWithEmailAndPassword,
+
+    sendEmailVerification,
+
+    signInWithEmailAndPassword,
+
+    signOut,
+
+    onAuthStateChanged
 
 };
