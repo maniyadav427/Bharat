@@ -186,5 +186,19 @@ img{
 #readingTimer button {
     margin: 4px;
 }
+/* ================================
+   STICKY READING TIMER
+================================ */
+
+#readingTimer {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+
+    background: white;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.15);
+}
   
     
