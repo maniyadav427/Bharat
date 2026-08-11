@@ -1,4 +1,6 @@
-// Firebase SDK
+// ===============================
+// FIREBASE SDK
+// ===============================
 
 import {
     initializeApp
@@ -18,77 +20,96 @@ import {
 import {
     getFirestore,
     doc,
-    setDoc
+    setDoc,
+    collection,
+    addDoc,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 
 
-// Firebase configuration
+// ===============================
+// FIREBASE CONFIGURATION
+// ===============================
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyAXAoP4ZAurROURN_ThBmiS5se7B2_foI4",
+    apiKey:
+        "AIzaSyAXAoP4ZAurROURN_ThBmiS5se7B2_foI4",
 
-    authDomain: "allied-f7854.firebaseapp.com",
+    authDomain:
+        "allied-f7854.firebaseapp.com",
 
-    projectId: "allied-f7854",
+    projectId:
+        "allied-f7854",
 
-    storageBucket: "allied-f7854.firebasestorage.app",
+    storageBucket:
+        "allied-f7854.firebasestorage.app",
 
-    messagingSenderId: "754424931220",
+    messagingSenderId:
+        "754424931220",
 
-    appId: "1:754424931220:web:97d9a44b7da4c7407ee581",
+    appId:
+        "1:754424931220:web:97d9a44b7da4c7407ee581",
 
-    measurementId: "G-N5M1C672D0"
+    measurementId:
+        "G-N5M1C672D0"
 
 };
 
 
 
-// Initialize Firebase
+// ===============================
+// INITIALIZE FIREBASE
+// ===============================
 
 const app =
     initializeApp(firebaseConfig);
 
 
 
-// Initialize Authentication
+// ===============================
+// INITIALIZE AUTHENTICATION
+// ===============================
 
 const auth =
     getAuth(app);
 
 
 
-// Initialize Firestore Database
+// ===============================
+// INITIALIZE FIRESTORE
+// ===============================
 
 const db =
     getFirestore(app);
 
 
 
-// Make Firebase available
-// to other JavaScript modules
+// ===============================
+// EXPORT FIREBASE SERVICES
+// ===============================
 
 export {
 
+    // Firebase App
     app,
 
+    // Authentication
     auth,
 
-    db,
-
-    doc,
-
-    setDoc,
-
     createUserWithEmailAndPassword,
-
     sendEmailVerification,
-
     signInWithEmailAndPassword,
-
     signOut,
+    onAuthStateChanged,
 
-    onAuthStateChanged
+    // Firestore
+    db,
+    doc,
+    setDoc,
+    collection,
+    addDoc,
+    serverTimestamp
 
 };
