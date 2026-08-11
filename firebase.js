@@ -1,15 +1,15 @@
-// ==========================================
-// FIREBASE APP
-// ==========================================
+// ================================
+// Firebase App
+// ================================
 
 import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 
 
-// ==========================================
-// FIREBASE AUTHENTICATION
-// ==========================================
+// ================================
+// Firebase Authentication
+// ================================
 
 import {
     getAuth,
@@ -21,9 +21,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
 
-// ==========================================
-// CLOUD FIRESTORE
-// ==========================================
+// ================================
+// Firebase Firestore
+// ================================
 
 import {
     getFirestore,
@@ -35,9 +35,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 
-// ==========================================
-// FIREBASE CONFIG
-// ==========================================
+// ================================
+// Firebase Configuration
+// ================================
 
 const firebaseConfig = {
 
@@ -64,33 +64,33 @@ const firebaseConfig = {
 };
 
 
-// ==========================================
-// INITIALIZE FIREBASE
-// ==========================================
+// ================================
+// Initialize Firebase
+// ================================
 
 const app =
     initializeApp(firebaseConfig);
 
 
-// ==========================================
-// INITIALIZE AUTH
-// ==========================================
+// ================================
+// Initialize Authentication
+// ================================
 
 const auth =
     getAuth(app);
 
 
-// ==========================================
-// INITIALIZE FIRESTORE
-// ==========================================
+// ================================
+// Initialize Firestore
+// ================================
 
 const db =
     getFirestore(app);
 
 
-// ==========================================
-// EXPORT
-// ==========================================
+// ================================
+// Export
+// ================================
 
 export {
 
@@ -101,22 +101,15 @@ export {
     db,
 
     doc,
-
     setDoc,
-
     collection,
-
     addDoc,
-
     serverTimestamp,
 
     createUserWithEmailAndPassword,
-
     sendEmailVerification,
-
     signInWithEmailAndPassword,
-
     signOut,
-
     onAuthStateChanged
+
 };
