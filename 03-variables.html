@@ -1,963 +1,468 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Chapter 3 - Variables in C | ALLIED</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    <title>
+        Chapter 3 - Variables in C | ALLIED
+    </title>
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            line-height: 1.7;
-            background: #f4f7fb;
-            color: #222;
-        }
+    <meta name="description"
+          content="Learn variables in C programming with the ALLIED E-Book Management System.">
 
-        header {
-            background: #111827;
-            color: white;
-            padding: 15px;
-        }
+    <link rel="stylesheet"
+          href="style.css">
 
-        .nav {
-            max-width: 1100px;
-            margin: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .logo {
-            color: white;
-            text-decoration: none;
-            font-size: 25px;
-            font-weight: bold;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 5px 8px;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            padding: 25px 18px 60px;
-        }
-
-        .hero {
-            background: white;
-            padding: 35px 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-
-        .hero h1 {
-            font-size: 38px;
-            margin-bottom: 10px;
-        }
-
-        .hero p {
-            font-size: 18px;
-            color: #555;
-        }
-
-        section {
-            background: white;
-            padding: 28px;
-            margin: 25px 0;
-            border-radius: 15px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-        }
-
-        h2 {
-            color: #111827;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 8px;
-        }
-
-        h3 {
-            color: #374151;
-            margin-top: 22px;
-        }
-
-        ul,
-        ol {
-            padding-left: 25px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        .objective {
-            background: #eff6ff;
-            border-left: 5px solid #2563eb;
-        }
-
-        .note {
-            background: #fff7ed;
-            border-left: 5px solid #f97316;
-            padding: 15px;
-            margin: 20px 0;
-        }
-
-        .tip {
-            background: #ecfdf5;
-            border-left: 5px solid #10b981;
-            padding: 15px;
-            margin: 20px 0;
-        }
-
-        .warning {
-            background: #fef2f2;
-            border-left: 5px solid #ef4444;
-            padding: 15px;
-            margin: 20px 0;
-        }
-
-        pre {
-            background: #111827;
-            color: #f9fafb;
-            padding: 18px;
-            border-radius: 10px;
-            overflow-x: auto;
-            font-family: Consolas, monospace;
-        }
-
-        code {
-            font-family: Consolas, monospace;
-        }
-
-        .diagram {
-            background: #f9fafb;
-            border: 1px solid #d1d5db;
-            padding: 20px;
-            border-radius: 10px;
-            overflow-x: auto;
-            white-space: pre;
-            font-family: Consolas, monospace;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 18px;
-        }
-
-        th,
-        td {
-            border: 1px solid #d1d5db;
-            padding: 12px;
-            text-align: left;
-        }
-
-        th {
-            background: #111827;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background: #f9fafb;
-        }
-
-        .mcq {
-            background: #f9fafb;
-            padding: 18px;
-            margin: 15px 0;
-            border-radius: 10px;
-        }
-
-        .answer {
-            color: #047857;
-            font-weight: bold;
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .button {
-            display: inline-block;
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-        }
-
-        .button:hover {
-            background: #1d4ed8;
-        }
-
-        footer {
-            background: #111827;
-            color: white;
-            text-align: center;
-            padding: 30px 15px;
-        }
-
-        @media (max-width: 700px) {
-
-            .hero h1 {
-                font-size: 30px;
-            }
-
-            section {
-                padding: 20px;
-            }
-
-            .navigation {
-                flex-direction: column;
-            }
-
-            .button {
-                text-align: center;
-            }
-
-            table {
-                font-size: 14px;
-            }
-        }
-    </style>
 </head>
 
-<body>
-<section class="reading-timer">
 
-    <h2>📖 Reading Time</h2>
+<body>
+
+
+<!-- ==================================================
+     AUTH CHECKING
+================================================== -->
+
+<div id="authChecking"
+     style="text-align:center; padding:40px;">
+
+    <h2>
+        🔐 Checking login...
+    </h2>
+
+    <p>
+        Please wait.
+    </p>
+
+</div>
+
+
+
+<!-- ==================================================
+     MAIN CONTENT
+================================================== -->
+
+<div id="pageContent"
+     style="display:none;">
+
+
+<!-- ==================================================
+     READING TIMER
+================================================== -->
+
+<section class="hero">
+
+    <h2>
+        📖 Reading Time
+    </h2>
+
+    <hr>
 
     <p>
         Chapter: Variables
     </p>
 
-    <h3 id="readingTimer">
+
+    <!-- TIMER -->
+
+    <h2 id="timer">
         00:00:00
-    </h3>
+    </h2>
+
+
+    <!-- BUTTONS -->
 
     <button
         type="button"
-        id="startReading">
+        id="startButton">
 
         ▶️ Start Reading
 
     </button>
 
+
     <button
         type="button"
-        id="pauseReading">
+        id="pauseButton"
+        disabled>
 
         ⏸️ Pause
 
     </button>
 
+
     <button
         type="button"
-        id="stopReading">
+        id="stopButton"
+        disabled>
 
         ⏹️ Stop & Save
 
     </button>
 
-    <p id="timerMessage"></p>
+
+    <!-- STATUS -->
+
+    <p id="saveStatus"></p>
 
 </section>
 
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
 <header>
 
-    <div class="nav">
+    <div class="logo-box">
 
-        <a href="home.html" class="logo">ALLIED</a>
+        <div class="logo-circle">
+            💻
+        </div>
 
-        <nav>
-            <a href="home.html">Home</a>
-            <a href="books.html">Books</a>
-            <a href="c.html">C Programming</a>
-            <a href="login.html">Login</a>
-        </nav>
+        <h1>
+            C Programming
+        </h1>
+
+        <p class="tagline">
+            Learn C • Practice • Master
+        </p>
 
     </div>
+
+
+    <nav>
+
+        <a href="home.html">
+            Home
+        </a>
+
+        <a href="books.html">
+            📚 Books
+        </a>
+
+        <a href="c.html">
+            C Programming
+        </a>
+
+    </nav>
 
 </header>
 
 
-<main class="container">
+
+<!-- ==================================================
+     CHAPTER TITLE
+================================================== -->
+
+<section class="hero">
+
+    <h1>
+        Chapter 3: Variables in C
+    </h1>
+
+    <p>
+        Learn how variables store data, how to declare
+        and initialize them, and how variables are used
+        in C programs.
+    </p>
+
+</section>
 
 
-    <!-- TITLE -->
 
-    <div class="hero">
+<!-- ==================================================
+     LEARNING OBJECTIVES
+================================================== -->
 
-        <h1>Chapter 3: Variables in C</h1>
+<section class="hero">
 
-        <p>
-            Learn how variables store data, how to declare and initialize
-            them, and how variables are used in C programs.
-        </p>
+    <h2>
+        🎯 Learning Objectives
+    </h2>
 
-    </div>
+    <p>
+        After completing this chapter, you will be able to:
+    </p>
 
+    <ul>
 
-    <!-- OBJECTIVES -->
+        <li>
+            Understand what a variable is.
+        </li>
 
-    <section class="objective">
+        <li>
+            Understand why variables are required in programs.
+        </li>
 
-        <h2>🎯 Learning Objectives</h2>
+        <li>
+            Declare variables correctly.
+        </li>
 
-        <p>
-            After completing this chapter, you will be able to:
-        </p>
+        <li>
+            Initialize variables.
+        </li>
 
-        <ul>
-            <li>Understand what a variable is.</li>
-            <li>Understand why variables are required in programs.</li>
-            <li>Declare variables correctly.</li>
-            <li>Initialize variables.</li>
-            <li>Assign and modify values.</li>
-            <li>Understand variable naming rules.</li>
-            <li>Understand local and global variables.</li>
-            <li>Use variables in C programs.</li>
-            <li>Avoid common variable-related errors.</li>
-        </ul>
+        <li>
+            Assign and modify values.
+        </li>
 
-    </section>
+        <li>
+            Understand variable naming rules.
+        </li>
 
+        <li>
+            Understand local and global variables.
+        </li>
 
-    <!-- INTRODUCTION -->
+        <li>
+            Use variables in C programs.
+        </li>
 
-    <section>
+        <li>
+            Avoid common variable-related errors.
+        </li>
 
-        <h2>3.1 Introduction to Variables</h2>
+    </ul>
 
-        <p>
-            A variable is a named memory location used to store a value
-            that can change while a program is running.
-        </p>
-
-        <p>
-            For example, a program that calculates the total marks of a
-            student needs a place to store marks. A variable can provide
-            that storage.
-        </p>
-
-        <pre><code>int marks = 85;</code></pre>
-
-        <p>
-            In this statement, <code>marks</code> is a variable that
-            stores the integer value <code>85</code>.
-        </p>
-
-        <div class="note">
-            <strong>Simple definition:</strong>
-            A variable is a named storage location whose value can be
-            changed during program execution.
-        </div>
-
-    </section>
+</section>
 
 
-    <!-- HISTORY -->
 
-    <section>
+<!-- ==================================================
+     3.1 INTRODUCTION
+================================================== -->
 
-        <h2>3.2 Historical Background</h2>
+<section class="hero">
 
-        <p>
-            The concept of variables is fundamental to virtually every
-            general-purpose programming language. C inherited many
-            important ideas about variables from earlier languages while
-            providing strong control over data types and memory.
-        </p>
+    <h2>
+        3.1 Introduction to Variables
+    </h2>
 
-        <p>
-            C's approach to variables is closely connected with its
-            emphasis on efficient compiled programs. A variable can be
-            associated with a particular data type, allowing the compiler
-            to understand the kind of value being stored.
-        </p>
+    <p>
+        A variable is a named memory location used to
+        store a value that can change while a program
+        is running.
+    </p>
 
-        <p>
-            This strong relationship between variables, data types and
-            memory is one of the concepts that makes C especially useful
-            for learning how computers represent and manipulate data.
-        </p>
-
-    </section>
+    <p>
+        For example, a program that calculates the total
+        marks of a student needs a place to store marks.
+        A variable can provide that storage.
+    </p>
 
 
-    <!-- FEATURES -->
-
-    <section>
-
-        <h2>3.3 Features of Variables</h2>
-
-        <ul>
-
-            <li>
-                <strong>Named Storage:</strong>
-                Each variable has a name used by the program.
-            </li>
-
-            <li>
-                <strong>Data Type:</strong>
-                Every variable declaration specifies a type.
-            </li>
-
-            <li>
-                <strong>Changeable Value:</strong>
-                A variable's value can usually be changed after
-                declaration.
-            </li>
-
-            <li>
-                <strong>Memory Allocation:</strong>
-                Variables require storage during program execution.
-            </li>
-
-            <li>
-                <strong>Scope:</strong>
-                A variable is accessible only within the region where
-                it is visible.
-            </li>
-
-            <li>
-                <strong>Lifetime:</strong>
-                Variables exist according to their storage duration.
-            </li>
-
-        </ul>
-
-    </section>
+    <pre>
+int marks = 85;
+    </pre>
 
 
-    <!-- DECLARATION -->
+    <p>
+        In this statement, <strong>marks</strong> is a
+        variable that stores the integer value 85.
+    </p>
 
-    <section>
+</section>
 
-        <h2>3.4 Variable Declaration</h2>
 
-        <p>
-            Before using a variable, it is normally declared with a data
-            type and a name.
-        </p>
 
-        <p>The general syntax is:</p>
+<!-- ==================================================
+     3.2 VARIABLE DECLARATION
+================================================== -->
 
-        <pre><code>data_type variable_name;</code></pre>
+<section class="hero">
 
-        <h3>Examples</h3>
+    <h2>
+        3.2 Variable Declaration
+    </h2>
 
-        <pre><code>int age;
-float price;
+    <p>
+        A variable should be declared with a data type
+        before it is used.
+    </p>
+
+
+    <pre>
+int age;
+float salary;
 char grade;
-double distance;</code></pre>
+double distance;
+    </pre>
 
-        <table>
+</section>
 
-            <tr>
-                <th>Declaration</th>
-                <th>Data Type</th>
-                <th>Variable</th>
-            </tr>
 
-            <tr>
-                <td>int age;</td>
-                <td>int</td>
-                <td>age</td>
-            </tr>
 
-            <tr>
-                <td>float price;</td>
-                <td>float</td>
-                <td>price</td>
-            </tr>
+<!-- ==================================================
+     3.3 VARIABLE INITIALIZATION
+================================================== -->
 
-            <tr>
-                <td>char grade;</td>
-                <td>char</td>
-                <td>grade</td>
-            </tr>
+<section class="hero">
 
-            <tr>
-                <td>double distance;</td>
-                <td>double</td>
-                <td>distance</td>
-            </tr>
+    <h2>
+        3.3 Variable Initialization
+    </h2>
 
-        </table>
+    <p>
+        Initialization means assigning an initial value
+        to a variable when it is declared.
+    </p>
 
-    </section>
 
+    <pre>
+int age = 20;
 
-    <!-- INITIALIZATION -->
+float marks = 85.5;
 
-    <section>
+char grade = 'A';
+    </pre>
 
-        <h2>3.5 Variable Initialization</h2>
+</section>
 
-        <p>
-            Initialization means giving a variable an initial value when
-            it is declared.
-        </p>
 
-        <pre><code>int age = 18;
-float price = 99.50f;
-char grade = 'A';</code></pre>
 
-        <p>
-            Initialization is useful because it gives the variable a
-            known value before it is used.
-        </p>
+<!-- ==================================================
+     3.4 ASSIGNING VALUES
+================================================== -->
 
-        <div class="tip">
-            <strong>Good practice:</strong>
-            Initialize variables when appropriate instead of relying on
-            an unknown or unintended value.
-        </div>
+<section class="hero">
 
-    </section>
+    <h2>
+        3.4 Assigning Values
+    </h2>
 
+    <p>
+        A value can be assigned or changed after the
+        variable has been declared.
+    </p>
 
-    <!-- ASSIGNMENT -->
 
-    <section>
+    <pre>
+int number;
 
-        <h2>3.6 Assignment</h2>
+number = 10;
 
-        <p>
-            The assignment operator <code>=</code> is used to place a
-            value into a variable.
-        </p>
+number = 20;
+    </pre>
 
-        <pre><code>int score;
 
-score = 75;</code></pre>
+    <p>
+        The final value stored in <strong>number</strong>
+        is 20.
+    </p>
 
-        <p>
-            The value can later be changed:
-        </p>
+</section>
 
-        <pre><code>score = 90;</code></pre>
 
-        <p>
-            After the second assignment, the value stored in
-            <code>score</code> is <code>90</code>.
-        </p>
 
-    </section>
+<!-- ==================================================
+     3.5 VARIABLE NAMING RULES
+================================================== -->
 
+<section class="hero">
 
-    <!-- MULTIPLE VARIABLES -->
+    <h2>
+        3.5 Variable Naming Rules
+    </h2>
 
-    <section>
+    <ul>
 
-        <h2>3.7 Declaring Multiple Variables</h2>
+        <li>
+            A variable name can contain letters.
+        </li>
 
-        <p>
-            Multiple variables of the same type can be declared in a
-            single declaration.
-        </p>
+        <li>
+            Digits can be used, but the name should not
+            begin with a digit.
+        </li>
 
-        <pre><code>int a, b, c;</code></pre>
+        <li>
+            Underscore can be used.
+        </li>
 
-        <p>
-            They can also be initialized:
-        </p>
+        <li>
+            Spaces are not allowed.
+        </li>
 
-        <pre><code>int a = 10, b = 20, c = 30;</code></pre>
+        <li>
+            C keywords cannot be used as variable names.
+        </li>
 
-        <div class="warning">
-            Although declaring several variables together is valid,
-            separate declarations can sometimes make larger programs
-            easier to read.
-        </div>
+        <li>
+            C variable names are case-sensitive.
+        </li>
 
-    </section>
+    </ul>
 
 
-    <!-- NAMING RULES -->
+    <pre>
+int studentAge;
+int student_age;
+int marks1;
+    </pre>
 
-    <section>
+</section>
 
-        <h2>3.8 Rules for Naming Variables</h2>
 
-        <p>
-            Variable names are identifiers, so they follow the identifier
-            rules of C.
-        </p>
 
-        <h3>Rules</h3>
+<!-- ==================================================
+     3.6 LOCAL VARIABLES
+================================================== -->
 
-        <ol>
+<section class="hero">
 
-            <li>
-                A variable name can contain letters, digits and
-                underscores.
-            </li>
+    <h2>
+        3.6 Local Variables
+    </h2>
 
-            <li>
-                It cannot begin with a digit.
-            </li>
+    <p>
+        A local variable is declared inside a function
+        or block and can normally be used within that
+        scope.
+    </p>
 
-            <li>
-                Spaces are not allowed.
-            </li>
 
-            <li>
-                Special symbols such as <code>@</code> and
-                <code>#</code> cannot normally be used in identifiers.
-            </li>
-
-            <li>
-                Keywords cannot be used as variable names.
-            </li>
-
-            <li>
-                C variable names are case-sensitive.
-            </li>
-
-        </ol>
-
-        <h3>Valid Names</h3>
-
-        <pre><code>age
-studentName
-student_name
-marks1
-_total</code></pre>
-
-        <h3>Invalid Names</h3>
-
-        <pre><code>1age
-student-name
-student name
-float
-total@marks</code></pre>
-
-    </section>
-
-
-    <!-- CASE SENSITIVE -->
-
-    <section>
-
-        <h2>3.9 Case Sensitivity</h2>
-
-        <p>
-            C is case-sensitive. Therefore, the following are different
-            identifiers:
-        </p>
-
-        <pre><code>age
-Age
-AGE
-aGe</code></pre>
-
-        <p>
-            Each of these names is considered different by the compiler.
-        </p>
-
-    </section>
-
-
-    <!-- DATA TYPE RELATION -->
-
-    <section>
-
-        <h2>3.10 Variables and Data Types</h2>
-
-        <p>
-            A variable is declared with a data type. The data type tells
-            the compiler what kind of value the variable is intended to
-            represent.
-        </p>
-
-        <table>
-
-            <tr>
-                <th>Type</th>
-                <th>Typical Use</th>
-                <th>Example</th>
-            </tr>
-
-            <tr>
-                <td>char</td>
-                <td>Character data</td>
-                <td>char grade = 'A';</td>
-            </tr>
-
-            <tr>
-                <td>int</td>
-                <td>Integer values</td>
-                <td>int age = 20;</td>
-            </tr>
-
-            <tr>
-                <td>float</td>
-                <td>Single-precision floating-point values</td>
-                <td>float price = 25.5f;</td>
-            </tr>
-
-            <tr>
-                <td>double</td>
-                <td>Double-precision floating-point values</td>
-                <td>double pi = 3.14159;</td>
-            </tr>
-
-        </table>
-
-    </section>
-
-
-    <!-- DIAGRAM -->
-
-    <section>
-
-        <h2>3.11 Variable Memory Diagram</h2>
-
-        <div class="diagram">
-
-Program
-   |
-   v
-Variable Declaration
-   |
-   v
-Memory Storage
-   |
-   +------------------+
-   |                  |
-Variable Name       Value
-   |                  |
-  age  ------------> 20
-   |
-   v
-Program Uses Value
-
-        </div>
-
-        <p>
-            Conceptually, a variable provides a name through which the
-            program can access stored data.
-        </p>
-
-    </section>
-
-
-    <!-- PROGRAM 1 -->
-
-    <section>
-
-        <h2>3.12 Program Example: Integer Variable</h2>
-
-        <pre><code>#include &lt;stdio.h&gt;
+    <pre>
+#include &lt;stdio.h&gt;
 
 int main()
 {
     int age = 20;
 
-    printf("Age = %d", age);
+    printf("%d", age);
 
     return 0;
-}</code></pre>
+}
+    </pre>
 
-        <h3>Output</h3>
+</section>
 
-        <pre><code>Age = 20</code></pre>
 
-        <p>
-            The variable <code>age</code> stores the value
-            <code>20</code>.
-        </p>
 
-    </section>
+<!-- ==================================================
+     3.7 GLOBAL VARIABLES
+================================================== -->
 
+<section class="hero">
 
-    <!-- PROGRAM 2 -->
+    <h2>
+        3.7 Global Variables
+    </h2>
 
-    <section>
+    <p>
+        A global variable is declared outside functions
+        and can be accessed according to its scope.
+    </p>
 
-        <h2>3.13 Program Example: Changing a Variable</h2>
 
-        <pre><code>#include &lt;stdio.h&gt;
-
-int main()
-{
-    int number = 10;
-
-    printf("Before = %d\n", number);
-
-    number = 50;
-
-    printf("After = %d", number);
-
-    return 0;
-}</code></pre>
-
-        <h3>Output</h3>
-
-        <pre><code>Before = 10
-After = 50</code></pre>
-
-        <p>
-            The assignment statement changes the value stored in
-            <code>number</code>.
-        </p>
-
-    </section>
-
-
-    <!-- PROGRAM 3 -->
-
-    <section>
-
-        <h2>3.14 Program Example: Multiple Variables</h2>
-
-        <pre><code>#include &lt;stdio.h&gt;
-
-int main()
-{
-    int a = 10;
-    int b = 20;
-    int sum;
-
-    sum = a + b;
-
-    printf("A = %d\n", a);
-    printf("B = %d\n", b);
-    printf("Sum = %d", sum);
-
-    return 0;
-}</code></pre>
-
-        <h3>Output</h3>
-
-        <pre><code>A = 10
-B = 20
-Sum = 30</code></pre>
-
-    </section>
-
-
-    <!-- PROGRAM 4 -->
-
-    <section>
-
-        <h2>3.15 Program Example: Different Variable Types</h2>
-
-        <pre><code>#include &lt;stdio.h&gt;
-
-int main()
-{
-    int age = 18;
-    float height = 5.8f;
-    char grade = 'A';
-
-    printf("Age = %d\n", age);
-    printf("Height = %.1f\n", height);
-    printf("Grade = %c", grade);
-
-    return 0;
-}</code></pre>
-
-        <h3>Output</h3>
-
-        <pre><code>Age = 18
-Height = 5.8
-Grade = A</code></pre>
-
-    </section>
-
-
-    <!-- USER INPUT -->
-
-    <section>
-
-        <h2>3.16 Variables with User Input</h2>
-
-        <p>
-            Variables are frequently used to store values entered by
-            the user.
-        </p>
-
-        <pre><code>#include &lt;stdio.h&gt;
-
-int main()
-{
-    int age;
-
-    printf("Enter your age: ");
-    scanf("%d", &amp;age);
-
-    printf("Your age is %d", age);
-
-    return 0;
-}</code></pre>
-
-        <p>
-            The <code>scanf()</code> function stores the entered integer
-            in the variable <code>age</code>.
-        </p>
-
-    </section>
-
-
-    <!-- LOCAL GLOBAL -->
-
-    <section>
-
-        <h2>3.17 Local and Global Variables</h2>
-
-        <h3>Local Variable</h3>
-
-        <p>
-            A variable declared inside a function or block generally
-            has local scope and can be accessed within its applicable
-            region.
-        </p>
-
-        <pre><code>#include &lt;stdio.h&gt;
-
-int main()
-{
-    int number = 10;
-
-    printf("%d", number);
-
-    return 0;
-}</code></pre>
-
-        <p>
-            Here, <code>number</code> is local to the
-            <code>main()</code> function.
-        </p>
-
-
-        <h3>Global Variable</h3>
-
-        <p>
-            A variable declared outside all functions has file scope
-            and is commonly called a global variable.
-        </p>
-
-        <pre><code>#include &lt;stdio.h&gt;
+    <pre>
+#include &lt;stdio.h&gt;
 
 int number = 100;
 
@@ -966,91 +471,645 @@ int main()
     printf("%d", number);
 
     return 0;
-}</code></pre>
+}
+    </pre>
 
-        <p>
-            The global variable <code>number</code> is declared outside
-            <code>main()</code>.
-        </p>
-
-    </section>
+</section>
 
 
-    <!-- SCOPE DIAGRAM -->
 
-    <section>
+<!-- ==================================================
+     3.8 EXAMPLE PROGRAM
+================================================== -->
 
-        <h2>3.18 Variable Scope Diagram</h2>
+<section class="hero">
 
-        <div class="diagram">
-
-Global Scope
-     |
-     +---------------------------+
-     |                           |
- Function 1                  Function 2
-     |                           |
- Local Variables            Local Variables
-
-        </div>
-
-        <p>
-            Scope determines where an identifier can be accessed in
-            the source program.
-        </p>
-
-    </section>
+    <h2>
+        3.8 Example Program
+    </h2>
 
 
-    <!-- CONSTANT VS VARIABLE -->
+    <pre>
+#include &lt;stdio.h&gt;
 
-    <section>
+int main()
+{
+    int age = 20;
+    float marks = 85.5;
+    char grade = 'A';
 
-        <h2>3.19 Variable vs Constant</h2>
+    printf("Age = %d\n", age);
+    printf("Marks = %.2f\n", marks);
+    printf("Grade = %c\n", grade);
 
-        <table>
+    return 0;
+}
+    </pre>
 
-            <tr>
-                <th>Variable</th>
-                <th>Constant</th>
-            </tr>
 
-            <tr>
-                <td>Value can normally change.</td>
-                <td>Represents a value intended not to change.</td>
-            </tr>
+    <h3>
+        Output
+    </h3>
 
-            <tr>
-                <td>Example: int age = 20;</td>
-                <td>Example: const int DAYS = 7;</td>
-            </tr>
 
-            <tr>
-                <td>Used for changing program data.</td>
-                <td>Used for fixed program values.</td>
-            </tr>
+    <pre>
+Age = 20
+Marks = 85.50
+Grade = A
+    </pre>
 
-        </table>
+</section>
 
-    </section>
-<script>
 
-    window.BOOK_NAME =
-        "C Programming";
 
-    window.CHAPTER_NAME =
-        "Variables";
+<!-- ==================================================
+     SUMMARY
+================================================== -->
+
+<section class="hero">
+
+    <h2>
+        📝 Chapter Summary
+    </h2>
+
+    <p>
+        Variables are used to store data in C programs.
+        Every variable has a data type and a name.
+        Variables can be declared, initialized and
+        modified during program execution.
+    </p>
+
+</section>
+
+
+
+<!-- ==================================================
+     NAVIGATION
+================================================== -->
+
+<footer>
+
+    <br>
+
+    <a href="c.html">
+        ⬅ Back to C Programming
+    </a>
+
+    <br><br>
+
+    <a href="home.html">
+        🏠 Home
+    </a>
+
+    <br><br>
+
+    <strong>
+        ALLIED E-Book Management System ❤️
+    </strong>
+
+</footer>
+
+
+</div>
+
+
+
+<!-- ==================================================
+     FIREBASE + READING TIMER
+================================================== -->
+
+<script type="module">
+
+import {
+
+    auth,
+
+    db,
+
+    onAuthStateChanged,
+
+    collection,
+
+    addDoc,
+
+    serverTimestamp
+
+} from "./firebase.js";
+
+
+
+/* ==================================================
+   PAGE ELEMENTS
+================================================== */
+
+const authChecking =
+    document.getElementById("authChecking");
+
+
+const pageContent =
+    document.getElementById("pageContent");
+
+
+const timer =
+    document.getElementById("timer");
+
+
+const startButton =
+    document.getElementById("startButton");
+
+
+const pauseButton =
+    document.getElementById("pauseButton");
+
+
+const stopButton =
+    document.getElementById("stopButton");
+
+
+const saveStatus =
+    document.getElementById("saveStatus");
+
+
+
+/* ==================================================
+   CHAPTER INFORMATION
+================================================== */
+
+const BOOK_NAME =
+    "C Programming";
+
+
+const CHAPTER_NAME =
+    "Chapter 3 - Variables";
+
+
+const CHAPTER_ID =
+    "03-variables";
+
+
+
+/* ==================================================
+   TIMER VARIABLES
+================================================== */
+
+let currentUser = null;
+
+let timerInterval = null;
+
+let elapsedSeconds = 0;
+
+let isRunning = false;
+
+let startTime = null;
+
+
+
+/* ==================================================
+   FORMAT TIMER
+================================================== */
+
+function formatTime(totalSeconds) {
+
+    const hours =
+        Math.floor(
+            totalSeconds / 3600
+        );
+
+
+    const minutes =
+        Math.floor(
+            (totalSeconds % 3600) / 60
+        );
+
+
+    const seconds =
+        totalSeconds % 60;
+
+
+    return (
+
+        String(hours).padStart(2, "0")
+        + ":" +
+        String(minutes).padStart(2, "0")
+        + ":" +
+        String(seconds).padStart(2, "0")
+
+    );
+
+}
+
+
+
+/* ==================================================
+   UPDATE TIMER DISPLAY
+================================================== */
+
+function updateTimer() {
+
+    timer.textContent =
+        formatTime(elapsedSeconds);
+
+}
+
+
+
+/* ==================================================
+   START TIMER
+================================================== */
+
+function startTimer() {
+
+    if (isRunning) {
+
+        return;
+
+    }
+
+
+    isRunning = true;
+
+
+    if (!startTime) {
+
+        startTime =
+            new Date();
+
+    }
+
+
+    startButton.disabled =
+        true;
+
+
+    pauseButton.disabled =
+        false;
+
+
+    stopButton.disabled =
+        false;
+
+
+    saveStatus.textContent =
+        "Reading time is being recorded... 📖";
+
+
+    timerInterval =
+        setInterval(() => {
+
+            elapsedSeconds++;
+
+            updateTimer();
+
+        }, 1000);
+
+}
+
+
+
+/* ==================================================
+   PAUSE TIMER
+================================================== */
+
+function pauseTimer() {
+
+    if (!isRunning) {
+
+        return;
+
+    }
+
+
+    clearInterval(
+        timerInterval
+    );
+
+
+    timerInterval =
+        null;
+
+
+    isRunning =
+        false;
+
+
+    startButton.disabled =
+        false;
+
+
+    startButton.textContent =
+        "▶️ Resume";
+
+
+    pauseButton.disabled =
+        true;
+
+
+    stopButton.disabled =
+        false;
+
+
+    saveStatus.textContent =
+        "Reading timer paused. ⏸️";
+
+}
+
+
+
+/* ==================================================
+   SAVE READING TIME
+================================================== */
+
+async function saveReadingTime() {
+
+    if (!currentUser) {
+
+        saveStatus.textContent =
+            "You are not logged in. ❌";
+
+        return;
+
+    }
+
+
+    if (elapsedSeconds <= 0) {
+
+        saveStatus.textContent =
+            "Please read for some time before saving.";
+
+        return;
+
+    }
+
+
+    try {
+
+        saveStatus.textContent =
+            "Saving reading time... 💾";
+
+
+        /*
+         * If timer is running,
+         * stop it first.
+         */
+
+        if (timerInterval) {
+
+            clearInterval(
+                timerInterval
+            );
+
+            timerInterval =
+                null;
+
+        }
+
+
+        isRunning =
+            false;
+
+
+        /*
+         * Create reading session
+         * inside the logged-in user's
+         * Firestore document.
+         */
+
+        const readingCollection =
+            collection(
+                db,
+                "users",
+                currentUser.uid,
+                "readingSessions"
+            );
+
+
+        /*
+         * Save the reading session.
+         */
+
+        await addDoc(
+            readingCollection,
+            {
+
+                userId:
+                    currentUser.uid,
+
+                userEmail:
+                    currentUser.email || "",
+
+                book:
+                    BOOK_NAME,
+
+                chapter:
+                    CHAPTER_NAME,
+
+                chapterId:
+                    CHAPTER_ID,
+
+                durationSeconds:
+                    elapsedSeconds,
+
+                durationMinutes:
+                    Number(
+                        (
+                            elapsedSeconds / 60
+                        ).toFixed(2)
+                    ),
+
+                startedAt:
+                    startTime
+                        ? startTime
+                        : new Date(),
+
+                endedAt:
+                    new Date(),
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        /*
+         * SUCCESS
+         */
+
+        saveStatus.textContent =
+            "Reading time saved successfully! ✅";
+
+
+        /*
+         * Reset timer
+         */
+
+        elapsedSeconds =
+            0;
+
+
+        startTime =
+            null;
+
+
+        updateTimer();
+
+
+        startButton.disabled =
+            false;
+
+
+        startButton.textContent =
+            "▶️ Start Reading";
+
+
+        pauseButton.disabled =
+            true;
+
+
+        stopButton.disabled =
+            true;
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Firestore save error:",
+            error
+        );
+
+
+        saveStatus.textContent =
+            "Unable to save reading time. " +
+            "Please try again. ❌";
+
+    }
+
+}
+
+
+
+/* ==================================================
+   BUTTON EVENTS
+================================================== */
+
+startButton.addEventListener(
+    "click",
+    startTimer
+);
+
+
+pauseButton.addEventListener(
+    "click",
+    pauseTimer
+);
+
+
+stopButton.addEventListener(
+    "click",
+    saveReadingTime
+);
+
+
+
+/* ==================================================
+   FIREBASE AUTH CHECK
+================================================== */
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+
+        /*
+         * No user
+         */
+
+        if (!user) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /*
+         * Refresh user information
+         */
+
+        try {
+
+            await user.reload();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "User reload error:",
+                error
+            );
+
+        }
+
+
+        currentUser =
+            auth.currentUser;
+
+
+        /*
+         * User disappeared
+         */
+
+        if (!currentUser) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /*
+         * Email not verified
+         */
+
+        if (!currentUser.emailVerified) {
+
+            alert(
+                "Please verify your email before reading this chapter."
+            );
+
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /*
+         * User is verified
+         */
+
+        authChecking.style.display =
+            "none";
+
+
+        pageContent.style.display =
+            "block";
+
+    }
+);
 
 </script>
 
 
-<script
-    type="module"
-    src="reading-timer.js">
-</script>
-
 </body>
-</html>
-</body>
-</html>
 
+</html>
