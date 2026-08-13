@@ -1,204 +1,849 @@
- /* Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+/* ==========================================
+   ALLIED DIGITAL LIBRARY
+   MAIN STYLE
+========================================== */
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
-
-body{
-    background:linear-gradient(135deg,#6dd5ed,#2193b0);
-    min-height:100vh;
-}
-
-header{
-    background:linear-gradient(90deg,#0f2027,#203a43,#2c5364);
-    color:white;
-    text-align:center;
-    padding:20px;
-    font-size:20px;
-    box-shadow:0 4px 10px rgba(0,0,0,.3);
-}
-
-nav{
-    text-align:center;
-    background:#ffffff;
-    padding:12px;
-    box-shadow:0 2px 8px rgba(0,0,0,.2);
-}
-
-nav a{
-    color:#1565c0;
-    text-decoration:none;
-    margin:0 15px;
-    font-weight:bold;
-}
-
-nav a:hover{
-    color:#ff5722;
-}
-
-.hero{
-    width:90%;
-    max-width:900px;
-    margin:30px auto;
-    background:#ffffff;
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,.2);
-}
-
-.hero h2{
-    text-align:center;
-    color:#1565c0;
-    margin-bottom:20px;
-}
-
-input{
-    width:100%;
-    padding:14px;
-    border:2px solid #2193b0;
-    border-radius:10px;
-    margin:10px 0;
-    font-size:16px;
-}
-
-input:focus{
-    outline:none;
-    border-color:#ff9800;
-}
-
-button{
-    width:100%;
-    padding:14px;
-    background:linear-gradient(90deg,#ff512f,#dd2476);
-    color:white;
-    border:none;
-    border-radius:12px;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:.3s;
-}
-
-button:hover{
-    transform:scale(1.05);
-    box-shadow:0 8px 20px rgba(0,0,0,.3);
-}
-
-.card{
-    background:white;
-    margin:20px 0;
-    padding:20px;
-    border-radius:18px;
-    box-shadow:0 8px 20px rgba(0,0,0,.15);
-    text-align:center;
-}
-
-.card h3{
-    color:#0d47a1;
-    margin-bottom:10px;
-}
-
-.card p{
-    color:#555;
-    margin-bottom:15px;
-}
-
-ul{
-    list-style:none;
-}
-
-li{
-    margin:15px 0;
-}
-
-footer{
-    background:#0f2027;
-    color:white;
-    text-align:center;
-    padding:20px;
-    margin-top:30px;
-}
-
-footer a{
-    color:#ffeb3b;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-img{
-    max-width:100%;
-    border-radius:10px;
-.book-logo{
-    text-align:center;
-    padding:20px;
-    background:linear-gradient(135deg,#000428,#004e92);
-}
-
-.book-logo img{
-    width:120px;
-    height:120px;
-    border-radius:50%;
-    box-shadow:0 0 20px #00bfff;
-    animation:zoom 2s infinite;
-}
-
-@keyframes zoom{
-    0%{transform:scale(0.9);}
-    50%{transform:scale(1.05);}
-    100%{transform:scale(0.9);}
-}
-.logo-box{
-    text-align:center;
-    padding:30px;
-    background:linear-gradient(135deg,#1e3c72,#2a5298,#00c6ff);
-    border-radius:20px;
-    margin:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,.3);
-}
-/* ================================
-   STICKY READING TIMER
-================================ */
-
-#readingTimer {
-    position: sticky;
-    top: 0;
-    z-index: 9999;
-
-    background: white;
-    padding: 15px;
+* {
+    box-sizing: border-box;
     margin: 0;
-
-    border-bottom: 2px solid #ddd;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    padding: 0;
 }
 
-/* Timer text */
-#readingTimer #timer {
-    font-size: 24px;
-    font-weight: bold;
+html {
+    scroll-behavior: smooth;
 }
 
-/* Buttons */
-#readingTimer button {
-    margin: 4px;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eef4f8;
+    color: #172033;
+    line-height: 1.6;
 }
-/* ================================
-   STICKY READING TIMER
-================================ */
 
-#readingTimer {
-    position: sticky;
-    top: 0;
-    z-index: 9999;
 
-    background: white;
+/* ==========================================
+   HEADER
+========================================== */
+
+header {
+    background: linear-gradient(
+        135deg,
+        #071d2b,
+        #164e63,
+        #246b80
+    );
+
+    color: white;
+    text-align: center;
+
+    padding: 28px 15px 20px;
 
     box-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.15);
+        0 4px 15px rgba(0, 0, 0, 0.20);
 }
-  
-    
+
+
+.logo-box {
+    max-width: 1100px;
+    margin: auto;
+}
+
+
+.logo-circle {
+    font-size: 34px;
+    margin-bottom: 5px;
+}
+
+
+header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 3px;
+}
+
+
+.tagline {
+    color: #d9f4ff;
+    font-size: 14px;
+}
+
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+nav {
+    margin: 20px auto 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    background: white;
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    max-width: 1100px;
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+nav a {
+    text-decoration: none;
+
+    color: #075985;
+
+    font-weight: 700;
+
+    padding: 9px 16px;
+
+    border-radius: 8px;
+
+    transition: 0.2s;
+}
+
+
+nav a:hover {
+    background: #e0f2fe;
+    color: #0c4a6e;
+}
+
+
+/* ==========================================
+   HERO / MAIN SECTIONS
+========================================== */
+
+.hero {
+    max-width: 1100px;
+
+    margin: 25px auto;
+
+    padding: 28px;
+
+    background: white;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+.hero h1,
+.hero h2 {
+    color: #075985;
+
+    margin-bottom: 12px;
+}
+
+
+.hero h2 {
+    font-size: 25px;
+}
+
+
+.hero h3 {
+    margin-top: 18px;
+    margin-bottom: 6px;
+
+    color: #164e63;
+}
+
+
+.hero p {
+    margin-bottom: 10px;
+}
+
+
+/* ==========================================
+   SEARCH AREA
+========================================== */
+
+.search-section {
+    max-width: 1100px;
+
+    margin: 25px auto;
+
+    padding: 28px;
+
+    background: white;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.08);
+
+    text-align: center;
+}
+
+
+#bookSearch {
+    width: 100%;
+
+    max-width: 800px;
+
+    padding: 15px 18px;
+
+    border: 2px solid #cbd5e1;
+
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    outline: none;
+}
+
+
+#bookSearch:focus {
+    border-color: #0284c7;
+
+    box-shadow:
+        0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+button {
+    border: none;
+
+    cursor: pointer;
+
+    background: linear-gradient(
+        135deg,
+        #0284c7,
+        #0369a1
+    );
+
+    color: white;
+
+    padding: 12px 20px;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    margin: 5px;
+
+    transition: 0.2s;
+}
+
+
+button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 15px rgba(3, 105, 161, 0.25);
+}
+
+
+button:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* Search button */
+
+#searchButton {
+    width: 100%;
+
+    max-width: 800px;
+
+    margin-top: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #ff512f,
+        #dd2476
+    );
+}
+
+
+/* ==========================================
+   CATEGORY GRID
+========================================== */
+
+.categories {
+    max-width: 1100px;
+
+    margin: 25px auto;
+
+    padding: 0 15px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 18px;
+}
+
+
+.category-card {
+    min-height: 130px;
+
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.08);
+
+    cursor: pointer;
+
+    text-align: center;
+
+    transition: 0.25s;
+
+    border: 2px solid transparent;
+}
+
+
+.category-card:hover {
+    transform: translateY(-5px);
+
+    border-color: #38bdf8;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+
+.category-card .icon {
+    font-size: 35px;
+
+    display: block;
+
+    margin-bottom: 8px;
+}
+
+
+.category-card h3 {
+    color: #075985;
+
+    font-size: 17px;
+}
+
+
+.category-card p {
+    color: #64748b;
+
+    font-size: 13px;
+
+    margin-top: 5px;
+}
+
+
+/* ==========================================
+   BOOK CARDS
+========================================== */
+
+.book-grid {
+    max-width: 1100px;
+
+    margin: 25px auto;
+
+    padding: 0 15px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+.book-card {
+    background: white;
+
+    padding: 22px;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.08);
+
+    transition: 0.2s;
+}
+
+
+.book-card:hover {
+    transform: translateY(-4px);
+}
+
+
+.book-card h3 {
+    color: #075985;
+
+    margin-bottom: 8px;
+}
+
+
+.book-card p {
+    color: #475569;
+
+    font-size: 14px;
+}
+
+
+/* ==========================================
+   MINI BOOK CARDS
+========================================== */
+
+.book-mini-card {
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 18px;
+
+    margin-bottom: 15px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.07);
+}
+
+
+.book-mini-card h3 {
+    color: #075985;
+
+    margin: 5px 0;
+}
+
+
+.book-icon {
+    font-size: 30px;
+}
+
+
+/* ==========================================
+   EMPTY CARDS
+========================================== */
+
+.empty-card {
+    background: #f8fafc;
+
+    border: 1px dashed #94a3b8;
+
+    border-radius: 14px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #64748b;
+}
+
+
+.empty-card span {
+    font-size: 35px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+
+.empty-card a {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    color: #0369a1;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+
+/* ==========================================
+   PROGRESS BAR
+========================================== */
+
+.progress-bar {
+    width: 100%;
+
+    height: 10px;
+
+    background: #e2e8f0;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    margin: 10px 0;
+}
+
+
+.progress-fill {
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        #0284c7,
+        #22c55e
+    );
+
+    border-radius: 20px;
+}
+
+
+/* ==========================================
+   READING TIMER
+========================================== */
+
+.reading-time {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    max-width: 1100px;
+
+    margin: 15px auto;
+
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 18px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+#timer {
+    font-family: monospace;
+
+    font-size: 32px;
+
+    color: #075985;
+
+    margin: 10px 0;
+}
+
+
+/* ==========================================
+   PRACTICE CENTER
+========================================== */
+
+.practice-card {
+    max-width: 1100px;
+
+    margin: 25px auto;
+
+    padding: 28px;
+
+    background: white;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.08);
+}
+
+
+.question {
+    background: #f8fafc;
+
+    padding: 20px;
+
+    border-radius: 14px;
+
+    border-left: 5px solid #0284c7;
+}
+
+
+.option {
+    display: block;
+
+    width: 100%;
+
+    text-align: left;
+
+    margin: 10px 0;
+
+    background: white;
+
+    color: #172033;
+
+    border: 2px solid #cbd5e1;
+}
+
+
+.option:hover {
+    background: #e0f2fe;
+
+    border-color: #0284c7;
+}
+
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+footer {
+    background: #071d2b;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 35px 15px;
+
+    margin-top: 40px;
+}
+
+
+footer a {
+    color: #facc15;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    margin: 0 5px;
+}
+
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* ==========================================
+   LISTS
+========================================== */
+
+ul {
+    padding-left: 25px;
+}
+
+
+li {
+    margin-bottom: 7px;
+}
+
+
+/* ==========================================
+   CODE
+========================================== */
+
+pre {
+    background: #111827;
+
+    color: #e5e7eb;
+
+    padding: 18px;
+
+    border-radius: 10px;
+
+    overflow-x: auto;
+
+    margin: 15px 0;
+
+    font-family: monospace;
+
+    font-size: 14px;
+}
+
+
+/* ==========================================
+   LINKS
+========================================== */
+
+a {
+    color: #0369a1;
+}
+
+
+a:hover {
+    color: #0c4a6e;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+
+    header {
+        padding: 20px 10px;
+    }
+
+
+    header h1 {
+        font-size: 24px;
+    }
+
+
+    nav {
+        margin-top: 15px;
+
+        gap: 4px;
+
+        border-radius: 8px;
+    }
+
+
+    nav a {
+        font-size: 14px;
+
+        padding: 8px 10px;
+    }
+
+
+    .hero {
+        margin: 15px 10px;
+
+        padding: 20px;
+
+        border-radius: 14px;
+    }
+
+
+    .hero h2 {
+        font-size: 21px;
+    }
+
+
+    .categories {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 10px;
+
+        padding: 0 10px;
+    }
+
+
+    .category-card {
+        min-height: 120px;
+
+        padding: 15px 8px;
+    }
+
+
+    .category-card .icon {
+        font-size: 28px;
+    }
+
+
+    .category-card h3 {
+        font-size: 14px;
+    }
+
+
+    .category-card p {
+        font-size: 12px;
+    }
+
+
+    .book-grid {
+        grid-template-columns: 1fr;
+
+        padding: 0 10px;
+    }
+
+
+    .search-section {
+        margin: 15px 10px;
+
+        padding: 20px;
+    }
+
+
+    button {
+        width: 100%;
+
+        margin: 5px 0;
+    }
+
+
+    #searchButton {
+        width: 100%;
+    }
+
+
+    .reading-time {
+        margin: 10px;
+
+        border-radius: 12px;
+
+        padding: 15px;
+    }
+
+
+    #timer {
+        font-size: 27px;
+    }
+
+}
+
+
+/* ==========================================
+   SMALL PHONES
+========================================== */
+
+@media (max-width: 420px) {
+
+    header h1 {
+        font-size: 21px;
+    }
+
+
+    .categories {
+        grid-template-columns: 1fr;
+    }
+
+
+    .category-card {
+        min-height: auto;
+
+        padding: 16px;
+    }
+
+
+    .hero {
+        padding: 16px;
+    }
+
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+
+    .hero h2 {
+        font-size: 20px;
+    }
+
+
+    body {
+        font-size: 14px;
+    }
+
+}
