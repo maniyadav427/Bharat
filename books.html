@@ -564,27 +564,180 @@ function showCategory(category) {
 
 
 
+ 
+  <script type="module">
+
+import {
+    auth,
+    db,
+    onAuthStateChanged,
+    collection,
+    doc,
+    setDoc,
+    serverTimestamp
+} from "./firebase.js";
+
+
+let currentUser = null;
+
+
+// ==========================================
+// CHECK LOGIN
+// ==========================================
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        currentUser = user;
+
+    }
+);
+
+
+
+// ==========================================
+// SAVE BOOK
+// ==========================================
+
 document
     .querySelectorAll(".saveBook")
-    .forEach(function (button) {
+    .forEach((button) => {
 
         button.addEventListener(
             "click",
-            function () {
+            async () => {
+
+
+                // ------------------------------
+                // CHECK LOGIN
+                // ------------------------------
+
+                if (!currentUser) {
+
+                    alert(
+                        "🔐 Please login before saving books."
+                    );
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+
+                // ------------------------------
+                // BOOK INFORMATION
+                // ------------------------------
 
                 const bookName =
                     button.dataset.book;
 
-                alert(
-                    "🔖 " +
-                    bookName +
-                    " will be saved to your account."
-                );
+
+                const bookId =
+                    bookName
+                        .toLowerCase()
+                        .replace(
+                            /[^a-z0-9]+/g,
+                            "-"
+                        )
+                        .replace(
+                            /^-|-$/g,
+                            ""
+                        );
+
+
+
+                try {
+
+
+                    // ------------------------------
+                    // FIRESTORE LOCATION
+                    // ------------------------------
+
+                    const savedBook =
+                        doc(
+                            db,
+                            "users",
+                            currentUser.uid,
+                            "savedBooks",
+                            bookId
+                        );
+
+
+
+                    // ------------------------------
+                    // SAVE DATA
+                    // ------------------------------
+
+                    await setDoc(
+                        savedBook,
+                        {
+
+                            bookId:
+                                bookId,
+
+                            title:
+                                bookName,
+
+                            savedAt:
+                                serverTimestamp()
+
+                        },
+
+                        {
+                            merge: true
+                        }
+
+                    );
+
+
+
+                    // ------------------------------
+                    // SUCCESS
+                    // ------------------------------
+
+                    button.textContent =
+                        "✅ Saved";
+
+
+                    button.disabled =
+                        true;
+
+
+                    alert(
+                        "📚 " +
+                        bookName +
+                        " saved successfully!"
+                    );
+
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Save book error:",
+                        error
+                    );
+
+
+                    alert(
+                        "❌ Unable to save the book. " +
+                        "Please try again."
+                    );
+
+                }
 
             }
+
         );
 
     });
+
+</script>
 
 </script>
 
