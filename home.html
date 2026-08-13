@@ -1225,7 +1225,258 @@ function escapeHTML(value) {
 
 </script>
 
+<script type="module">
 
+import {
+    auth,
+    db,
+    onAuthStateChanged,
+    collection,
+    getDocs
+} from "./firebase.js";
+
+
+const savedBooksContainer =
+    document.getElementById("savedBooks");
+
+
+/* ==========================================
+   LOAD SAVED BOOKS
+========================================== */
+
+async function loadSavedBooks(user) {
+
+    if (!user) {
+
+        savedBooksContainer.innerHTML = `
+            <div class="empty-card">
+
+                <span>🔐</span>
+
+                <p>
+                    Please login to see your saved books.
+                </p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    try {
+
+        savedBooksContainer.innerHTML = `
+            <div class="empty-card">
+                <p>📚 Loading saved books...</p>
+            </div>
+        `;
+
+
+        const savedBooksRef =
+            collection(
+                db,
+                "users",
+                user.uid,
+                "savedBooks"
+            );
+
+
+        const snapshot =
+            await getDocs(savedBooksRef);
+
+
+        /* ==================================
+           NO SAVED BOOKS
+        ================================== */
+
+        if (snapshot.empty) {
+
+            savedBooksContainer.innerHTML = `
+                <div class="empty-card">
+
+                    <span>🔖</span>
+
+                    <p>
+                        Your saved books will appear here.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        /* ==================================
+           DISPLAY SAVED BOOKS
+        ================================== */
+
+        savedBooksContainer.innerHTML = "";
+
+
+        snapshot.forEach((documentSnapshot) => {
+
+            const book =
+                documentSnapshot.data();
+
+
+            const title =
+                book.title || "Book";
+
+
+            const bookId =
+                book.bookId || "";
+
+
+            let readPage = "#";
+
+
+            /* ===============================
+               BOOK LINKS
+            =============================== */
+
+            if (bookId === "c-programming") {
+
+                readPage = "c.html";
+
+            }
+
+            else if (bookId === "java-programming") {
+
+                readPage = "java.html";
+
+            }
+
+            else if (bookId === "python-programming") {
+
+                readPage = "python.html";
+
+            }
+
+            else if (
+                bookId ===
+                "data-structures-algorithms"
+            ) {
+
+                readPage = "dsa.html";
+
+            }
+
+
+            /* ===============================
+               CREATE CARD
+            =============================== */
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "saved-book-card";
+
+
+            card.innerHTML = `
+
+                <h3>
+                    📚 ${title}
+                </h3>
+
+                <p>
+                    🔖 Saved Book
+                </p>
+
+                <button
+                    type="button"
+                    class="continueBook"
+                >
+                    ▶️ Continue Reading
+                </button>
+
+            `;
+
+
+            /* ===============================
+               BUTTON
+            =============================== */
+
+            const button =
+                card.querySelector(
+                    ".continueBook"
+                );
+
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    if (readPage === "#") {
+
+                        alert(
+                            "📖 This book page is coming soon."
+                        );
+
+                        return;
+
+                    }
+
+
+                    window.location.href =
+                        readPage;
+
+                }
+            );
+
+
+            savedBooksContainer.appendChild(
+                card
+            );
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Load saved books error:",
+            error
+        );
+
+
+        savedBooksContainer.innerHTML = `
+
+            <div class="empty-card">
+
+                <span>❌</span>
+
+                <p>
+                    Unable to load saved books.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ==========================================
+   FIREBASE AUTH
+========================================== */
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        loadSavedBooks(user);
+
+    }
+);
+
+</script>
 </body>
 
 </html>
