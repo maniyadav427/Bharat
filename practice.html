@@ -254,8 +254,32 @@
 </footer>
 
 
+<script type="module">
 
-<script>
+import {
+
+    auth,
+    db,
+    onAuthStateChanged,
+    collection,
+    addDoc,
+    serverTimestamp
+
+} from "./firebase.js";
+
+
+
+/* ==========================================
+   USER
+========================================== */
+
+let currentUser = null;
+
+
+
+/* ==========================================
+   TEST VARIABLES
+========================================== */
 
 let currentSubject = "";
 
@@ -268,6 +292,21 @@ let userAnswers = [];
 let timerInterval = null;
 
 let remainingTime = 20;
+
+
+
+/* ==========================================
+   FIREBASE LOGIN
+========================================== */
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        currentUser = user;
+
+    }
+);
 
 
 
@@ -293,7 +332,6 @@ const questionBank = {
             answer: 1
         },
 
-
         {
             question:
                 "Which function is used to print output in C?",
@@ -307,7 +345,6 @@ const questionBank = {
 
             answer: 2
         },
-
 
         {
             question:
@@ -323,7 +360,6 @@ const questionBank = {
             answer: 2
         },
 
-
         {
             question:
                 "Which symbol starts a single-line comment in C?",
@@ -337,7 +373,6 @@ const questionBank = {
 
             answer: 0
         },
-
 
         {
             question:
@@ -372,7 +407,6 @@ const questionBank = {
             answer: 0
         },
 
-
         {
             question:
                 "Which method is the entry point of a Java program?",
@@ -405,7 +439,6 @@ const questionBank = {
 
             answer: 1
         },
-
 
         {
             question:
@@ -469,9 +502,25 @@ const questionBank = {
    START TEST
 ========================================== */
 
-function startTest(subject) {
+window.startTest = function(subject) {
 
-    currentSubject = subject;
+    if (!currentUser) {
+
+        alert(
+            "🔐 Please login before starting a test."
+        );
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    currentSubject =
+        subject;
+
 
     questions =
         questionBank[subject];
@@ -483,7 +532,7 @@ function startTest(subject) {
     ) {
 
         alert(
-            "No questions available yet."
+            "No questions available."
         );
 
         return;
@@ -498,12 +547,14 @@ function startTest(subject) {
 
     document.getElementById(
         "testArea"
-    ).style.display = "block";
+    ).style.display =
+        "block";
 
 
     document.getElementById(
         "resultArea"
-    ).style.display = "none";
+    ).style.display =
+        "none";
 
 
     document.getElementById(
@@ -529,7 +580,7 @@ function startTest(subject) {
 
     showQuestion();
 
-}
+};
 
 
 
@@ -578,7 +629,7 @@ function showQuestion() {
 
 
             label.style.margin =
-                "10px 0";
+                "12px 0";
 
 
             label.innerHTML = `
@@ -668,7 +719,7 @@ function startQuestionTimer() {
 
 
 /* ==========================================
-   DISPLAY TIMER
+   TIMER DISPLAY
 ========================================== */
 
 function updateTimer() {
@@ -722,7 +773,7 @@ function saveCurrentAnswer() {
    NEXT QUESTION
 ========================================== */
 
-function nextQuestion() {
+window.nextQuestion = function() {
 
     clearInterval(
         timerInterval
@@ -749,6 +800,215 @@ function nextQuestion() {
 
     }
 
+};
+
+
+
+/* ==========================================
+   CALCULATE SCORE
+========================================== */
+
+function calculateScore() {
+
+    let score = 0;
+
+
+    questions.forEach(
+        (question, index) => {
+
+            if (
+                userAnswers[index] ===
+                question.answer
+            ) {
+
+                score++;
+
+            }
+
+        }
+    );
+
+
+    return score;
+
+}
+
+
+
+/* ==========================================
+   SHOW ANSWER KEY
+========================================== */
+
+function showAnswerKey() {
+
+    const answerKey =
+        document.getElementById(
+            "answerKey"
+        );
+
+
+    answerKey.innerHTML = "";
+
+
+    questions.forEach(
+        (question, index) => {
+
+            const userAnswer =
+                userAnswers[index];
+
+
+            const correctAnswer =
+                question.answer;
+
+
+            const userText =
+                userAnswer === null ||
+                userAnswer === undefined
+
+                ? "Not Answered"
+
+                : question.options[
+                    userAnswer
+                  ];
+
+
+            const correctText =
+                question.options[
+                    correctAnswer
+                ];
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.style.margin =
+                "15px 0";
+
+
+            row.innerHTML = `
+
+                <strong>
+                    Q${index + 1}.
+                </strong>
+
+                ${question.question}
+
+                <br>
+
+                👤 Your Answer:
+                <strong>
+                    ${userText}
+                </strong>
+
+                <br>
+
+                ✅ Correct Answer:
+                <strong>
+                    ${correctText}
+                </strong>
+
+            `;
+
+
+            answerKey.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+
+/* ==========================================
+   SAVE TEST TO FIRESTORE
+========================================== */
+
+async function saveTestResult(
+    score
+) {
+
+    if (!currentUser) {
+
+        console.log(
+            "No logged-in user."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const points =
+            score * 10;
+
+
+        const testResults =
+            collection(
+                db,
+                "users",
+                currentUser.uid,
+                "testResults"
+            );
+
+
+        await addDoc(
+            testResults,
+            {
+
+                userId:
+                    currentUser.uid,
+
+                userEmail:
+                    currentUser.email || "",
+
+                subject:
+                    currentSubject,
+
+                totalQuestions:
+                    questions.length,
+
+                score:
+                    score,
+
+                points:
+                    points,
+
+                answers:
+                    userAnswers,
+
+                resultDeclared:
+                    false,
+
+                submittedAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        console.log(
+            "Test result saved successfully."
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Test result save error:",
+            error
+        );
+
+    }
+
 }
 
 
@@ -757,24 +1017,98 @@ function nextQuestion() {
    FINISH TEST
 ========================================== */
 
-function finishTest() {
+async function finishTest() {
 
     clearInterval(
         timerInterval
     );
 
 
+    const score =
+        calculateScore();
+
+
+    /* -----------------------------
+       SAVE TO FIREBASE
+    ----------------------------- */
+
+    await saveTestResult(
+        score
+    );
+
+
+    /* -----------------------------
+       HIDE TEST
+    ----------------------------- */
+
     document.getElementById(
         "testArea"
-    ).style.display = "none";
+    ).style.display =
+        "none";
 
+
+    /* -----------------------------
+       SHOW RESULT AREA
+    ----------------------------- */
 
     document.getElementById(
         "resultArea"
-    ).style.display = "block";
+    ).style.display =
+        "block";
 
+
+    /* -----------------------------
+       SHOW ANSWER KEY
+    ----------------------------- */
 
     showAnswerKey();
+
+
+    /* -----------------------------
+       KEEP MARKS HIDDEN
+    ----------------------------- */
+
+    const resultArea =
+        document.getElementById(
+            "resultArea"
+        );
+
+
+    const hiddenMessage =
+        document.createElement(
+            "div"
+        );
+
+
+    hiddenMessage.innerHTML = `
+
+        <hr>
+
+        <h3>
+            🔒 Marks are currently hidden
+        </h3>
+
+        <p>
+            Your answers have been submitted
+            successfully.
+        </p>
+
+        <p>
+            🏆 Result will be displayed
+            after it is declared.
+        </p>
+
+    `;
+
+
+    resultArea.appendChild(
+        hiddenMessage
+    );
+
+
+    resultArea.scrollIntoView({
+        behavior: "smooth"
+    });
 
 }
 
