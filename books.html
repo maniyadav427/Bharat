@@ -1,97 +1,593 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Books</title>
-<link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Books | ALLIED Digital Library</title>
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<script>
-if(localStorage.getItem("loggedIn")!=="true"){
-    alert("Please login first!");
-    window.location.href="login.html";
-}
-</script>
+
+<!-- ==============================
+     HEADER
+================================ -->
 
 <header>
-<h1>📚 E-Book Management System</h1>
 
-<nav>
-<a href="home.html">Home</a>
-<a href="#" onclick="logout()">Logout</a>
-</nav>
+    <h1>📚 ALLIED Digital Library</h1>
+
+    <p>
+        Learn • Read • Practice • Grow
+    </p>
+
+    <nav>
+
+        <a href="home.html">
+            🏠 Home
+        </a>
+
+        <a href="books.html">
+            📚 Books
+        </a>
+
+        <a href="practice.html">
+            📝 Practice
+        </a>
+
+        <a href="login.html" id="loginLink">
+            🔐 Login
+        </a>
+
+        <a href="#" id="logoutLink">
+            🚪 Logout
+        </a>
+
+    </nav>
 
 </header>
 
+
+<!-- ==============================
+     SEARCH
+================================ -->
+
 <section class="hero">
 
-<h2>Select Programming Subject</h2>
+    <h2>📚 Explore Books</h2>
 
-<input type="text" id="search" placeholder="Search Subject..." onkeyup="searchBooks()">
+    <p>
+        Find books by subject, category or title.
+    </p>
 
-<br><br>
-
-<button onclick="window.location.href='c.html'">
-💻 C Programming
-</button>
-
-<br><br>
-
-<button onclick="window.location.href='java.html'">
-☕ Java Programming
-</button>
-
-<br><br>
-
-<button onclick="window.location.href='python.html'">
-🐍 Python Programming
-</button>
-
-<br><br>
-
-<button onclick="window.location.href='dsa.html'">
-📚 Data Structures & Algorithms
-</button>
+    <input
+        type="text"
+        id="search"
+        placeholder="🔍 Search books..."
+    >
 
 </section>
 
+
+
+<!-- ==============================
+     CATEGORIES
+================================ -->
+
+<section class="hero">
+
+    <h2>📂 Categories</h2>
+
+
+    <div class="book-category">
+
+        <button onclick="showCategory('computer')">
+            💻 Computer Science
+        </button>
+
+        <button onclick="showCategory('mathematics')">
+            📐 Mathematics
+        </button>
+
+        <button onclick="showCategory('physics')">
+            ⚛️ Physics
+        </button>
+
+        <button onclick="showCategory('chemistry')">
+            🧪 Chemistry
+        </button>
+
+        <button onclick="showCategory('engineering')">
+            ⚙️ Engineering
+        </button>
+
+        <button onclick="showCategory('gk')">
+            🌍 General Knowledge
+        </button>
+
+        <button onclick="showCategory('exam')">
+            📝 Exam Preparation
+        </button>
+
+        <button onclick="showCategory('literature')">
+            📖 Literature & Novels
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==============================
+     BOOK LIST
+================================ -->
+
+<section class="hero">
+
+    <h2>📖 Available Books</h2>
+
+
+    <div id="bookList">
+
+
+        <!-- C PROGRAMMING -->
+
+        <div class="book-card"
+             data-category="computer"
+             data-title="C Programming">
+
+            <h3>
+                💻 C Programming
+            </h3>
+
+            <p>
+                Complete C Programming Course
+            </p>
+
+            <p>
+                📖 20 Chapters
+            </p>
+
+            <p>
+                ⏱️ Estimated reading: 4h 30m
+            </p>
+
+            <button
+                onclick="window.location.href='c.html'">
+
+                ▶️ Read Book
+
+            </button>
+
+            <button
+                class="saveBook"
+                data-book="C Programming">
+
+                🔖 Save
+
+            </button>
+
+        </div>
+
+
+
+        <!-- JAVA -->
+
+        <div class="book-card"
+             data-category="computer"
+             data-title="Java Programming">
+
+            <h3>
+                ☕ Java Programming
+            </h3>
+
+            <p>
+                Learn Java from Basic to Advanced
+            </p>
+
+            <p>
+                📖 Complete Course
+            </p>
+
+            <p>
+                ⏱️ Estimated reading: 5h
+            </p>
+
+            <button
+                onclick="window.location.href='java.html'">
+
+                ▶️ Read Book
+
+            </button>
+
+            <button
+                class="saveBook"
+                data-book="Java Programming">
+
+                🔖 Save
+
+            </button>
+
+        </div>
+
+
+
+        <!-- PYTHON -->
+
+        <div class="book-card"
+             data-category="computer"
+             data-title="Python Programming">
+
+            <h3>
+                🐍 Python Programming
+            </h3>
+
+            <p>
+                Python Basic to Advanced
+            </p>
+
+            <p>
+                📖 Complete Course
+            </p>
+
+            <p>
+                ⏱️ Estimated reading: 6h
+            </p>
+
+            <button
+                onclick="window.location.href='python.html'">
+
+                ▶️ Read Book
+
+            </button>
+
+            <button
+                class="saveBook"
+                data-book="Python Programming">
+
+                🔖 Save
+
+            </button>
+
+        </div>
+
+
+
+        <!-- DSA -->
+
+        <div class="book-card"
+             data-category="computer"
+             data-title="Data Structures Algorithms">
+
+            <h3>
+                📊 Data Structures & Algorithms
+            </h3>
+
+            <p>
+                Learn DSA concepts and algorithms.
+            </p>
+
+            <p>
+                📖 Complete Course
+            </p>
+
+            <p>
+                ⏱️ Estimated reading: 7h
+            </p>
+
+            <button
+                onclick="window.location.href='dsa.html'">
+
+                ▶️ Read Book
+
+            </button>
+
+            <button
+                class="saveBook"
+                data-book="Data Structures & Algorithms">
+
+                🔖 Save
+
+            </button>
+
+        </div>
+
+
+
+        <!-- MATHEMATICS -->
+
+        <div class="book-card"
+             data-category="mathematics"
+             data-title="Engineering Mathematics">
+
+            <h3>
+                📐 Engineering Mathematics
+            </h3>
+
+            <p>
+                Mathematics concepts and problem solving.
+            </p>
+
+            <p>
+                ⏱️ Estimated reading: 8h
+            </p>
+
+            <button>
+                🔒 Coming Soon
+            </button>
+
+            <button
+                class="saveBook"
+                data-book="Engineering Mathematics">
+
+                🔖 Save
+
+            </button>
+
+        </div>
+
+
+
+        <!-- PHYSICS -->
+
+        <div class="book-card"
+             data-category="physics"
+             data-title="Engineering Physics">
+
+            <h3>
+                ⚛️ Engineering Physics
+            </h3>
+
+            <p>
+                Physics concepts and important topics.
+            </p>
+
+            <p>
+                ⏱️ Estimated reading: 6h
+            </p>
+
+            <button>
+                🔒 Coming Soon
+            </button>
+
+        </div>
+
+
+
+        <!-- CHEMISTRY -->
+
+        <div class="book-card"
+             data-category="chemistry"
+             data-title="Engineering Chemistry">
+
+            <h3>
+                🧪 Engineering Chemistry
+            </h3>
+
+            <p>
+                Chemical concepts and applications.
+            </p>
+
+            <p>
+                ⏱️ Estimated reading: 5h
+            </p>
+
+            <button>
+                🔒 Coming Soon
+            </button>
+
+        </div>
+
+
+
+        <!-- GK -->
+
+        <div class="book-card"
+             data-category="gk"
+             data-title="General Knowledge">
+
+            <h3>
+                🌍 General Knowledge
+            </h3>
+
+            <p>
+                General knowledge and current learning.
+            </p>
+
+            <p>
+                ⏱️ Estimated reading: 5h
+            </p>
+
+            <button>
+                🔒 Coming Soon
+            </button>
+
+        </div>
+
+
+
+        <!-- EXAM -->
+
+        <div class="book-card"
+             data-category="exam"
+             data-title="JEE Main Preparation">
+
+            <h3>
+                📝 JEE Main Preparation
+            </h3>
+
+            <p>
+                Practice material and preparation resources.
+            </p>
+
+            <p>
+                ⏱️ Estimated reading: 10h
+            </p>
+
+            <button>
+                🔒 Coming Soon
+            </button>
+
+        </div>
+
+
+
+        <!-- LITERATURE -->
+
+        <div class="book-card"
+             data-category="literature"
+             data-title="Stories and Novels">
+
+            <h3>
+                📖 Stories & Novels
+            </h3>
+
+            <p>
+                Copyright-free literature and stories.
+            </p>
+
+            <p>
+                ⏱️ Estimated reading: 4h
+            </p>
+
+            <button>
+                🔒 Coming Soon
+            </button>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ==============================
+     FOOTER
+================================ -->
+
 <footer>
 
-<br>
+    <p>
+        📚 ALLIED Digital Library
+    </p>
 
-<a href="https://instagram.com/call_me_mr_mani_yadav_">
-Instagram Page
-</a>
-
-<br><br>
-
-<strong>Thank you for visiting my website ❤️</strong>
+    <p>
+        Read • Learn • Practice • Grow ❤️
+    </p>
 
 </footer>
 
+
+
+<!-- ==============================
+     SEARCH + CATEGORY
+================================ -->
+
 <script>
-function searchBooks(){
 
-let input=document.getElementById("search").value.toLowerCase();
+const search =
+    document.getElementById("search");
 
-let buttons=document.querySelectorAll(".hero button");
+const books =
+    document.querySelectorAll(".book-card");
 
-buttons.forEach(function(btn){
 
-if(btn.innerText.toLowerCase().includes(input))
-btn.style.display="block";
-else
-btn.style.display="none";
+search.addEventListener(
+    "input",
+    function () {
 
-});
+        const value =
+            search.value.toLowerCase();
+
+        books.forEach(function (book) {
+
+            const title =
+                book.dataset.title.toLowerCase();
+
+            const text =
+                book.innerText.toLowerCase();
+
+            if (
+                title.includes(value) ||
+                text.includes(value)
+            ) {
+
+                book.style.display =
+                    "block";
+
+            } else {
+
+                book.style.display =
+                    "none";
+
+            }
+
+        });
+
+    }
+);
+
+
+
+function showCategory(category) {
+
+    books.forEach(function (book) {
+
+        if (
+            book.dataset.category === category
+        ) {
+
+            book.style.display =
+                "block";
+
+        } else {
+
+            book.style.display =
+                "none";
+
+        }
+
+    });
 
 }
+
+
+
+document
+    .querySelectorAll(".saveBook")
+    .forEach(function (button) {
+
+        button.addEventListener(
+            "click",
+            function () {
+
+                const bookName =
+                    button.dataset.book;
+
+                alert(
+                    "🔖 " +
+                    bookName +
+                    " will be saved to your account."
+                );
+
+            }
+        );
+
+    });
+
 </script>
 
-<script type="module" src="firebase.js"></script>
 
 </body>
 </html>
