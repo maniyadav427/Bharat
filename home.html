@@ -7,49 +7,13 @@
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
-<meta name="google-adsense-account" content="ca-pub-2870967645080381">
 
-    <link rel="canonical"
-          href="https://maniyadav427.github.io/home.html">
-
-    <title>ALLIED E-Book Management System</title>
-
-    <meta name="application-name"
-          content="ALLIED E-Book Management System">
-
-    <meta property="og:site_name"
-          content="ALLIED E-Book Management System">
+    <title>
+        ALLIED - Digital Library
+    </title>
 
     <meta name="description"
-          content="ALLIED E-Book Management System is an educational platform for learning C, Java, Python, Data Structures and Algorithms through organized digital programming books.">
-
-
-    <!-- =========================
-         GOOGLE ANALYTICS
-    ========================== -->
-
-    <script async
-        src="https://www.googletagmanager.com/gtag/js?id=G-0ZQ7X6RC61">
-    </script>
-
-    <script>
-
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-
-        gtag('config', 'G-0ZQ7X6RC61');
-
-    </script>
-
-
-    <!-- =========================
-         CSS
-    ========================== -->
+          content="ALLIED is a digital library and learning platform with e-books, practice questions, reading progress and personalized learning.">
 
     <link rel="stylesheet"
           href="style.css">
@@ -60,63 +24,65 @@
 <body>
 
 
-<!-- =========================
+<!-- ==========================================
      HEADER
-========================= -->
+========================================== -->
 
-<header>
+<header class="allied-header">
 
-    <div class="logo-box">
+    <div class="brand">
 
-        <div class="logo-circle">
+        <div class="brand-logo">
             📚
         </div>
 
-        <h1>
-            ALLIED E-Book Management System
-        </h1>
+        <div>
 
-        <p class="tagline">
-            Read • Learn • Manage
-        </p>
+            <h1>
+                ALLIED
+            </h1>
+
+            <p>
+                Digital Library
+            </p>
+
+        </div>
 
     </div>
 
 
-    <!-- =========================
-         NAVIGATION
-    ========================== -->
-
-    <nav id="mainNav">
+    <nav>
 
         <a href="home.html">
-            Home
+            🏠 Home
         </a>
 
+        <a href="books.html">
+            📚 Books
+        </a>
 
-        <!-- LOGIN -->
+        <a href="practice.html">
+            📝 Practice
+        </a>
 
         <a href="login.html"
            id="loginLink">
-            Login
+            🔐 Login
         </a>
-
-
-        <!-- REGISTER -->
 
         <a href="register.html"
            id="registerLink">
             Register
         </a>
 
+        <button
+            id="logoutButton"
+            style="display:none;"
+            type="button">
 
-        <!-- LOGOUT -->
+            🚪 Logout
 
-        <a href="#"
-           id="logoutLink"
-           style="display:none;">
-            Logout
-        </a>
+        </button>
 
     </nav>
 
@@ -124,758 +90,1141 @@
 
 
 
-<!-- =========================
-     WELCOME SECTION
-========================= -->
+<!-- ==========================================
+     HERO
+========================================== -->
 
-<section class="hero">
+<section class="allied-hero">
 
-    <h2>
-        Welcome to the ALLIED E-Book Library 📚
+    <div class="hero-content">
+
+        <p class="hero-label">
+            📚 LEARN • READ • PRACTICE
+        </p>
+
+        <h2>
+            Your Digital Library
+        </h2>
+
+        <p>
+            Discover books, learn new concepts,
+            practice questions and track your
+            learning progress in one place.
+        </p>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <input
+                type="search"
+                id="bookSearch"
+                placeholder="🔍 Search books, subjects or authors...">
+
+            <button
+                type="button"
+                id="searchButton">
+
+                Search
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     USER WELCOME
+========================================== -->
+
+<section class="welcome-section">
+
+    <h2 id="welcomeMessage">
+        Welcome to ALLIED 👋
     </h2>
 
-
-    <p>
-        ALLIED E-Book Management System is an educational
-        platform designed to help students learn programming
-        and computer science concepts through organized
-        digital learning resources.
-    </p>
-
-
-    <p>
-        Our library provides learning resources for beginners,
-        college students and anyone interested in programming
-        and computer science.
-    </p>
-
-
-    <p id="loginStatus">
-        Please login to access the books. 🔐
+    <p id="userStatus">
+        Explore our digital library and
+        learning resources.
     </p>
 
 </section>
 
 
 
-<!-- =========================
-     ABOUT OUR LIBRARY
-========================= -->
+<!-- ==========================================
+     CATEGORIES
+========================================== -->
 
-<section class="hero">
+<section class="library-section">
 
-    <h2>
-        📖 About Our E-Book Library
-    </h2>
+    <div class="section-heading">
 
+        <h2>
+            📂 Explore Categories
+        </h2>
 
-    <p>
-        Learning programming becomes easier when concepts are
-        organized into understandable topics. The ALLIED
-        E-Book Management System provides a structured
-        collection of programming learning materials.
-    </p>
+        <p>
+            Find books and learning resources
+            by subject.
+        </p>
 
-
-    <p>
-        Each subject contains important programming concepts
-        that students can study step by step. The platform is
-        designed to provide a simple digital learning
-        environment for reading and practicing programming.
-    </p>
+    </div>
 
 
-    <p>
-        Students can select a programming subject from the
-        library and continue learning through the available
-        educational materials.
-    </p>
+    <div class="category-grid">
+
+
+        <!-- COMPUTER SCIENCE -->
+
+        <button
+            class="category-card"
+            data-category="Computer Science">
+
+            <span>
+                💻
+            </span>
+
+            <strong>
+                Computer Science
+            </strong>
+
+            <small>
+                Programming & Technology
+            </small>
+
+        </button>
+
+
+
+        <!-- MATHEMATICS -->
+
+        <button
+            class="category-card"
+            data-category="Mathematics">
+
+            <span>
+                📐
+            </span>
+
+            <strong>
+                Mathematics
+            </strong>
+
+            <small>
+                Maths & Problem Solving
+            </small>
+
+        </button>
+
+
+
+        <!-- PHYSICS -->
+
+        <button
+            class="category-card"
+            data-category="Physics">
+
+            <span>
+                🔬
+            </span>
+
+            <strong>
+                Physics
+            </strong>
+
+            <small>
+                Science & Concepts
+            </small>
+
+        </button>
+
+
+
+        <!-- CHEMISTRY -->
+
+        <button
+            class="category-card"
+            data-category="Chemistry">
+
+            <span>
+                🧪
+            </span>
+
+            <strong>
+                Chemistry
+            </strong>
+
+            <small>
+                Chemical Sciences
+            </small>
+
+        </button>
+
+
+
+        <!-- ENGINEERING -->
+
+        <button
+            class="category-card"
+            data-category="Engineering">
+
+            <span>
+                ⚡
+            </span>
+
+            <strong>
+                Engineering
+            </strong>
+
+            <small>
+                Engineering Subjects
+            </small>
+
+        </button>
+
+
+
+        <!-- GENERAL KNOWLEDGE -->
+
+        <button
+            class="category-card"
+            data-category="General Knowledge">
+
+            <span>
+                🌍
+            </span>
+
+            <strong>
+                General Knowledge
+            </strong>
+
+            <small>
+                GK & Current Learning
+            </small>
+
+        </button>
+
+
+
+        <!-- EXAM PREPARATION -->
+
+        <button
+            class="category-card"
+            data-category="Exam Preparation">
+
+            <span>
+                📝
+            </span>
+
+            <strong>
+                Exam Preparation
+            </strong>
+
+            <small>
+                Practice & Mock Tests
+            </small>
+
+        </button>
+
+
+
+        <!-- LITERATURE -->
+
+        <button
+            class="category-card"
+            data-category="Literature">
+
+            <span>
+                📖
+            </span>
+
+            <strong>
+                Literature
+            </strong>
+
+            <small>
+                Stories & Novels
+            </small>
+
+        </button>
+
+
+    </div>
 
 </section>
 
 
 
-<!-- =========================
-     WHAT YOU CAN LEARN
-========================= -->
+<!-- ==========================================
+     CONTINUE READING
+========================================== -->
 
-<section class="hero">
+<section class="library-section">
 
-    <h2>
-        🎓 What You Can Learn
-    </h2>
+    <div class="section-heading">
 
+        <h2>
+            ▶️ Continue Reading
+        </h2>
 
-    <p>
-        The ALLIED library currently focuses on four major
-        programming and computer science areas.
-    </p>
+        <p>
+            Continue from where you stopped.
+        </p>
 
-
-
-    <!-- C -->
-
-    <h3>
-        💻 C Programming
-    </h3>
-
-    <p>
-        Learn C programming fundamentals including variables,
-        constants, data types, operators, conditional
-        statements, loops, arrays, strings, functions,
-        pointers, structures and file handling.
-    </p>
+    </div>
 
 
+    <div id="continueReading">
 
-    <!-- JAVA -->
+        <div class="empty-card">
 
-    <h3>
-        ☕ Java Programming
-    </h3>
+            <span>
+                📚
+            </span>
 
-    <p>
-        Study Java programming and object-oriented concepts
-        including classes, objects, inheritance, polymorphism,
-        exception handling and other important Java concepts.
-    </p>
+            <p>
+                Your recently read books
+                will appear here.
+            </p>
 
+        </div>
 
-
-    <!-- PYTHON -->
-
-    <h3>
-        🐍 Python Programming
-    </h3>
-
-    <p>
-        Learn Python fundamentals including variables, data
-        types, operators, conditional statements, loops,
-        functions, lists, dictionaries and object-oriented
-        programming.
-    </p>
-
-
-
-    <!-- DSA -->
-
-    <h3>
-        📚 Data Structures & Algorithms
-    </h3>
-
-    <p>
-        Study arrays, linked lists, stacks, queues, trees,
-        searching, sorting and algorithmic problem solving.
-    </p>
+    </div>
 
 </section>
 
 
 
-<!-- =========================
-     WHY USE ALLIED
-========================= -->
+<!-- ==========================================
+     SAVED BOOKS
+========================================== -->
 
-<section class="hero">
+<section class="library-section">
 
-    <h2>
-        ⭐ Why Use ALLIED E-Books?
-    </h2>
+    <div class="section-heading">
 
+        <h2>
+            🔖 Saved Books
+        </h2>
 
-    <p>
-        Programming contains many connected concepts.
-        Organizing these concepts into subjects and topics can
-        make learning easier for beginners and students.
-    </p>
+        <p>
+            Quickly access books you saved.
+        </p>
 
-
-    <p>
-        The ALLIED E-Book Management System is designed with
-        simplicity in mind. Students can select a subject,
-        access the learning material and study at their own
-        pace.
-    </p>
+    </div>
 
 
-    <p>
-        The platform can be used as a supplementary learning
-        resource along with classroom teaching, programming
-        practice and personal study.
-    </p>
+    <div id="savedBooks">
 
-</section>
+        <div class="empty-card">
 
+            <span>
+                🔖
+            </span>
 
+            <p>
+                Your saved books will appear here.
+            </p>
 
-<!-- =========================
-     ALL BOOKS
-========================= -->
+        </div>
 
-<section class="hero">
-
-    <h2>
-        📚 Explore Our Books
-    </h2>
-
-
-    <p>
-        Select a subject below to continue learning.
-        You must log in and verify your email before accessing
-        the protected book pages.
-    </p>
-
-
-    <br>
-
-
-    <!-- C PROGRAMMING -->
-
-    <button
-        type="button"
-        onclick="openBook('c.html')">
-
-        💻 C Programming
-
-    </button>
-
-
-    <br><br>
-
-
-    <!-- JAVA PROGRAMMING -->
-
-    <button
-        type="button"
-        onclick="openBook('java.html')">
-
-        ☕ Java Programming
-
-    </button>
-
-
-    <br><br>
-
-
-    <!-- PYTHON PROGRAMMING -->
-
-    <button
-        type="button"
-        onclick="openBook('python.html')">
-
-        🐍 Python Programming
-
-    </button>
-
-
-    <br><br>
-
-
-    <!-- DATA STRUCTURES -->
-
-    <button
-        type="button"
-        onclick="openBook('dsa.html')">
-
-        📚 Data Structures & Algorithms
-
-    </button>
+    </div>
 
 </section>
 
 
 
-<!-- =========================
-     LEARNING PATH
-========================= -->
+<!-- ==========================================
+     PRACTICE CENTER
+========================================== -->
 
-<section class="hero">
+<section class="practice-banner">
 
-    <h2>
-        🧠 Suggested Learning Path
-    </h2>
+    <div>
 
+        <span>
+            📝
+        </span>
 
-    <p>
-        Beginners can start with C Programming to understand
-        basic concepts such as variables, operators,
-        conditions, loops and functions.
-    </p>
+        <h2>
+            Practice Center
+        </h2>
 
+        <p>
+            Test your knowledge with timed questions,
+            advanced practice and mock tests.
+        </p>
 
-    <p>
-        After learning programming fundamentals, students can
-        explore Java or Python to understand different
-        programming approaches and object-oriented concepts.
-    </p>
-
-
-    <p>
-        Data Structures & Algorithms can then be studied to
-        understand how data is organized and how computational
-        problems can be solved efficiently.
-    </p>
-
-</section>
+    </div>
 
 
-
-<!-- =========================
-     CONTACT
-========================= -->
-
-<footer>
-
-    <h3>
-        Contact Us
-    </h3>
-
-
-    <p>
-        If you have questions or suggestions about the ALLIED
-        E-Book Management System, you can contact us.
-    </p>
-
-
-    <!-- USERNAME -->
-
-    <input
-        type="text"
-        id="contactUsername"
-        placeholder="Username">
-
-
-    <br><br>
-
-
-    <!-- EMAIL -->
-
-    <input
-        type="email"
-        id="contactEmail"
-        placeholder="Email">
-
-
-    <br><br>
-
-
-    <!-- PHONE -->
-
-    <input
-        type="tel"
-        id="contactPhone"
-        placeholder="Phone Number">
-
-
-    <br><br>
-
-
-    <!-- SUBMIT -->
-
-    <button
-        type="button"
-        onclick="submitContact()">
-
-        Submit
-
-    </button>
-
-
-    <br><br>
-
-
-    <!-- INSTAGRAM -->
-
-    <a href="https://instagram.com/call_me_mr_mani_yadav_">
-
-        Instagram Page
-
+    <a href="practice.html">
+        Start Practice →
     </a>
 
-
-    <br><br>
-
-
-    <!-- PRIVACY -->
-
-    <a href="privacy.html">
-
-        Privacy Policy
-
-    </a>
+</section>
 
 
-    <br><br>
+
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
+<footer class="allied-footer">
+
+    <h2>
+        📚 ALLIED
+    </h2>
+
+    <p>
+        Read • Learn • Practice • Grow
+    </p>
+
+
+    <div class="footer-links">
+
+        <a href="home.html">
+            Home
+        </a>
+
+        <a href="books.html">
+            Books
+        </a>
+
+        <a href="practice.html">
+            Practice
+        </a>
+
+        <a href="privacy.html">
+            Privacy Policy
+        </a>
+
+        <a href="contact.html">
+            Contact
+        </a>
+
+    </div>
 
 
     <p>
-        Thank you for visiting the ALLIED E-Book Management
-        System. 🙏
+        © 2026 ALLIED Digital Library
     </p>
 
 </footer>
-
-
-
-<!-- ==================================================
-     FIREBASE AUTHENTICATION
-=================================================== -->
+<!-- ==========================================
+     FIREBASE + HOME PAGE JAVASCRIPT
+========================================== -->
 
 <script type="module">
 
-    import {
-        auth,
-        onAuthStateChanged,
-        signOut
-    } from "./firebase.js";
+import {
+    auth,
+    db,
+    onAuthStateChanged,
+    signOut,
+    collection,
+    getDocs
+} from "./firebase.js";
 
 
-    /* =========================
-       CURRENT USER
-    ========================== */
+// ==========================================
+// ELEMENTS
+// ==========================================
 
-    let currentUser = null;
+const loginLink =
+    document.getElementById("loginLink");
+
+const registerLink =
+    document.getElementById("registerLink");
+
+const logoutButton =
+    document.getElementById("logoutButton");
+
+const welcomeMessage =
+    document.getElementById("welcomeMessage");
+
+const userStatus =
+    document.getElementById("userStatus");
+
+const searchInput =
+    document.getElementById("bookSearch");
+
+const searchButton =
+    document.getElementById("searchButton");
+
+const continueReading =
+    document.getElementById("continueReading");
+
+const savedBooks =
+    document.getElementById("savedBooks");
 
 
-    /* =========================
-       GET HTML ELEMENTS
-    ========================== */
 
-    const loginStatus =
-        document.getElementById("loginStatus");
+// ==========================================
+// CURRENT USER
+// ==========================================
 
-
-    const loginLink =
-        document.getElementById("loginLink");
+let currentUser = null;
 
 
-    const registerLink =
-        document.getElementById("registerLink");
+
+// ==========================================
+// FIREBASE AUTHENTICATION
+// ==========================================
+
+onAuthStateChanged(auth, async (user) => {
+
+    currentUser = user;
 
 
-    const logoutLink =
-        document.getElementById("logoutLink");
+    // ------------------------------
+    // USER LOGGED IN
+    // ------------------------------
+
+    if (user) {
+
+        welcomeMessage.textContent =
+            "Welcome back, " +
+            (user.displayName || "Reader") +
+            " 👋";
 
 
-    /* =========================
-       SHOW LOGGED OUT STATE
-    ========================== */
+        userStatus.textContent =
+            "You are signed in as " +
+            user.email;
 
-    function showLoggedOut() {
 
         loginLink.style.display =
-            "inline-block";
-
-        registerLink.style.display =
-            "inline-block";
-
-        logoutLink.style.display =
             "none";
 
-        loginStatus.textContent =
-            "Please login to access the books. 🔐";
+
+        registerLink.style.display =
+            "none";
+
+
+        logoutButton.style.display =
+            "inline-block";
+
+
+        // Load user's data
+
+        await loadSavedBooks();
+
+        await loadRecentBooks();
 
     }
 
 
-    /* =========================
-       SHOW LOGGED IN STATE
-    ========================== */
+    // ------------------------------
+    // USER NOT LOGGED IN
+    // ------------------------------
 
-    function showLoggedIn(user) {
+    else {
+
+        welcomeMessage.textContent =
+            "Welcome to ALLIED 👋";
+
+
+        userStatus.textContent =
+            "Explore our digital library and learning resources.";
+
 
         loginLink.style.display =
-            "none";
-
-        registerLink.style.display =
-            "none";
-
-        logoutLink.style.display =
             "inline-block";
 
 
-        if (user.emailVerified) {
+        registerLink.style.display =
+            "inline-block";
 
-            loginStatus.textContent =
-                "You are logged in and your email is verified. You can open the books. ✅";
 
-        } else {
+        logoutButton.style.display =
+            "none";
 
-            loginStatus.textContent =
-                "Please verify your email before opening the books. 📧";
 
-        }
+        showLoginMessage();
 
     }
 
-
-    /* ==================================================
-       FIREBASE AUTH STATE
-    =================================================== */
-
-    onAuthStateChanged(auth, async (user) => {
-
-        currentUser = user;
+});
 
 
-        /* =========================
-           NO USER
-        ========================== */
 
-        if (!user) {
+// ==========================================
+// LOGOUT
+// ==========================================
 
-            showLoggedOut();
-
-            return;
-
-        }
-
-
-        /* =========================
-           REFRESH USER INFORMATION
-        ========================== */
+logoutButton.addEventListener(
+    "click",
+    async () => {
 
         try {
 
-            await user.reload();
+            await signOut(auth);
 
-            currentUser =
-                auth.currentUser;
+            window.location.href =
+                "home.html";
 
         }
 
         catch (error) {
 
             console.error(
-                "User reload error:",
+                "Logout error:",
                 error
+            );
+
+            alert(
+                "Unable to logout. Please try again."
             );
 
         }
 
-
-        /* =========================
-           CHECK USER
-        ========================== */
-
-        if (currentUser) {
-
-            showLoggedIn(currentUser);
-
-        }
-
-        else {
-
-            showLoggedOut();
-
-        }
-
-    });
+    }
+);
 
 
-    /* ==================================================
-       LOGOUT
-    =================================================== */
 
-    logoutLink.addEventListener(
+// ==========================================
+// CATEGORY BUTTONS
+// ==========================================
+
+const categoryButtons =
+    document.querySelectorAll(
+        ".category-card"
+    );
+
+
+categoryButtons.forEach((button) => {
+
+    button.addEventListener(
         "click",
-        async (event) => {
+        () => {
 
-            event.preventDefault();
-
-
-            try {
-
-                await signOut(auth);
+            const category =
+                button.dataset.category;
 
 
-                /* Clear current user */
+            /*
+             * Send the selected category
+             * to books.html.
+             */
 
-                currentUser = null;
-
-
-                /* Remove requested book */
-
-                sessionStorage.removeItem(
-                    "requestedBook"
-                );
-
-
-                /* Show logged out navigation */
-
-                showLoggedOut();
-
-
-                /* Go to Home */
-
-                window.location.href =
-                    "home.html";
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Logout error:",
-                    error
-                );
-
-
-                alert(
-                    "Logout failed. Please try again."
-                );
-
-            }
+            window.location.href =
+                "books.html?category=" +
+                encodeURIComponent(category);
 
         }
     );
 
-
-    /* ==================================================
-       OPEN BOOK
-    =================================================== */
-
-    window.openBook = function(bookPage) {
+});
 
 
-        /* =========================
-           NOT LOGGED IN
-        ========================== */
 
-        if (!currentUser) {
+// ==========================================
+// SEARCH
+// ==========================================
 
-            sessionStorage.setItem(
-                "requestedBook",
-                bookPage
-            );
+function performSearch() {
 
-
-            window.location.href =
-                "login.html";
+    const search =
+        searchInput.value.trim();
 
 
-            return;
-
-        }
-
-
-        /* =========================
-           EMAIL NOT VERIFIED
-        ========================== */
-
-        if (!currentUser.emailVerified) {
-
-            sessionStorage.setItem(
-                "requestedBook",
-                bookPage
-            );
-
-
-            alert(
-                "Please verify your email before accessing this book."
-            );
-
-
-            window.location.href =
-                "login.html";
-
-
-            return;
-
-        }
-
-
-        /* =========================
-           VERIFIED USER
-        ========================== */
-
-        window.location.href =
-            bookPage;
-
-    };
-
-
-    /* ==================================================
-       CONTACT FORM
-    =================================================== */
-
-    window.submitContact = function() {
-
-
-        const username =
-            document.getElementById(
-                "contactUsername"
-            ).value.trim();
-
-
-        const email =
-            document.getElementById(
-                "contactEmail"
-            ).value.trim();
-
-
-        const phone =
-            document.getElementById(
-                "contactPhone"
-            ).value.trim();
-
-
-        /* =========================
-           USERNAME CHECK
-        ========================== */
-
-        if (!username) {
-
-            alert(
-                "Please enter your username."
-            );
-
-            return;
-
-        }
-
-
-        /* =========================
-           EMAIL CHECK
-        ========================== */
-
-        if (!email) {
-
-            alert(
-                "Please enter your email."
-            );
-
-            return;
-
-        }
-
-
-        /* =========================
-           PHONE CHECK
-        ========================== */
-
-        if (!phone) {
-
-            alert(
-                "Please enter your phone number."
-            );
-
-            return;
-
-        }
-
-
-        /* =========================
-           SUCCESS
-        ========================== */
+    if (search === "") {
 
         alert(
-            "Thank you! Your information has been submitted successfully."
+            "Please enter a book, subject or author."
         );
 
-    };
+        return;
+
+    }
+
+
+    window.location.href =
+        "books.html?search=" +
+        encodeURIComponent(search);
+
+}
+
+
+
+searchButton.addEventListener(
+    "click",
+    performSearch
+);
+
+
+
+searchInput.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (event.key === "Enter") {
+
+            performSearch();
+
+        }
+
+    }
+);
+
+
+
+// ==========================================
+// LOAD SAVED BOOKS
+// ==========================================
+
+async function loadSavedBooks() {
+
+    if (!currentUser) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const savedCollection =
+            collection(
+                db,
+                "users",
+                currentUser.uid,
+                "savedBooks"
+            );
+
+
+        const snapshot =
+            await getDocs(
+                savedCollection
+            );
+
+
+        if (snapshot.empty) {
+
+            savedBooks.innerHTML = `
+
+                <div class="empty-card">
+
+                    <span>
+                        🔖
+                    </span>
+
+                    <p>
+                        You haven't saved any books yet.
+                    </p>
+
+                    <a href="books.html">
+                        Browse Books →
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        savedBooks.innerHTML = "";
+
+
+        snapshot.forEach((doc) => {
+
+            const book =
+                doc.data();
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "book-mini-card";
+
+
+            card.innerHTML = `
+
+                <span class="book-icon">
+                    📘
+                </span>
+
+                <h3>
+                    ${escapeHTML(
+                        book.title ||
+                        "Untitled Book"
+                    )}
+                </h3>
+
+                <p>
+                    ${escapeHTML(
+                        book.category ||
+                        "General"
+                    )}
+                </p>
+
+                <button
+                    type="button"
+                    class="open-book-button">
+
+                    📖 Open Book
+
+                </button>
+
+            `;
+
+
+            const openButton =
+                card.querySelector(
+                    ".open-book-button"
+                );
+
+
+            openButton.addEventListener(
+                "click",
+                () => {
+
+                    if (book.url) {
+
+                        window.location.href =
+                            book.url;
+
+                    }
+
+                    else {
+
+                        window.location.href =
+                            "books.html";
+
+                    }
+
+                }
+            );
+
+
+            savedBooks.appendChild(
+                card
+            );
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Saved books error:",
+            error
+        );
+
+
+        savedBooks.innerHTML = `
+
+            <div class="empty-card">
+
+                <p>
+                    Unable to load saved books.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+// ==========================================
+// LOAD RECENT BOOKS
+// ==========================================
+
+async function loadRecentBooks() {
+
+    if (!currentUser) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const recentCollection =
+            collection(
+                db,
+                "users",
+                currentUser.uid,
+                "recentBooks"
+            );
+
+
+        const snapshot =
+            await getDocs(
+                recentCollection
+            );
+
+
+        if (snapshot.empty) {
+
+            continueReading.innerHTML = `
+
+                <div class="empty-card">
+
+                    <span>
+                        📚
+                    </span>
+
+                    <p>
+                        Start reading a book and
+                        it will appear here.
+                    </p>
+
+                    <a href="books.html">
+                        Explore Books →
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        continueReading.innerHTML = "";
+
+
+        snapshot.forEach((doc) => {
+
+            const book =
+                doc.data();
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "book-mini-card";
+
+
+            card.innerHTML = `
+
+                <span class="book-icon">
+                    📖
+                </span>
+
+                <h3>
+                    ${escapeHTML(
+                        book.title ||
+                        "Untitled Book"
+                    )}
+                </h3>
+
+                <p>
+                    ${
+                        book.chapter ||
+                        "Continue reading"
+                    }
+                </p>
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill"
+                        style="width:${
+                            Number(
+                                book.progress || 0
+                            )
+                        }%;">
+                    </div>
+
+                </div>
+
+                <p>
+                    ${
+                        Number(
+                            book.progress || 0
+                        )
+                    }% completed
+                </p>
+
+                <button
+                    type="button"
+                    class="continue-button">
+
+                    ▶️ Continue Reading
+
+                </button>
+
+            `;
+
+
+            const continueButton =
+                card.querySelector(
+                    ".continue-button"
+                );
+
+
+            continueButton.addEventListener(
+                "click",
+                () => {
+
+                    if (book.url) {
+
+                        window.location.href =
+                            book.url;
+
+                    }
+
+                    else {
+
+                        window.location.href =
+                            "books.html";
+
+                    }
+
+                }
+            );
+
+
+            continueReading.appendChild(
+                card
+            );
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Recent books error:",
+            error
+        );
+
+
+        continueReading.innerHTML = `
+
+            <div class="empty-card">
+
+                <p>
+                    Unable to load recent books.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+// ==========================================
+// NOT LOGGED IN MESSAGE
+// ==========================================
+
+function showLoginMessage() {
+
+    continueReading.innerHTML = `
+
+        <div class="empty-card">
+
+            <span>
+                🔐
+            </span>
+
+            <p>
+                Login to see your recent books.
+            </p>
+
+            <a href="login.html">
+                Login →
+            </a>
+
+        </div>
+
+    `;
+
+
+    savedBooks.innerHTML = `
+
+        <div class="empty-card">
+
+            <span>
+                🔖
+            </span>
+
+            <p>
+                Login to see your saved books.
+            </p>
+
+            <a href="login.html">
+                Login →
+            </a>
+
+        </div>
+
+    `;
+
+}
+
+
+
+// ==========================================
+// BASIC HTML SAFETY
+// ==========================================
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
 
 </script>
+
 
 </body>
 
