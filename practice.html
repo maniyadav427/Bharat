@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Practice Center | ALLIED</title>
+
+<link rel="stylesheet"
+      href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header>
+
+    <h1>
+        📝 ALLIED Practice Center
+    </h1>
+
+    <p>
+        Learn • Practice • Improve • Earn Points
+    </p>
+
+    <nav>
+
+        <a href="home.html">
+            🏠 Home
+        </a>
+
+        <a href="books.html">
+            📚 Books
+        </a>
+
+        <a href="practice.html">
+            📝 Practice
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ==========================================
+     PRACTICE MENU
+========================================== -->
+
+<section class="hero">
+
+    <h2>
+        🎯 Choose Practice
+    </h2>
+
+    <p>
+        Test your knowledge and earn points.
+    </p>
+
+
+    <button
+        type="button"
+        onclick="startTest('c')">
+
+        💻 C Programming
+
+    </button>
+
+
+    <br><br>
+
+
+    <button
+        type="button"
+        onclick="startTest('java')">
+
+        ☕ Java Programming
+
+    </button>
+
+
+    <br><br>
+
+
+    <button
+        type="button"
+        onclick="startTest('python')">
+
+        🐍 Python Programming
+
+    </button>
+
+
+    <br><br>
+
+
+    <button
+        type="button"
+        onclick="startTest('mathematics')">
+
+        📐 Mathematics
+
+    </button>
+
+
+    <br><br>
+
+
+    <button
+        type="button"
+        onclick="startTest('gk')">
+
+        🌍 General Knowledge
+
+    </button>
+
+</section>
+
+
+
+<!-- ==========================================
+     TEST AREA
+========================================== -->
+
+<section
+    id="testArea"
+    class="hero"
+    style="display:none;">
+
+    <h2 id="testTitle">
+        Practice Test
+    </h2>
+
+
+    <p>
+
+        Question
+        <span id="questionNumber">
+            1
+        </span>
+
+        /
+
+        <span id="totalQuestions">
+            10
+        </span>
+
+    </p>
+
+
+    <!-- TIMER -->
+
+    <h2 id="questionTimer">
+
+        ⏱️ 00:20
+
+    </h2>
+
+
+    <!-- QUESTION -->
+
+    <h3 id="questionText">
+
+        Question will appear here.
+
+    </h3>
+
+
+    <!-- OPTIONS -->
+
+    <div id="options">
+
+    </div>
+
+
+    <br>
+
+
+    <button
+        type="button"
+        id="nextButton"
+        onclick="nextQuestion()">
+
+        ➡️ Next
+
+    </button>
+
+
+</section>
+
+
+
+<!-- ==========================================
+     RESULT AREA
+========================================== -->
+
+<section
+    id="resultArea"
+    class="hero"
+    style="display:none;">
+
+    <h2>
+        📋 Answer Key
+    </h2>
+
+
+    <div id="answerKey">
+
+    </div>
+
+
+    <hr>
+
+
+    <h3>
+        🔒 Marks are currently hidden
+    </h3>
+
+
+    <p>
+        Your score will be displayed after
+        the result is declared.
+    </p>
+
+
+</section>
+
+
+
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
+<footer>
+
+    <p>
+        📚 ALLIED Digital Library
+    </p>
+
+    <p>
+        Read • Learn • Practice • Grow ❤️
+    </p>
+
+</footer>
+
+
+
+<script>
+
+let currentSubject = "";
+
+let currentQuestion = 0;
+
+let questions = [];
+
+let userAnswers = [];
+
+let timerInterval = null;
+
+let remainingTime = 20;
+
+
+
+/* ==========================================
+   QUESTION DATABASE
+========================================== */
+
+const questionBank = {
+
+    c: [
+
+        {
+            question:
+                "Which symbol is used to end a statement in C?",
+
+            options: [
+                ".",
+                ";",
+                ":",
+                ","
+            ],
+
+            answer: 1
+        },
+
+
+        {
+            question:
+                "Which function is used to print output in C?",
+
+            options: [
+                "scanf()",
+                "input()",
+                "printf()",
+                "print()"
+            ],
+
+            answer: 2
+        },
+
+
+        {
+            question:
+                "Which data type stores an integer?",
+
+            options: [
+                "float",
+                "char",
+                "int",
+                "double"
+            ],
+
+            answer: 2
+        },
+
+
+        {
+            question:
+                "Which symbol starts a single-line comment in C?",
+
+            options: [
+                "//",
+                "##",
+                "<!--",
+                "**"
+            ],
+
+            answer: 0
+        },
+
+
+        {
+            question:
+                "Which header file contains printf()?",
+
+            options: [
+                "math.h",
+                "stdio.h",
+                "string.h",
+                "stdlib.h"
+            ],
+
+            answer: 1
+        }
+
+    ],
+
+
+    java: [
+
+        {
+            question:
+                "Which keyword is used to create a class in Java?",
+
+            options: [
+                "class",
+                "struct",
+                "object",
+                "define"
+            ],
+
+            answer: 0
+        },
+
+
+        {
+            question:
+                "Which method is the entry point of a Java program?",
+
+            options: [
+                "start()",
+                "run()",
+                "main()",
+                "begin()"
+            ],
+
+            answer: 2
+        }
+
+    ],
+
+
+    python: [
+
+        {
+            question:
+                "Which symbol is used for comments in Python?",
+
+            options: [
+                "//",
+                "#",
+                "/*",
+                "--"
+            ],
+
+            answer: 1
+        },
+
+
+        {
+            question:
+                "Which keyword defines a function in Python?",
+
+            options: [
+                "function",
+                "func",
+                "def",
+                "define"
+            ],
+
+            answer: 2
+        }
+
+    ],
+
+
+    mathematics: [
+
+        {
+            question:
+                "What is 2 + 3?",
+
+            options: [
+                "4",
+                "5",
+                "6",
+                "7"
+            ],
+
+            answer: 1
+        }
+
+    ],
+
+
+    gk: [
+
+        {
+            question:
+                "What is the capital of India?",
+
+            options: [
+                "Mumbai",
+                "Hyderabad",
+                "New Delhi",
+                "Chennai"
+            ],
+
+            answer: 2
+        }
+
+    ]
+
+};
+
+
+
+/* ==========================================
+   START TEST
+========================================== */
+
+function startTest(subject) {
+
+    currentSubject = subject;
+
+    questions =
+        questionBank[subject];
+
+
+    if (
+        !questions ||
+        questions.length === 0
+    ) {
+
+        alert(
+            "No questions available yet."
+        );
+
+        return;
+
+    }
+
+
+    currentQuestion = 0;
+
+    userAnswers = [];
+
+
+    document.getElementById(
+        "testArea"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "resultArea"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "testArea"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+
+
+    document.getElementById(
+        "testTitle"
+    ).textContent =
+        "🎯 " +
+        subject.toUpperCase() +
+        " Practice Test";
+
+
+    document.getElementById(
+        "totalQuestions"
+    ).textContent =
+        questions.length;
+
+
+    showQuestion();
+
+}
+
+
+
+/* ==========================================
+   SHOW QUESTION
+========================================== */
+
+function showQuestion() {
+
+    const question =
+        questions[currentQuestion];
+
+
+    document.getElementById(
+        "questionNumber"
+    ).textContent =
+        currentQuestion + 1;
+
+
+    document.getElementById(
+        "questionText"
+    ).textContent =
+        question.question;
+
+
+    const options =
+        document.getElementById(
+            "options"
+        );
+
+
+    options.innerHTML = "";
+
+
+    question.options.forEach(
+        (option, index) => {
+
+            const label =
+                document.createElement(
+                    "label"
+                );
+
+
+            label.style.display =
+                "block";
+
+
+            label.style.margin =
+                "10px 0";
+
+
+            label.innerHTML = `
+
+                <input
+                    type="radio"
+                    name="answer"
+                    value="${index}">
+
+                ${option}
+
+            `;
+
+
+            options.appendChild(
+                label
+            );
+
+        }
+    );
+
+
+    document.getElementById(
+        "nextButton"
+    ).textContent =
+
+        currentQuestion ===
+        questions.length - 1
+
+        ? "✅ Submit Test"
+
+        : "➡️ Next";
+
+
+    startQuestionTimer();
+
+}
+
+
+
+/* ==========================================
+   20 SECOND TIMER
+========================================== */
+
+function startQuestionTimer() {
+
+    clearInterval(
+        timerInterval
+    );
+
+
+    remainingTime = 20;
+
+
+    updateTimer();
+
+
+    timerInterval =
+        setInterval(
+            () => {
+
+                remainingTime--;
+
+                updateTimer();
+
+
+                if (
+                    remainingTime <= 0
+                ) {
+
+                    clearInterval(
+                        timerInterval
+                    );
+
+                    saveCurrentAnswer();
+
+                    nextQuestion();
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+
+/* ==========================================
+   DISPLAY TIMER
+========================================== */
+
+function updateTimer() {
+
+    document.getElementById(
+        "questionTimer"
+    ).textContent =
+
+        "⏱️ 00:" +
+        String(
+            remainingTime
+        ).padStart(2, "0");
+
+}
+
+
+
+/* ==========================================
+   SAVE CURRENT ANSWER
+========================================== */
+
+function saveCurrentAnswer() {
+
+    const selected =
+        document.querySelector(
+            'input[name="answer"]:checked'
+        );
+
+
+    if (selected) {
+
+        userAnswers[currentQuestion] =
+            Number(
+                selected.value
+            );
+
+    }
+
+    else {
+
+        userAnswers[currentQuestion] =
+            null;
+
+    }
+
+}
+
+
+
+/* ==========================================
+   NEXT QUESTION
+========================================== */
+
+function nextQuestion() {
+
+    clearInterval(
+        timerInterval
+    );
+
+
+    saveCurrentAnswer();
+
+
+    if (
+        currentQuestion <
+        questions.length - 1
+    ) {
+
+        currentQuestion++;
+
+        showQuestion();
+
+    }
+
+    else {
+
+        finishTest();
+
+    }
+
+}
+
+
+
+/* ==========================================
+   FINISH TEST
+========================================== */
+
+function finishTest() {
+
+    clearInterval(
+        timerInterval
+    );
+
+
+    document.getElementById(
+        "testArea"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "resultArea"
+    ).style.display = "block";
+
+
+    showAnswerKey();
+
+}
+
+</script>
+
+</body>
+
+</html>
