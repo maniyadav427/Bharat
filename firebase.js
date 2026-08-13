@@ -25,12 +25,13 @@ import {
 // Firebase Firestore
 // ================================
 
-import {
+ import {
     getFirestore,
     doc,
     setDoc,
     collection,
     addDoc,
+    getDocs,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
@@ -101,10 +102,11 @@ export {
     db,
 
     doc,
-    setDoc,
-    collection,
-    addDoc,
-    serverTimestamp,
+setDoc,
+collection,
+addDoc,
+getDocs,
+serverTimestamp,
 
     createUserWithEmailAndPassword,
     sendEmailVerification,
