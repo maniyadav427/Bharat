@@ -292,6 +292,34 @@ let userAnswers = [];
 let timerInterval = null;
 
 let remainingTime = 20;
+// ==========================================
+// CALCULATE PRACTICE POINTS
+// ==========================================
+
+function calculatePoints() {
+
+    let points = 0;
+
+    questions.forEach((question, index) => {
+
+        const userAnswer =
+            userAnswers[index];
+
+        if (
+            userAnswer !== undefined &&
+            userAnswer !== null &&
+            userAnswer !== "" &&
+            userAnswer === question.answer
+        ) {
+
+            points++;
+
+        }
+
+    });
+
+    return points;
+}
 
 
 
@@ -957,7 +985,8 @@ async function saveTestResult(
                 "testResults"
             );
 
-
+const points = calculatePoints();
+const score = points;
         await addDoc(
             testResults,
             {
@@ -1146,8 +1175,7 @@ async function savePracticeTest() {
             resultDeclared:
                 false,
 
-            points:
-                0
+            points: calculatePoints()
 
         };
 
@@ -1185,6 +1213,34 @@ async function savePracticeTest() {
 
     }
 
+}
+// ==========================================
+// CALCULATE PRACTICE POINTS
+// ==========================================
+
+function calculatePoints() {
+
+    let points = 0;
+
+    questions.forEach((question, index) => {
+
+        const userAnswer =
+            userAnswers[index];
+
+        if (
+            userAnswer !== undefined &&
+            userAnswer !== null &&
+            userAnswer !== "" &&
+            userAnswer === question.answer
+        ) {
+
+            points++;
+
+        }
+
+    });
+
+    return points;
 }
 
 </script>
