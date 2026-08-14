@@ -3,15 +3,17 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<title>Practice Center | ALLIED</title>
+    <title>
+        Practice Center | ALLIED
+    </title>
 
-<link rel="stylesheet"
-      href="style.css">
+    <link rel="stylesheet"
+          href="style.css">
 
 </head>
 
@@ -145,6 +147,7 @@
     <p>
 
         Question
+
         <span id="questionNumber">
             1
         </span>
@@ -158,7 +161,7 @@
     </p>
 
 
-    <!-- TIMER -->
+    <!-- 20 SECOND TIMER -->
 
     <h2 id="questionTimer">
 
@@ -222,16 +225,32 @@
     <hr>
 
 
-    <h3>
-        🔒 Marks are currently hidden
-    </h3>
+    <div id="hiddenResult">
+
+        <h3>
+            🔒 Marks are currently hidden
+        </h3>
 
 
-    <p>
-        Your score will be displayed after
-        the result is declared.
-    </p>
+        <p>
+            Your answers have been submitted successfully.
+        </p>
 
+
+        <p>
+            🏆 Your points:
+            <strong id="pointsDisplay">
+                0
+            </strong>
+        </p>
+
+
+        <p>
+            📢 Marks will be displayed after
+            the result is declared.
+        </p>
+
+    </div>
 
 </section>
 
@@ -251,10 +270,7 @@
         Read • Learn • Practice • Grow ❤️
     </p>
 
-</footer>
-
-
-<script type="module">
+</footer><script type="module">
 
 import {
 
@@ -270,7 +286,7 @@ import {
 
 
 /* ==========================================
-   USER
+   CURRENT USER
 ========================================== */
 
 let currentUser = null;
@@ -292,48 +308,23 @@ let userAnswers = [];
 let timerInterval = null;
 
 let remainingTime = 20;
-// ==========================================
-// CALCULATE PRACTICE POINTS
-// ==========================================
-
-function calculatePoints() {
-
-    let points = 0;
-
-    questions.forEach((question, index) => {
-
-        const userAnswer =
-            userAnswers[index];
-
-        if (
-            userAnswer !== undefined &&
-            userAnswer !== null &&
-            userAnswer !== "" &&
-            userAnswer === question.answer
-        ) {
-
-            points++;
-
-        }
-
-    });
-
-    return points;
-}
 
 
 
 /* ==========================================
-   FIREBASE LOGIN
+   FIREBASE AUTH
 ========================================== */
 
 onAuthStateChanged(
+
     auth,
+
     (user) => {
 
         currentUser = user;
 
     }
+
 );
 
 
@@ -344,180 +335,255 @@ onAuthStateChanged(
 
 const questionBank = {
 
+
+    /* ========================================
+       C PROGRAMMING
+    ======================================== */
+
     c: [
 
         {
+
             question:
                 "Which symbol is used to end a statement in C?",
 
             options: [
+
                 ".",
                 ";",
                 ":",
                 ","
+
             ],
 
             answer: 1
+
         },
 
+
         {
+
             question:
                 "Which function is used to print output in C?",
 
             options: [
+
                 "scanf()",
                 "input()",
                 "printf()",
                 "print()"
+
             ],
 
             answer: 2
+
         },
 
+
         {
+
             question:
                 "Which data type stores an integer?",
 
             options: [
+
                 "float",
                 "char",
                 "int",
                 "double"
+
             ],
 
             answer: 2
+
         },
 
+
         {
+
             question:
                 "Which symbol starts a single-line comment in C?",
 
             options: [
+
                 "//",
                 "##",
                 "<!--",
                 "**"
+
             ],
 
             answer: 0
+
         },
 
+
         {
+
             question:
                 "Which header file contains printf()?",
 
             options: [
+
                 "math.h",
                 "stdio.h",
                 "string.h",
                 "stdlib.h"
+
             ],
 
             answer: 1
+
         }
 
     ],
 
+
+
+    /* ========================================
+       JAVA
+    ======================================== */
 
     java: [
 
         {
+
             question:
                 "Which keyword is used to create a class in Java?",
 
             options: [
+
                 "class",
                 "struct",
                 "object",
                 "define"
+
             ],
 
             answer: 0
+
         },
 
+
         {
+
             question:
                 "Which method is the entry point of a Java program?",
 
             options: [
+
                 "start()",
                 "run()",
                 "main()",
                 "begin()"
+
             ],
 
             answer: 2
+
         }
 
     ],
 
+
+
+    /* ========================================
+       PYTHON
+    ======================================== */
 
     python: [
 
         {
+
             question:
                 "Which symbol is used for comments in Python?",
 
             options: [
+
                 "//",
                 "#",
                 "/*",
                 "--"
+
             ],
 
             answer: 1
+
         },
 
+
         {
+
             question:
                 "Which keyword defines a function in Python?",
 
             options: [
+
                 "function",
                 "func",
                 "def",
                 "define"
+
             ],
 
             answer: 2
+
         }
 
     ],
 
+
+
+    /* ========================================
+       MATHEMATICS
+    ======================================== */
 
     mathematics: [
 
         {
+
             question:
                 "What is 2 + 3?",
 
             options: [
+
                 "4",
                 "5",
                 "6",
                 "7"
+
             ],
 
             answer: 1
+
         }
 
     ],
 
 
+
+    /* ========================================
+       GENERAL KNOWLEDGE
+    ======================================== */
+
     gk: [
 
         {
+
             question:
                 "What is the capital of India?",
 
             options: [
+
                 "Mumbai",
                 "Hyderabad",
                 "New Delhi",
                 "Chennai"
+
             ],
 
             answer: 2
+
         }
 
     ]
@@ -532,14 +598,17 @@ const questionBank = {
 
 window.startTest = function(subject) {
 
+
     if (!currentUser) {
 
         alert(
             "🔐 Please login before starting a test."
         );
 
+
         window.location.href =
             "login.html";
+
 
         return;
 
@@ -563,14 +632,18 @@ window.startTest = function(subject) {
             "No questions available."
         );
 
+
         return;
 
     }
 
 
-    currentQuestion = 0;
+    currentQuestion =
+        0;
 
-    userAnswers = [];
+
+    userAnswers =
+        [];
 
 
     document.getElementById(
@@ -588,15 +661,21 @@ window.startTest = function(subject) {
     document.getElementById(
         "testArea"
     ).scrollIntoView({
-        behavior: "smooth"
+
+        behavior:
+            "smooth"
+
     });
 
 
     document.getElementById(
         "testTitle"
     ).textContent =
-        "🎯 " +
-        subject.toUpperCase() +
+
+        "🎯 "
+        +
+        subject.toUpperCase()
+        +
         " Practice Test";
 
 
@@ -618,6 +697,7 @@ window.startTest = function(subject) {
 
 function showQuestion() {
 
+
     const question =
         questions[currentQuestion];
 
@@ -625,12 +705,14 @@ function showQuestion() {
     document.getElementById(
         "questionNumber"
     ).textContent =
+
         currentQuestion + 1;
 
 
     document.getElementById(
         "questionText"
     ).textContent =
+
         question.question;
 
 
@@ -640,11 +722,14 @@ function showQuestion() {
         );
 
 
-    options.innerHTML = "";
+    options.innerHTML =
+        "";
 
 
     question.options.forEach(
+
         (option, index) => {
+
 
             const label =
                 document.createElement(
@@ -677,6 +762,7 @@ function showQuestion() {
             );
 
         }
+
     );
 
 
@@ -704,12 +790,14 @@ function showQuestion() {
 
 function startQuestionTimer() {
 
+
     clearInterval(
         timerInterval
     );
 
 
-    remainingTime = 20;
+    remainingTime =
+        20;
 
 
     updateTimer();
@@ -717,9 +805,12 @@ function startQuestionTimer() {
 
     timerInterval =
         setInterval(
+
             () => {
 
+
                 remainingTime--;
+
 
                 updateTimer();
 
@@ -728,18 +819,23 @@ function startQuestionTimer() {
                     remainingTime <= 0
                 ) {
 
+
                     clearInterval(
                         timerInterval
                     );
 
+
                     saveCurrentAnswer();
+
 
                     nextQuestion();
 
                 }
 
             },
+
             1000
+
         );
 
 }
@@ -747,19 +843,24 @@ function startQuestionTimer() {
 
 
 /* ==========================================
-   TIMER DISPLAY
+   UPDATE TIMER
 ========================================== */
 
 function updateTimer() {
+
 
     document.getElementById(
         "questionTimer"
     ).textContent =
 
-        "⏱️ 00:" +
+        "⏱️ 00:"
+        +
         String(
             remainingTime
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 }
 
@@ -771,6 +872,7 @@ function updateTimer() {
 
 function saveCurrentAnswer() {
 
+
     const selected =
         document.querySelector(
             'input[name="answer"]:checked'
@@ -779,16 +881,25 @@ function saveCurrentAnswer() {
 
     if (selected) {
 
-        userAnswers[currentQuestion] =
+
+        userAnswers[
+            currentQuestion
+        ] =
+
             Number(
                 selected.value
             );
+
 
     }
 
     else {
 
-        userAnswers[currentQuestion] =
+
+        userAnswers[
+            currentQuestion
+        ] =
+
             null;
 
     }
@@ -803,6 +914,7 @@ function saveCurrentAnswer() {
 
 window.nextQuestion = function() {
 
+
     clearInterval(
         timerInterval
     );
@@ -812,17 +924,23 @@ window.nextQuestion = function() {
 
 
     if (
+
         currentQuestion <
         questions.length - 1
+
     ) {
+
 
         currentQuestion++;
 
+
         showQuestion();
+
 
     }
 
     else {
+
 
         finishTest();
 
@@ -833,31 +951,58 @@ window.nextQuestion = function() {
 
 
 /* ==========================================
-   CALCULATE SCORE
+   CALCULATE POINTS
 ========================================== */
 
-function calculateScore() {
+function calculatePoints() {
 
-    let score = 0;
+
+    let points =
+        0;
 
 
     questions.forEach(
+
         (question, index) => {
 
+
+            const userAnswer =
+                userAnswers[index];
+
+
             if (
-                userAnswers[index] ===
+
+                userAnswer !==
+                undefined
+
+                &&
+
+                userAnswer !==
+                null
+
+                &&
+
+                userAnswer !==
+                ""
+
+                &&
+
+                userAnswer ===
                 question.answer
+
             ) {
 
-                score++;
+
+                points++;
 
             }
 
         }
+
     );
 
 
-    return score;
+    return points;
 
 }
 
@@ -869,17 +1014,21 @@ function calculateScore() {
 
 function showAnswerKey() {
 
+
     const answerKey =
         document.getElementById(
             "answerKey"
         );
 
 
-    answerKey.innerHTML = "";
+    answerKey.innerHTML =
+        "";
 
 
     questions.forEach(
+
         (question, index) => {
+
 
             const userAnswer =
                 userAnswers[index];
@@ -890,14 +1039,23 @@ function showAnswerKey() {
 
 
             const userText =
-                userAnswer === null ||
-                userAnswer === undefined
 
-                ? "Not Answered"
+                userAnswer ===
+                null
 
-                : question.options[
+                ||
+                userAnswer ===
+                undefined
+
+                ?
+
+                "Not Answered"
+
+                :
+
+                question.options[
                     userAnswer
-                  ];
+                ];
 
 
             const correctText =
@@ -927,6 +1085,7 @@ function showAnswerKey() {
                 <br>
 
                 👤 Your Answer:
+
                 <strong>
                     ${userText}
                 </strong>
@@ -934,6 +1093,7 @@ function showAnswerKey() {
                 <br>
 
                 ✅ Correct Answer:
+
                 <strong>
                     ${correctText}
                 </strong>
@@ -946,6 +1106,7 @@ function showAnswerKey() {
             );
 
         }
+
     );
 
 }
@@ -953,88 +1114,124 @@ function showAnswerKey() {
 
 
 /* ==========================================
-   SAVE TEST TO FIRESTORE
+   SAVE PRACTICE TEST
 ========================================== */
 
-async function saveTestResult(
-    score
-) {
+async function savePracticeTest() {
+
 
     if (!currentUser) {
 
-        console.log(
-            "No logged-in user."
+
+        alert(
+            "🔐 Please login first."
         );
 
-        return;
+
+        return false;
 
     }
 
 
     try {
 
+
         const points =
-            score * 10;
+            calculatePoints();
 
 
-        const testResults =
-            collection(
-                db,
-                "users",
+        const testData = {
+
+
+            userId:
                 currentUser.uid,
-                "testResults"
-            );
 
-const points = calculatePoints();
-const score = points;
+
+            userEmail:
+                currentUser.email || "",
+
+
+            subject:
+                currentSubject,
+
+
+            totalQuestions:
+                questions.length,
+
+
+            answers:
+                userAnswers,
+
+
+            points:
+                points,
+
+
+            score:
+                points,
+
+
+            resultDeclared:
+                false,
+
+
+            submittedAt:
+                serverTimestamp()
+
+        };
+
+
         await addDoc(
-            testResults,
-            {
 
-                userId:
-                    currentUser.uid,
+            collection(
 
-                userEmail:
-                    currentUser.email || "",
+                db,
 
-                subject:
-                    currentSubject,
+                "users",
 
-                totalQuestions:
-                    questions.length,
+                currentUser.uid,
 
-                score:
-                    score,
+                "practiceTests"
 
-                points:
-                    points,
+            ),
 
-                answers:
-                    userAnswers,
+            testData
 
-                resultDeclared:
-                    false,
-
-                submittedAt:
-                    serverTimestamp()
-
-            }
         );
 
 
         console.log(
-            "Test result saved successfully."
+            "Practice test saved successfully."
         );
+
+
+        return true;
 
 
     }
 
     catch (error) {
 
+
         console.error(
-            "Test result save error:",
+
+            "Practice test save error:",
+
             error
+
         );
+
+
+        alert(
+
+            "❌ Unable to save your test.\n\n"
+            +
+            error.message
+
+        );
+
+
+        return false;
 
     }
 
@@ -1048,27 +1245,37 @@ const score = points;
 
 async function finishTest() {
 
+
     clearInterval(
         timerInterval
     );
 
 
-    const score =
-        calculateScore();
+    saveCurrentAnswer();
 
 
-    /* -----------------------------
-       SAVE TO FIREBASE
-    ----------------------------- */
-
-    await saveTestResult(
-        score
-    );
+    const points =
+        calculatePoints();
 
 
-    /* -----------------------------
+    /* ------------------------------------------
+       SAVE TEST
+    ------------------------------------------ */
+
+    const saved =
+        await savePracticeTest();
+
+
+    if (!saved) {
+
+        return;
+
+    }
+
+
+    /* ------------------------------------------
        HIDE TEST
-    ----------------------------- */
+    ------------------------------------------ */
 
     document.getElementById(
         "testArea"
@@ -1076,9 +1283,9 @@ async function finishTest() {
         "none";
 
 
-    /* -----------------------------
-       SHOW RESULT AREA
-    ----------------------------- */
+    /* ------------------------------------------
+       SHOW RESULT
+    ------------------------------------------ */
 
     document.getElementById(
         "resultArea"
@@ -1086,164 +1293,43 @@ async function finishTest() {
         "block";
 
 
-    /* -----------------------------
-       SHOW ANSWER KEY
-    ----------------------------- */
+    /* ------------------------------------------
+       ANSWER KEY
+    ------------------------------------------ */
 
     showAnswerKey();
 
 
-    /* -----------------------------
-       KEEP MARKS HIDDEN
-    ----------------------------- */
+    /* ------------------------------------------
+       POINTS + HIDDEN MARKS
+    ------------------------------------------ */
 
-    const resultArea =
-        document.getElementById(
-            "resultArea"
-        );
-
-
-    const hiddenMessage =
-        document.createElement(
-            "div"
-        );
+    document.getElementById(
+        "pointsDisplay"
+    ).textContent =
+        points;
 
 
-    hiddenMessage.innerHTML = `
-
-        <hr>
-
-        <h3>
-            🔒 Marks are currently hidden
-        </h3>
-
-        <p>
-            Your answers have been submitted
-            successfully.
-        </p>
-
-        <p>
-            🏆 Result will be displayed
-            after it is declared.
-        </p>
-
-    `;
+    document.getElementById(
+        "hiddenResult"
+    ).style.display =
+        "block";
 
 
-    resultArea.appendChild(
-        hiddenMessage
-    );
+    document.getElementById(
+        "resultArea"
+    ).scrollIntoView({
 
-
-    resultArea.scrollIntoView({
-        behavior: "smooth"
-    });
-
-}
-// ==========================================
-// SAVE PRACTICE TEST
-// ==========================================
-
-async function savePracticeTest() {
-
-    if (!currentUser) {
-        alert("🔐 Please login first.");
-        return;
-    }
-
-    try {
-
-        const testData = {
-
-            userId: currentUser.uid,
-
-            userEmail:
-                currentUser.email || "",
-
-            subject:
-                currentSubject,
-
-            totalQuestions:
-                questions.length,
-
-            answers:
-                userAnswers,
-
-            submittedAt:
-                serverTimestamp(),
-
-            resultDeclared:
-                false,
-
-            points: calculatePoints()
-
-        };
-
-
-        await addDoc(
-
-            collection(
-                db,
-                "users",
-                currentUser.uid,
-                "practiceTests"
-            ),
-
-            testData
-
-        );
-
-
-        console.log(
-            "Practice test saved successfully."
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Practice test save error:",
-            error
-        );
-
-        alert(
-            "❌ Unable to save practice test.\n\n" +
-            error.message
-        );
-
-    }
-
-}
-// ==========================================
-// CALCULATE PRACTICE POINTS
-// ==========================================
-
-function calculatePoints() {
-
-    let points = 0;
-
-    questions.forEach((question, index) => {
-
-        const userAnswer =
-            userAnswers[index];
-
-        if (
-            userAnswer !== undefined &&
-            userAnswer !== null &&
-            userAnswer !== "" &&
-            userAnswer === question.answer
-        ) {
-
-            points++;
-
-        }
+        behavior:
+            "smooth"
 
     });
 
-    return points;
 }
+
 
 </script>
+
 
 </body>
 
