@@ -51,11 +51,13 @@
      style="display:none;">
 
 
+
 <!-- ==================================================
      READING TIMER
 ================================================== -->
 
-<section class="hero" id="readingTimer">
+<section class="hero"
+         id="readingTimer">
 
     <h2>
         📖 Reading Time
@@ -68,14 +70,10 @@
     </p>
 
 
-    <!-- TIMER -->
-
     <h2 id="timer">
         00:00:00
     </h2>
 
-
-    <!-- BUTTONS -->
 
     <button
         type="button"
@@ -105,8 +103,6 @@
 
     </button>
 
-
-    <!-- STATUS -->
 
     <p id="saveStatus"></p>
 
@@ -570,11 +566,7 @@ Grade = A
 </footer>
 
 
-</div>
-
-
-
-<!-- ==================================================
+</div><!-- ==================================================
      FIREBASE + READING TIMER
 ================================================== -->
 
@@ -583,15 +575,10 @@ Grade = A
 import {
 
     auth,
-
     db,
-
     onAuthStateChanged,
-
-    collection,
-
-    addDoc,
-
+    doc,
+    setDoc,
     serverTimestamp
 
 } from "./firebase.js";
@@ -603,40 +590,58 @@ import {
 ================================================== */
 
 const authChecking =
-    document.getElementById("authChecking");
+    document.getElementById(
+        "authChecking"
+    );
 
 
 const pageContent =
-    document.getElementById("pageContent");
+    document.getElementById(
+        "pageContent"
+    );
 
 
 const timer =
-    document.getElementById("timer");
+    document.getElementById(
+        "timer"
+    );
 
 
 const startButton =
-    document.getElementById("startButton");
+    document.getElementById(
+        "startButton"
+    );
 
 
 const pauseButton =
-    document.getElementById("pauseButton");
+    document.getElementById(
+        "pauseButton"
+    );
 
 
 const stopButton =
-    document.getElementById("stopButton");
+    document.getElementById(
+        "stopButton"
+    );
 
 
 const saveStatus =
-    document.getElementById("saveStatus");
+    document.getElementById(
+        "saveStatus"
+    );
 
 
 
 /* ==================================================
-   CHAPTER INFORMATION
+   BOOK INFORMATION
 ================================================== */
 
 const BOOK_NAME =
     "C Programming";
+
+
+const BOOK_ID =
+    "c-programming";
 
 
 const CHAPTER_NAME =
@@ -649,26 +654,62 @@ const CHAPTER_ID =
 
 
 /* ==================================================
-   TIMER VARIABLES
+   USER
 ================================================== */
 
 let currentUser = null;
 
-let timerInterval = null;
+
+
+/* ==================================================
+   TIMER VARIABLES
+================================================== */
 
 let elapsedSeconds = 0;
 
 let isRunning = false;
 
-let startTime = null;
+let timerInterval = null;
+
+let saveInterval = null;
+
+let lastStartTime = null;
+
+let saving = false;
+
+let stopped = false;
 
 
 
 /* ==================================================
-   FORMAT TIMER
+   UNIQUE FIRESTORE SESSION
+================================================== */
+
+const sessionId =
+
+    "chapter-03-"
+    +
+    Date.now()
+    +
+    "-"
+    +
+    Math.random()
+        .toString(36)
+        .substring(2, 8);
+
+
+
+/* ==================================================
+   FORMAT TIME
 ================================================== */
 
 function formatTime(totalSeconds) {
+
+    totalSeconds =
+        Math.floor(
+            Number(totalSeconds) || 0
+        );
+
 
     const hours =
         Math.floor(
@@ -688,11 +729,52 @@ function formatTime(totalSeconds) {
 
     return (
 
-        String(hours).padStart(2, "0")
-        + ":" +
-        String(minutes).padStart(2, "0")
-        + ":" +
-        String(seconds).padStart(2, "0")
+        String(hours)
+            .padStart(2, "0")
+
+        + ":"
+
+        +
+
+        String(minutes)
+            .padStart(2, "0")
+
+        + ":"
+
+        +
+
+        String(seconds)
+            .padStart(2, "0")
+
+    );
+
+}
+
+
+
+/* ==================================================
+   GET CURRENT ELAPSED TIME
+================================================== */
+
+function getCurrentElapsed() {
+
+    if (
+        !isRunning ||
+        !lastStartTime
+    ) {
+
+        return 0;
+
+    }
+
+
+    return Math.floor(
+
+        (
+            Date.now()
+            -
+            lastStartTime
+        ) / 1000
 
     );
 
@@ -706,8 +788,16 @@ function formatTime(totalSeconds) {
 
 function updateTimer() {
 
+    const currentSeconds =
+        elapsedSeconds
+        +
+        getCurrentElapsed();
+
+
     timer.textContent =
-        formatTime(elapsedSeconds);
+        formatTime(
+            currentSeconds
+        );
 
 }
 
@@ -719,22 +809,22 @@ function updateTimer() {
 
 function startTimer() {
 
-    if (isRunning) {
+    if (
+        isRunning ||
+        stopped
+    ) {
 
         return;
 
     }
 
 
-    isRunning = true;
+    isRunning =
+        true;
 
 
-    if (!startTime) {
-
-        startTime =
-            new Date();
-
-    }
+    lastStartTime =
+        Date.now();
 
 
     startButton.disabled =
@@ -749,18 +839,27 @@ function startTimer() {
         false;
 
 
+    startButton.textContent =
+        "▶️ Reading...";
+
+
     saveStatus.textContent =
-        "Reading time is being recorded... 📖";
+        "📖 Reading time is being recorded...";
+
+
+    clearInterval(
+        timerInterval
+    );
 
 
     timerInterval =
-        setInterval(() => {
+        setInterval(
+            updateTimer,
+            1000
+        );
 
-            elapsedSeconds++;
 
-            updateTimer();
-
-        }, 1000);
+    updateTimer();
 
 }
 
@@ -770,13 +869,20 @@ function startTimer() {
    PAUSE TIMER
 ================================================== */
 
-function pauseTimer() {
+async function pauseTimer() {
 
     if (!isRunning) {
 
         return;
 
     }
+
+
+    calculateElapsed();
+
+
+    isRunning =
+        false;
 
 
     clearInterval(
@@ -786,10 +892,6 @@ function pauseTimer() {
 
     timerInterval =
         null;
-
-
-    isRunning =
-        false;
 
 
     startButton.disabled =
@@ -809,7 +911,56 @@ function pauseTimer() {
 
 
     saveStatus.textContent =
-        "Reading timer paused. ⏸️";
+        "⏸️ Reading timer paused.";
+
+
+    await saveReadingTime();
+
+}
+
+
+
+/* ==================================================
+   CALCULATE ELAPSED TIME
+================================================== */
+
+function calculateElapsed() {
+
+    if (
+        !isRunning ||
+        !lastStartTime
+    ) {
+
+        return;
+
+    }
+
+
+    const seconds =
+        Math.floor(
+
+            (
+                Date.now()
+                -
+                lastStartTime
+            ) / 1000
+
+        );
+
+
+    if (seconds > 0) {
+
+        elapsedSeconds +=
+            seconds;
+
+    }
+
+
+    lastStartTime =
+        null;
+
+
+    updateTimer();
 
 }
 
@@ -823,72 +974,58 @@ async function saveReadingTime() {
 
     if (!currentUser) {
 
-        saveStatus.textContent =
-            "You are not logged in. ❌";
+        return;
+
+    }
+
+
+    if (saving) {
 
         return;
 
     }
+
+
+    /*
+     * Add current running time.
+     */
+
+    calculateElapsed();
 
 
     if (elapsedSeconds <= 0) {
 
-        saveStatus.textContent =
-            "Please read for some time before saving.";
-
         return;
 
     }
 
 
+    saving = true;
+
+
     try {
 
-        saveStatus.textContent =
-            "Saving reading time... 💾";
 
+        const sessionRef =
+            doc(
 
-        /*
-         * If timer is running,
-         * stop it first.
-         */
-
-        if (timerInterval) {
-
-            clearInterval(
-                timerInterval
-            );
-
-            timerInterval =
-                null;
-
-        }
-
-
-        isRunning =
-            false;
-
-
-        /*
-         * Create reading session
-         * inside the logged-in user's
-         * Firestore document.
-         */
-
-        const readingCollection =
-            collection(
                 db,
+
                 "users",
+
                 currentUser.uid,
-                "readingSessions"
+
+                "readingSessions",
+
+                sessionId
+
             );
 
 
-        /*
-         * Save the reading session.
-         */
+        await setDoc(
 
-        await addDoc(
-            readingCollection,
+            sessionRef,
+
             {
 
                 userId:
@@ -899,6 +1036,9 @@ async function saveReadingTime() {
 
                 book:
                     BOOK_NAME,
+
+                bookId:
+                    BOOK_ID,
 
                 chapter:
                     CHAPTER_NAME,
@@ -911,63 +1051,36 @@ async function saveReadingTime() {
 
                 durationMinutes:
                     Number(
+
                         (
-                            elapsedSeconds / 60
+                            elapsedSeconds /
+                            60
+
                         ).toFixed(2)
+
                     ),
 
-                startedAt:
-                    startTime
-                        ? startTime
-                        : new Date(),
-
-                endedAt:
-                    new Date(),
-
-                createdAt:
+                lastUpdated:
                     serverTimestamp()
 
+            },
+
+            {
+                merge: true
             }
+
         );
 
 
-        /*
-         * SUCCESS
-         */
-
         saveStatus.textContent =
-            "Reading time saved successfully! ✅";
+            "☁️ Reading time saved.";
 
 
-        /*
-         * Reset timer
-         */
-
-        elapsedSeconds =
-            0;
-
-
-        startTime =
-            null;
-
-
-        updateTimer();
-
-
-        startButton.disabled =
-            false;
-
-
-        startButton.textContent =
-            "▶️ Start Reading";
-
-
-        pauseButton.disabled =
-            true;
-
-
-        stopButton.disabled =
-            true;
+        console.log(
+            "Reading time saved:",
+            elapsedSeconds,
+            "seconds"
+        );
 
 
     }
@@ -975,16 +1088,94 @@ async function saveReadingTime() {
     catch (error) {
 
         console.error(
-            "Firestore save error:",
+            "Reading time save error:",
             error
         );
 
 
         saveStatus.textContent =
-            "Unable to save reading time. " +
-            "Please try again. ❌";
+            "⚠️ Unable to save reading time.";
 
     }
+
+
+    finally {
+
+        saving = false;
+
+    }
+
+}
+
+
+
+/* ==================================================
+   STOP & SAVE
+================================================== */
+
+async function stopTimer() {
+
+    if (stopped) {
+
+        return;
+
+    }
+
+
+    if (isRunning) {
+
+        calculateElapsed();
+
+    }
+
+
+    isRunning =
+        false;
+
+
+    stopped =
+        true;
+
+
+    clearInterval(
+        timerInterval
+    );
+
+
+    clearInterval(
+        saveInterval
+    );
+
+
+    timerInterval =
+        null;
+
+
+    saveInterval =
+        null;
+
+
+    startButton.disabled =
+        true;
+
+
+    pauseButton.disabled =
+        true;
+
+
+    stopButton.disabled =
+        true;
+
+
+    saveStatus.textContent =
+        "💾 Saving reading time...";
+
+
+    await saveReadingTime();
+
+
+    saveStatus.textContent =
+        "✅ Reading time saved successfully!";
 
 }
 
@@ -1008,23 +1199,131 @@ pauseButton.addEventListener(
 
 stopButton.addEventListener(
     "click",
-    saveReadingTime
+    stopTimer
 );
 
 
 
 /* ==================================================
-   FIREBASE AUTH CHECK
+   AUTOMATIC FIRESTORE SAVE
 ================================================== */
 
-onAuthStateChanged(
-    auth,
-    async (user) => {
+function startAutoSave() {
+
+    clearInterval(
+        saveInterval
+    );
+
+
+    saveInterval =
+        setInterval(
+
+            async () => {
+
+                if (isRunning) {
+
+                    await saveReadingTime();
+
+                }
+
+            },
+
+            15000
+
+        );
+
+}
+
+
+
+/* ==================================================
+   PAGE VISIBILITY
+================================================== */
+
+document.addEventListener(
+
+    "visibilitychange",
+
+    async () => {
 
 
         /*
-         * No user
+         * User leaves page/tab.
          */
+
+        if (
+
+            document.visibilityState ===
+            "hidden"
+
+        ) {
+
+
+            if (isRunning) {
+
+                calculateElapsed();
+
+
+                isRunning =
+                    false;
+
+
+                clearInterval(
+                    timerInterval
+                );
+
+
+                timerInterval =
+                    null;
+
+
+                await saveReadingTime();
+
+            }
+
+        }
+
+
+        /*
+         * User returns.
+         */
+
+        else {
+
+
+            if (
+
+                currentUser &&
+                !stopped
+
+            ) {
+
+                startTimer();
+
+            }
+
+        }
+
+    }
+
+);
+
+
+
+/* ==================================================
+   FIREBASE AUTHENTICATION
+================================================== */
+
+onAuthStateChanged(
+
+    auth,
+
+    async (user) => {
+
+
+        /* ------------------------------------------
+           NO USER
+        ------------------------------------------ */
 
         if (!user) {
 
@@ -1036,9 +1335,9 @@ onAuthStateChanged(
         }
 
 
-        /*
-         * Refresh user information
-         */
+        /* ------------------------------------------
+           REFRESH USER
+        ------------------------------------------ */
 
         try {
 
@@ -1060,9 +1359,9 @@ onAuthStateChanged(
             auth.currentUser;
 
 
-        /*
-         * User disappeared
-         */
+        /* ------------------------------------------
+           USER NOT AVAILABLE
+        ------------------------------------------ */
 
         if (!currentUser) {
 
@@ -1074,11 +1373,13 @@ onAuthStateChanged(
         }
 
 
-        /*
-         * Email not verified
-         */
+        /* ------------------------------------------
+           EMAIL VERIFICATION
+        ------------------------------------------ */
 
-        if (!currentUser.emailVerified) {
+        if (
+            !currentUser.emailVerified
+        ) {
 
             alert(
                 "Please verify your email before reading this chapter."
@@ -1088,14 +1389,15 @@ onAuthStateChanged(
             window.location.href =
                 "login.html";
 
+
             return;
 
         }
 
 
-        /*
-         * User is verified
-         */
+        /* ------------------------------------------
+           SHOW PAGE
+        ------------------------------------------ */
 
         authChecking.style.display =
             "none";
@@ -1104,7 +1406,17 @@ onAuthStateChanged(
         pageContent.style.display =
             "block";
 
+
+        /* ------------------------------------------
+           START TIMER
+        ------------------------------------------ */
+
+        startAutoSave();
+
+        startTimer();
+
     }
+
 );
 
 </script>
