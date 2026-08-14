@@ -1111,6 +1111,81 @@ async function finishTest() {
     });
 
 }
+// ==========================================
+// SAVE PRACTICE TEST
+// ==========================================
+
+async function savePracticeTest() {
+
+    if (!currentUser) {
+        alert("🔐 Please login first.");
+        return;
+    }
+
+    try {
+
+        const testData = {
+
+            userId: currentUser.uid,
+
+            userEmail:
+                currentUser.email || "",
+
+            subject:
+                currentSubject,
+
+            totalQuestions:
+                questions.length,
+
+            answers:
+                userAnswers,
+
+            submittedAt:
+                serverTimestamp(),
+
+            resultDeclared:
+                false,
+
+            points:
+                0
+
+        };
+
+
+        await addDoc(
+
+            collection(
+                db,
+                "users",
+                currentUser.uid,
+                "practiceTests"
+            ),
+
+            testData
+
+        );
+
+
+        console.log(
+            "Practice test saved successfully."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Practice test save error:",
+            error
+        );
+
+        alert(
+            "❌ Unable to save practice test.\n\n" +
+            error.message
+        );
+
+    }
+
+}
 
 </script>
 
