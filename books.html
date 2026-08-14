@@ -10,9 +10,11 @@
 
     <title>Books | ALLIED Digital Library</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+          href="style.css">
 
 </head>
+
 
 <body>
 
@@ -23,11 +25,14 @@
 
 <header>
 
-    <h1>📚 ALLIED Digital Library</h1>
+    <h1>
+        📚 ALLIED Digital Library
+    </h1>
 
     <p>
         Learn • Read • Practice • Grow
     </p>
+
 
     <nav>
 
@@ -43,17 +48,25 @@
             📝 Practice
         </a>
 
-        <a href="login.html" id="loginLink">
+        <a href="login.html"
+           id="loginLink">
+
             🔐 Login
+
         </a>
 
-        <a href="#" id="logoutLink" style="display:none;">
+        <a href="#"
+           id="logoutLink"
+           style="display:none;">
+
             🚪 Logout
+
         </a>
 
     </nav>
 
 </header>
+
 
 
 <!-- =========================================
@@ -62,11 +75,14 @@
 
 <section class="hero">
 
-    <h2>📚 Explore Books</h2>
+    <h2>
+        📚 Explore Books
+    </h2>
 
     <p>
         Find books by subject, category or title.
     </p>
+
 
     <input
         type="text"
@@ -77,87 +93,138 @@
 </section>
 
 
+
 <!-- =========================================
      CATEGORIES
 ========================================= -->
 
 <section class="hero">
 
-    <h2>📂 Categories</h2>
+    <h2>
+        📂 Categories
+    </h2>
+
 
     <div class="book-category">
 
-        <button onclick="showCategory('all')">
+
+        <button
+            onclick="showCategory('all')">
+
             📚 All Books
+
         </button>
 
-        <button onclick="showCategory('computer')">
+
+        <button
+            onclick="showCategory('computer')">
+
             💻 Computer Science
+
         </button>
 
-        <button onclick="showCategory('mathematics')">
+
+        <button
+            onclick="showCategory('mathematics')">
+
             📐 Mathematics
+
         </button>
 
-        <button onclick="showCategory('physics')">
+
+        <button
+            onclick="showCategory('physics')">
+
             ⚛️ Physics
+
         </button>
 
-        <button onclick="showCategory('chemistry')">
+
+        <button
+            onclick="showCategory('chemistry')">
+
             🧪 Chemistry
+
         </button>
 
-        <button onclick="showCategory('engineering')">
+
+        <button
+            onclick="showCategory('engineering')">
+
             ⚙️ Engineering
+
         </button>
 
-        <button onclick="showCategory('gk')">
+
+        <button
+            onclick="showCategory('gk')">
+
             🌍 General Knowledge
+
         </button>
 
-        <button onclick="showCategory('exam')">
+
+        <button
+            onclick="showCategory('exam')">
+
             📝 Exam Preparation
+
         </button>
 
-        <button onclick="showCategory('literature')">
+
+        <button
+            onclick="showCategory('literature')">
+
             📖 Literature & Novels
+
         </button>
+
 
     </div>
 
 </section>
 
 
+
 <!-- =========================================
-     BOOK LIST
+     AVAILABLE BOOKS
 ========================================= -->
 
 <section class="hero">
 
-    <h2>📖 Available Books</h2>
+    <h2>
+        📖 Available Books
+    </h2>
+
 
     <div id="bookList">
+
 
 
         <!-- =================================
              C PROGRAMMING
         ================================== -->
 
-        <div class="book-card"
-             data-category="computer"
-             data-title="C Programming">
+        <div
+            class="book-card"
+            data-category="computer"
+            data-title="C Programming">
+
 
             <h3>
                 💻 C Programming
             </h3>
 
+
             <p>
                 Complete C Programming Course
             </p>
 
+
             <p>
                 📖 20 Chapters
             </p>
+
 
             <p class="runtime">
 
@@ -173,12 +240,14 @@
 
             </p>
 
+
             <button
                 onclick="window.location.href='c.html'">
 
                 ▶️ Read Book
 
             </button>
+
 
             <button
                 class="saveBook"
@@ -188,28 +257,35 @@
 
             </button>
 
+
         </div>
+
 
 
         <!-- =================================
              JAVA
         ================================== -->
 
-        <div class="book-card"
-             data-category="computer"
-             data-title="Java Programming">
+        <div
+            class="book-card"
+            data-category="computer"
+            data-title="Java Programming">
+
 
             <h3>
                 ☕ Java Programming
             </h3>
 
+
             <p>
                 Learn Java from Basic to Advanced
             </p>
 
+
             <p>
                 📖 Complete Course
             </p>
+
 
             <p class="runtime">
 
@@ -225,12 +301,14 @@
 
             </p>
 
+
             <button
                 onclick="window.location.href='java.html'">
 
                 ▶️ Read Book
 
             </button>
+
 
             <button
                 class="saveBook"
@@ -240,28 +318,35 @@
 
             </button>
 
+
         </div>
+
 
 
         <!-- =================================
              PYTHON
         ================================== -->
 
-        <div class="book-card"
-             data-category="computer"
-             data-title="Python Programming">
+        <div
+            class="book-card"
+            data-category="computer"
+            data-title="Python Programming">
+
 
             <h3>
                 🐍 Python Programming
             </h3>
 
+
             <p>
                 Python Basic to Advanced
             </p>
 
+
             <p>
                 📖 Complete Course
             </p>
+
 
             <p class="runtime">
 
@@ -277,12 +362,14 @@
 
             </p>
 
+
             <button
                 onclick="window.location.href='python.html'">
 
                 ▶️ Read Book
 
             </button>
+
 
             <button
                 class="saveBook"
@@ -292,28 +379,35 @@
 
             </button>
 
+
         </div>
+
 
 
         <!-- =================================
              DSA
         ================================== -->
 
-        <div class="book-card"
-             data-category="computer"
-             data-title="Data Structures Algorithms">
+        <div
+            class="book-card"
+            data-category="computer"
+            data-title="Data Structures Algorithms">
+
 
             <h3>
                 📊 Data Structures & Algorithms
             </h3>
 
+
             <p>
                 Learn DSA concepts and algorithms.
             </p>
 
+
             <p>
                 📖 Complete Course
             </p>
+
 
             <p class="runtime">
 
@@ -329,12 +423,14 @@
 
             </p>
 
+
             <button
                 onclick="window.location.href='dsa.html'">
 
                 ▶️ Read Book
 
             </button>
+
 
             <button
                 class="saveBook"
@@ -344,24 +440,30 @@
 
             </button>
 
+
         </div>
+
 
 
         <!-- =================================
              MATHEMATICS
         ================================== -->
 
-        <div class="book-card"
-             data-category="mathematics"
-             data-title="Engineering Mathematics">
+        <div
+            class="book-card"
+            data-category="mathematics"
+            data-title="Engineering Mathematics">
+
 
             <h3>
                 📐 Engineering Mathematics
             </h3>
 
+
             <p>
                 Mathematics concepts and problem solving.
             </p>
+
 
             <p class="runtime">
 
@@ -377,9 +479,11 @@
 
             </p>
 
+
             <button>
                 🔒 Coming Soon
             </button>
+
 
             <button
                 class="saveBook"
@@ -389,24 +493,30 @@
 
             </button>
 
+
         </div>
+
 
 
         <!-- =================================
              PHYSICS
         ================================== -->
 
-        <div class="book-card"
-             data-category="physics"
-             data-title="Engineering Physics">
+        <div
+            class="book-card"
+            data-category="physics"
+            data-title="Engineering Physics">
+
 
             <h3>
                 ⚛️ Engineering Physics
             </h3>
 
+
             <p>
                 Physics concepts and important topics.
             </p>
+
 
             <p class="runtime">
 
@@ -422,9 +532,11 @@
 
             </p>
 
+
             <button>
                 🔒 Coming Soon
             </button>
+
 
             <button
                 class="saveBook"
@@ -434,24 +546,30 @@
 
             </button>
 
+
         </div>
+
 
 
         <!-- =================================
              CHEMISTRY
         ================================== -->
 
-        <div class="book-card"
-             data-category="chemistry"
-             data-title="Engineering Chemistry">
+        <div
+            class="book-card"
+            data-category="chemistry"
+            data-title="Engineering Chemistry">
+
 
             <h3>
                 🧪 Engineering Chemistry
             </h3>
 
+
             <p>
                 Chemical concepts and applications.
             </p>
+
 
             <p class="runtime">
 
@@ -467,9 +585,11 @@
 
             </p>
 
+
             <button>
                 🔒 Coming Soon
             </button>
+
 
             <button
                 class="saveBook"
@@ -479,24 +599,30 @@
 
             </button>
 
+
         </div>
+
 
 
         <!-- =================================
              ENGINEERING
         ================================== -->
 
-        <div class="book-card"
-             data-category="engineering"
-             data-title="Engineering Subjects">
+        <div
+            class="book-card"
+            data-category="engineering"
+            data-title="Engineering Subjects">
+
 
             <h3>
                 ⚙️ Engineering Subjects
             </h3>
 
+
             <p>
                 Engineering subjects and study materials.
             </p>
+
 
             <p class="runtime">
 
@@ -512,9 +638,11 @@
 
             </p>
 
+
             <button>
                 🔒 Coming Soon
             </button>
+
 
             <button
                 class="saveBook"
@@ -524,24 +652,30 @@
 
             </button>
 
+
         </div>
+
 
 
         <!-- =================================
              GENERAL KNOWLEDGE
         ================================== -->
 
-        <div class="book-card"
-             data-category="gk"
-             data-title="General Knowledge">
+        <div
+            class="book-card"
+            data-category="gk"
+            data-title="General Knowledge">
+
 
             <h3>
                 🌍 General Knowledge
             </h3>
 
+
             <p>
                 General knowledge and current learning.
             </p>
+
 
             <p class="runtime">
 
@@ -557,9 +691,11 @@
 
             </p>
 
+
             <button>
                 🔒 Coming Soon
             </button>
+
 
             <button
                 class="saveBook"
@@ -569,24 +705,30 @@
 
             </button>
 
+
         </div>
+
 
 
         <!-- =================================
              EXAM PREPARATION
         ================================== -->
 
-        <div class="book-card"
-             data-category="exam"
-             data-title="JEE Main Preparation">
+        <div
+            class="book-card"
+            data-category="exam"
+            data-title="JEE Main Preparation">
+
 
             <h3>
                 📝 JEE Main Preparation
             </h3>
 
+
             <p>
                 Practice material and preparation resources.
             </p>
+
 
             <p class="runtime">
 
@@ -602,9 +744,11 @@
 
             </p>
 
+
             <button>
                 🔒 Coming Soon
             </button>
+
 
             <button
                 class="saveBook"
@@ -614,24 +758,30 @@
 
             </button>
 
+
         </div>
+
 
 
         <!-- =================================
              LITERATURE
         ================================== -->
 
-        <div class="book-card"
-             data-category="literature"
-             data-title="Stories and Novels">
+        <div
+            class="book-card"
+            data-category="literature"
+            data-title="Stories and Novels">
+
 
             <h3>
                 📖 Stories & Novels
             </h3>
 
+
             <p>
                 Copyright-free literature and stories.
             </p>
+
 
             <p class="runtime">
 
@@ -647,9 +797,11 @@
 
             </p>
 
+
             <button>
                 🔒 Coming Soon
             </button>
+
 
             <button
                 class="saveBook"
@@ -659,12 +811,17 @@
 
             </button>
 
+
         </div>
 
 
     </div>
 
-</section><!-- =========================================
+</section>
+
+
+
+<!-- =========================================
      FOOTER
 ========================================= -->
 
@@ -681,6 +838,7 @@
 </footer>
 
 
+
 <!-- =========================================
      SEARCH + CATEGORY
 ========================================= -->
@@ -694,78 +852,80 @@ const books =
     document.querySelectorAll(".book-card");
 
 
-/* =========================================
-   SEARCH
-========================================= */
-
 search.addEventListener(
     "input",
     function () {
 
         const value =
-            search.value.toLowerCase().trim();
+            search.value
+                .toLowerCase()
+                .trim();
 
-        books.forEach(function (book) {
 
-            const title =
-                book.dataset.title.toLowerCase();
+        books.forEach(
+            function (book) {
 
-            const text =
-                book.innerText.toLowerCase();
+                const title =
+                    book.dataset.title
+                        .toLowerCase();
 
+                const text =
+                    book.innerText
+                        .toLowerCase();
+
+
+                if (
+                    title.includes(value) ||
+                    text.includes(value)
+                ) {
+
+                    book.style.display =
+                        "block";
+
+                }
+
+                else {
+
+                    book.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+function showCategory(category) {
+
+    books.forEach(
+        function (book) {
 
             if (
-                title.includes(value) ||
-                text.includes(value)
+                category === "all" ||
+                book.dataset.category === category
             ) {
 
                 book.style.display =
                     "block";
 
-            } else {
+            }
+
+            else {
 
                 book.style.display =
                     "none";
 
             }
 
-        });
-
-    }
-);
-
-
-/* =========================================
-   CATEGORY
-========================================= */
-
-function showCategory(category) {
-
-    books.forEach(function (book) {
-
-        if (
-            category === "all" ||
-            book.dataset.category === category
-        ) {
-
-            book.style.display =
-                "block";
-
-        } else {
-
-            book.style.display =
-                "none";
-
         }
-
-    });
+    );
 
 }
 
-</script>
-
-
-<!-- =========================================
+</script><!-- =========================================
      FIREBASE
 ========================================= -->
 
@@ -774,19 +934,12 @@ function showCategory(category) {
 import {
 
     auth,
-
     db,
-
     onAuthStateChanged,
-
     collection,
-
     doc,
-
     setDoc,
-
     getDocs,
-
     serverTimestamp
 
 } from "./firebase.js";
@@ -800,7 +953,7 @@ let currentUser = null;
 
 
 /* =========================================
-   LOGIN / LOGOUT
+   LOGIN / LOGOUT ELEMENTS
 ========================================= */
 
 const loginLink =
@@ -810,33 +963,43 @@ const logoutLink =
     document.getElementById("logoutLink");
 
 
+/* =========================================
+   CHECK AUTH STATE
+========================================= */
+
 onAuthStateChanged(
     auth,
     async (user) => {
 
-        currentUser =
-            user;
+        currentUser = user;
 
 
         if (user) {
 
-            loginLink.style.display =
-                "none";
+            /* Logged in */
 
-            logoutLink.style.display =
-                "inline-block";
+            if (loginLink) {
+
+                loginLink.style.display =
+                    "none";
+
+            }
 
 
-            /*
-             * Load saved books
-             */
+            if (logoutLink) {
+
+                logoutLink.style.display =
+                    "inline-block";
+
+            }
+
+
+            /* Load saved books */
 
             await loadSavedBooks();
 
 
-            /*
-             * Load actual reading time
-             */
+            /* Load reading time */
 
             await loadReadingTimes();
 
@@ -844,16 +1007,28 @@ onAuthStateChanged(
 
         else {
 
-            loginLink.style.display =
-                "inline-block";
+            /* Logged out */
 
-            logoutLink.style.display =
-                "none";
+            if (loginLink) {
+
+                loginLink.style.display =
+                    "inline-block";
+
+            }
+
+
+            if (logoutLink) {
+
+                logoutLink.style.display =
+                    "none";
+
+            }
 
         }
 
     }
 );
+
 
 
 /* =========================================
@@ -869,10 +1044,15 @@ logoutLink.addEventListener(
 
         try {
 
-            const { signOut } =
-                await import(
-                    "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js"
-                );
+            const {
+
+                signOut
+
+            } = await import(
+
+                "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js"
+
+            );
 
 
             await signOut(auth);
@@ -890,14 +1070,16 @@ logoutLink.addEventListener(
                 error
             );
 
+
             alert(
-                "Unable to logout."
+                "❌ Unable to logout."
             );
 
         }
 
     }
 );
+
 
 
 /* =========================================
@@ -908,13 +1090,15 @@ document
     .querySelectorAll(".saveBook")
     .forEach(function (button) {
 
+
         button.addEventListener(
             "click",
             async function () {
 
-                /*
-                 * Check login
-                 */
+
+                /* -------------------------
+                   CHECK LOGIN
+                ------------------------- */
 
                 if (!currentUser) {
 
@@ -922,25 +1106,29 @@ document
                         "🔐 Please login before saving books."
                     );
 
+
                     window.location.href =
                         "login.html";
+
 
                     return;
 
                 }
 
 
-                /*
-                 * Get book name
-                 */
+
+                /* -------------------------
+                   BOOK NAME
+                ------------------------- */
 
                 const bookName =
                     button.dataset.book;
 
 
-                /*
-                 * Create safe ID
-                 */
+
+                /* -------------------------
+                   CREATE BOOK ID
+                ------------------------- */
 
                 const bookId =
                     bookName
@@ -955,11 +1143,17 @@ document
                         );
 
 
+
                 try {
 
-                    /*
-                     * Firestore location
-                     */
+
+                    /* -------------------------
+                       FIRESTORE LOCATION
+
+                       users
+                         └── UID
+                             └── savedBooks
+                    ------------------------- */
 
                     const savedBook =
                         doc(
@@ -971,9 +1165,10 @@ document
                         );
 
 
-                    /*
-                     * Save book
-                     */
+
+                    /* -------------------------
+                       SAVE BOOK
+                    ------------------------- */
 
                     await setDoc(
                         savedBook,
@@ -997,9 +1192,10 @@ document
                     );
 
 
-                    /*
-                     * Button change
-                     */
+
+                    /* -------------------------
+                       UPDATE BUTTON
+                    ------------------------- */
 
                     button.textContent =
                         "✅ Saved";
@@ -1009,15 +1205,18 @@ document
                         true;
 
 
+
                     alert(
                         "📚 " +
                         bookName +
                         " saved successfully!"
                     );
 
+
                 }
 
                 catch (error) {
+
 
                     console.error(
                         "Save book error:",
@@ -1033,9 +1232,11 @@ document
                 }
 
             }
+
         );
 
     });
+
 
 
 /* =========================================
@@ -1043,6 +1244,7 @@ document
 ========================================= */
 
 async function loadSavedBooks() {
+
 
     if (!currentUser) {
 
@@ -1052,6 +1254,7 @@ async function loadSavedBooks() {
 
 
     try {
+
 
         const savedBooksRef =
             collection(
@@ -1068,9 +1271,15 @@ async function loadSavedBooks() {
             );
 
 
+
+        /* -------------------------
+           CHECK EVERY SAVE BUTTON
+        ------------------------- */
+
         document
             .querySelectorAll(".saveBook")
             .forEach(function (button) {
+
 
                 const bookName =
                     button.dataset.book;
@@ -1080,8 +1289,13 @@ async function loadSavedBooks() {
                     snapshot.docs.some(
                         function (item) {
 
+
+                            const data =
+                                item.data();
+
+
                             return (
-                                item.data().title ===
+                                data.title ===
                                 bookName
                             );
 
@@ -1094,6 +1308,7 @@ async function loadSavedBooks() {
                     button.textContent =
                         "✅ Saved";
 
+
                     button.disabled =
                         true;
 
@@ -1101,9 +1316,11 @@ async function loadSavedBooks() {
 
             });
 
+
     }
 
     catch (error) {
+
 
         console.error(
             "Load saved books error:",
@@ -1115,11 +1332,13 @@ async function loadSavedBooks() {
 }
 
 
+
 /* =========================================
    LOAD REAL READING TIMES
 ========================================= */
 
 async function loadReadingTimes() {
+
 
     if (!currentUser) {
 
@@ -1130,13 +1349,14 @@ async function loadReadingTimes() {
 
     try {
 
-        /*
-         * Location:
-         *
-         * users
-         *   └── UID
-         *       └── readingSessions
-         */
+
+        /* -------------------------
+           FIRESTORE LOCATION
+
+           users
+             └── UID
+                 └── readingSessions
+        ------------------------- */
 
         const sessionsRef =
             collection(
@@ -1153,16 +1373,18 @@ async function loadReadingTimes() {
             );
 
 
-        /*
-         * Store total time
-         * for each book.
-         */
+
+        /* -------------------------
+           TOTAL TIME
+        ------------------------- */
 
         const totals = {};
 
 
+
         snapshot.forEach(
             function (document) {
+
 
                 const data =
                     document.data();
@@ -1200,14 +1422,16 @@ async function loadReadingTimes() {
         );
 
 
-        /*
-         * Display time
-         */
+
+        /* -------------------------
+           DISPLAY TIME
+        ------------------------- */
 
         document
             .querySelectorAll(".runtimeValue")
             .forEach(
                 function (element) {
+
 
                     const bookName =
                         element.dataset.book;
@@ -1225,9 +1449,11 @@ async function loadReadingTimes() {
                 }
             );
 
+
     }
 
     catch (error) {
+
 
         console.error(
             "Reading time error:",
@@ -1239,11 +1465,13 @@ async function loadReadingTimes() {
 }
 
 
+
 /* =========================================
    FORMAT TIME
 ========================================= */
 
 function formatTime(totalSeconds) {
+
 
     totalSeconds =
         Math.floor(
@@ -1269,11 +1497,18 @@ function formatTime(totalSeconds) {
 
     return (
 
-        String(hours).padStart(2, "0")
+        String(hours)
+            .padStart(2, "0")
+
         + ":" +
-        String(minutes).padStart(2, "0")
+
+        String(minutes)
+            .padStart(2, "0")
+
         + ":" +
-        String(seconds).padStart(2, "0")
+
+        String(seconds)
+            .padStart(2, "0")
 
     );
 
