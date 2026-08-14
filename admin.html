@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Admin Panel | ALLIED
+    </title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     ADMIN HEADER
+========================================== -->
+
+<header>
+
+    <h1>
+        🔐 ALLIED Admin Panel
+    </h1>
+
+    <p>
+        Manage Practice Results
+    </p>
+
+    <nav>
+
+        <a href="home.html">
+            🏠 Home
+        </a>
+
+        <a href="practice.html">
+            📝 Practice
+        </a>
+
+        <a href="books.html">
+            📚 Books
+        </a>
+
+        <a href="#" id="logoutButton">
+            🚪 Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ==========================================
+     ADMIN CHECKING
+========================================== -->
+
+<section
+    id="adminChecking"
+    class="hero">
+
+    <h2>
+        🔐 Checking administrator access...
+    </h2>
+
+    <p>
+        Please wait.
+    </p>
+
+</section>
+
+
+
+<!-- ==========================================
+     ACCESS DENIED
+========================================== -->
+
+<section
+    id="accessDenied"
+    class="hero"
+    style="display:none;">
+
+    <h2>
+        🚫 Access Denied
+    </h2>
+
+    <p>
+        You do not have permission to access
+        the ALLIED Admin Panel.
+    </p>
+
+    <button
+        type="button"
+        onclick="window.location.href='home.html'">
+
+        🏠 Back to Home
+
+    </button>
+
+</section>
+
+
+
+<!-- ==========================================
+     ADMIN CONTENT
+========================================== -->
+
+<div
+    id="adminContent"
+    style="display:none;">
+
+
+
+<!-- ==========================================
+     ADMIN DASHBOARD
+========================================== -->
+
+<section class="hero">
+
+    <h2>
+        📊 Practice Test Submissions
+    </h2>
+
+    <p>
+        Review submitted practice tests and
+        declare results.
+    </p>
+
+
+    <button
+        type="button"
+        id="refreshButton">
+
+        🔄 Refresh Submissions
+
+    </button>
+
+
+    <p id="adminStatus">
+
+        Loading submissions...
+
+    </p>
+
+</section>
+
+
+
+<!-- ==========================================
+     SUBMISSIONS
+========================================== -->
+
+<section class="hero">
+
+    <h2>
+        📋 Submitted Tests
+    </h2>
+
+
+    <div id="submissions">
+
+        <div class="empty-card">
+
+            <p>
+                ⏳ Loading...
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+</div>
+
+
+
+<!-- ==========================================
+     FIREBASE
+========================================== -->
+
+<script type="module">
+
+import {
+
+    auth,
+    db,
+    onAuthStateChanged,
+    collection,
+    getDocs,
+    doc,
+    updateDoc
+
+} from "./firebase.js";
+
+
+
+/* ==========================================
+   ADMIN EMAIL
+========================================== */
+
+/*
+ * CHANGE THIS TO YOUR ADMIN EMAIL.
+ *
+ * Example:
+ *
+ * const ADMIN_EMAIL =
+ *     "yourgmail@gmail.com";
+ */
+
+const ADMIN_EMAIL =
+    "mekalamanoj8522@gmail.com";
+
+
+
+/* ==========================================
+   PAGE ELEMENTS
+========================================== */
+
+const adminChecking =
+    document.getElementById(
+        "adminChecking"
+    );
+
+
+const accessDenied =
+    document.getElementById(
+        "accessDenied"
+    );
+
+
+const adminContent =
+    document.getElementById(
+        "adminContent"
+    );
+
+
+const submissions =
+    document.getElementById(
+        "submissions"
+    );
+
+
+const adminStatus =
+    document.getElementById(
+        "adminStatus"
+    );
+
+
+const refreshButton =
+    document.getElementById(
+        "refreshButton"
+    );
+
+
+const logoutButton =
+    document.getElementById(
+        "logoutButton"
+    );
+
+
+
+/* ==========================================
+   CURRENT USER
+========================================== */
+
+let currentUser = null;
+
+
+
+/* ==========================================
+   FIREBASE AUTH CHECK
+========================================== */
+
+onAuthStateChanged(
+
+    auth,
+
+    async (user) => {
+
+
+        /*
+         * No login
+         */
+
+        if (!user) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        currentUser =
+            user;
+
+
+        /*
+         * Refresh user
+         */
+
+        try {
+
+            await user.reload();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "User reload error:",
+                error
+            );
+
+        }
+
+
+        currentUser =
+            auth.currentUser;
+
+
+        if (!currentUser) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /*
+         * ADMIN CHECK
+         */
+
+        if (
+            currentUser.email !==
+            ADMIN_EMAIL
+        ) {
+
+            adminChecking.style.display =
+                "none";
+
+
+            accessDenied.style.display =
+                "block";
+
+
+            return;
+
+        }
+
+
+        /*
+         * ADMIN APPROVED
+         */
+
+        adminChecking.style.display =
+            "none";
+
+
+        adminContent.style.display =
+            "block";
+
+
+        /*
+         * Load submissions
+         */
+
+        await loadSubmissions();
+
+    }
+
+);
+
+
+
+/* ==========================================
+   LOAD SUBMISSIONS
+========================================== */
+
+async function loadSubmissions() {
+
+
+    if (!currentUser) {
+
+        return;
+
+    }
+
+
+    try {
+
+
+        adminStatus.textContent =
+            "⏳ Loading submissions...";
+
+
+        submissions.innerHTML =
+            "";
+
+
+        /*
+         * Get all users
+         */
+
+        const usersRef =
+            collection(
+                db,
+                "users"
+            );
+
+
+        const usersSnapshot =
+            await getDocs(
+                usersRef
+            );
+
+
+        let totalTests =
+            0;
+
+
+        /*
+         * Check every user's
+         * practiceTests collection.
+         */
+
+        for (
+            const userDocument
+            of usersSnapshot.docs
+        ) {
+
+
+            const userId =
+                userDocument.id;
+
+
+            const testsRef =
+                collection(
+                    db,
+                    "users",
+                    userId,
+                    "practiceTests"
+                );
+
+
+            const testsSnapshot =
+                await getDocs(
+                    testsRef
+                );
+
+
+            /*
+             * Display every test
+             */
+
+            testsSnapshot.forEach(
+                (testDocument) => {
+
+
+                    totalTests++;
+
+
+                    const data =
+                        testDocument.data();
+
+
+                    createSubmissionCard(
+
+                        userId,
+
+                        testDocument.id,
+
+                        data
+
+                    );
+
+                }
+
+            );
+
+        }
+
+
+        if (
+            totalTests === 0
+        ) {
+
+            submissions.innerHTML = `
+
+                <div class="empty-card">
+
+                    <h3>
+                        📭 No submissions yet
+                    </h3>
+
+                    <p>
+                        Practice test submissions
+                        will appear here.
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+
+
+        adminStatus.textContent =
+
+            "✅ "
+            +
+            totalTests
+            +
+            " test submission(s) found.";
+
+    }
+
+    catch (error) {
+
+
+        console.error(
+            "Load submissions error:",
+            error
+        );
+
+
+        adminStatus.textContent =
+            "❌ Unable to load submissions.";
+
+
+        submissions.innerHTML = `
+
+            <div class="empty-card">
+
+                <h3>
+                    ❌ Error
+                </h3>
+
+                <p>
+                    ${error.message}
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* ==========================================
+   CREATE SUBMISSION CARD
+========================================== */
+
+function createSubmissionCard(
+
+    userId,
+    testId,
+    data
+
+) {
+
+
+    const card =
+        document.createElement(
+            "div"
+        );
+
+
+    card.className =
+        "book-card";
+
+
+    const declared =
+        data.resultDeclared === true;
+
+
+    const points =
+        Number(
+            data.points || 0
+        );
+
+
+    const totalQuestions =
+        Number(
+            data.totalQuestions || 0
+        );
+
+
+    card.innerHTML = `
+
+        <h3>
+            📝
+            ${escapeHTML(
+                String(
+                    data.subject ||
+                    "Unknown Subject"
+                )
+            )}
+        </h3>
+
+
+        <p>
+            👤 User:
+            <strong>
+                ${escapeHTML(
+                    String(
+                        data.userEmail ||
+                        "Unknown User"
+                    )
+                )}
+            </strong>
+        </p>
+
+
+        <p>
+            🆔 Test ID:
+            <small>
+                ${escapeHTML(testId)}
+            </small>
+        </p>
+
+
+        <p>
+            🏆 Points:
+            <strong>
+                ${points}
+            </strong>
+        </p>
+
+
+        <p>
+            📊 Total Questions:
+            <strong>
+                ${totalQuestions}
+            </strong>
+        </p>
+
+
+        <p>
+            📢 Result Status:
+
+            <strong>
+
+                ${
+                    declared
+                    ? "✅ Declared"
+                    : "🔒 Not Declared"
+                }
+
+            </strong>
+
+        </p>
+
+
+        <div class="admin-actions">
+
+            ${
+                declared
+
+                ?
+
+                `
+                <button
+                    type="button"
+                    disabled>
+
+                    ✅ Result Declared
+
+                </button>
+                `
+
+                :
+
+                `
+                <button
+                    type="button"
+                    class="declareButton">
+
+                    📢 Declare Result
+
+                </button>
+                `
+
+            }
+
+        </div>
+
+    `;
+
+
+    /*
+     * Declare button
+     */
+
+    if (!declared) {
+
+
+        const declareButton =
+            card.querySelector(
+                ".declareButton"
+            );
+
+
+        declareButton.addEventListener(
+
+            "click",
+
+            () => {
+
+                declareResult(
+
+                    userId,
+
+                    testId,
+
+                    declareButton,
+                    card
+
+                );
+
+            }
+
+        );
+
+    }
+
+
+    submissions.appendChild(
+        card
+    );
+
+}
+
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value;
+
+
+    return div.innerHTML;
+
+}/* ==========================================
+   DECLARE RESULT
+========================================== */
+
+async function declareResult(
+    userId,
+    testId,
+    button,
+    card
+) {
+
+    if (!currentUser) {
+
+        alert(
+            "🔐 Please login first."
+        );
+
+        return;
+
+    }
+
+
+    const confirmResult =
+        confirm(
+            "📢 Are you sure you want to declare this result?"
+        );
+
+
+    if (!confirmResult) {
+
+        return;
+
+    }
+
+
+    try {
+
+        button.disabled =
+            true;
+
+        button.textContent =
+            "⏳ Declaring...";
+
+
+        /*
+         * Exact Firestore location:
+         *
+         * users
+         *   └── USER_ID
+         *       └── practiceTests
+         *           └── TEST_ID
+         */
+
+        const testRef =
+            doc(
+                db,
+                "users",
+                userId,
+                "practiceTests",
+                testId
+            );
+
+
+        /*
+         * Change resultDeclared
+         * from false to true.
+         */
+
+        await updateDoc(
+            testRef,
+            {
+                resultDeclared: true
+            }
+        );
+
+
+        /*
+         * Update card immediately
+         */
+
+        const statusElements =
+            card.querySelectorAll(
+                "strong"
+            );
+
+
+        /*
+         * Re-load everything so
+         * the displayed data is fresh.
+         */
+
+        await loadSubmissions();
+
+
+        alert(
+            "🏆 Result declared successfully!"
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Declare result error:",
+            error
+        );
+
+
+        button.disabled =
+            false;
+
+
+        button.textContent =
+            "📢 Declare Result";
+
+
+        alert(
+            "❌ Unable to declare result.\n\n"
+            +
+            error.message
+        );
+
+    }
+
+}
+
+
+
+/* ==========================================
+   REFRESH BUTTON
+========================================== */
+
+refreshButton.addEventListener(
+
+    "click",
+
+    async function () {
+
+        await loadSubmissions();
+
+    }
+
+);
+
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+logoutButton.addEventListener(
+
+    "click",
+
+    async function (event) {
+
+        event.preventDefault();
+
+
+        try {
+
+
+            /*
+             * Firebase signOut
+             */
+
+            const {
+                signOut
+            } = await import(
+
+                "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js"
+
+            );
+
+
+            await signOut(
+                auth
+            );
+
+
+            window.location.href =
+                "login.html";
+
+
+        }
+
+        catch (error) {
+
+
+            console.error(
+                "Logout error:",
+                error
+            );
+
+
+            alert(
+                "❌ Unable to logout."
+            );
+
+        }
+
+    }
+
+);
+
+
+
+</script>
+
+
+</body>
+
+</html>
