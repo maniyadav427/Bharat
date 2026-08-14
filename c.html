@@ -23,9 +23,12 @@
      AUTH CHECK
 ================================================== -->
 
-<div id="authChecking">
+<div id="authChecking"
+     style="text-align:center; padding:40px;">
 
-    <h2>🔐 Checking login...</h2>
+    <h2>
+        🔐 Checking login...
+    </h2>
 
     <p>
         Please wait.
@@ -42,6 +45,11 @@
 <div id="bookContent"
      style="display:none;">
 
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
 
 <header>
 
@@ -65,11 +73,15 @@
     <nav>
 
         <a href="home.html">
-            Home
+            🏠 Home
         </a>
 
         <a href="books.html">
             📚 Books
+        </a>
+
+        <a href="practice.html">
+            📝 Practice
         </a>
 
     </nav>
@@ -77,6 +89,36 @@
 </header>
 
 
+
+<!-- ==================================================
+     READING TIME
+================================================== -->
+
+<section class="hero">
+
+    <h2>
+        ⏱️ Reading Time
+    </h2>
+
+    <p>
+        Your reading time is automatically recorded.
+    </p>
+
+    <h2 id="readingTimer">
+        00:00:00
+    </h2>
+
+    <p id="readingStatus">
+        📖 Reading time is starting...
+    </p>
+
+</section>
+
+
+
+<!-- ==================================================
+     BOOK INFORMATION
+================================================== -->
 
 <section class="hero">
 
@@ -88,8 +130,15 @@
         Select a chapter to start learning C Programming.
     </p>
 
-    <br>
+</section>
 
+
+
+<!-- ==================================================
+     CHAPTERS
+================================================== -->
+
+<section class="hero">
 
 
     <!-- Chapter 1 -->
@@ -368,9 +417,14 @@
 
     </button>
 
+
 </section>
 
 
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
 
 <footer>
 
@@ -389,10 +443,11 @@
     <br><br>
 
     <strong>
-        Thank you for visiting my website ❤️
+        ALLIED E-Book Management System ❤️
     </strong>
 
 </footer>
+
 
 
 </div>
@@ -400,31 +455,496 @@
 
 
 <!-- ==================================================
-     FIREBASE AUTHENTICATION
+     FIREBASE + READING TIME
 ================================================== -->
 
 <script type="module">
 
-    import {
-        auth,
-        onAuthStateChanged
-    } from "./firebase.js";
+import {
+
+    auth,
+    db,
+    onAuthStateChanged,
+    doc,
+    setDoc,
+    serverTimestamp
+
+} from "./firebase.js";
 
 
-    const authChecking =
-        document.getElementById("authChecking");
+
+/* ==================================================
+   PAGE ELEMENTS
+================================================== */
+
+const authChecking =
+    document.getElementById(
+        "authChecking"
+    );
 
 
-    const bookContent =
-        document.getElementById("bookContent");
+const bookContent =
+    document.getElementById(
+        "bookContent"
+    );
 
 
-    onAuthStateChanged(auth, async (user) => {
+const readingTimer =
+    document.getElementById(
+        "readingTimer"
+    );
 
 
-        /* ==========================================
+const readingStatus =
+    document.getElementById(
+        "readingStatus"
+    );
+
+
+
+/* ==================================================
+   BOOK INFORMATION
+================================================== */
+
+const BOOK_NAME =
+    "C Programming";
+
+
+const BOOK_ID =
+    "c-programming";
+
+
+
+/* ==================================================
+   USER
+================================================== */
+
+let currentUser = null;
+
+
+
+/* ==================================================
+   READING TIMER VARIABLES
+================================================== */
+
+let sessionStartTime = null;
+
+let totalSessionSeconds = 0;
+
+let saveInterval = null;
+
+let displayInterval = null;
+
+let saving = false;
+
+
+
+/* ==================================================
+   CREATE SESSION ID
+================================================== */
+
+const sessionId =
+
+    "c-"
+    +
+    Date.now()
+    +
+    "-"
+    +
+    Math.random()
+        .toString(36)
+        .substring(2, 8);
+
+
+
+/* ==================================================
+   FORMAT TIME
+================================================== */
+
+function formatTime(
+    totalSeconds
+) {
+
+    totalSeconds =
+        Math.floor(
+            Number(
+                totalSeconds
+            ) || 0
+        );
+
+
+    const hours =
+        Math.floor(
+            totalSeconds / 3600
+        );
+
+
+    const minutes =
+        Math.floor(
+            (
+                totalSeconds % 3600
+            ) / 60
+        );
+
+
+    const seconds =
+        totalSeconds % 60;
+
+
+    return (
+
+        String(hours)
+            .padStart(2, "0")
+
+        + ":"
+
+        +
+
+        String(minutes)
+            .padStart(2, "0")
+
+        + ":"
+
+        +
+
+        String(seconds)
+            .padStart(2, "0")
+
+    );
+
+}
+
+
+
+/* ==================================================
+   GET CURRENT SESSION SECONDS
+================================================== */
+
+function getCurrentElapsedSeconds() {
+
+    if (!sessionStartTime) {
+
+        return 0;
+
+    }
+
+
+    return Math.floor(
+
+        (
+            Date.now()
+            -
+            sessionStartTime
+        ) / 1000
+
+    );
+
+}
+
+
+
+/* ==================================================
+   UPDATE TIMER ON SCREEN
+================================================== */
+
+function updateReadingTimer() {
+
+    const currentSeconds =
+        getCurrentElapsedSeconds();
+
+
+    const totalSeconds =
+        totalSessionSeconds
+        +
+        currentSeconds;
+
+
+    readingTimer.textContent =
+        formatTime(
+            totalSeconds
+        );
+
+}
+
+
+
+/* ==================================================
+   START READING
+================================================== */
+
+function startReading() {
+
+    if (sessionStartTime) {
+
+        return;
+
+    }
+
+
+    sessionStartTime =
+        Date.now();
+
+
+    readingStatus.textContent =
+        "📖 Reading time is being recorded...";
+
+
+    /*
+     * Update screen every second.
+     */
+
+    displayInterval =
+        setInterval(
+            updateReadingTimer,
+            1000
+        );
+
+
+    /*
+     * Save to Firestore every 15 seconds.
+     */
+
+    saveInterval =
+        setInterval(
+            saveReadingTime,
+            15000
+        );
+
+
+    updateReadingTimer();
+
+}
+
+
+
+/* ==================================================
+   SAVE READING TIME
+================================================== */
+
+async function saveReadingTime() {
+
+    if (!currentUser) {
+
+        return;
+
+    }
+
+
+    if (!sessionStartTime) {
+
+        return;
+
+    }
+
+
+    if (saving) {
+
+        return;
+
+    }
+
+
+    const elapsed =
+        getCurrentElapsedSeconds();
+
+
+    if (elapsed <= 0) {
+
+        return;
+
+    }
+
+
+    saving = true;
+
+
+    try {
+
+
+        /*
+         * Add current elapsed time
+         * to the session total.
+         */
+
+        totalSessionSeconds +=
+            elapsed;
+
+
+        /*
+         * Start a new timing period.
+         */
+
+        sessionStartTime =
+            Date.now();
+
+
+        /*
+         * Firestore:
+         *
+         * users
+         *   └── UID
+         *       └── readingSessions
+         *           └── session ID
+         */
+
+        const sessionRef =
+            doc(
+                db,
+                "users",
+                currentUser.uid,
+                "readingSessions",
+                sessionId
+            );
+
+
+        await setDoc(
+            sessionRef,
+            {
+
+                userId:
+                    currentUser.uid,
+
+                userEmail:
+                    currentUser.email || "",
+
+                book:
+                    BOOK_NAME,
+
+                bookId:
+                    BOOK_ID,
+
+                durationSeconds:
+                    totalSessionSeconds,
+
+                durationMinutes:
+                    Number(
+                        (
+                            totalSessionSeconds
+                            /
+                            60
+                        ).toFixed(2)
+                    ),
+
+                lastUpdated:
+                    serverTimestamp()
+
+            },
+
+            {
+                merge: true
+            }
+
+        );
+
+
+        console.log(
+            "✅ Reading time saved:",
+            totalSessionSeconds,
+            "seconds"
+        );
+
+
+        readingStatus.textContent =
+            "☁️ Reading time saved";
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Reading time save error:",
+            error
+        );
+
+
+        readingStatus.textContent =
+            "⚠️ Unable to save reading time";
+
+    }
+
+    finally {
+
+        saving = false;
+
+    }
+
+}
+
+
+
+/* ==================================================
+   SAVE WHEN TAB BECOMES HIDDEN
+================================================== */
+
+document.addEventListener(
+    "visibilitychange",
+    async () => {
+
+        if (
+            document.visibilityState ===
+            "hidden"
+        ) {
+
+            await saveReadingTime();
+
+        }
+
+        else {
+
+            /*
+             * Restart timing after
+             * returning to the page.
+             */
+
+            if (
+                currentUser &&
+                !sessionStartTime
+            ) {
+
+                startReading();
+
+            }
+
+        }
+
+    }
+);
+
+
+
+/* ==================================================
+   SAVE WHEN PAGE IS LEAVING
+================================================== */
+
+window.addEventListener(
+    "pagehide",
+    () => {
+
+        /*
+         * The visibilitychange event
+         * normally performs the final save.
+         */
+
+        saveReadingTime();
+
+    }
+);
+
+
+
+/* ==================================================
+   FIREBASE AUTHENTICATION
+================================================== */
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+
+        /* ------------------------------------------
            NO USER
-        =========================================== */
+        ------------------------------------------ */
 
         if (!user) {
 
@@ -436,9 +956,9 @@
         }
 
 
-        /* ==========================================
-           REFRESH USER INFORMATION
-        =========================================== */
+        /* ------------------------------------------
+           REFRESH USER
+        ------------------------------------------ */
 
         try {
 
@@ -456,13 +976,13 @@
         }
 
 
-        const currentUser =
+        currentUser =
             auth.currentUser;
 
 
-        /* ==========================================
-           USER DOES NOT EXIST
-        =========================================== */
+        /* ------------------------------------------
+           USER DISAPPEARED
+        ------------------------------------------ */
 
         if (!currentUser) {
 
@@ -474,27 +994,31 @@
         }
 
 
-        /* ==========================================
-           EMAIL NOT VERIFIED
-        =========================================== */
+        /* ------------------------------------------
+           EMAIL VERIFICATION
+        ------------------------------------------ */
 
-        if (!currentUser.emailVerified) {
+        if (
+            !currentUser.emailVerified
+        ) {
 
             alert(
                 "Please verify your email before accessing C Programming."
             );
 
+
             window.location.href =
                 "login.html";
+
 
             return;
 
         }
 
 
-        /* ==========================================
-           VERIFIED USER
-        =========================================== */
+        /* ------------------------------------------
+           SHOW PAGE
+        ------------------------------------------ */
 
         authChecking.style.display =
             "none";
@@ -503,7 +1027,15 @@
         bookContent.style.display =
             "block";
 
-    });
+
+        /* ------------------------------------------
+           START READING
+        ------------------------------------------ */
+
+        startReading();
+
+    }
+);
 
 </script>
 
