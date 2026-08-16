@@ -22,7 +22,7 @@
 
 
 <!-- ==================================================
-     ADMIN HEADER
+     HEADER
 ================================================== -->
 
 <header>
@@ -34,6 +34,7 @@
     <p>
         Manage Practice Results
     </p>
+
 
     <nav>
 
@@ -49,6 +50,8 @@
             📚 Books
         </a>
 
+        <!-- LOGIN ONLY WHEN NOT LOGGED IN -->
+
         <a href="login.html"
            id="loginButton"
            style="display:none;">
@@ -56,6 +59,9 @@
             🔐 Login
 
         </a>
+
+
+        <!-- LOGOUT ONLY WHEN LOGGED IN -->
 
         <a href="#"
            id="logoutButton"
@@ -72,7 +78,7 @@
 
 
 <!-- ==================================================
-     CHECKING ADMIN ACCESS
+     CHECKING
 ================================================== -->
 
 <section
@@ -101,13 +107,14 @@
     style="display:none;">
 
     <h2>
-        🔐 Admin Login Required
+        🔐 Administrator Login Required
     </h2>
 
     <p>
         Please login with the administrator account
-        to access the Admin Panel.
+        to access this page.
     </p>
+
 
     <button
         type="button"
@@ -135,9 +142,10 @@
     </h2>
 
     <p>
-        You are logged in, but this account does not
-        have administrator permission.
+        Your account is not authorized to access
+        the ALLIED Admin Panel.
     </p>
+
 
     <button
         type="button"
@@ -162,7 +170,7 @@
 
 
 <!-- ==================================================
-     ADMIN DASHBOARD
+     DASHBOARD
 ================================================== -->
 
 <section class="hero">
@@ -172,7 +180,7 @@
     </h2>
 
     <p>
-        Review submitted practice tests and
+        Review student practice tests and
         declare results.
     </p>
 
@@ -228,7 +236,7 @@
 
 
 <!-- ==================================================
-     FIREBASE SCRIPT
+     FIREBASE
 ================================================== -->
 
 <script type="module">
@@ -241,7 +249,8 @@ import {
     collection,
     getDocs,
     doc,
-    updateDoc
+    updateDoc,
+    signOut
 
 } from "./firebase.js";
 
@@ -336,10 +345,10 @@ let currentUser = null;
 
 
 /* ==================================================
-   INITIAL PAGE STATE
+   HIDE ALL MAIN SECTIONS
 ================================================== */
 
-function hideAllAccessSections() {
+function hideAllSections() {
 
     adminChecking.style.display =
         "none";
@@ -363,7 +372,7 @@ function hideAllAccessSections() {
 
 function showLoginRequired() {
 
-    hideAllAccessSections();
+    hideAllSections();
 
 
     loginRequired.style.display =
@@ -387,7 +396,7 @@ function showLoginRequired() {
 
 function showAccessDenied() {
 
-    hideAllAccessSections();
+    hideAllSections();
 
 
     accessDenied.style.display =
@@ -411,7 +420,7 @@ function showAccessDenied() {
 
 function showAdminPanel() {
 
-    hideAllAccessSections();
+    hideAllSections();
 
 
     adminContent.style.display =
@@ -434,16 +443,13 @@ function showAdminPanel() {
 ================================================== */
 
 goLoginButton.addEventListener(
-
     "click",
-
     function () {
 
         window.location.href =
             "login.html";
 
     }
-
 );
 
 
@@ -453,53 +459,34 @@ goLoginButton.addEventListener(
 ================================================== */
 
 backHomeButton.addEventListener(
-
     "click",
-
     function () {
 
         window.location.href =
             "home.html";
 
     }
-
 );
 
 
 
 /* ==================================================
-   FIREBASE AUTH CHECK
+   FIREBASE AUTHENTICATION
 ================================================== */
 
 onAuthStateChanged(
-
     auth,
+    async function (user) {
 
-    async (user) => {
-
-        /*
-         * Start with checking screen.
-         */
-
-        adminChecking.style.display =
-            "block";
+        console.log(
+            "AUTH STATE:",
+            user
+        );
 
 
-        loginRequired.style.display =
-            "none";
-
-
-        accessDenied.style.display =
-            "none";
-
-
-        adminContent.style.display =
-            "none";
-
-
-        /*
-         * No logged-in user.
-         */
+        /* ------------------------------------------
+           USER NOT LOGGED IN
+        ------------------------------------------ */
 
         if (!user) {
 
@@ -514,17 +501,17 @@ onAuthStateChanged(
         }
 
 
-        /*
-         * Store user.
-         */
+        /* ------------------------------------------
+           USER FOUND
+        ------------------------------------------ */
 
         currentUser =
             user;
 
 
-        /*
-         * Refresh Firebase user.
-         */
+        /* ------------------------------------------
+           REFRESH USER
+        ------------------------------------------ */
 
         try {
 
@@ -542,17 +529,13 @@ onAuthStateChanged(
         }
 
 
-        /*
-         * Get current Firebase user.
-         */
-
         currentUser =
             auth.currentUser;
 
 
-        /*
-         * User disappeared.
-         */
+        /* ------------------------------------------
+           CHECK USER AGAIN
+        ------------------------------------------ */
 
         if (!currentUser) {
 
@@ -563,12 +546,9 @@ onAuthStateChanged(
         }
 
 
-        /*
-         * Compare email.
-         *
-         * toLowerCase() avoids
-         * accidental uppercase mismatch.
-         */
+        /* ------------------------------------------
+           GET EMAIL
+        ------------------------------------------ */
 
         const userEmail =
             (
@@ -584,9 +564,21 @@ onAuthStateChanged(
             .toLowerCase();
 
 
-        /*
-         * NORMAL USER
-         */
+        console.log(
+            "USER EMAIL:",
+            userEmail
+        );
+
+
+        console.log(
+            "ADMIN EMAIL:",
+            adminEmail
+        );
+
+
+        /* ------------------------------------------
+           ADMIN CHECK
+        ------------------------------------------ */
 
         if (
             userEmail !==
@@ -600,21 +592,16 @@ onAuthStateChanged(
         }
 
 
-        /*
-         * ADMIN USER
-         */
+        /* ------------------------------------------
+           ADMIN APPROVED
+        ------------------------------------------ */
 
         showAdminPanel();
 
 
-        /*
-         * Load submissions.
-         */
-
         await loadSubmissions();
 
     }
-
 );
 
 
@@ -625,10 +612,6 @@ onAuthStateChanged(
 
 async function loadSubmissions() {
 
-    /*
-     * Only admin can call this.
-     */
-
     if (!currentUser) {
 
         return;
@@ -636,7 +619,11 @@ async function loadSubmissions() {
     }
 
 
-    const currentEmail =
+    /* ------------------------------------------
+       ADMIN SECURITY CHECK
+    ------------------------------------------ */
+
+    const email =
         (
             currentUser.email || ""
         )
@@ -645,10 +632,10 @@ async function loadSubmissions() {
 
 
     if (
-        currentEmail !==
+        email !==
         ADMIN_EMAIL
-        .trim()
-        .toLowerCase()
+            .trim()
+            .toLowerCase()
     ) {
 
         return;
@@ -675,9 +662,9 @@ async function loadSubmissions() {
         `;
 
 
-        /*
-         * users collection
-         */
+        /* --------------------------------------
+           USERS COLLECTION
+        -------------------------------------- */
 
         const usersRef =
             collection(
@@ -696,26 +683,23 @@ async function loadSubmissions() {
             0;
 
 
-        /*
-         * Loop through users.
-         */
+        /* --------------------------------------
+           LOOP THROUGH USERS
+        -------------------------------------- */
 
         for (
             const userDocument
             of usersSnapshot.docs
         ) {
 
+
             const userId =
                 userDocument.id;
 
 
-            /*
-             * practiceTests collection
-             *
-             * users
-             *   └── UID
-             *       └── practiceTests
-             */
+            /* ----------------------------------
+               PRACTICE TESTS
+            ---------------------------------- */
 
             const testsRef =
                 collection(
@@ -732,13 +716,12 @@ async function loadSubmissions() {
                 );
 
 
-            /*
-             * Display each test.
-             */
+            /* ----------------------------------
+               LOOP THROUGH TESTS
+            ---------------------------------- */
 
             testsSnapshot.forEach(
-
-                (testDocument) => {
+                function (testDocument) {
 
                     totalTests++;
 
@@ -758,15 +741,14 @@ async function loadSubmissions() {
                     );
 
                 }
-
             );
 
         }
 
 
-        /*
-         * No tests.
-         */
+        /* --------------------------------------
+           NO TESTS
+        -------------------------------------- */
 
         if (
             totalTests === 0
@@ -781,8 +763,8 @@ async function loadSubmissions() {
                     </h3>
 
                     <p>
-                        Practice test submissions
-                        will appear here.
+                        Student practice test
+                        submissions will appear here.
                     </p>
 
                 </div>
@@ -805,7 +787,7 @@ async function loadSubmissions() {
     catch (error) {
 
         console.error(
-            "Load submissions error:",
+            "LOAD SUBMISSIONS ERROR:",
             error
         );
 
@@ -819,7 +801,7 @@ async function loadSubmissions() {
             <div class="empty-card">
 
                 <h3>
-                    ❌ Error
+                    ❌ Error loading submissions
                 </h3>
 
                 <p>
@@ -834,20 +816,8 @@ async function loadSubmissions() {
 
     }
 
-}<!-- ==================================================
-     CREATE SUBMISSION CARD
-================================================== -->
+}
 
-<script type="module">
-
-/*
- * This second script uses the variables/functions
- * from the first module only through functions that
- * are already available in this module.
- *
- * Therefore the complete recommended version is to
- * combine Part 1 and Part 2 into ONE <script type="module>.
- */
 
 
 /* ==================================================
@@ -857,7 +827,9 @@ async function loadSubmissions() {
 function createSubmissionCard(
 
     userId,
+
     testId,
+
     data
 
 ) {
@@ -872,59 +844,9 @@ function createSubmissionCard(
         "book-card";
 
 
-    /*
-     * Result status
-     */
-
-    const declared =
-        data.resultDeclared === true;
-
-
-    /*
-     * Points
-     */
-
-    const points =
-        Number(
-            data.points || 0
-        );
-
-
-    /*
-     * Total questions
-     */
-
-    const totalQuestions =
-        Number(
-            data.totalQuestions ||
-            0
-        );
-
-
-    /*
-     * Score
-     */
-
-    const score =
-        Number(
-            data.score || 0
-        );
-
-
-    /*
-     * Student email
-     */
-
-    const studentEmail =
-        String(
-            data.userEmail ||
-            "Unknown User"
-        );
-
-
-    /*
-     * Subject
-     */
+    /* ------------------------------------------
+       DATA
+    ------------------------------------------ */
 
     const subject =
         String(
@@ -933,19 +855,39 @@ function createSubmissionCard(
         );
 
 
-    /*
-     * Result text
-     */
-
-    const resultText =
-        declared
-            ? "✅ Declared"
-            : "🔒 Not Declared";
+    const email =
+        String(
+            data.userEmail ||
+            "Unknown User"
+        );
 
 
-    /*
-     * Card
-     */
+    const score =
+        Number(
+            data.score || 0
+        );
+
+
+    const points =
+        Number(
+            data.points || 0
+        );
+
+
+    const totalQuestions =
+        Number(
+            data.totalQuestions || 0
+        );
+
+
+    const declared =
+        data.resultDeclared === true;
+
+
+
+    /* ------------------------------------------
+       CARD HTML
+    ------------------------------------------ */
 
     card.innerHTML = `
 
@@ -966,7 +908,7 @@ function createSubmissionCard(
             <strong>
 
                 ${escapeHTML(
-                    studentEmail
+                    email
                 )}
 
             </strong>
@@ -1011,9 +953,7 @@ function createSubmissionCard(
             <strong>
 
                 ${score}
-
                 /
-
                 ${totalQuestions}
 
             </strong>
@@ -1040,7 +980,11 @@ function createSubmissionCard(
 
             <strong>
 
-                ${resultText}
+                ${
+                    declared
+                    ? "✅ Declared"
+                    : "🔒 Not Declared"
+                }
 
             </strong>
 
@@ -1048,7 +992,6 @@ function createSubmissionCard(
 
 
         <div
-            class="admin-actions"
             style="margin-top:15px;">
 
             ${
@@ -1081,6 +1024,7 @@ function createSubmissionCard(
                 </button>
 
                 `
+
             }
 
         </div>
@@ -1088,22 +1032,21 @@ function createSubmissionCard(
     `;
 
 
-    /*
-     * Add declare button event.
-     */
+
+    /* ------------------------------------------
+       DECLARE BUTTON
+    ------------------------------------------ */
 
     if (!declared) {
 
-        const declareButton =
+        const button =
             card.querySelector(
                 ".declareButton"
             );
 
 
-        declareButton.addEventListener(
-
+        button.addEventListener(
             "click",
-
             async function () {
 
                 await declareResult(
@@ -1112,46 +1055,24 @@ function createSubmissionCard(
 
                     testId,
 
-                    declareButton
+                    button
 
                 );
 
             }
-
         );
 
     }
 
 
-    /*
-     * Add card to page.
-     */
+
+    /* ------------------------------------------
+       ADD CARD
+    ------------------------------------------ */
 
     submissions.appendChild(
         card
     );
-
-}
-
-
-
-/* ==================================================
-   ESCAPE HTML
-================================================== */
-
-function escapeHTML(value) {
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-
-    div.textContent =
-        value;
-
-
-    return div.innerHTML;
 
 }
 
@@ -1171,10 +1092,6 @@ async function declareResult(
 
 ) {
 
-    /*
-     * Check admin.
-     */
-
     if (!currentUser) {
 
         alert(
@@ -1186,7 +1103,11 @@ async function declareResult(
     }
 
 
-    const currentEmail =
+    /* ------------------------------------------
+       CHECK ADMIN
+    ------------------------------------------ */
+
+    const email =
         (
             currentUser.email || ""
         )
@@ -1194,15 +1115,11 @@ async function declareResult(
         .toLowerCase();
 
 
-    const adminEmail =
-        ADMIN_EMAIL
-        .trim()
-        .toLowerCase();
-
-
     if (
-        currentEmail !==
-        adminEmail
+        email !==
+        ADMIN_EMAIL
+            .trim()
+            .toLowerCase()
     ) {
 
         alert(
@@ -1214,9 +1131,9 @@ async function declareResult(
     }
 
 
-    /*
-     * Confirmation.
-     */
+    /* ------------------------------------------
+       CONFIRM
+    ------------------------------------------ */
 
     const confirmed =
         confirm(
@@ -1233,10 +1150,6 @@ async function declareResult(
 
     try {
 
-        /*
-         * Disable button.
-         */
-
         button.disabled =
             true;
 
@@ -1245,28 +1158,29 @@ async function declareResult(
             "⏳ Declaring...";
 
 
-        /*
-         * Exact Firestore location:
-         *
-         * users
-         *   └── USER_ID
-         *       └── practiceTests
-         *           └── TEST_ID
-         */
+        /* --------------------------------------
+           TEST DOCUMENT
+        -------------------------------------- */
 
         const testRef =
             doc(
+
                 db,
+
                 "users",
+
                 userId,
+
                 "practiceTests",
+
                 testId
+
             );
 
 
-        /*
-         * Declare result.
-         */
+        /* --------------------------------------
+           UPDATE RESULT
+        -------------------------------------- */
 
         await updateDoc(
 
@@ -1282,23 +1196,23 @@ async function declareResult(
         );
 
 
-        /*
-         * Reload submissions.
-         */
-
-        await loadSubmissions();
-
-
         alert(
             "🏆 Result declared successfully!"
         );
+
+
+        /* --------------------------------------
+           RELOAD
+        -------------------------------------- */
+
+        await loadSubmissions();
 
     }
 
     catch (error) {
 
         console.error(
-            "Declare result error:",
+            "DECLARE RESULT ERROR:",
             error
         );
 
@@ -1358,31 +1272,10 @@ logoutButton.addEventListener(
 
         try {
 
-            /*
-             * Import Firebase signOut.
-             */
-
-            const {
-                signOut
-            } = await import(
-
-                "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js"
-
-            );
-
-
-            /*
-             * Sign out.
-             */
-
             await signOut(
                 auth
             );
 
-
-            /*
-             * Return to login.
-             */
 
             window.location.href =
                 "login.html";
@@ -1392,7 +1285,7 @@ logoutButton.addEventListener(
         catch (error) {
 
             console.error(
-                "Logout error:",
+                "LOGOUT ERROR:",
                 error
             );
 
@@ -1406,9 +1299,25 @@ logoutButton.addEventListener(
     }
 
 );
+/* ==================================================
+   ESCAPE HTML
+================================================== */
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        value;
+
+    return div.innerHTML;
+
+}
 
 </script>
-
 
 </body>
 
