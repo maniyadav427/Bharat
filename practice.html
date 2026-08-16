@@ -78,7 +78,6 @@
 
     </button>
 
-
     <br><br>
 
 
@@ -89,7 +88,6 @@
         ☕ Java Programming
 
     </button>
-
 
     <br><br>
 
@@ -102,7 +100,6 @@
 
     </button>
 
-
     <br><br>
 
 
@@ -113,7 +110,6 @@
         📐 Mathematics
 
     </button>
-
 
     <br><br>
 
@@ -155,34 +151,23 @@
         /
 
         <span id="totalQuestions">
-            10
+            0
         </span>
 
     </p>
 
 
-    <!-- 20 SECOND TIMER -->
-
     <h2 id="questionTimer">
-
         ⏱️ 00:20
-
     </h2>
 
 
-    <!-- QUESTION -->
-
     <h3 id="questionText">
-
         Question will appear here.
-
     </h3>
 
 
-    <!-- OPTIONS -->
-
     <div id="options">
-
     </div>
 
 
@@ -197,7 +182,6 @@
         ➡️ Next
 
     </button>
-
 
 </section>
 
@@ -218,7 +202,6 @@
 
 
     <div id="answerKey">
-
     </div>
 
 
@@ -238,10 +221,13 @@
 
 
         <p>
+
             🏆 Your points:
+
             <strong id="pointsDisplay">
                 0
             </strong>
+
         </p>
 
 
@@ -270,7 +256,15 @@
         Read • Learn • Practice • Grow ❤️
     </p>
 
-</footer><script type="module">
+</footer>
+
+
+
+<!-- ==========================================
+     FIREBASE + PRACTICE JAVASCRIPT
+========================================== -->
+
+<script type="module">
 
 import {
 
@@ -322,6 +316,11 @@ onAuthStateChanged(
     (user) => {
 
         currentUser = user;
+
+        console.log(
+            "Current user:",
+            currentUser
+        );
 
     }
 
@@ -605,10 +604,8 @@ window.startTest = function(subject) {
             "🔐 Please login before starting a test."
         );
 
-
         window.location.href =
             "login.html";
-
 
         return;
 
@@ -629,9 +626,8 @@ window.startTest = function(subject) {
     ) {
 
         alert(
-            "No questions available."
+            "❌ No questions available."
         );
-
 
         return;
 
@@ -745,6 +741,10 @@ function showQuestion() {
                 "12px 0";
 
 
+            label.style.cursor =
+                "pointer";
+
+
             label.innerHTML = `
 
                 <input
@@ -785,7 +785,7 @@ function showQuestion() {
 
 
 /* ==========================================
-   20 SECOND TIMER
+   QUESTION TIMER
 ========================================== */
 
 function startQuestionTimer() {
@@ -828,7 +828,7 @@ function startQuestionTimer() {
                     saveCurrentAnswer();
 
 
-                    nextQuestion();
+                    moveToNextQuestion();
 
                 }
 
@@ -881,7 +881,6 @@ function saveCurrentAnswer() {
 
     if (selected) {
 
-
         userAnswers[
             currentQuestion
         ] =
@@ -890,17 +889,13 @@ function saveCurrentAnswer() {
                 selected.value
             );
 
-
     }
 
     else {
 
-
         userAnswers[
             currentQuestion
-        ] =
-
-            null;
+        ] = null;
 
     }
 
@@ -909,7 +904,7 @@ function saveCurrentAnswer() {
 
 
 /* ==========================================
-   NEXT QUESTION
+   NEXT BUTTON
 ========================================== */
 
 window.nextQuestion = function() {
@@ -923,6 +918,19 @@ window.nextQuestion = function() {
     saveCurrentAnswer();
 
 
+    moveToNextQuestion();
+
+};
+
+
+
+/* ==========================================
+   MOVE TO NEXT QUESTION
+========================================== */
+
+function moveToNextQuestion() {
+
+
     if (
 
         currentQuestion <
@@ -930,23 +938,19 @@ window.nextQuestion = function() {
 
     ) {
 
-
         currentQuestion++;
 
-
         showQuestion();
-
 
     }
 
     else {
 
-
         finishTest();
 
     }
 
-};
+}
 
 
 
@@ -991,7 +995,6 @@ function calculatePoints() {
                 question.answer
 
             ) {
-
 
                 points++;
 
@@ -1044,6 +1047,7 @@ function showAnswerKey() {
                 null
 
                 ||
+
                 userAnswer ===
                 undefined
 
@@ -1082,7 +1086,7 @@ function showAnswerKey() {
 
                 ${question.question}
 
-                <br>
+                <br><br>
 
                 👤 Your Answer:
 
@@ -1114,13 +1118,24 @@ function showAnswerKey() {
 
 
 /* ==========================================
-   SAVE PRACTICE TEST
+   PART 1 ENDS HERE
+========================================== */
+/* ==========================================
+   SAVE PRACTICE TEST TO FIRESTORE
 ========================================== */
 
 async function savePracticeTest() {
 
 
+    /* ------------------------------------------
+       CHECK LOGIN
+    ------------------------------------------ */
+
     if (!currentUser) {
+
+        console.error(
+            "No logged-in user."
+        );
 
 
         alert(
@@ -1133,47 +1148,73 @@ async function savePracticeTest() {
     }
 
 
+
+    /* ------------------------------------------
+       CHECK QUESTIONS
+    ------------------------------------------ */
+
+    if (
+        !questions ||
+        questions.length === 0
+    ) {
+
+        console.error(
+            "No questions found."
+        );
+
+
+        alert(
+            "❌ No test questions found."
+        );
+
+
+        return false;
+
+    }
+
+
+
     try {
 
+
+        /* --------------------------------------
+           CALCULATE POINTS
+        -------------------------------------- */
 
         const points =
             calculatePoints();
 
 
-        const testData = {
 
+        /* --------------------------------------
+           TEST DATA
+        -------------------------------------- */
+
+        const testData = {
 
             userId:
                 currentUser.uid,
 
-
             userEmail:
                 currentUser.email || "",
-
 
             subject:
                 currentSubject,
 
-
             totalQuestions:
                 questions.length,
-
-
-            answers:
-                userAnswers,
-
-
-            points:
-                points,
-
 
             score:
                 points,
 
+            points:
+                points,
+
+            answers:
+                userAnswers,
 
             resultDeclared:
                 false,
-
 
             submittedAt:
                 serverTimestamp()
@@ -1181,27 +1222,53 @@ async function savePracticeTest() {
         };
 
 
-        await addDoc(
 
-            collection(
-
-                db,
-
-                "users",
-
-                currentUser.uid,
-
-                "practiceTests"
-
-            ),
-
+        console.log(
+            "Saving test data:",
             testData
-
         );
+
+
+
+        /* --------------------------------------
+           FIRESTORE PATH
+
+           users
+              └── USER UID
+                   └── practiceTests
+                        └── TEST ID
+        -------------------------------------- */
+
+        const practiceTestsRef =
+            collection(
+                db,
+                "users",
+                currentUser.uid,
+                "practiceTests"
+            );
+
+
+
+        /* --------------------------------------
+           ADD TEST
+        -------------------------------------- */
+
+        const savedDocument =
+            await addDoc(
+                practiceTestsRef,
+                testData
+            );
+
 
 
         console.log(
             "Practice test saved successfully."
+        );
+
+
+        console.log(
+            "Test ID:",
+            savedDocument.id
         );
 
 
@@ -1214,11 +1281,8 @@ async function savePracticeTest() {
 
 
         console.error(
-
             "Practice test save error:",
-
             error
-
         );
 
 
@@ -1246,31 +1310,56 @@ async function savePracticeTest() {
 async function finishTest() {
 
 
+    /* ------------------------------------------
+       STOP TIMER
+    ------------------------------------------ */
+
     clearInterval(
         timerInterval
     );
 
 
+    timerInterval =
+        null;
+
+
+
+    /* ------------------------------------------
+       SAVE LAST ANSWER
+    ------------------------------------------ */
+
     saveCurrentAnswer();
 
+
+
+    /* ------------------------------------------
+       CALCULATE POINTS
+    ------------------------------------------ */
 
     const points =
         calculatePoints();
 
 
+
     /* ------------------------------------------
-       SAVE TEST
+       SAVE TO FIRESTORE
     ------------------------------------------ */
 
     const saved =
         await savePracticeTest();
 
 
+
+    /* ------------------------------------------
+       IF SAVE FAILED
+    ------------------------------------------ */
+
     if (!saved) {
 
         return;
 
     }
+
 
 
     /* ------------------------------------------
@@ -1283,8 +1372,9 @@ async function finishTest() {
         "none";
 
 
+
     /* ------------------------------------------
-       SHOW RESULT
+       SHOW RESULT AREA
     ------------------------------------------ */
 
     document.getElementById(
@@ -1293,15 +1383,17 @@ async function finishTest() {
         "block";
 
 
+
     /* ------------------------------------------
-       ANSWER KEY
+       SHOW ANSWER KEY
     ------------------------------------------ */
 
     showAnswerKey();
 
 
+
     /* ------------------------------------------
-       POINTS + HIDDEN MARKS
+       SHOW POINTS
     ------------------------------------------ */
 
     document.getElementById(
@@ -1310,11 +1402,21 @@ async function finishTest() {
         points;
 
 
+
+    /* ------------------------------------------
+       MARKS REMAIN HIDDEN
+    ------------------------------------------ */
+
     document.getElementById(
         "hiddenResult"
     ).style.display =
         "block";
 
+
+
+    /* ------------------------------------------
+       SCROLL TO RESULT
+    ------------------------------------------ */
 
     document.getElementById(
         "resultArea"
@@ -1325,8 +1427,14 @@ async function finishTest() {
 
     });
 
+
 }
 
+
+
+/* ==========================================
+   END OF PRACTICE JAVASCRIPT
+========================================== */
 
 </script>
 
