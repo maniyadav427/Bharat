@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard | ALLIED</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header>
+
+    <h1>
+        🎓 ALLIED Student Dashboard
+    </h1>
+
+    <p>
+        Learn • Read • Practice • Track Progress
+    </p>
+
+    <nav>
+
+        <a href="home.html">
+            🏠 Home
+        </a>
+
+        <a href="books.html">
+            📚 Books
+        </a>
+
+        <a href="practice.html">
+            📝 Practice
+        </a>
+
+        <a href="dashboard.html">
+            🎓 Dashboard
+        </a>
+
+        <a href="#" id="logoutButton">
+            🚪 Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ==========================================
+     AUTH CHECKING
+========================================== -->
+
+<section
+    id="loadingSection"
+    class="hero">
+
+    <h2>
+        🔐 Checking account...
+    </h2>
+
+    <p>
+        Please wait.
+    </p>
+
+</section>
+
+
+
+<!-- ==========================================
+     DASHBOARD
+========================================== -->
+
+<div
+    id="dashboard"
+    style="display:none;">
+
+
+
+<!-- ==========================================
+     PROFILE
+========================================== -->
+
+<section class="hero">
+
+    <h2>
+        👤 Student Profile
+    </h2>
+
+    <p>
+        Email:
+        <strong id="userEmail">
+            Loading...
+        </strong>
+    </p>
+
+    <p>
+        User ID:
+        <small id="userId">
+            Loading...
+        </small>
+    </p>
+
+</section>
+
+
+
+<!-- ==========================================
+     STATISTICS
+========================================== -->
+
+<section class="hero">
+
+    <h2>
+        📊 My Progress
+    </h2>
+
+
+    <div class="dashboard-stats">
+
+
+        <div class="book-card">
+
+            <h3>
+                📚 Saved Books
+            </h3>
+
+            <p id="savedBooksCount">
+                0
+            </p>
+
+        </div>
+
+
+
+        <div class="book-card">
+
+            <h3>
+                📝 Tests Attempted
+            </h3>
+
+            <p id="testsCount">
+                0
+            </p>
+
+        </div>
+
+
+
+        <div class="book-card">
+
+            <h3>
+                🏆 Total Points
+            </h3>
+
+            <p id="totalPoints">
+                0
+            </p>
+
+        </div>
+
+
+
+        <div class="book-card">
+
+            <h3>
+                ⏱️ Reading Time
+            </h3>
+
+            <p id="readingTime">
+                00:00:00
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     SAVED BOOKS
+========================================== -->
+
+<section class="hero">
+
+    <h2>
+        🔖 My Saved Books
+    </h2>
+
+    <div id="savedBooks">
+
+        <div class="empty-card">
+
+            <p>
+                ⏳ Loading saved books...
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     TEST HISTORY
+========================================== -->
+
+<section class="hero">
+
+    <h2>
+        📝 My Practice History
+    </h2>
+
+    <div id="testHistory">
+
+        <div class="empty-card">
+
+            <p>
+                ⏳ Loading test history...
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     RESULTS
+========================================== -->
+
+<section class="hero">
+
+    <h2>
+        🏆 My Results
+    </h2>
+
+    <div id="results">
+
+        <div class="empty-card">
+
+            <p>
+                ⏳ Loading results...
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+</div>
+
+
+
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
+<footer>
+
+    <p>
+        📚 ALLIED Digital Library
+    </p>
+
+    <p>
+        Read • Learn • Practice • Grow ❤️
+    </p>
+
+</footer>
+
+
+
+<!-- ==========================================
+     FIREBASE
+========================================== -->
+
+<script type="module">
+
+import {
+
+    auth,
+    db,
+    onAuthStateChanged,
+    collection,
+    getDocs
+
+} from "./firebase.js";
+
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const loadingSection =
+    document.getElementById(
+        "loadingSection"
+    );
+
+
+const dashboard =
+    document.getElementById(
+        "dashboard"
+    );
+
+
+const userEmail =
+    document.getElementById(
+        "userEmail"
+    );
+
+
+const userId =
+    document.getElementById(
+        "userId"
+    );
+
+
+const savedBooksCount =
+    document.getElementById(
+        "savedBooksCount"
+    );
+
+
+const testsCount =
+    document.getElementById(
+        "testsCount"
+    );
+
+
+const totalPoints =
+    document.getElementById(
+        "totalPoints"
+    );
+
+
+const readingTime =
+    document.getElementById(
+        "readingTime"
+    );
+
+
+const savedBooks =
+    document.getElementById(
+        "savedBooks"
+    );
+
+
+const testHistory =
+    document.getElementById(
+        "testHistory"
+    );
+
+
+const results =
+    document.getElementById(
+        "results"
+    );
+
+
+const logoutButton =
+    document.getElementById(
+        "logoutButton"
+    );
+
+
+
+/* ==========================================
+   CURRENT USER
+========================================== */
+
+let currentUser = null;
+
+
+
+/* ==========================================
+   AUTH CHECK
+========================================== */
+
+onAuthStateChanged(
+
+    auth,
+
+    async (user) => {
+
+
+        if (!user) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        currentUser =
+            user;
+
+
+        userEmail.textContent =
+            user.email || "Unknown";
+
+
+        userId.textContent =
+            user.uid;
+
+
+        loadingSection.style.display =
+            "none";
+
+
+        dashboard.style.display =
+            "block";
+
+
+        await loadDashboard();
+
+    }
+
+);
+
+
+
+/* ==========================================
+   LOAD DASHBOARD
+========================================== */
+
+async function loadDashboard() {
+
+    await loadSavedBooks();
+
+    await loadTests();
+
+    await loadReadingTime();
+
+}
+
+
+
+/* ==========================================
+   LOAD SAVED BOOKS
+========================================== */
+
+async function loadSavedBooks() {
+
+    try {
+
+        const savedBooksRef =
+            collection(
+
+                db,
+
+                "users",
+
+                currentUser.uid,
+
+                "savedBooks"
+
+            );
+
+
+        const snapshot =
+            await getDocs(
+                savedBooksRef
+            );
+
+
+        savedBooksCount.textContent =
+            snapshot.size;
+
+
+        savedBooks.innerHTML =
+            "";
+
+
+        if (snapshot.empty) {
+
+            savedBooks.innerHTML = `
+
+                <div class="empty-card">
+
+                    <p>
+                        🔖 No saved books yet.
+                    </p>
+
+                    <a href="books.html">
+                        📚 Browse Books
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        snapshot.forEach(
+
+            (documentSnapshot) => {
+
+                const data =
+                    documentSnapshot.data();
+
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "book-card";
+
+
+                card.innerHTML = `
+
+                    <h3>
+                        🔖
+                        ${escapeHTML(
+                            data.title ||
+                            "Saved Book"
+                        )}
+                    </h3>
+
+                    <p>
+                        Saved to your library.
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="window.location.href='books.html'">
+
+                        📖 Open Books
+
+                    </button>
+
+                `;
+
+
+                savedBooks.appendChild(
+                    card
+                );
+
+            }
+
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Saved books error:",
+            error
+        );
+
+
+        savedBooks.innerHTML = `
+
+            <div class="empty-card">
+
+                ❌ Unable to load saved books.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* ==========================================
+   LOAD PRACTICE TESTS
+========================================== */
+
+async function loadTests() {
+
+    try {
+
+        const testsRef =
+            collection(
+
+                db,
+
+                "users",
+
+                currentUser.uid,
+
+                "practiceTests"
+
+            );
+
+
+        const snapshot =
+            await getDocs(
+                testsRef
+            );
+
+
+        testsCount.textContent =
+            snapshot.size;
+
+
+        testHistory.innerHTML =
+            "";
+
+
+        results.innerHTML =
+            "";
+
+
+        let pointsTotal =
+            0;
+
+
+        if (snapshot.empty) {
+
+            testHistory.innerHTML = `
+
+                <div class="empty-card">
+
+                    <p>
+                        📝 No practice tests attempted yet.
+                    </p>
+
+                    <a href="practice.html">
+                        🎯 Start Practice
+                    </a>
+
+                </div>
+
+            `;
+
+
+            results.innerHTML = `
+
+                <div class="empty-card">
+
+                    <p>
+                        🏆 No results yet.
+                    </p>
+
+                </div>
+
+            `;
+
+            totalPoints.textContent =
+                "0";
+
+            return;
+
+        }
+
+
+        snapshot.forEach(
+
+            (documentSnapshot) => {
+
+                const data =
+                    documentSnapshot.data();
+
+
+                const points =
+                    Number(
+                        data.points || 0
+                    );
+
+
+                pointsTotal +=
+                    points;
+
+
+                const declared =
+                    data.resultDeclared === true;
+
+
+                /* --------------------------
+                   TEST HISTORY
+                -------------------------- */
+
+                const historyCard =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                historyCard.className =
+                    "book-card";
+
+
+                historyCard.innerHTML = `
+
+                    <h3>
+                        📝
+                        ${escapeHTML(
+                            String(
+                                data.subject ||
+                                "Unknown"
+                            )
+                        )}
+                    </h3>
+
+                    <p>
+                        📊 Questions:
+                        <strong>
+                            ${
+                                Number(
+                                    data.totalQuestions ||
+                                    0
+                                )
+                            }
+                        </strong>
+                    </p>
+
+                    <p>
+                        🏆 Points:
+                        <strong>
+                            ${points}
+                        </strong>
+                    </p>
+
+                    <p>
+                        📢 Status:
+                        <strong>
+                            ${
+                                declared
+                                ? "✅ Result Declared"
+                                : "🔒 Waiting for Result"
+                            }
+                        </strong>
+                    </p>
+
+                `;
+
+
+                testHistory.appendChild(
+                    historyCard
+                );
+
+
+                /* --------------------------
+                   RESULTS
+                -------------------------- */
+
+                const resultCard =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                resultCard.className =
+                    "book-card";
+
+
+                if (declared) {
+
+                    resultCard.innerHTML = `
+
+                        <h3>
+                            🏆
+                            ${escapeHTML(
+                                String(
+                                    data.subject ||
+                                    "Test"
+                                )
+                            )}
+                        </h3>
+
+                        <p>
+                            🎯 Score:
+                            <strong>
+                                ${
+                                    Number(
+                                        data.score ||
+                                        data.points ||
+                                        0
+                                    )
+                                }
+                            /
+                                ${
+                                    Number(
+                                        data.totalQuestions ||
+                                        0
+                                    )
+                                }
+                            </strong>
+                        </p>
+
+                        <p>
+                            ⭐ Points:
+                            <strong>
+                                ${points}
+                            </strong>
+                        </p>
+
+                        <p>
+                            ✅ Result Declared
+                        </p>
+
+                    `;
+
+                }
+
+                else {
+
+                    resultCard.innerHTML = `
+
+                        <h3>
+                            🔒
+                            ${escapeHTML(
+                                String(
+                                    data.subject ||
+                                    "Test"
+                                )
+                            )}
+                        </h3>
+
+                        <p>
+                            Your result is waiting
+                            for administrator declaration.
+                        </p>
+
+                        <p>
+                            ⏳ Please check again later.
+                        </p>
+
+                    `;
+
+                }
+
+
+                results.appendChild(
+                    resultCard
+                );
+
+            }
+
+        );
+
+
+        totalPoints.textContent =
+            pointsTotal;
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Practice test error:",
+            error
+        );
+
+
+        testHistory.innerHTML = `
+
+            <div class="empty-card">
+
+                ❌ Unable to load practice history.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* ==========================================
+   LOAD READING TIME
+========================================== */
+
+async function loadReadingTime() {
+
+    try {
+
+        const sessionsRef =
+            collection(
+
+                db,
+
+                "users",
+
+                currentUser.uid,
+
+                "readingSessions"
+
+            );
+
+
+        const snapshot =
+            await getDocs(
+                sessionsRef
+            );
+
+
+        let totalSeconds =
+            0;
+
+
+        snapshot.forEach(
+
+            (documentSnapshot) => {
+
+                const data =
+                    documentSnapshot.data();
+
+
+                totalSeconds +=
+                    Number(
+                        data.durationSeconds || 0
+                    );
+
+            }
+
+        );
+
+
+        readingTime.textContent =
+            formatTime(
+                totalSeconds
+            );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Reading time error:",
+            error
+        );
+
+
+        readingTime.textContent =
+            "00:00:00";
+
+    }
+
+}
+
+
+
+/* ==========================================
+   FORMAT TIME
+========================================== */
+
+function formatTime(totalSeconds) {
+
+    totalSeconds =
+        Math.floor(
+            Number(
+                totalSeconds
+            ) || 0
+        );
+
+
+    const hours =
+        Math.floor(
+            totalSeconds / 3600
+        );
+
+
+    const minutes =
+        Math.floor(
+            (totalSeconds % 3600) / 60
+        );
+
+
+    const seconds =
+        totalSeconds % 60;
+
+
+    return (
+
+        String(hours).padStart(
+            2,
+            "0"
+        )
+
+        + ":" +
+
+        String(minutes).padStart(
+            2,
+            "0"
+        )
+
+        + ":" +
+
+        String(seconds).padStart(
+            2,
+            "0"
+        )
+
+    );
+
+}
+
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value;
+
+
+    return div.innerHTML;
+
+}
+
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+logoutButton.addEventListener(
+
+    "click",
+
+    async (event) => {
+
+        event.preventDefault();
+
+
+        try {
+
+            const {
+                signOut
+            } = await import(
+
+                "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js"
+
+            );
+
+
+            await signOut(
+                auth
+            );
+
+
+            window.location.href =
+                "login.html";
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Logout error:",
+                error
+            );
+
+
+            alert(
+                "❌ Unable to logout."
+            );
+
+        }
+
+    }
+
+);
+
+</script>
+
+
+</body>
+
+</html>
