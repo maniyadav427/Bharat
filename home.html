@@ -1484,6 +1484,46 @@ onAuthStateChanged(
     }
 );
 
+</script><script type="module">
+
+import {
+    auth,
+    onAuthStateChanged
+} from "./firebase.js";
+
+
+const adminLink =
+    document.getElementById("adminLink");
+
+
+const ADMIN_EMAIL =
+    "mekalamanoj8688@gmail.com";
+
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        if (
+            user &&
+            user.email === ADMIN_EMAIL
+        ) {
+
+            adminLink.style.display =
+                "inline-block";
+
+        }
+
+        else {
+
+            adminLink.style.display =
+                "none";
+
+        }
+
+    }
+);
+
 </script>
 </body>
 
