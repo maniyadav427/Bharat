@@ -239,21 +239,12 @@
      FIREBASE
 ================================================== -->
 
-<script type="module">
+ <script type="module">
 
-import {
-
-    auth,
-    db,
-    onAuthStateChanged,
-    collection,
-    getDocs,
-    doc,
-    updateDoc,
-    signOut
-
-} from "./firebase.js";
-
+/* ==================================================
+   ALLIED ADMIN PANEL
+   FIREBASE ADMIN AUTH + PRACTICE RESULTS
+================================================== */
 
 
 /* ==================================================
@@ -264,76 +255,152 @@ const ADMIN_EMAIL =
     "mekalamanoj8522@gmail.com";
 
 
-
 /* ==================================================
    PAGE ELEMENTS
 ================================================== */
 
 const adminChecking =
-    document.getElementById(
-        "adminChecking"
-    );
-
-
-const loginRequired =
-    document.getElementById(
-        "loginRequired"
-    );
-
+    document.getElementById("adminChecking");
 
 const accessDenied =
-    document.getElementById(
-        "accessDenied"
-    );
-
+    document.getElementById("accessDenied");
 
 const adminContent =
-    document.getElementById(
-        "adminContent"
-    );
-
+    document.getElementById("adminContent");
 
 const submissions =
-    document.getElementById(
-        "submissions"
-    );
-
+    document.getElementById("submissions");
 
 const adminStatus =
-    document.getElementById(
-        "adminStatus"
-    );
-
+    document.getElementById("adminStatus");
 
 const refreshButton =
-    document.getElementById(
-        "refreshButton"
-    );
-
-
-const loginButton =
-    document.getElementById(
-        "loginButton"
-    );
-
+    document.getElementById("refreshButton");
 
 const logoutButton =
-    document.getElementById(
-        "logoutButton"
+    document.getElementById("logoutButton");
+
+
+/* ==================================================
+   SHOW ERROR
+================================================== */
+
+function showFirebaseError(error) {
+
+    console.error(
+        "ADMIN FIREBASE ERROR:",
+        error
     );
 
+    adminChecking.innerHTML = `
 
-const goLoginButton =
-    document.getElementById(
-        "goLoginButton"
+        <h2>
+            ❌ Firebase Error
+        </h2>
+
+        <p>
+            Admin panel could not connect to Firebase.
+        </p>
+
+        <p style="
+            color:red;
+            word-break:break-word;
+        ">
+            ${escapeHTML(
+                error?.message ||
+                String(error)
+            )}
+        </p>
+
+        <button
+            type="button"
+            onclick="location.reload()">
+
+            🔄 Try Again
+
+        </button>
+
+    `;
+
+}
+
+
+/* ==================================================
+   ESCAPE HTML
+================================================== */
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value;
+
+    return div.innerHTML;
+
+}
+
+
+/* ==================================================
+   LOAD FIREBASE
+================================================== */
+
+let firebase;
+
+try {
+
+    firebase =
+        await import("./firebase.js");
+
+}
+
+catch (error) {
+
+    showFirebaseError(error);
+
+    throw error;
+
+}
+
+
+/* ==================================================
+   FIREBASE FUNCTIONS
+================================================== */
+
+const {
+    auth,
+    db,
+    onAuthStateChanged,
+    collection,
+    getDocs,
+    doc,
+    updateDoc,
+    signOut
+} = firebase;
+
+
+/* ==================================================
+   CHECK FIREBASE EXPORTS
+================================================== */
+
+if (
+    !auth ||
+    !db ||
+    !onAuthStateChanged
+) {
+
+    showFirebaseError(
+        new Error(
+            "firebase.js is missing auth, db or onAuthStateChanged export."
+        )
     );
 
-
-const backHomeButton =
-    document.getElementById(
-        "backHomeButton"
+    throw new Error(
+        "Invalid firebase.js exports."
     );
 
+}
 
 
 /* ==================================================
@@ -343,140 +410,15 @@ const backHomeButton =
 let currentUser = null;
 
 
-
 /* ==================================================
-   HIDE ALL MAIN SECTIONS
-================================================== */
-
-function hideAllSections() {
-
-    adminChecking.style.display =
-        "none";
-
-    loginRequired.style.display =
-        "none";
-
-    accessDenied.style.display =
-        "none";
-
-    adminContent.style.display =
-        "none";
-
-}
-
-
-
-/* ==================================================
-   SHOW LOGIN REQUIRED
-================================================== */
-
-function showLoginRequired() {
-
-    hideAllSections();
-
-
-    loginRequired.style.display =
-        "block";
-
-
-    loginButton.style.display =
-        "inline-block";
-
-
-    logoutButton.style.display =
-        "none";
-
-}
-
-
-
-/* ==================================================
-   SHOW ACCESS DENIED
-================================================== */
-
-function showAccessDenied() {
-
-    hideAllSections();
-
-
-    accessDenied.style.display =
-        "block";
-
-
-    loginButton.style.display =
-        "none";
-
-
-    logoutButton.style.display =
-        "inline-block";
-
-}
-
-
-
-/* ==================================================
-   SHOW ADMIN PANEL
-================================================== */
-
-function showAdminPanel() {
-
-    hideAllSections();
-
-
-    adminContent.style.display =
-        "block";
-
-
-    loginButton.style.display =
-        "none";
-
-
-    logoutButton.style.display =
-        "inline-block";
-
-}
-
-
-
-/* ==================================================
-   LOGIN BUTTON
-================================================== */
-
-goLoginButton.addEventListener(
-    "click",
-    function () {
-
-        window.location.href =
-            "login.html";
-
-    }
-);
-
-
-
-/* ==================================================
-   BACK HOME BUTTON
-================================================== */
-
-backHomeButton.addEventListener(
-    "click",
-    function () {
-
-        window.location.href =
-            "home.html";
-
-    }
-);
-
-
-
-/* ==================================================
-   FIREBASE AUTHENTICATION
+   AUTHENTICATION CHECK
 ================================================== */
 
 onAuthStateChanged(
+
     auth,
-    async function (user) {
+
+    async (user) => {
 
         console.log(
             "AUTH STATE:",
@@ -484,34 +426,23 @@ onAuthStateChanged(
         );
 
 
-        /* ------------------------------------------
-           USER NOT LOGGED IN
-        ------------------------------------------ */
+        /* ==========================================
+           NO USER
+        ========================================== */
 
         if (!user) {
 
-            currentUser =
-                null;
-
-
-            showLoginRequired();
+            window.location.href =
+                "login.html";
 
             return;
 
         }
 
 
-        /* ------------------------------------------
-           USER FOUND
-        ------------------------------------------ */
-
-        currentUser =
-            user;
-
-
-        /* ------------------------------------------
+        /* ==========================================
            REFRESH USER
-        ------------------------------------------ */
+        ========================================== */
 
         try {
 
@@ -521,8 +452,8 @@ onAuthStateChanged(
 
         catch (error) {
 
-            console.error(
-                "User reload error:",
+            console.warn(
+                "User reload warning:",
                 error
             );
 
@@ -533,22 +464,19 @@ onAuthStateChanged(
             auth.currentUser;
 
 
-        /* ------------------------------------------
-           CHECK USER AGAIN
-        ------------------------------------------ */
-
         if (!currentUser) {
 
-            showLoginRequired();
+            window.location.href =
+                "login.html";
 
             return;
 
         }
 
 
-        /* ------------------------------------------
+        /* ==========================================
            GET EMAIL
-        ------------------------------------------ */
+        ========================================== */
 
         const userEmail =
             (
@@ -565,45 +493,67 @@ onAuthStateChanged(
 
 
         console.log(
-            "USER EMAIL:",
+            "Logged in email:",
             userEmail
         );
 
-
         console.log(
-            "ADMIN EMAIL:",
+            "Admin email:",
             adminEmail
         );
 
 
-        /* ------------------------------------------
+        /* ==========================================
            ADMIN CHECK
-        ------------------------------------------ */
+        ========================================== */
 
         if (
             userEmail !==
             adminEmail
         ) {
 
-            showAccessDenied();
+            adminChecking.style.display =
+                "none";
+
+            adminContent.style.display =
+                "none";
+
+            accessDenied.style.display =
+                "block";
 
             return;
 
         }
 
 
-        /* ------------------------------------------
+        /* ==========================================
            ADMIN APPROVED
-        ------------------------------------------ */
+        ========================================== */
 
-        showAdminPanel();
+        console.log(
+            "ADMIN ACCESS GRANTED"
+        );
 
+
+        adminChecking.style.display =
+            "none";
+
+        accessDenied.style.display =
+            "none";
+
+        adminContent.style.display =
+            "block";
+
+
+        /* ==========================================
+           LOAD SUBMISSIONS
+        ========================================== */
 
         await loadSubmissions();
 
     }
-);
 
+);
 
 
 /* ==================================================
@@ -619,52 +569,14 @@ async function loadSubmissions() {
     }
 
 
-    /* ------------------------------------------
-       ADMIN SECURITY CHECK
-    ------------------------------------------ */
-
-    const email =
-        (
-            currentUser.email || ""
-        )
-        .trim()
-        .toLowerCase();
-
-
-    if (
-        email !==
-        ADMIN_EMAIL
-            .trim()
-            .toLowerCase()
-    ) {
-
-        return;
-
-    }
-
-
     try {
 
         adminStatus.textContent =
             "⏳ Loading submissions...";
 
 
-        submissions.innerHTML = `
+        submissions.innerHTML = "";
 
-            <div class="empty-card">
-
-                <p>
-                    ⏳ Loading...
-                </p>
-
-            </div>
-
-        `;
-
-
-        /* --------------------------------------
-           USERS COLLECTION
-        -------------------------------------- */
 
         const usersRef =
             collection(
@@ -679,27 +591,21 @@ async function loadSubmissions() {
             );
 
 
-        let totalTests =
-            0;
+        let totalTests = 0;
 
 
-        /* --------------------------------------
+        /* ==========================================
            LOOP THROUGH USERS
-        -------------------------------------- */
+        ========================================== */
 
         for (
             const userDocument
             of usersSnapshot.docs
         ) {
 
-
             const userId =
                 userDocument.id;
 
-
-            /* ----------------------------------
-               PRACTICE TESTS
-            ---------------------------------- */
 
             const testsRef =
                 collection(
@@ -716,18 +622,10 @@ async function loadSubmissions() {
                 );
 
 
-            /* ----------------------------------
-               LOOP THROUGH TESTS
-            ---------------------------------- */
-
             testsSnapshot.forEach(
-                function (testDocument) {
+                (testDocument) => {
 
                     totalTests++;
-
-
-                    const data =
-                        testDocument.data();
 
 
                     createSubmissionCard(
@@ -736,7 +634,7 @@ async function loadSubmissions() {
 
                         testDocument.id,
 
-                        data
+                        testDocument.data()
 
                     );
 
@@ -746,9 +644,9 @@ async function loadSubmissions() {
         }
 
 
-        /* --------------------------------------
+        /* ==========================================
            NO TESTS
-        -------------------------------------- */
+        ========================================== */
 
         if (
             totalTests === 0
@@ -763,8 +661,8 @@ async function loadSubmissions() {
                     </h3>
 
                     <p>
-                        Student practice test
-                        submissions will appear here.
+                        Practice test submissions
+                        will appear here.
                     </p>
 
                 </div>
@@ -775,11 +673,8 @@ async function loadSubmissions() {
 
 
         adminStatus.textContent =
-
-            "✅ "
-            +
-            totalTests
-            +
+            "✅ " +
+            totalTests +
             " test submission(s) found.";
 
     }
@@ -792,25 +687,17 @@ async function loadSubmissions() {
         );
 
 
-        adminStatus.textContent =
-            "❌ Unable to load submissions.";
+        adminStatus.innerHTML = `
 
+            ❌ Unable to load submissions.
 
-        submissions.innerHTML = `
+            <br><br>
 
-            <div class="empty-card">
-
-                <h3>
-                    ❌ Error loading submissions
-                </h3>
-
-                <p>
-                    ${escapeHTML(
-                        error.message
-                    )}
-                </p>
-
-            </div>
+            <small>
+                ${escapeHTML(
+                    error.message
+                )}
+            </small>
 
         `;
 
@@ -819,19 +706,14 @@ async function loadSubmissions() {
 }
 
 
-
 /* ==================================================
    CREATE SUBMISSION CARD
 ================================================== */
 
 function createSubmissionCard(
-
     userId,
-
     testId,
-
     data
-
 ) {
 
     const card =
@@ -844,28 +726,8 @@ function createSubmissionCard(
         "book-card";
 
 
-    /* ------------------------------------------
-       DATA
-    ------------------------------------------ */
-
-    const subject =
-        String(
-            data.subject ||
-            "Unknown Subject"
-        );
-
-
-    const email =
-        String(
-            data.userEmail ||
-            "Unknown User"
-        );
-
-
-    const score =
-        Number(
-            data.score || 0
-        );
+    const declared =
+        data.resultDeclared === true;
 
 
     const points =
@@ -880,103 +742,60 @@ function createSubmissionCard(
         );
 
 
-    const declared =
-        data.resultDeclared === true;
+    const subject =
+        escapeHTML(
+            String(
+                data.subject ||
+                "Unknown Subject"
+            )
+        );
 
 
+    const email =
+        escapeHTML(
+            String(
+                data.userEmail ||
+                "Unknown User"
+            )
+        );
 
-    /* ------------------------------------------
-       CARD HTML
-    ------------------------------------------ */
 
     card.innerHTML = `
 
         <h3>
-
-            📝
-            ${escapeHTML(
-                subject
-            )}
-
+            📝 ${subject}
         </h3>
 
-
         <p>
-
-            👤 Student:
-
+            👤 User:
             <strong>
-
-                ${escapeHTML(
-                    email
-                )}
-
+                ${email}
             </strong>
-
         </p>
 
-
         <p>
-
-            🆔 User ID:
-
-            <small>
-
-                ${escapeHTML(
-                    userId
-                )}
-
-            </small>
-
-        </p>
-
-
-        <p>
-
             🆔 Test ID:
-
             <small>
-
-                ${escapeHTML(
-                    testId
-                )}
-
+                ${escapeHTML(testId)}
             </small>
-
         </p>
 
-
         <p>
-
-            📊 Score:
-
-            <strong>
-
-                ${score}
-                /
-                ${totalQuestions}
-
-            </strong>
-
-        </p>
-
-
-        <p>
-
             🏆 Points:
-
             <strong>
-
                 ${points}
-
             </strong>
-
         </p>
 
+        <p>
+            📊 Total Questions:
+            <strong>
+                ${totalQuestions}
+            </strong>
+        </p>
 
         <p>
-
-            📢 Result Status:
+            📢 Result:
 
             <strong>
 
@@ -990,9 +809,7 @@ function createSubmissionCard(
 
         </p>
 
-
-        <div
-            style="margin-top:15px;">
+        <div class="admin-actions">
 
             ${
                 declared
@@ -1032,22 +849,21 @@ function createSubmissionCard(
     `;
 
 
-
-    /* ------------------------------------------
+    /* ==========================================
        DECLARE BUTTON
-    ------------------------------------------ */
+    ========================================== */
 
     if (!declared) {
 
-        const button =
+        const declareButton =
             card.querySelector(
                 ".declareButton"
             );
 
 
-        button.addEventListener(
+        declareButton.addEventListener(
             "click",
-            async function () {
+            async () => {
 
                 await declareResult(
 
@@ -1055,7 +871,7 @@ function createSubmissionCard(
 
                     testId,
 
-                    button
+                    declareButton
 
                 );
 
@@ -1065,11 +881,6 @@ function createSubmissionCard(
     }
 
 
-
-    /* ------------------------------------------
-       ADD CARD
-    ------------------------------------------ */
-
     submissions.appendChild(
         card
     );
@@ -1077,19 +888,14 @@ function createSubmissionCard(
 }
 
 
-
 /* ==================================================
    DECLARE RESULT
 ================================================== */
 
 async function declareResult(
-
     userId,
-
     testId,
-
     button
-
 ) {
 
     if (!currentUser) {
@@ -1102,38 +908,6 @@ async function declareResult(
 
     }
 
-
-    /* ------------------------------------------
-       CHECK ADMIN
-    ------------------------------------------ */
-
-    const email =
-        (
-            currentUser.email || ""
-        )
-        .trim()
-        .toLowerCase();
-
-
-    if (
-        email !==
-        ADMIN_EMAIL
-            .trim()
-            .toLowerCase()
-    ) {
-
-        alert(
-            "🚫 You are not authorized."
-        );
-
-        return;
-
-    }
-
-
-    /* ------------------------------------------
-       CONFIRM
-    ------------------------------------------ */
 
     const confirmed =
         confirm(
@@ -1158,41 +932,24 @@ async function declareResult(
             "⏳ Declaring...";
 
 
-        /* --------------------------------------
-           TEST DOCUMENT
-        -------------------------------------- */
-
         const testRef =
             doc(
-
                 db,
-
                 "users",
-
                 userId,
-
                 "practiceTests",
-
                 testId
-
             );
 
 
-        /* --------------------------------------
-           UPDATE RESULT
-        -------------------------------------- */
-
         await updateDoc(
-
             testRef,
-
             {
 
                 resultDeclared:
                     true
 
             }
-
         );
 
 
@@ -1200,10 +957,6 @@ async function declareResult(
             "🏆 Result declared successfully!"
         );
 
-
-        /* --------------------------------------
-           RELOAD
-        -------------------------------------- */
 
         await loadSubmissions();
 
@@ -1226,11 +979,8 @@ async function declareResult(
 
 
         alert(
-
-            "❌ Unable to declare result.\n\n"
-            +
+            "❌ Unable to declare result.\n\n" +
             error.message
-
         );
 
     }
@@ -1238,23 +988,18 @@ async function declareResult(
 }
 
 
-
 /* ==================================================
-   REFRESH BUTTON
+   REFRESH
 ================================================== */
 
 refreshButton.addEventListener(
-
     "click",
-
-    async function () {
+    async () => {
 
         await loadSubmissions();
 
     }
-
 );
-
 
 
 /* ==================================================
@@ -1262,10 +1007,8 @@ refreshButton.addEventListener(
 ================================================== */
 
 logoutButton.addEventListener(
-
     "click",
-
-    async function (event) {
+    async (event) => {
 
         event.preventDefault();
 
@@ -1291,34 +1034,16 @@ logoutButton.addEventListener(
 
 
             alert(
-                "❌ Unable to logout."
+                "❌ Unable to logout.\n\n" +
+                error.message
             );
 
         }
 
     }
-
 );
-/* ==================================================
-   ESCAPE HTML
-================================================== */
-
-function escapeHTML(value) {
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.textContent =
-        value;
-
-    return div.innerHTML;
-
-}
 
 </script>
-
 </body>
 
 </html>
